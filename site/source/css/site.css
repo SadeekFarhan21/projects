@@ -405,8 +405,15 @@ html .post-container .post-meta {
 html .post-container .post-meta .post-meta-sep {
   color: #94a3b8;
 }
+/* The reading time matters more than the date: bold and darker, date regular. */
 html .post-container .post-meta .post-read {
-  color: #475569;
+  color: #1f2937;
+  font-size: inherit;
+  font-weight: 700;
+}
+html .post-container .post-meta .post-date {
+  color: #64748b;
+  font-weight: 400;
 }
 html .post-tags {
   display: flex;
@@ -472,7 +479,7 @@ html .post-preview a.tag-pill {
 }
 html .post-preview .post-time {
   color: #475569 !important;
-  font-weight: 550;
+  font-weight: 400;
 }
 
 /* Nav: the theme's #999 labels were too faint. Dark slate text, mid-slate
