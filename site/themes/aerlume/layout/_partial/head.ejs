@@ -26,6 +26,11 @@ var hasExplicitUpdated = Boolean(page.updated && page.raw && /^\s*updated\s*:/m.
 var updatedTime = hasExplicitUpdated ? page.updated.toISOString() : '';
 var description = escapeAttribute(pageDescription);
 var title = escapeAttribute(pageTitle);
+// These attribute values are escaped here once, so the tags print them unescaped.
+// Link previews (Open Graph, Twitter): config.share_title names the site, and is
+// the preview title of the home page; other pages keep their own title.
+var shareSite = escapeAttribute(config.share_title || config.title);
+var shareTitle = is_home() ? shareSite : escapeAttribute(page.title || pageTitle);
 var canonical = escapeAttribute(canonicalUrl);
 var keywords = escapeAttribute(pageKeywords);
 %>
@@ -35,7 +40,7 @@ var keywords = escapeAttribute(pageKeywords);
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- SEO：canonical 防重复内容 -->
-    <link rel="canonical" href="<%= canonical %>">
+    <link rel="canonical" href="<%- canonical %>">
 
     <!-- SEO：聚合页 noindex,follow 避免稀释主文章权重 -->
     <% if (is_archive() || is_tag() || is_category() || is_current('/404') || (page.path && page.path.indexOf('tags/') === 0 && page.path !== 'tags/index.html')) { %>
@@ -43,15 +48,15 @@ var keywords = escapeAttribute(pageKeywords);
     <% } %>
 
     <!-- SEO：description / keywords -->
-    <meta name="description" content="<%= description %>">
-    <meta name="keywords" content="<%= keywords %>">
+    <meta name="description" content="<%- description %>">
+    <meta name="keywords" content="<%- keywords %>">
 
     <!-- SEO：Open Graph -->
-    <meta property="og:title" content="<%= title %>">
-    <meta property="og:description" content="<%= description %>">
+    <meta property="og:title" content="<%- shareTitle %>">
+    <meta property="og:description" content="<%- description %>">
     <meta property="og:type" content="<%= ogType %>">
-    <meta property="og:url" content="<%= canonical %>">
-    <meta property="og:site_name" content="<%= config.title %>">
+    <meta property="og:url" content="<%- canonical %>">
+    <meta property="og:site_name" content="<%- shareSite %>">
     <meta property="og:locale" content="<%= ogLocale %>">
     <% if (is_post() && publishedTime) { %>
     <meta property="article:author" content="<%= config.author %>">
@@ -63,8 +68,8 @@ var keywords = escapeAttribute(pageKeywords);
 
     <!-- SEO：Twitter Card -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="<%= title %>">
-    <meta name="twitter:description" content="<%= description %>">
+    <meta name="twitter:title" content="<%- shareTitle %>">
+    <meta name="twitter:description" content="<%- description %>">
 
     <!-- RSS 订阅 -->
     <link rel="alternate" type="application/atom+xml" title="<%= config.title %>" href="<%= url_for('atom.xml') %>">

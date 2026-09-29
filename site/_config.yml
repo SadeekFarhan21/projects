@@ -2,11 +2,12 @@
 # see themes/aerlume/UPSTREAM_COMMIT); theme-level settings live in _config.aerlume.yml.
 
 # Site
-title: Farhan Sadeek · Projects
-subtitle: Systems, trading and ML projects, built from scratch and measured
+title: "Farhan's Projects"
+subtitle: ''
 description: "Projects by Farhan Sadeek: storage engines, exchanges, trading research, compilers, kernels and ML systems, each built from scratch and written up with its measurements."
 keyword: "Farhan Sadeek,projects,systems,trading,machine learning"
-SEOTitle: Farhan Sadeek · Projects
+SEOTitle: "Farhan's Projects"
+share_title: "Farhan's Experiments That Often Failed"  # link previews (og:, twitter:)
 author: Farhan Sadeek
 email: farhan@farhansadeek.com
 language: en

@@ -14,12 +14,14 @@
     </button>
 </div>
 
+<%# The site headline: the page's h1 on the home page, where nothing else is. %>
+<% var headlineTag = is_home() ? 'h1' : 'div'; %>
 <div class="index-about">
-    <i> <%= config.subtitle %> </i>
+    <<%= headlineTag %> class="site-headline"><%= config.title %></<%= headlineTag %>>
 </div>
 
 <div class="index-about-mobile">
-    <i><%= config.subtitle %></i>
+    <div class="site-headline" aria-hidden="true"><%= config.title %></div>
 </div>
 </header>
 

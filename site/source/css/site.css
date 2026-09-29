@@ -655,3 +655,13 @@ html .tag-page-header .tag-page-eyebrow {
     max-width: none;
   }
 }
+
+/* The site headline above the page, in place of the theme's italic subtitle. */
+html .site-headline {
+  margin: 0;
+  font-family: "Quicksand", Helvetica, Arial, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #0b4f7c;
+}
