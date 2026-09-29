@@ -22,9 +22,7 @@ layout: layout
                 </ul>
                 <% } %>
             </div>
-            <time class="post-time" datetime="<%= post.date.toISOString() %>">
-                <%= post.date.format(config.date_format) %>
-            </time>
+            <span class="post-time post-read-time"><%= read_minutes(post) %> min read</span>
         </article>
         <% }); %>
 </section>

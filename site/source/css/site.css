@@ -477,9 +477,11 @@ html .post-preview a.tag-pill {
   font-size: 0.75rem;
   padding: 0.1rem 0.6rem;
 }
+/* The home page list shows the reading time (bold) where the date was. */
 html .post-preview .post-time {
-  color: #475569 !important;
-  font-weight: 400;
+  color: #1f2937 !important;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Nav: the theme's #999 labels were too faint. Dark slate text, mid-slate

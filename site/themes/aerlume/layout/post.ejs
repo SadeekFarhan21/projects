@@ -5,11 +5,7 @@
         }) %>
     </h1>
 
-<%
-  var plain = (page.content || '').replace(/<figure[\s\S]*?<\/figure>/g, ' ').replace(/<[^>]+>/g, ' ');
-  var words = (plain.match(/[A-Za-z0-9_'-]+/g) || []).length;
-  var minutes = Math.max(1, Math.round(words / 230));
-%>
+<% var minutes = read_minutes(page); %>
     <div class="post-meta">
         <time class="post-date" datetime="<%= page.date.toISOString() %>"><%- page.date.format(config.date_format) %></time>
         <span class="post-meta-sep" aria-hidden="true">·</span>
