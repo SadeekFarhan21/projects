@@ -64,11 +64,11 @@ The other half of RLVR is deciding whether a completion's answer matches the gol
 
 | Model's boxed answer | Gold | String equality | `math_verify` |
 | --- | --- | --- | --- |
-| `72` | `72` | ✅ | ✅ |
-| `0.5` | `1/2` | ❌ | ✅ |
-| `\frac{1}{2}` | `1/2` | ❌ | ✅ |
-| `40` | `72` | ❌ | ❌ |
-| *(no `\boxed{}`)* | `72` | none | ❌ |
+| `72` | `72` | correct | correct |
+| `0.5` | `1/2` | wrong | correct |
+| `\frac{1}{2}` | `1/2` | wrong | correct |
+| `40` | `72` | wrong | wrong |
+| *(no `\boxed{}`)* | `72` | none | wrong |
 
 Rows two and three are the reason this matters. A naive string check produces a **biased** reward. It systematically punishes correct answers for being written in a different form, and therefore trains the model toward the dataset's formatting conventions rather than toward being right. Parsing both sides symbolically and checking mathematical equality is the only version that rewards the intended thing.
 

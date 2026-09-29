@@ -135,3 +135,6 @@ mechanism or setup the prose can't.
 705px on a 1280px screen), so a canvas is scaled by 705 / its width. Keep the Excalidraw canvas at
 most ~1,000 units wide with body text at least 18px (titles 28px), which renders at about 12-13px.
 Wide, side-by-side layouts become unreadable; stack panels vertically instead.
+
+**No emoji or symbol glyphs in posts, charts or diagrams** (no ✅ ❌ ✓ ✗ ⚠ or similar). Say it in
+words ("correct", "wrong", "yes", "no"). Arrows used as notation ("256 → 1,024", "A → B edge") are fine.
