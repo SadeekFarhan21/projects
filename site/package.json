@@ -9,7 +9,8 @@
     "figures": "esbuild figures/entry.ts --define:import.meta.env.BASE_URL='\"/\"' --bundle --minify --format=iife --target=es2020 --outfile=source/js/figures.js",
     "build": "npm run figures && hexo clean && hexo generate",
     "dev": "npm run figures && hexo server --draft",
-    "new": "hexo new draft"
+    "new": "hexo new draft",
+    "publish": "node tools/publish.mjs"
   },
   "hexo": {
     "version": "8.1.2"
