@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="100" fill="black" />
+  <path d="M 60 40
+           L 140 40
+           L 140 60
+           L 80 60
+           L 80 90
+           L 126 90
+           L 126 110
+           L 80 110
+           L 80 160
+           L 60 160
+           Z"
+        fill="white"
+        transform="translate(100 100) scale(0.8) translate(-100 -100)" />
+</svg>

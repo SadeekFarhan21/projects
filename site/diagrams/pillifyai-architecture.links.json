@@ -1,0 +1,9 @@
+{
+  "auth": {"href": "#auth-lives-in-firebase-roles-live-in-postgres", "tip": "Auth Lives in Firebase, Roles Live in Postgres"},
+  "app": {"href": "#roles-in-the-app", "tip": "Roles in the App"},
+  "queue": {"href": "#an-offline-queue", "tip": "An Offline Queue"},
+  "srv": {"href": "#the-prescribe-handler", "tip": "The Prescribe Handler"},
+  "pg": {"href": "#one-record-as-the-shared-truth", "tip": "One Record as the Shared Truth"},
+  "esp": {"href": "#the-esp32-loop", "tip": "The ESP32 Loop"},
+  "pi": {"href": "#the-servo-class-on-the-pi", "tip": "The Servo Class on the Pi"}
+}

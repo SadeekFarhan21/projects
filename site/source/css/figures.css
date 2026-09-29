@@ -307,3 +307,31 @@
   margin: 0 auto;
   cursor: zoom-in;
 }
+
+/* Interactive diagrams (tools/interactive-diagrams.py): the SVG is inlined, and
+   each linked box highlights on hover or keyboard focus and jumps to the
+   section that explains it. */
+.post-content figure.excal-interactive .excal-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.post-content figure.excal-interactive .excal-hot {
+  cursor: pointer;
+  transition: filter 120ms ease;
+}
+.post-content figure.excal-interactive .excal-hot:is(:hover, :focus-visible) {
+  filter: drop-shadow(0 0 5px rgb(0 108 172 / 0.6));
+  outline: none;
+}
+.post-content figure.excal-interactive .excal-hint {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  text-align: left;
+}
+@media (prefers-reduced-motion: reduce) {
+  .post-content figure.excal-interactive .excal-hot {
+    transition: none;
+  }
+}

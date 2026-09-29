@@ -81,6 +81,8 @@ ALT = {
     "empirica-biomedical-graphs-edge-extraction": "Two ways Empirica makes an edge: sentence-level co-occurrence adds weight 1 to every entity pair in a sentence and keeps up to three evidence sentences, and regex verb patterns with single-word captures turn 'the p38 MAPK inhibits NF-kB signaling' into an edge with source MAPK and target NF because the hyphen cuts the entity.",
     "diffsense-architecture": "DiffSense architecture: a React, Vite and Tailwind dashboard and a VS Code chat extension both call one FastAPI service (main.py, 3,913 lines, 36 routes) that uses seven backend modules by Jalen Francis: github_service, git_analyzer, embedding_engine, breaking_change_detector, rag_system, claude_analyzer and a SQLite database.",
     "diffsense-hybrid-drift": "The hybrid drift score blends CodeBERT on the diff lines (0.7) with MiniLM on the commit message (0.3, zero-padded to 768 dimensions) as 1 minus cosine similarity against a 0.3 threshold, and measured on 17 commits MiniLM alone gives median drift 0.679 with 16 of 16 over threshold while CodeBERT gives median 0.024 with 0 of 16 over.",
+    "wakafree-architecture": "WakaFree architecture with two ways in: the VS Code extension (heartbeat on file switch, on edit once per file per 2 minutes, and on every save, queued and flushed every 30 s) posts to heartbeats.bulk on the Next.js 15 server, while syncRange pulls /summaries and /durations from the WakaTime API (every 20 minutes for 2 days, nightly for 365 days, or from the Refresh button) and upserts one waka_daily row per date into Supabase Postgres beside the heartbeats and waka_meta tables; the Recharts dashboard reads 365 slim rows plus 3 rows with full timelines, and a 15-tool FastMCP server calls the WakaTime API for an LLM client.",
+    "wakafree-day-boundary": "Two panels built from the repo's date helpers: the first lines up local time five hours behind UTC against UTC for January 15 to 16 and shows that at 19:00 local UTC is already January 16, which is why offsetDate takes today in the local zone anchored at 12:00 UTC; the second draws bars measured from local midnight to the next local midnight, 24 hours on an ordinary day, 23 on the US spring-forward day 2026-03-08, 25 on the fall-back day 2026-11-01 and 26 on a day that ends in a zone 2 hours west.",
 }
 
 
@@ -113,6 +115,14 @@ def main() -> int:
                 return m.group(0)
             alt, w, h = ALT[name]
             swapped += 1
+            svg = IMG / f"{name}.svg"
+            if svg.exists():  # clickable version from tools/interactive-diagrams.py
+                inline = svg.read_text().replace('role="img" ', f'role="img" aria-label="{alt}" ', 1)
+                return (
+                    f'<figure class="excal excal-interactive" data-diagram="{name}">{inline}'
+                    f'<figcaption class="excal-hint">Hover a box to see where it is explained; click to jump there.</figcaption>'
+                    f"</figure>"
+                )
             return (
                 f'<figure class="excal" data-diagram="{name}">'
                 f'<a href="/img/diagrams/{name}.webp" class="excal-link" aria-label="Open the diagram full size">'
@@ -123,7 +133,7 @@ def main() -> int:
         # Old placeholders, and figures from an earlier run (their size may have changed).
         new = re.sub(
             r'<figure data-figure="diagram:([a-z0-9-]+)"></figure>'
-            r'|<figure class="excal" data-diagram="([a-z0-9-]+)">.*?</figure>',
+            r'|<figure class="excal(?: excal-interactive)?" data-diagram="([a-z0-9-]+)">.*?</figure>',
             repl, text)
         if new != text:
             post.write_text(new)

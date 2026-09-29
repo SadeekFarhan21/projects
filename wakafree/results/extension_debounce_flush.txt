@@ -1,0 +1,12 @@
+# Extension debounce/flush harness: tracker.ts run on Node v26.8.1 with a fake clock, stubbed vscode and fetch (synthetic edits)
+# command: WF=<repo copy> node --import ./register.mjs tracker_test.mjs (harness/)
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  "edits_1s_apart_100s_single_file_heartbeats": 1,
+  "edits_1s_apart_600s_single_file_heartbeats": 5,
+  "five_saves_in_5s_heartbeats": 5,
+  "three_files_alternating_10s_for_600s_heartbeats": 15,
+  "one_heartbeat_batch_body_bytes": 261
+}
+[WakaFree] Server 500: x
+{"retry_attempt_batch_sizes":[2,2]}

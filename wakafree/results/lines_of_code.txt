@@ -1,0 +1,10 @@
+# Lines of code per part (wc -l over copied source, excluding lockfiles)
+# command: find <part> -name '*.ts' -o -name '*.tsx' -o -name '*.py' -o -name '*.sql' -o -name '*.css' | xargs wc -l
+wakafree-extension/src      318
+wakafree-server/src     2964
+wakafree-server/supabase       51
+wakafree-mcp      282
+server api routes        8 files,      344 lines
+server components       10 files,     1306 lines
+mcp tools: 15
+note: measured on the ported copy, which omits the setup and export routes

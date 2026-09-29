@@ -150,5 +150,11 @@
     "date": "2026-09-29 04:01:45",
     "source": "projects/cuped-msprt-ope-engine, first commit",
     "code": "https://github.com/SadeekFarhan21/projects/tree/main/cuped-msprt-ope-engine"
+  },
+  "wakafree": {
+    "date": "2026-06-28 22:49:28",
+    "source": "SadeekFarhan21/WakaFree, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/wakafree",
+    "tab_title": "WakaFree"
   }
 }

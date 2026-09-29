@@ -1,0 +1,44 @@
+# Server logic harness: compute.ts, timezone.ts, syncRange with counting fetch and stubbed Supabase (synthetic data)
+# command: WF=<repo copy> node --import ./register.mjs server_test.mjs (harness/)
+{
+  "compute_total_seconds_gap_20min": 900,
+  "compute_total_seconds_gap_14min": 840,
+  "compute_total_seconds_gap_15min": 0,
+  "formatSeconds_3725": "1 hr 2 min",
+  "compactNumber_1234567": "1.2M",
+  "midnight_utc_epoch": 1768435200,
+  "midnight_ny_jan": 18000,
+  "midnight_ny_jul": 14400,
+  "sync_days2_meta0": {
+    "days": 2,
+    "fetches": 13,
+    "upsert_rows": [
+      "waka_daily:2"
+    ]
+  },
+  "sync_days2_meta1": {
+    "days": 2,
+    "fetches": 22,
+    "upsert_rows": [
+      "waka_daily:2",
+      "waka_meta:9"
+    ]
+  },
+  "sync_days7_meta0": {
+    "days": 7,
+    "fetches": 43,
+    "upsert_rows": [
+      "waka_daily:7"
+    ]
+  },
+  "sync_backfill365_meta1": {
+    "days": 365,
+    "fetches": 2200,
+    "upsert_rows": [
+      "waka_daily:365",
+      "waka_meta:9"
+    ]
+  },
+  "resolveRange_backfill_999_days_span": 365
+}
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.

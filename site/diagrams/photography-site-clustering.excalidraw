@@ -20,8 +20,8 @@
       "strokeColor": "transparent",
       "x": -26,
       "y": -26,
-      "width": 1290,
-      "height": 660,
+      "width": 992,
+      "height": 861.0,
       "text": "Collapsing a Shooting Session",
       "originalText": "Collapsing a Shooting Session",
       "fontSize": 28,
@@ -46,9 +46,9 @@
       "seed": 1,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 20,
+      "x": 0,
       "y": 0,
-      "width": 422.24,
+      "width": 402.75,
       "height": 35.0,
       "text": "Collapsing a Shooting Session",
       "originalText": "Collapsing a Shooting Session",
@@ -74,9 +74,9 @@
       "seed": 2,
       "backgroundColor": "transparent",
       "strokeColor": "#64748b",
-      "x": 20,
-      "y": 44,
-      "width": 655.1999999999999,
+      "x": 0,
+      "y": 48,
+      "width": 612.35,
       "height": 22.5,
       "text": "Bursts and drone flights become one candidate before the ranking pass.",
       "originalText": "Bursts and drone flights become one candidate before the ranking pass.",
@@ -102,9 +102,9 @@
       "seed": 3,
       "backgroundColor": "transparent",
       "strokeColor": "#006cac",
-      "x": 20,
+      "x": 0,
       "y": 110,
-      "width": 767.52,
+      "width": 675.36,
       "height": 22.5,
       "text": "Illustrative timeline: frames by capture time, a new session after a gap over 30 s",
       "originalText": "Illustrative timeline: frames by capture time, a new session after a gap over 30 s",
@@ -130,9 +130,9 @@
       "seed": 4,
       "backgroundColor": "transparent",
       "strokeColor": "#64748b",
-      "x": 40,
-      "y": 215,
-      "width": 1140,
+      "x": 0,
+      "y": 230,
+      "width": 912,
       "height": 0,
       "points": [
         [
@@ -140,10 +140,12 @@
           0
         ],
         [
-          1140,
+          912,
           0
         ]
-      ]
+      ],
+      "startBinding": null,
+      "endBinding": null
     },
     {
       "angle": 0,
@@ -160,8 +162,8 @@
       "seed": 5,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 72,
-      "y": 207,
+      "x": 24.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -180,8 +182,8 @@
       "seed": 6,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 142,
-      "y": 207,
+      "x": 80.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -200,8 +202,8 @@
       "seed": 7,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 207,
-      "y": 207,
+      "x": 132.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -220,8 +222,8 @@
       "seed": 8,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 282,
-      "y": 207,
+      "x": 192.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -240,8 +242,8 @@
       "seed": 9,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 352,
-      "y": 207,
+      "x": 248.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -260,8 +262,8 @@
       "seed": 10,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 632,
-      "y": 207,
+      "x": 472.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -280,8 +282,8 @@
       "seed": 11,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 692,
-      "y": 207,
+      "x": 520.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -300,8 +302,8 @@
       "seed": 12,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 922,
-      "y": 207,
+      "x": 704.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -320,8 +322,8 @@
       "seed": 13,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 992,
-      "y": 207,
+      "x": 760.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -340,8 +342,8 @@
       "seed": 14,
       "backgroundColor": "#006cac",
       "strokeColor": "#006cac",
-      "x": 1072,
-      "y": 207,
+      "x": 824.0,
+      "y": 222,
       "width": 16,
       "height": 16
     },
@@ -360,13 +362,13 @@
       "seed": 15,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 60,
-      "y": 150,
-      "width": 74.88,
-      "height": 20.0,
+      "x": 16.0,
+      "y": 162,
+      "width": 79.7,
+      "height": 22.5,
       "text": "Session A",
       "originalText": "Session A",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -388,20 +390,22 @@
       "seed": 16,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 60,
-      "y": 180,
-      "width": 315,
+      "x": 16.0,
+      "y": 200,
+      "width": 252.0,
       "height": 0,
       "points": [
         [
-          0,
+          0.0,
           0
         ],
         [
-          315,
+          252.0,
           0
         ]
-      ]
+      ],
+      "startBinding": null,
+      "endBinding": null
     },
     {
       "angle": 0,
@@ -418,13 +422,13 @@
       "seed": 17,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 600,
-      "y": 150,
-      "width": 74.88,
-      "height": 20.0,
+      "x": 464.0,
+      "y": 162,
+      "width": 79.86,
+      "height": 22.5,
       "text": "Session B",
       "originalText": "Session B",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -446,20 +450,22 @@
       "seed": 18,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 620,
-      "y": 180,
-      "width": 100,
+      "x": 464.0,
+      "y": 200,
+      "width": 80.0,
       "height": 0,
       "points": [
         [
-          0,
+          0.0,
           0
         ],
         [
-          100,
+          80.0,
           0
         ]
-      ]
+      ],
+      "startBinding": null,
+      "endBinding": null
     },
     {
       "angle": 0,
@@ -476,13 +482,13 @@
       "seed": 19,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 900,
-      "y": 150,
-      "width": 74.88,
-      "height": 20.0,
+      "x": 696.0,
+      "y": 162,
+      "width": 79.71,
+      "height": 22.5,
       "text": "Session C",
       "originalText": "Session C",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -504,20 +510,22 @@
       "seed": 20,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 910,
-      "y": 180,
-      "width": 190,
+      "x": 696.0,
+      "y": 200,
+      "width": 152.0,
       "height": 0,
       "points": [
         [
-          0,
+          0.0,
           0
         ],
         [
-          190,
+          152.0,
           0
         ]
-      ]
+      ],
+      "startBinding": null,
+      "endBinding": null
     },
     {
       "angle": 0,
@@ -534,13 +542,13 @@
       "seed": 21,
       "backgroundColor": "transparent",
       "strokeColor": "#c0572a",
-      "x": 390,
-      "y": 236,
-      "width": 166.4,
-      "height": 40.0,
+      "x": 300,
+      "y": 260,
+      "width": 170.42,
+      "height": 45.0,
       "text": "gap over 30 s\nstarts a new session",
       "originalText": "gap over 30 s\nstarts a new session",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -562,13 +570,13 @@
       "seed": 22,
       "backgroundColor": "transparent",
       "strokeColor": "#c0572a",
-      "x": 780,
-      "y": 236,
-      "width": 108.16,
-      "height": 20.0,
+      "x": 595,
+      "y": 260,
+      "width": 115.06,
+      "height": 22.5,
       "text": "gap over 30 s",
       "originalText": "gap over 30 s",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -590,9 +598,9 @@
       "seed": 23,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 20,
-      "y": 320,
-      "width": 166.4,
+      "x": 0,
+      "y": 355,
+      "width": 149.87,
       "height": 25.0,
       "text": "Within a session",
       "originalText": "Within a session",
@@ -606,7 +614,12 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "e32",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -618,9 +631,9 @@
       "seed": 24,
       "backgroundColor": "#fdf1cf",
       "strokeColor": "#a1660a",
-      "x": 20,
-      "y": 370,
-      "width": 260,
+      "x": 0,
+      "y": 405,
+      "width": 420,
       "height": 90,
       "roundness": {
         "type": 3
@@ -641,9 +654,9 @@
       "seed": 25,
       "backgroundColor": "transparent",
       "strokeColor": "#374151",
-      "x": 20,
-      "y": 392.5,
-      "width": 260,
+      "x": 8,
+      "y": 427.5,
+      "width": 404,
       "height": 45.0,
       "text": "dHash every frame\nmerge Hamming <= 6",
       "originalText": "dHash every frame\nmerge Hamming <= 6",
@@ -657,7 +670,16 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "e32",
+          "type": "arrow"
+        },
+        {
+          "id": "e33",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -669,9 +691,9 @@
       "seed": 26,
       "backgroundColor": "#cfe3f3",
       "strokeColor": "#0b4f7c",
-      "x": 340,
-      "y": 370,
-      "width": 260,
+      "x": 520,
+      "y": 405,
+      "width": 420,
       "height": 90,
       "roundness": {
         "type": 3
@@ -692,9 +714,9 @@
       "seed": 27,
       "backgroundColor": "transparent",
       "strokeColor": "#374151",
-      "x": 340,
-      "y": 392.5,
-      "width": 260,
+      "x": 528,
+      "y": 427.5,
+      "width": 404,
       "height": 45.0,
       "text": "Cluster near-dups\nacross the month",
       "originalText": "Cluster near-dups\nacross the month",
@@ -708,7 +730,16 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "e33",
+          "type": "arrow"
+        },
+        {
+          "id": "e34",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -720,9 +751,9 @@
       "seed": 28,
       "backgroundColor": "#ebe3f6",
       "strokeColor": "#7d5ba6",
-      "x": 660,
-      "y": 370,
-      "width": 260,
+      "x": 520,
+      "y": 565,
+      "width": 420,
       "height": 90,
       "roundness": {
         "type": 3
@@ -743,9 +774,9 @@
       "seed": 29,
       "backgroundColor": "transparent",
       "strokeColor": "#374151",
-      "x": 660,
-      "y": 392.5,
-      "width": 260,
+      "x": 528,
+      "y": 587.5,
+      "width": 404,
       "height": 45.0,
       "text": "Keep the highest\nscore in each cluster",
       "originalText": "Keep the highest\nscore in each cluster",
@@ -759,7 +790,12 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "e34",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -771,9 +807,9 @@
       "seed": 30,
       "backgroundColor": "#dcefe3",
       "strokeColor": "#2f7a54",
-      "x": 980,
-      "y": 370,
-      "width": 240,
+      "x": 0,
+      "y": 565,
+      "width": 420,
       "height": 90,
       "roundness": null
     },
@@ -792,9 +828,9 @@
       "seed": 31,
       "backgroundColor": "transparent",
       "strokeColor": "#374151",
-      "x": 980,
-      "y": 392.5,
-      "width": 240,
+      "x": 8,
+      "y": 587.5,
+      "width": 404,
       "height": 45.0,
       "text": "One frame per\nmoment",
       "originalText": "One frame per\nmoment",
@@ -820,24 +856,32 @@
       "seed": 32,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 284,
-      "y": 415,
-      "width": 52,
-      "height": 0,
+      "x": 420,
+      "y": 450.0,
+      "width": 100,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          52,
-          0
+          100,
+          0.0
         ]
       ],
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null
+      "startBinding": {
+        "elementId": "e24",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "e26",
+        "focus": 0,
+        "gap": 1
+      }
     },
     {
       "angle": 0,
@@ -854,24 +898,32 @@
       "seed": 33,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 604,
-      "y": 415,
-      "width": 52,
-      "height": 0,
+      "x": 730,
+      "y": 495,
+      "width": 0,
+      "height": 70,
       "points": [
         [
           0,
           0
         ],
         [
-          52,
-          0
+          0,
+          70
         ]
       ],
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null
+      "startBinding": {
+        "elementId": "e26",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "e28",
+        "focus": 0,
+        "gap": 1
+      }
     },
     {
       "angle": 0,
@@ -888,24 +940,32 @@
       "seed": 34,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 924,
-      "y": 415,
-      "width": 52,
-      "height": 0,
+      "x": 520,
+      "y": 610.0,
+      "width": 100,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          52,
-          0
+          -100,
+          0.0
         ]
       ],
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null
+      "startBinding": {
+        "elementId": "e28",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "e30",
+        "focus": 0,
+        "gap": 1
+      }
     },
     {
       "angle": 0,
@@ -922,9 +982,9 @@
       "seed": 35,
       "backgroundColor": "transparent",
       "strokeColor": "#0b4f7c",
-      "x": 20,
-      "y": 530,
-      "width": 393.12,
+      "x": 0,
+      "y": 695,
+      "width": 365.83,
       "height": 45.0,
       "text": "Settings: 30 s session gap,\nHamming distance <= 6, score threshold 70.",
       "originalText": "Settings: 30 s session gap,\nHamming distance <= 6, score threshold 70.",
@@ -950,13 +1010,13 @@
       "seed": 36,
       "backgroundColor": "transparent",
       "strokeColor": "#64748b",
-      "x": 660,
-      "y": 530,
-      "width": 391.04,
-      "height": 60.0,
+      "x": 0,
+      "y": 764,
+      "width": 347.04,
+      "height": 45.0,
       "text": "Real effect in 2025-07: 330 of 488 images\nwere excluded as near-duplicates.",
       "originalText": "Real effect in 2025-07: 330 of 488 images\nwere excluded as near-duplicates.",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",

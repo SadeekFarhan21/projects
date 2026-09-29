@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Never allow page-level sideways panning on phones; paint overscroll areas
+   in the surface color instead of the browser default. */
+html {
+  background-color: #0c1117;
+}
+html,
+body {
+  overflow-x: hidden;
+}

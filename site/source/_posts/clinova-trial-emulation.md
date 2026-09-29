@@ -39,7 +39,7 @@ Our `rubric.md`, 638 lines long, turns this into a check the validator can apply
 
 The pipeline is a straight chain with one loop.
 
-<figure class="excal" data-diagram="clinova-trial-emulation-pipeline"><a href="/img/diagrams/clinova-trial-emulation-pipeline.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/clinova-trial-emulation-pipeline.webp" alt="Clinova pipeline: a free-text clinical question flows through the Question, Design and Validator agents on gpt-5.2, with a dashed feedback arrow from the validator back to the design agent for at most 3 revise_spec iterations, then a local OMOP concept lookup and the Code agent on gemini-3-pro-preview, which produces analysis code for the All of Us enclave." width="2400" height="1373" loading="lazy" decoding="async"></a></figure>
+<figure class="excal" data-diagram="clinova-trial-emulation-pipeline"><a href="/img/diagrams/clinova-trial-emulation-pipeline.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/clinova-trial-emulation-pipeline.webp" alt="Clinova pipeline: a free-text clinical question flows through the Question, Design and Validator agents on gpt-5.2, with a dashed feedback arrow from the validator back to the design agent for at most 3 revise_spec iterations, then a local OMOP concept lookup and the Code agent on gemini-3-pro-preview, which produces analysis code for the All of Us enclave." width="2400" height="2665" loading="lazy" decoding="async"></a></figure>
 
 The question, design and validator agents are configured for `gpt-5.2` in `agent/config.py`, and the same file sets `GEMINI_MODEL = "gemini-3-pro-preview"` for the code agent. The OMOP lookup is a local tool with no LLM call. The validator can send the design back to the design agent at most three times. For Barrett, the code agent's output was a 470-line analysis script.
 
@@ -49,7 +49,7 @@ A design spec is a long document. The Barrett one is 341 lines in its first vers
 
 Here is what that looked like on Barrett.
 
-<figure class="excal" data-diagram="clinova-trial-emulation-validator-loop"><a href="/img/diagrams/clinova-trial-emulation-validator-loop.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/clinova-trial-emulation-validator-loop.webp" alt="Three design spec drafts and the validator's verdicts on the Barrett 2006 run: v1 (t0 = contrast administration time) gets FEEDBACK with 3 CRITICAL and 1 WARNING issues, v2 (t0 = max of procedure and drug start) gets 1 CRITICAL left-truncation issue, and v3 (t0 = drug_exposure_start_datetime) is VALID with 6 of 6 gates passed." width="2400" height="1534" loading="lazy" decoding="async"></a></figure>
+<figure class="excal" data-diagram="clinova-trial-emulation-validator-loop"><a href="/img/diagrams/clinova-trial-emulation-validator-loop.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/clinova-trial-emulation-validator-loop.webp" alt="Three design spec drafts and the validator's verdicts on the Barrett 2006 run: v1 (t0 = contrast administration time) gets FEEDBACK with 3 CRITICAL and 1 WARNING issues, v2 (t0 = max of procedure and drug start) gets 1 CRITICAL left-truncation issue, and v3 (t0 = drug_exposure_start_datetime) is VALID with 6 of 6 gates passed." width="2400" height="3541" loading="lazy" decoding="async"></a></figure>
 
 ### From Free Text to Concept IDs
 

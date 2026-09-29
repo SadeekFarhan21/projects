@@ -1,0 +1,50 @@
+{
+  "name": "wakafree",
+  "displayName": "WakaFree",
+  "description": "Self-hosted coding time tracker — sends heartbeats to your WakaFree server",
+  "version": "0.1.0",
+  "publisher": "wakafree",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "wakafree.menu",
+        "title": "WakaFree: Open Menu"
+      }
+    ],
+    "configuration": {
+      "title": "WakaFree",
+      "properties": {
+        "wakafree.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:3000/api/v1",
+          "description": "URL of your WakaFree server API (no trailing slash)"
+        },
+        "wakafree.apiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Your WakaFree API key — get it by POSTing to `/api/setup` on your server"
+        },
+        "wakafree.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable time tracking"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

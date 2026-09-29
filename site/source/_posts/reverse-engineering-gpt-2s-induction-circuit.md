@@ -33,7 +33,7 @@ The claimed implementation is two heads composed across layers<sup>[[5]](#ref-5)
 
 Two heads and one edge between them. Every part of that claim is separately testable, and this experiment tests the weakest part of it, whether heads exist whose attention goes where the story says it should.
 
-<figure class="excal" data-diagram="induction-two-head-mechanism"><a href="/img/diagrams/induction-two-head-mechanism.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/induction-two-head-mechanism.webp" alt="Token strip '... A B ... A' where a previous-token head (typically layer 0) writes 'previous token = A' into the residual stream at B's position, and an induction head uses QK (W_Q W_K^T) to match the final A against that position and OV (W_O W_V) to copy B into the output, raising its logit; QK is bracketed as what the induction score measures, OV as not measured here (experiment 05), and the composition edge as assumed and tested by path patching in experiment 04." width="2400" height="1769" loading="lazy" decoding="async"></a></figure>
+<figure class="excal" data-diagram="induction-two-head-mechanism"><a href="/img/diagrams/induction-two-head-mechanism.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/induction-two-head-mechanism.webp" alt="Token strip '... A B ... A' where a previous-token head (typically layer 0) writes 'previous token = A' into the residual stream at B's position, and an induction head uses QK (W_Q W_K^T) to match the final A against that position and OV (W_O W_V) to copy B into the output, raising its logit; QK is bracketed as what the induction score measures, OV as not measured here (experiment 05), and the composition edge as assumed and tested by path patching in experiment 04." width="2400" height="2303" loading="lazy" decoding="async"></a></figure>
 
 ### QK and OV, Where a Head Attends versus What It Moves
 
@@ -73,7 +73,7 @@ $$
 
 Query $1+N+j$ sits at offset $j$ into the repeated half; it holds the same token as position $1+j$, so the key it must attend to is the token that *followed* that first occurrence, at position $2+j$. The difference between those indices is constant, which is why the whole measurement is one diagonal at offset $-(N-1)$.
 
-<figure class="excal" data-diagram="induction-score-setup"><a href="/img/diagrams/induction-score-setup.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/induction-score-setup.webp" alt="Diagram of the induction-score setup: a [BOS][50 random][same 50] token strip above a 101x101 causal attention matrix with the single offset -49 diagonal (query 1+N+j to key 2+j) highlighted, the two first-half cells excluded, and the pipeline from one cached forward pass to 144 head scores." width="2400" height="1843" loading="lazy" decoding="async"></a></figure>
+<figure class="excal" data-diagram="induction-score-setup"><a href="/img/diagrams/induction-score-setup.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/induction-score-setup.webp" alt="Diagram of the induction-score setup: a [BOS][50 random][same 50] token strip above a 101x101 causal attention matrix with the single offset -49 diagonal (query 1+N+j to key 2+j) highlighted, the two first-half cells excluded, and the pipeline from one cached forward pass to 144 head scores." width="2400" height="3365" loading="lazy" decoding="async"></a></figure>
 
 ## Implementation
 

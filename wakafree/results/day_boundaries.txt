@@ -1,0 +1,19 @@
+# Day-boundary harness: compute.ts and timezone.ts (localMidnightEpochSeconds) run on Node v26.8.1 (synthetic heartbeats, generic zones)
+# command: WF=<repo copy> node --import ./register.mjs day_test.mjs (harness/)
+{
+  "two_hours_with_20min_break_heartbeats": 62,
+  "two_hours_with_20min_break_total_seconds": 7200,
+  "gap_899s_total_seconds": 899,
+  "gap_900s_total_seconds": 0,
+  "single_heartbeat_total_seconds": 0,
+  "utc5w_instant_local_time": "19:00",
+  "utc5w_instant_local_date": "2026-01-15",
+  "utc5w_instant_utc_date": "2026-01-16",
+  "utc5w_local_midnight_minus_utc_midnight_hours": 5,
+  "day_hours_ordinary_2026_01_15_new_york": 24,
+  "day_hours_spring_forward_2026_03_08_new_york": 23,
+  "day_hours_fall_back_2026_11_01_new_york": 25,
+  "day_hours_utc_to_two_hours_west": 26,
+  "day_hours_utc_to_two_hours_east": 22,
+  "day_hours_next_start_by_adding_86400_after_spring_forward_off_by_hours": 1
+}

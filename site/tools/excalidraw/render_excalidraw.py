@@ -74,8 +74,9 @@ def render(
     output_path: Path | None = None,
     scale: int = 2,
     max_width: int = 1920,
+    svg_output: Path | None = None,
 ) -> Path:
-    """Render an .excalidraw file to PNG. Returns the output PNG path."""
+    """Render an .excalidraw file to PNG (and optionally SVG). Returns the PNG path."""
     # Import playwright here so validation errors show before import errors
     try:
         from playwright.sync_api import sync_playwright
@@ -164,6 +165,8 @@ def render(
             sys.exit(1)
 
         svg_el.screenshot(path=str(output_path))
+        if svg_output is not None:
+            svg_output.write_text(svg_el.evaluate("el => el.outerHTML"))
         browser.close()
 
     return output_path
@@ -175,13 +178,14 @@ def main() -> None:
     parser.add_argument("--output", "-o", type=Path, default=None, help="Output PNG path (default: same name with .png)")
     parser.add_argument("--scale", "-s", type=int, default=2, help="Device scale factor (default: 2)")
     parser.add_argument("--width", "-w", type=int, default=1920, help="Max viewport width (default: 1920)")
+    parser.add_argument("--svg", type=Path, default=None, help="Also save the rendered SVG (site fonts applied) to this path")
     args = parser.parse_args()
 
     if not args.input.exists():
         print(f"ERROR: File not found: {args.input}", file=sys.stderr)
         sys.exit(1)
 
-    png_path = render(args.input, args.output, args.scale, args.width)
+    png_path = render(args.input, args.output, args.scale, args.width, args.svg)
     print(str(png_path))
 
 

@@ -130,3 +130,8 @@ record it in `site/tools/post-dates.json`), then these `##` sections in order:
 No Reproducibility section: Farhan doesn't want build/run instructions in posts. Citations inline as
 `<sup>[[N]](#ref-N)</sup>`. Nothing collapsible (no `<details>`). Diagrams only where they explain a
 mechanism or setup the prose can't.
+
+**Diagrams must be readable on a laptop.** Posts render diagrams at the text column's width (about
+705px on a 1280px screen), so a canvas is scaled by 705 / its width. Keep the Excalidraw canvas at
+most ~1,000 units wide with body text at least 18px (titles 28px), which renders at about 12-13px.
+Wide, side-by-side layouts become unreadable; stack panels vertically instead.

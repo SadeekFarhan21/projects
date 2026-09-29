@@ -62,13 +62,13 @@ then re-orthonormalize with QR and append.
 
 The price is a finite budget. Every concept spends dimensions no later concept can use, and CLIP's embedding space has only 768 of them. The guarantee is also scoped to the forget subspaces. The retain projector $P_r$ is not orthogonalized against the bank, so with retain prompts the composed projectors are not exactly orthogonal.
 
-<figure class="excal" data-diagram="cure-improve-architecture"><a href="/img/diagrams/cure-improve-architecture.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/cure-improve-architecture.webp" alt="Layout of the CURE-Improve repo: concept prompts become CLIP text embeddings of shape n by 768 and feed cure/ (the base CURE reimplementation editing attn2 to_k and to_v), cure_seq/ (a SubspaceBank with orthogonal projectors that imports from cure/) and cure_dit/ (targeting SD3 MM-DiT), all of which feed evaluation/ with one results.json schema computing LPIPS_e, LPIPS_u and CLIP_u, with labels crediting the packages and protocol to Arses Prasai and the Figure-6 sweeps to Jeffrey Xie." width="2400" height="1368" loading="lazy" decoding="async"></a></figure>
+<figure class="excal" data-diagram="cure-improve-architecture"><a href="/img/diagrams/cure-improve-architecture.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/cure-improve-architecture.webp" alt="Layout of the CURE-Improve repo: concept prompts become CLIP text embeddings of shape n by 768 and feed cure/ (the base CURE reimplementation editing attn2 to_k and to_v), cure_seq/ (a SubspaceBank with orthogonal projectors that imports from cure/) and cure_dit/ (targeting SD3 MM-DiT), all of which feed evaluation/ with one results.json schema computing LPIPS_e, LPIPS_u and CLIP_u, with labels crediting the packages and protocol to Arses Prasai and the Figure-6 sweeps to Jeffrey Xie." width="2400" height="1887" loading="lazy" decoding="async"></a></figure>
 
 ### How the Repo Fits Together
 
 `cure/` holds the base eraser and the attention utilities that find and edit the `attn2` layers. `cure_seq/` imports those utilities and adds the `SubspaceBank`, a spectral module that computes orthogonalized projectors, and a `SequentialCURE` class. `cure_dit/` reuses the spectral idea for SD3. `evaluation/` runs any of them under one config and one `results.json` schema and computes the Figure-6 metrics. By line count that is about 2,100 lines for the base method, 1,300 for CURE-Sequential including experiments, 650 for CURE-DiT and 2,900 for evaluation.
 
-<figure class="excal" data-diagram="cure-improve-subspace-bank"><a href="/img/diagrams/cure-improve-subspace-bank.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/cure-improve-subspace-bank.webp" alt="Flow of one sequential erasure in CURE-Sequential: forget prompts become CLIP embeddings and an SVD gives right singular vectors, an orthogonalize step against the SubspaceBank B and QR feed an adaptive alpha and the projector P, the weights are edited as W minus W P on to_k and to_v, and new directions with spectral weight above 0.01 are registered back into the bank, which lives in the 768-dimensional CLIP space so its capacity is bounded." width="2400" height="1428" loading="lazy" decoding="async"></a></figure>
+<figure class="excal" data-diagram="cure-improve-subspace-bank"><a href="/img/diagrams/cure-improve-subspace-bank.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/cure-improve-subspace-bank.webp" alt="Flow of one sequential erasure in CURE-Sequential: forget prompts become CLIP embeddings and an SVD gives right singular vectors, an orthogonalize step against the SubspaceBank B and QR feed an adaptive alpha and the projector P, the weights are edited as W minus W P on to_k and to_v, and new directions with spectral weight above 0.01 are registered back into the bank, which lives in the 768-dimensional CLIP space so its capacity is bounded." width="2400" height="3111" loading="lazy" decoding="async"></a></figure>
 
 ### The DiT Port
 
@@ -198,7 +198,7 @@ Log the bank's dimension usage at every checkpoint and rerun the 100-artist swee
 
 The zero-cross-term guarantee holds by construction for forget projectors only. A synthetic test with retain prompts, using the same harness as the orthogonality check, would show how large the residual cross term is when $P_r$ is not orthogonalized.
 
-### Report Noise, Not Just Means
+### Report the Noise Alongside the Means
 
 Report paired differences per seed and prompt with a confidence interval. A paired comparison would pin down how large CURE-Sequential's advantage at k=5 to 50 is.
 

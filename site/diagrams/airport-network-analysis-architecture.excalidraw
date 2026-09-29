@@ -16,8 +16,8 @@
       "type": "rectangle",
       "x": -26,
       "y": -26,
-      "width": 1152,
-      "height": 1142,
+      "width": 992,
+      "height": 1309.5,
       "strokeColor": "transparent",
       "backgroundColor": "transparent",
       "strokeWidth": 1,
@@ -35,9 +35,9 @@
       "strokeStyle": "solid",
       "id": "title",
       "type": "text",
-      "x": 20,
+      "x": 0,
       "y": 0,
-      "width": 700,
+      "width": 373.04,
       "height": 35.0,
       "text": "One Notebook, One Render",
       "originalText": "One Notebook, One Render",
@@ -63,12 +63,12 @@
       "strokeStyle": "solid",
       "id": "sub",
       "type": "text",
-      "x": 20,
-      "y": 44,
-      "width": 900,
+      "x": 0,
+      "y": 48,
+      "width": 611.05,
       "height": 45.0,
-      "text": "A 5,065-row CSV goes in, igraph builds two graphs from it, and Quarto\nrenders every table and plot into one self-contained HTML page.",
-      "originalText": "A 5,065-row CSV goes in, igraph builds two graphs from it, and Quarto\nrenders every table and plot into one self-contained HTML page.",
+      "text": "A 5,065-row CSV goes in, igraph builds two graphs from it, and\nQuarto renders every table and plot into one self-contained HTML page.",
+      "originalText": "A 5,065-row CSV goes in, igraph builds two graphs from it, and\nQuarto renders every table and plot into one self-contained HTML page.",
       "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
@@ -83,7 +83,12 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a_raw",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -91,10 +96,10 @@
       "strokeStyle": "dashed",
       "id": "raw",
       "type": "rectangle",
-      "x": 20,
+      "x": 0,
       "y": 150,
-      "width": 240,
-      "height": 110,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#9aa1ab",
       "backgroundColor": "#f3f4f6",
       "strokeWidth": 2,
@@ -114,13 +119,13 @@
       "strokeStyle": "solid",
       "id": "raw_t",
       "type": "text",
-      "x": 20,
-      "y": 176.875,
-      "width": 240,
-      "height": 56.25,
+      "x": 8,
+      "y": 166.25,
+      "width": 254,
+      "height": 67.5,
       "text": "20 monthly flight lists\nMar 2020 to Oct 2021\n(about 8 GB, Git LFS)",
       "originalText": "20 monthly flight lists\nMar 2020 to Oct 2021\n(about 8 GB, Git LFS)",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -134,7 +139,16 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a_raw",
+          "type": "arrow"
+        },
+        {
+          "id": "a_unk",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -142,10 +156,10 @@
       "strokeStyle": "dashed",
       "id": "unk",
       "type": "rectangle",
-      "x": 20,
-      "y": 310,
-      "width": 240,
-      "height": 80,
+      "x": 335,
+      "y": 150,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#9aa1ab",
       "backgroundColor": "#f3f4f6",
       "strokeWidth": 2,
@@ -165,13 +179,13 @@
       "strokeStyle": "solid",
       "id": "unk_t",
       "type": "text",
-      "x": 20,
-      "y": 340.625,
-      "width": 240,
-      "height": 18.75,
+      "x": 343,
+      "y": 188.75,
+      "width": 254,
+      "height": 22.5,
       "text": "sampling step",
       "originalText": "sampling step",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -193,18 +207,18 @@
       "strokeStyle": "dashed",
       "id": "a_raw",
       "type": "arrow",
-      "x": 140,
-      "y": 262,
-      "width": 0,
-      "height": 46,
+      "x": 270,
+      "y": 200.0,
+      "width": 65,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          0,
-          46
+          65,
+          0.0
         ]
       ],
       "strokeColor": "#9aa1ab",
@@ -213,14 +227,31 @@
       "seed": 107,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "raw",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "unk",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a_unk",
+          "type": "arrow"
+        },
+        {
+          "id": "a1",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -228,10 +259,10 @@
       "strokeStyle": "solid",
       "id": "csv",
       "type": "rectangle",
-      "x": 330,
-      "y": 290,
-      "width": 230,
-      "height": 120,
+      "x": 670,
+      "y": 150,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#c0572a",
       "backgroundColor": "#fbe3d5",
       "strokeWidth": 2,
@@ -251,13 +282,13 @@
       "strokeStyle": "solid",
       "id": "csv_t",
       "type": "text",
-      "x": 330,
-      "y": 330.0,
-      "width": 230,
-      "height": 40.0,
+      "x": 678,
+      "y": 177.5,
+      "width": 254,
+      "height": 45.0,
       "text": "sampled_flights.csv\n5,065 rows",
       "originalText": "sampled_flights.csv\n5,065 rows",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -279,18 +310,18 @@
       "strokeStyle": "dashed",
       "id": "a_unk",
       "type": "arrow",
-      "x": 262,
-      "y": 350,
-      "width": 66,
-      "height": 0,
+      "x": 605,
+      "y": 200.0,
+      "width": 65,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          66,
-          0
+          65,
+          0.0
         ]
       ],
       "strokeColor": "#9aa1ab",
@@ -299,8 +330,16 @@
       "seed": 110,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "unk",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "csv",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
@@ -314,13 +353,13 @@
       "strokeStyle": "solid",
       "id": "csv_n",
       "type": "text",
-      "x": 330,
-      "y": 418,
-      "width": 300,
-      "height": 32.5,
-      "text": "read.csv, then select 6 columns:\norigin, destination, lat/lon x2",
-      "originalText": "read.csv, then select 6 columns:\norigin, destination, lat/lon x2",
-      "fontSize": 13,
+      "x": 670,
+      "y": 262,
+      "width": 186.02,
+      "height": 67.5,
+      "text": "read.csv, then select 6\ncolumns: origin,\ndestination, lat/lon x2",
+      "originalText": "read.csv, then select 6\ncolumns: origin,\ndestination, lat/lon x2",
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -334,7 +373,16 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a1",
+          "type": "arrow"
+        },
+        {
+          "id": "a2",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -342,10 +390,10 @@
       "strokeStyle": "solid",
       "id": "dna",
       "type": "rectangle",
-      "x": 620,
-      "y": 290,
-      "width": 220,
-      "height": 120,
+      "x": 670,
+      "y": 370,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#cfe3f3",
       "strokeWidth": 2,
@@ -365,13 +413,13 @@
       "strokeStyle": "solid",
       "id": "dna_t",
       "type": "text",
-      "x": 620,
-      "y": 330.0,
-      "width": 220,
-      "height": 40.0,
+      "x": 678,
+      "y": 397.5,
+      "width": 254,
+      "height": 45.0,
       "text": "drop_na()\n3,297 rows kept",
       "originalText": "drop_na()\n3,297 rows kept",
-      "fontSize": 16,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -393,18 +441,18 @@
       "strokeStyle": "solid",
       "id": "a1",
       "type": "arrow",
-      "x": 562,
-      "y": 350,
-      "width": 56,
-      "height": 0,
+      "x": 910,
+      "y": 250,
+      "width": 0,
+      "height": 120,
       "points": [
         [
           0,
           0
         ],
         [
-          56,
-          0
+          0,
+          120
         ]
       ],
       "strokeColor": "#c0572a",
@@ -413,14 +461,31 @@
       "seed": 114,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "csv",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "dna",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a2",
+          "type": "arrow"
+        },
+        {
+          "id": "a3",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -428,10 +493,10 @@
       "strokeStyle": "solid",
       "id": "edges",
       "type": "rectangle",
-      "x": 890,
-      "y": 290,
-      "width": 190,
-      "height": 120,
+      "x": 335,
+      "y": 370,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#cfe3f3",
       "strokeWidth": 2,
@@ -451,13 +516,13 @@
       "strokeStyle": "solid",
       "id": "edges_t",
       "type": "text",
-      "x": 890,
-      "y": 321.875,
-      "width": 190,
-      "height": 56.25,
+      "x": 343,
+      "y": 386.25,
+      "width": 254,
+      "height": 67.5,
       "text": "group_by(origin,\ndestination)\nweight = n()",
       "originalText": "group_by(origin,\ndestination)\nweight = n()",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 3,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -479,18 +544,18 @@
       "strokeStyle": "solid",
       "id": "a2",
       "type": "arrow",
-      "x": 842,
-      "y": 350,
-      "width": 46,
-      "height": 0,
+      "x": 670,
+      "y": 420.0,
+      "width": 65,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          46,
-          0
+          -65,
+          0.0
         ]
       ],
       "strokeColor": "#0b4f7c",
@@ -499,14 +564,31 @@
       "seed": 117,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "dna",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "edges",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a3",
+          "type": "arrow"
+        },
+        {
+          "id": "a4",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -514,10 +596,10 @@
       "strokeStyle": "solid",
       "id": "gd",
       "type": "rectangle",
-      "x": 890,
-      "y": 470,
-      "width": 190,
-      "height": 120,
+      "x": 0,
+      "y": 370,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#7d5ba6",
       "backgroundColor": "#ebe3f6",
       "strokeWidth": 2,
@@ -537,13 +619,13 @@
       "strokeStyle": "solid",
       "id": "gd_t",
       "type": "text",
-      "x": 890,
-      "y": 501.875,
-      "width": 190,
-      "height": 56.25,
+      "x": 8,
+      "y": 386.25,
+      "width": 254,
+      "height": 67.5,
       "text": "directed graph\nsimplify()\n1,909 V, 2,574 E",
       "originalText": "directed graph\nsimplify()\n1,909 V, 2,574 E",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -565,18 +647,18 @@
       "strokeStyle": "solid",
       "id": "a3",
       "type": "arrow",
-      "x": 985,
-      "y": 412,
-      "width": 0,
-      "height": 56,
+      "x": 335,
+      "y": 420.0,
+      "width": 65,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          0,
-          56
+          -65,
+          0.0
         ]
       ],
       "strokeColor": "#0b4f7c",
@@ -585,14 +667,31 @@
       "seed": 120,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "edges",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "gd",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a4",
+          "type": "arrow"
+        },
+        {
+          "id": "a5",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -600,10 +699,10 @@
       "strokeStyle": "solid",
       "id": "gu",
       "type": "rectangle",
-      "x": 620,
-      "y": 470,
-      "width": 220,
-      "height": 120,
+      "x": 0,
+      "y": 560,
+      "width": 270,
+      "height": 100,
       "strokeColor": "#7d5ba6",
       "backgroundColor": "#ebe3f6",
       "strokeWidth": 2,
@@ -623,13 +722,13 @@
       "strokeStyle": "solid",
       "id": "gu_t",
       "type": "text",
-      "x": 620,
-      "y": 501.875,
-      "width": 220,
-      "height": 56.25,
+      "x": 8,
+      "y": 576.25,
+      "width": 254,
+      "height": 67.5,
       "text": "undirected graph\ncollapse\n2,429 E",
       "originalText": "undirected graph\ncollapse\n2,429 E",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -651,18 +750,18 @@
       "strokeStyle": "solid",
       "id": "a4",
       "type": "arrow",
-      "x": 888,
-      "y": 530,
-      "width": 46,
-      "height": 0,
+      "x": 30,
+      "y": 470,
+      "width": 0,
+      "height": 90,
       "points": [
         [
           0,
           0
         ],
         [
-          -46,
-          0
+          0,
+          90
         ]
       ],
       "strokeColor": "#7d5ba6",
@@ -671,8 +770,16 @@
       "seed": 123,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "gd",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "gu",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
@@ -686,13 +793,13 @@
       "strokeStyle": "solid",
       "id": "gd_n",
       "type": "text",
-      "x": 890,
-      "y": 598,
-      "width": 200,
-      "height": 32.5,
+      "x": 48,
+      "y": 492,
+      "width": 159.71,
+      "height": 45.0,
       "text": "hub and authority\nscores use this one",
       "originalText": "hub and authority\nscores use this one",
-      "fontSize": 13,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -714,13 +821,13 @@
       "strokeStyle": "solid",
       "id": "gu_n",
       "type": "text",
-      "x": 620,
-      "y": 598,
-      "width": 160,
-      "height": 32.5,
+      "x": 295,
+      "y": 588.0,
+      "width": 128.86,
+      "height": 45.0,
       "text": "everything else\nuses this one",
       "originalText": "everything else\nuses this one",
-      "fontSize": 13,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -734,7 +841,16 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a5",
+          "type": "arrow"
+        },
+        {
+          "id": "a6",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -742,10 +858,10 @@
       "strokeStyle": "solid",
       "id": "an",
       "type": "rectangle",
-      "x": 20,
-      "y": 660,
-      "width": 1060,
-      "height": 250,
+      "x": 0,
+      "y": 740,
+      "width": 940,
+      "height": 337.5,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#e3eef8",
       "strokeWidth": 2,
@@ -765,13 +881,13 @@
       "strokeStyle": "solid",
       "id": "an_h",
       "type": "text",
-      "x": 44,
-      "y": 676,
-      "width": 400,
-      "height": 22.5,
+      "x": 24,
+      "y": 756,
+      "width": 270.32,
+      "height": 25.0,
       "text": "Analysis chunks in index.qmd",
       "originalText": "Analysis chunks in index.qmd",
-      "fontSize": 18,
+      "fontSize": 20,
       "fontFamily": 2,
       "textAlign": "left",
       "verticalAlign": "top",
@@ -793,10 +909,10 @@
       "strokeStyle": "solid",
       "id": "ac0",
       "type": "rectangle",
-      "x": 44,
-      "y": 720,
-      "width": 230,
-      "height": 160,
+      "x": 24,
+      "y": 800,
+      "width": 434,
+      "height": 130,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#ffffff",
       "strokeWidth": 2,
@@ -816,13 +932,13 @@
       "strokeStyle": "solid",
       "id": "ac0_h",
       "type": "text",
-      "x": 44,
-      "y": 736.25,
-      "width": 230,
-      "height": 37.5,
+      "x": 32,
+      "y": 816,
+      "width": 418,
+      "height": 45.0,
       "text": "Degree, strength,\nneighbour degree",
       "originalText": "Degree, strength,\nneighbour degree",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -844,13 +960,13 @@
       "strokeStyle": "solid",
       "id": "ac0_b",
       "type": "text",
-      "x": 44,
-      "y": 813.75,
-      "width": 230,
-      "height": 32.5,
+      "x": 32,
+      "y": 869,
+      "width": 418,
+      "height": 45.0,
       "text": "igraph::degree\nstrength, knn",
       "originalText": "igraph::degree\nstrength, knn",
-      "fontSize": 13,
+      "fontSize": 18,
       "fontFamily": 3,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -872,10 +988,10 @@
       "strokeStyle": "solid",
       "id": "ac1",
       "type": "rectangle",
-      "x": 298,
-      "y": 720,
-      "width": 230,
-      "height": 160,
+      "x": 482,
+      "y": 800,
+      "width": 434,
+      "height": 130,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#ffffff",
       "strokeWidth": 2,
@@ -895,13 +1011,13 @@
       "strokeStyle": "solid",
       "id": "ac1_h",
       "type": "text",
-      "x": 298,
-      "y": 745.625,
-      "width": 230,
-      "height": 18.75,
+      "x": 490,
+      "y": 816,
+      "width": 418,
+      "height": 22.5,
       "text": "Cohesion",
       "originalText": "Cohesion",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -923,13 +1039,13 @@
       "strokeStyle": "solid",
       "id": "ac1_b",
       "type": "text",
-      "x": 298,
-      "y": 813.75,
-      "width": 230,
-      "height": 32.5,
+      "x": 490,
+      "y": 869,
+      "width": 418,
+      "height": 45.0,
       "text": "vertex_connectivity\ncomponents",
       "originalText": "vertex_connectivity\ncomponents",
-      "fontSize": 13,
+      "fontSize": 18,
       "fontFamily": 3,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -951,10 +1067,10 @@
       "strokeStyle": "solid",
       "id": "ac2",
       "type": "rectangle",
-      "x": 552,
-      "y": 720,
-      "width": 230,
-      "height": 160,
+      "x": 24,
+      "y": 950,
+      "width": 434,
+      "height": 107.5,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#ffffff",
       "strokeWidth": 2,
@@ -974,13 +1090,13 @@
       "strokeStyle": "solid",
       "id": "ac2_h",
       "type": "text",
-      "x": 552,
-      "y": 745.625,
-      "width": 230,
-      "height": 18.75,
+      "x": 32,
+      "y": 966,
+      "width": 418,
+      "height": 22.5,
       "text": "Transitivity",
       "originalText": "Transitivity",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1002,13 +1118,13 @@
       "strokeStyle": "solid",
       "id": "ac2_b",
       "type": "text",
-      "x": 552,
-      "y": 813.75,
-      "width": 230,
-      "height": 32.5,
+      "x": 32,
+      "y": 996.5,
+      "width": 418,
+      "height": 45.0,
       "text": "transitivity\nglobal, local",
       "originalText": "transitivity\nglobal, local",
-      "fontSize": 13,
+      "fontSize": 18,
       "fontFamily": 3,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1030,10 +1146,10 @@
       "strokeStyle": "solid",
       "id": "ac3",
       "type": "rectangle",
-      "x": 806,
-      "y": 720,
-      "width": 230,
-      "height": 160,
+      "x": 482,
+      "y": 950,
+      "width": 434,
+      "height": 107.5,
       "strokeColor": "#0b4f7c",
       "backgroundColor": "#ffffff",
       "strokeWidth": 2,
@@ -1053,13 +1169,13 @@
       "strokeStyle": "solid",
       "id": "ac3_h",
       "type": "text",
-      "x": 806,
-      "y": 745.625,
-      "width": 230,
-      "height": 18.75,
+      "x": 490,
+      "y": 966,
+      "width": 418,
+      "height": 22.5,
       "text": "Centralities",
       "originalText": "Centralities",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1081,13 +1197,13 @@
       "strokeStyle": "solid",
       "id": "ac3_b",
       "type": "text",
-      "x": 806,
-      "y": 813.75,
-      "width": 230,
-      "height": 32.5,
+      "x": 490,
+      "y": 996.5,
+      "width": 418,
+      "height": 45.0,
       "text": "betweenness, closeness\neigenvector, hub/authority",
       "originalText": "betweenness, closeness\neigenvector, hub/authority",
-      "fontSize": 13,
+      "fontSize": 18,
       "fontFamily": 3,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1109,10 +1225,10 @@
       "strokeStyle": "solid",
       "id": "a5",
       "type": "arrow",
-      "x": 810,
-      "y": 592,
+      "x": 135,
+      "y": 660,
       "width": 0,
-      "height": 66,
+      "height": 80,
       "points": [
         [
           0,
@@ -1120,7 +1236,7 @@
         ],
         [
           0,
-          66
+          80
         ]
       ],
       "strokeColor": "#7d5ba6",
@@ -1129,14 +1245,31 @@
       "seed": 140,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "gu",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "an",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a6",
+          "type": "arrow"
+        },
+        {
+          "id": "a7",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -1144,10 +1277,10 @@
       "strokeStyle": "solid",
       "id": "qmd",
       "type": "rectangle",
-      "x": 20,
-      "y": 980,
-      "width": 300,
-      "height": 90,
+      "x": 0,
+      "y": 1157.5,
+      "width": 260,
+      "height": 100,
       "strokeColor": "#2f7a54",
       "backgroundColor": "#dcefe3",
       "strokeWidth": 2,
@@ -1167,13 +1300,13 @@
       "strokeStyle": "solid",
       "id": "qmd_t",
       "type": "text",
-      "x": 20,
-      "y": 1006.25,
-      "width": 300,
-      "height": 37.5,
+      "x": 8,
+      "y": 1185.0,
+      "width": 244,
+      "height": 45.0,
       "text": "quarto render\nself-contained HTML",
       "originalText": "quarto render\nself-contained HTML",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1187,7 +1320,16 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a7",
+          "type": "arrow"
+        },
+        {
+          "id": "a8",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -1195,10 +1337,10 @@
       "strokeStyle": "solid",
       "id": "net",
       "type": "rectangle",
-      "x": 420,
-      "y": 980,
-      "width": 300,
-      "height": 90,
+      "x": 340,
+      "y": 1157.5,
+      "width": 260,
+      "height": 100,
       "strokeColor": "#2f7a54",
       "backgroundColor": "#dcefe3",
       "strokeWidth": 2,
@@ -1218,13 +1360,13 @@
       "strokeStyle": "solid",
       "id": "net_t",
       "type": "text",
-      "x": 420,
-      "y": 1006.25,
-      "width": 300,
-      "height": 37.5,
-      "text": "Netlify\nbuild.sh installs Quarto 1.5.57",
-      "originalText": "Netlify\nbuild.sh installs Quarto 1.5.57",
-      "fontSize": 15,
+      "x": 348,
+      "y": 1173.75,
+      "width": 244,
+      "height": 67.5,
+      "text": "Netlify\nbuild.sh installs\nQuarto 1.5.57",
+      "originalText": "Netlify\nbuild.sh installs\nQuarto 1.5.57",
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1238,7 +1380,12 @@
     {
       "angle": 0,
       "groupIds": [],
-      "boundElements": null,
+      "boundElements": [
+        {
+          "id": "a8",
+          "type": "arrow"
+        }
+      ],
       "isDeleted": false,
       "roughness": 0,
       "opacity": 100,
@@ -1246,10 +1393,10 @@
       "strokeStyle": "solid",
       "id": "site",
       "type": "rectangle",
-      "x": 820,
-      "y": 980,
+      "x": 680,
+      "y": 1157.5,
       "width": 260,
-      "height": 90,
+      "height": 100,
       "strokeColor": "#2f7a54",
       "backgroundColor": "#dcefe3",
       "strokeWidth": 2,
@@ -1269,13 +1416,13 @@
       "strokeStyle": "solid",
       "id": "site_t",
       "type": "text",
-      "x": 820,
-      "y": 1015.625,
-      "width": 260,
-      "height": 18.75,
+      "x": 688,
+      "y": 1196.25,
+      "width": 244,
+      "height": 22.5,
       "text": "airport.farhansadeek.com",
       "originalText": "airport.farhansadeek.com",
-      "fontSize": 15,
+      "fontSize": 18,
       "fontFamily": 2,
       "textAlign": "center",
       "verticalAlign": "top",
@@ -1297,18 +1444,18 @@
       "strokeStyle": "solid",
       "id": "a6",
       "type": "arrow",
-      "x": 180,
-      "y": 912,
+      "x": 130,
+      "y": 1077.5,
       "width": 0,
-      "height": 66,
+      "height": 80.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
           0,
-          66
+          80.0
         ]
       ],
       "strokeColor": "#2f7a54",
@@ -1317,8 +1464,16 @@
       "seed": 147,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "an",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "qmd",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
@@ -1332,18 +1487,18 @@
       "strokeStyle": "solid",
       "id": "a7",
       "type": "arrow",
-      "x": 322,
-      "y": 1025,
-      "width": 96,
-      "height": 0,
+      "x": 260,
+      "y": 1207.5,
+      "width": 80,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          96,
-          0
+          80,
+          0.0
         ]
       ],
       "strokeColor": "#2f7a54",
@@ -1352,8 +1507,16 @@
       "seed": 148,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "qmd",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "net",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     },
     {
@@ -1367,18 +1530,18 @@
       "strokeStyle": "solid",
       "id": "a8",
       "type": "arrow",
-      "x": 722,
-      "y": 1025,
-      "width": 96,
-      "height": 0,
+      "x": 600,
+      "y": 1207.5,
+      "width": 80,
+      "height": 0.0,
       "points": [
         [
           0,
-          0
+          0.0
         ],
         [
-          96,
-          0
+          80,
+          0.0
         ]
       ],
       "strokeColor": "#2f7a54",
@@ -1387,8 +1550,16 @@
       "seed": 149,
       "startArrowhead": null,
       "endArrowhead": "arrow",
-      "startBinding": null,
-      "endBinding": null,
+      "startBinding": {
+        "elementId": "net",
+        "focus": 0,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "site",
+        "focus": 0,
+        "gap": 1
+      },
       "roundness": null
     }
   ],
