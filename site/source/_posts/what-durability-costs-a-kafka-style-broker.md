@@ -18,7 +18,7 @@ The code is about 2,700 lines of C++ across the library, the broker, a CLI and a
 
 The headline measurement is how much batching matters. With 100 B messages, going from one record per produce request to 1,000 moved throughput from **32,886 to 12,744,103 messages per second**, a factor of about 390. End to end, without an fsync, a message took **41.5 µs** at the median from send to receive at 10,000 messages per second. Pushing data all the way through the drive's write cache with `F_FULLFSYNC` raised that to **4.0 ms**. All benchmark numbers were measured on a shared Apple M4 Pro that was also running other people's builds and benchmarks, with the 1 minute load average recorded in every row (8 to 11 for the reported runs). They are indicative, not a clean benchmark.
 
-Code is in `projects/04-minikafka-log-broker`. v0 is one broker, with no replication.
+Code is in `projects/minikafka-log-broker`. v0 is one broker, with no replication.
 
 The argument of this post is that Kafka's speed comes from a few simple decisions about bytes, and that the hard part of reproducing it was not the protocol but keeping the index, the locks and the benchmarks honest. Skip to [problems](#problems) for the bugs.
 
@@ -367,7 +367,7 @@ Producer scaling and the low-rate latency tail both have plausible explanations 
 
 ## reproducibility
 
-Requirements are CMake 3.24 or newer, Ninja and a C++20 compiler. The project was developed with Apple clang 17 on macOS 26.5 on an Apple M4 Pro, and GoogleTest is fetched by CMake. From `projects/04-minikafka-log-broker`, the following commands build everything.
+Requirements are CMake 3.24 or newer, Ninja and a C++20 compiler. The project was developed with Apple clang 17 on macOS 26.5 on an Apple M4 Pro, and GoogleTest is fetched by CMake. From `projects/minikafka-log-broker`, the following commands build everything.
 
 ```sh
 # Release (-O2)
@@ -402,4 +402,4 @@ python3 -m venv .venv && .venv/bin/pip install matplotlib
 .venv/bin/python scripts/plot.py
 ```
 
-Code is in `projects/04-minikafka-log-broker`, with the library in `src/` and `include/minikafka/`, the broker and CLI in `tools/`, the benchmark harness in `bench/`, the tests in `tests/`, the formats, invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.
+Code is in `projects/minikafka-log-broker`, with the library in `src/` and `include/minikafka/`, the broker and CLI in `tools/`, the benchmark harness in `bench/`, the tests in `tests/`, the formats, invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.

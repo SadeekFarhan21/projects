@@ -228,3 +228,26 @@
   color: var(--muted-foreground);
   font-size: 0.6875rem;
 }
+
+/* Excalidraw architecture diagrams (tools/embed-diagrams.py). Click opens the
+   theme lightbox, which can zoom and pan. */
+.post-content figure.excal {
+  margin: 1.8rem 0;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+.post-content figure.excal a {
+  display: block;
+  border: 0;
+  text-decoration: none;
+}
+.post-content figure.excal img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+  cursor: zoom-in;
+}

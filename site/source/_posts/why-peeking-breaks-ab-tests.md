@@ -23,7 +23,7 @@ On correctness, every off-policy estimator agrees with Open Bandit Pipeline (obp
 
 One limit belongs up front. The Open Bandit experiment uses the 10,000-row sample that ships with obp, and the random-policy log in it holds **38 clicks**. All five estimators land inside the on-policy confidence interval, which is a sanity check, but the intervals are so wide that this data cannot rank the estimators, and I do not try to.
 
-Code is in `projects/25-cuped-msprt-ope-engine`.
+Code is in `projects/cuped-msprt-ope-engine`.
 
 ## table of contents
 
@@ -371,7 +371,7 @@ Generating and loading the A/A events took 55 s and 49 s against 13 s for the SQ
 The project uses uv and pins Python 3.12.
 
 ```sh
-cd projects/25-cuped-msprt-ope-engine
+cd projects/cuped-msprt-ope-engine
 uv sync --group dev --group crosscheck      # crosscheck installs obp, used only for cross-checks
 uv run python scripts/fetch_obd.py          # copies the OBD sample shipped with obp into data/obd
 uv run --group crosscheck pytest -q         # 38 tests, obp tests are skipped without the group
@@ -399,4 +399,4 @@ unzip open_bandit_dataset.zip -d data/obd_full
 uv run --group crosscheck python experiments/07_obd_ope.py --data-dir data/obd_full/open_bandit_dataset
 ```
 
-Code is in `projects/25-cuped-msprt-ope-engine`, with the metrics layer in `src/expope/metrics`, the A/B statistics in `src/expope/stats`, the estimators, reward model and Open Bandit loader in `src/expope/ope`, the simulators in `src/expope/sim`, the numbered experiment scripts in `experiments/`, every CSV and JSON behind this post in `results/`, the invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.
+Code is in `projects/cuped-msprt-ope-engine`, with the metrics layer in `src/expope/metrics`, the A/B statistics in `src/expope/stats`, the estimators, reward model and Open Bandit loader in `src/expope/ope`, the simulators in `src/expope/sim`, the numbered experiment scripts in `experiments/`, every CSV and JSON behind this post in `results/`, the invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.

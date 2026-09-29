@@ -101,5 +101,5 @@
     }
   ],
   "caption": "The simulated ratio is the variance of 1,000 CUPED estimates over the variance of 1,000 plain differences on the same data, so it carries its own sampling noise. The largest gap is 0.039, at rho 0.6. On the event-log generator, sessions per user has pooled rho 0.723 and the observed ratio of squared standard errors is 0.4778 against a theory of 0.4778.",
-  "source": "projects/25-cuped-msprt-ope-engine/results/cuped_variance.csv"
+  "source": "projects/cuped-msprt-ope-engine/results/cuped_variance.csv"
 }

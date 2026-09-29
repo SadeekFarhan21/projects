@@ -21,7 +21,7 @@ The headline result is the crash testing. A child process writes and acknowledge
 
 The second story is what durability costs on a Mac. With no sync a commit took **1.2 µs** at the median. With `fsync` it took **24 µs**, and with `F_FULLFSYNC`, the only call on macOS that makes the drive flush its own cache, it took **4.01 ms**, about 3,300 times the unsynced cost. Batching 256 puts into one `F_FULLFSYNC` commit brought throughput from 243 to **59,450 puts per second**. All benchmark numbers come from a shared Apple M4 Pro that was running other jobs, with the 1 minute load average recorded in every row (3.9 to 6.3 for the reported runs). They are indicative, not a clean benchmark. The 1M key database also fits in memory, so the throughput numbers measure CPU and system call cost, not the disk.
 
-Code is in `projects/01-kvdb-btree-wal-engine`. The argument of this post is that a small storage engine becomes trustworthy through its crash tests rather than its design document, and that on macOS "durable" is a choice between three very different prices. Skip to [problems](#problems) for what went wrong.
+Code is in `projects/kvdb-btree-wal-engine`. The argument of this post is that a small storage engine becomes trustworthy through its crash tests rather than its design document, and that on macOS "durable" is a choice between three very different prices. Skip to [problems](#problems) for what went wrong.
 
 ## table of contents
 
@@ -354,7 +354,7 @@ Every throughput number here is an in-memory number. A database several times la
 Build. This needs CMake 3.24 or newer, Ninja and a C++20 compiler, and GoogleTest is fetched at configure time. SQLite is optional, and the macOS SDK's copy is found automatically and enables the SQLite baseline. The `asan` preset uses Homebrew LLVM at `/opt/homebrew/opt/llvm/bin/clang++` because Apple clang 17's sanitizer runtime hangs on this macOS version.
 
 ```sh
-cd projects/01-kvdb-btree-wal-engine
+cd projects/kvdb-btree-wal-engine
 cmake --preset release            # -O2, build/release
 cmake --build --preset release -j2
 cmake --preset asan               # ASan + UBSan, build/asan
@@ -378,4 +378,4 @@ python3 -m venv .venv && .venv/bin/pip install matplotlib
 ./build/release/kvdb_bench --exp=sync --n=2000 --out=/tmp/sync.csv   # one experiment
 ```
 
-Code is in `projects/01-kvdb-btree-wal-engine`, with the public API in `include/kvdb/db.h`, the engine in `src/`, the crash tests in `tests/recovery_test.cc`, the benchmark harness in `bench/bench.cc`, the formats, invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.
+Code is in `projects/kvdb-btree-wal-engine`, with the public API in `include/kvdb/db.h`, the engine in `src/`, the crash tests in `tests/recovery_test.cc`, the benchmark harness in `bench/bench.cc`, the formats, invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.

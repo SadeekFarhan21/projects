@@ -63,5 +63,5 @@
   }
  ],
  "caption": "Asset-days per second normalizes away the number of assets, so a flat line across N means the kernel is doing constant work per cell. Everything was measured while other jobs held the load average between 230 and 360 on 14 cores, so these are lower bounds and the multithreaded rows are noisy.",
- "source": "projects/08-quant-research-platform/results/bench_backtest.csv, column asset_days_per_s divided by one million"
+ "source": "projects/leakage-checked-backtester/results/bench_backtest.csv, column asset_days_per_s divided by one million"
 }

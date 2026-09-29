@@ -29,5 +29,5 @@
     }
   ],
   "caption": "The character MLP is an Embedding, a 512-unit hidden layer with LayerNorm and tanh, and a 65-way output, trained for 6,000 AdamW steps at batch 256.",
-  "source": "projects/11-autograd-from-scratch/results/char_summary.json"
+  "source": "projects/smolgrad/results/char_summary.json"
 }

@@ -28,7 +28,7 @@ results/                                CSV and JSON outputs, results/figures PN
 Requires uv. The project pins Python 3.12 (`.python-version`).
 
 ```
-cd projects/25-cuped-msprt-ope-engine
+cd projects/cuped-msprt-ope-engine
 uv sync --group dev --group crosscheck      # crosscheck installs obp, used only for cross-checks
 uv run python scripts/fetch_obd.py          # copies the OBD sample shipped with obp into data/obd
 ```

@@ -109,5 +109,5 @@
     }
   ],
   "caption": "Every experiment here has no true effect, so every stop is a false positive. The naive analyst who stops at the first significant look ends at 32.8 percent after 50 looks (Wilson 30.8 to 34.9), while a single test at the final look alone rejects 5.25 percent. The mixture SPRT ends at 1.95 percent. Points shown every 1,000 users per arm, the CSV has all 50 looks.",
-  "source": "projects/25-cuped-msprt-ope-engine/results/peeking.csv"
+  "source": "projects/cuped-msprt-ope-engine/results/peeking.csv"
 }

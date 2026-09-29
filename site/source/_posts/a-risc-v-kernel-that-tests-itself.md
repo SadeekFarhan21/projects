@@ -18,7 +18,7 @@ The number I trust most is not a benchmark. Every boot can run a built-in suite 
 
 Under QEMU's deterministic `-icount` mode a raw context switch costs **34** guest instructions, a switch through the scheduler **190**, a trap round trip **140** and a call into firmware **291**. These are QEMU instruction counts, not cycles on real hardware. The wall-clock timings I also took ran inside QEMU on a Mac with a load average of 129 to 151 from other jobs, so they serve only as a cross-check.
 
-Code is in `projects/16-riscv-sv39-kernel`. v0 is kernel only, with no user mode yet.
+Code is in `projects/riscv-sv39-kernel`. v0 is kernel only, with no user mode yet.
 
 *Reading note.* The argument is that the hard part of a small kernel is not paging or the trap vector, which worked the first time they were switched on, but making every claim checkable and then finding the races that only show up when the same boot runs thirty or forty times. Skip to [problems](#problems) for the bugs.
 
@@ -396,7 +396,7 @@ The exit-code race and the tick race were both found by booting the same kernel 
 
 ## reproducibility
 
-The toolchain is Homebrew LLVM and QEMU on macOS. Apple's clang has no RISC-V backend. This project was built with clang 23.1.2, LLD 23.1.2 and QEMU 11.1.1, whose bundled OpenSBI (v1.8.1 in the logs) is what `-bios default` loads. From `projects/16-riscv-sv39-kernel`, the following commands build, test and reproduce every result.
+The toolchain is Homebrew LLVM and QEMU on macOS. Apple's clang has no RISC-V backend. This project was built with clang 23.1.2, LLD 23.1.2 and QEMU 11.1.1, whose bundled OpenSBI (v1.8.1 in the logs) is what `-bios default` loads. From `projects/riscv-sv39-kernel`, the following commands build, test and reproduce every result.
 
 ```sh
 brew install qemu llvm lld
@@ -421,4 +421,4 @@ qemu-system-riscv64 -machine virt -cpu rv64 -smp 2 -m 128M -nographic \
 
 Add `-icount shift=0,sleep=off` for deterministic virtual time. Every number in this post comes from a file in `results/`, which holds the raw logs of each run, with the host load average recorded in the benchmark files.
 
-Code is in `projects/16-riscv-sv39-kernel`, with the kernel in `kernel/`, the test and benchmark scripts in `tools/`, the memory map, trap flow and locking rules in `DESIGN.md`, and the full build log in `DEVLOG.md`.
+Code is in `projects/riscv-sv39-kernel`, with the kernel in `kernel/`, the test and benchmark scripts in `tools/`, the memory map, trap flow and locking rules in `DESIGN.md`, and the full build log in `DEVLOG.md`.

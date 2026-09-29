@@ -22,7 +22,7 @@ See [DESIGN.md](DESIGN.md) for the architecture, invariants and trade-offs, and 
 Requires [uv](https://docs.astral.sh/uv/). The project pins Python 3.12.
 
 ```bash
-cd projects/08-leakage-checked-backtester
+cd projects/leakage-checked-backtester
 uv sync
 ```
 

@@ -40,5 +40,5 @@
     }
   ],
   "caption": "The slowest send rate without a flush has a worse tail than rates ten and fifty times higher. My unprofiled guess is thread wakeup cost when producer, broker and consumer park between messages. Shared Apple M4 Pro at a load average of 10 to 11, indicative only.",
-  "source": "projects/04-kafka-from-scratch/results/latency.csv"
+  "source": "projects/minikafka-log-broker/results/latency.csv"
 }

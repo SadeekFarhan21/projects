@@ -43,5 +43,5 @@
     }
   ],
   "caption": "Fetch size plays the role for consumers that batch size plays for producers, and the curve flattens after 1 MiB. Shared Apple M4 Pro at a 1 minute load average of 9, so indicative only.",
-  "source": "projects/04-kafka-from-scratch/results/consume_throughput.csv"
+  "source": "projects/minikafka-log-broker/results/consume_throughput.csv"
 }

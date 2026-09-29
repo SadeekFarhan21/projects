@@ -41,7 +41,7 @@ results/                     raw outputs (CSV, JSON, PNG, logs)
 Requirements: macOS or Linux, [uv](https://docs.astral.sh/uv/), CMake 3.20+, Ninja, a C++20 compiler (Apple clang works), curl.
 
 ```
-cd projects/19-deribit-svi-hedging
+cd projects/deribit-svi-hedging
 uv sync                      # creates .venv with Python 3.12 (pinned in .python-version)
 ```
 

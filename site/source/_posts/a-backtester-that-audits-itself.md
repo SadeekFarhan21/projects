@@ -418,7 +418,7 @@ It recomputes every feature nine times, which is fine for 14 features on daily b
 Everything runs from the project directory with [uv](https://docs.astral.sh/uv/) and Python 3.12. The data is about 13 MB of parquet from roughly 15,400 small zip files, and is gitignored.
 
 ```bash
-cd projects/08-leakage-checked-backtester
+cd projects/leakage-checked-backtester
 uv sync
 ./scripts/download_data.sh                          # same as: uv run qrp ingest --root data
 uv run qrp info                                     # ingest log and symbol metadata
@@ -436,4 +436,4 @@ uv run python scripts/bench_backtest.py --real      # results/bench_backtest.{cs
 
 A fresh download gets a new ingest id and therefore a different snapshot id from `417cbe2508ff` (the reviewer's was `f2322f2cf2d1`), but the same 466,274 rows, and the experiment table reproduced exactly. Throughput will differ on any other machine, and should be higher on an idle one.
 
-Code is in `projects/08-leakage-checked-backtester`. The raw outputs behind every number in this post are in its `results/` directory, `DESIGN.md` lists each invariant with the test that enforces it, and `DEVLOG.md` has the build log.
+Code is in `projects/leakage-checked-backtester`. The raw outputs behind every number in this post are in its `results/` directory, `DESIGN.md` lists each invariant with the test that enforces it, and `DEVLOG.md` has the build log.

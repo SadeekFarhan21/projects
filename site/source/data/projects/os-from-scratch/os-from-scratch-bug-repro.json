@@ -37,5 +37,5 @@
     }
   ],
   "caption": "Neither race showed up reliably in a single boot, which is why each fix is backed by a repeated-boot count rather than one passing run.",
-  "source": "projects/16-os-from-scratch/results/bug-repro-tick-race.txt and results/exit-race.txt"
+  "source": "projects/riscv-sv39-kernel/results/bug-repro-tick-race.txt and results/exit-race.txt"
 }

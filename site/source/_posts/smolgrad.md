@@ -19,7 +19,7 @@ The number I trust most is not an accuracy. Trained side by side with a PyTorch 
 
 With that established, the models are almost a formality. A 784-512-256-10 MLP reaches **97.89%** MNIST test accuracy after ten float32 epochs (the PyTorch twin reaches 97.81%), which is one draw from a spread of about 0.2 points that depends on the BLAS thread count, and a character-level model reaches **1.794 nats per character** on held-out Tiny Shakespeare against 2.482 for a bigram baseline. A full training step is **1.2x to 2.5x slower than PyTorch** on one CPU thread, and a hand-written numpy baseline splits that gap into autograd overhead and kernel speed. Every timing was taken on a machine loaded by other jobs, so the absolute times are upper bounds and the single-threaded ratios are the useful part.
 
-Code is in `projects/11-smolgrad`.
+Code is in `projects/smolgrad`.
 
 *Reading note.* The argument is that an autograd engine is short, and that almost all of the difficulty is in proving it right and in the handful of places where numpy's semantics and the chain rule disagree about who owns an array. Skip to [problems](#problems) for the bugs.
 
@@ -481,7 +481,7 @@ Right now each VJP is raw numpy, so the backward pass builds no graph and grad-o
 
 ## reproducibility
 
-Needs [uv](https://docs.astral.sh/uv/). Python is pinned to 3.12. From `projects/11-smolgrad`, the following commands set up the environment, run the tests, download the data and reproduce every experiment.
+Needs [uv](https://docs.astral.sh/uv/). Python is pinned to 3.12. From `projects/smolgrad`, the following commands set up the environment, run the tests, download the data and reproduce every experiment.
 
 ```bash
 uv sync
@@ -514,4 +514,4 @@ Every number in this post comes from a file in `results/`, which holds the raw C
 
 An independent reviewer who did not build the project reran it on 2026-09-26, with BLAS threads capped at 2 on a shared machine and every output written to a scratch folder. All 101 tests passed. The float64 MNIST twin reproduced, with 97.75% test accuracy for both implementations, every loss matching the committed CSV to about 1e-16, and a final weight difference of 3.9e-14 against the committed 5.3e-14, both at rounding level. The full character run matched `results/char_summary.json` to 1e-7, with validation loss 1.794 and the same three baselines. The drift experiment matched in float64 and for float32 SGD, while float32 AdamW agreed at step 1 and then drifted to a different end value, as expected for the chaotic float32 behavior described in problem 6. The float32 MNIST run reproduced only up to the thread-count spread described in the MNIST results. The reviewer also checked that the hand-written numpy baseline computes the same loss and gradients as smolgrad, and corrected the README, which had claimed checksums for both datasets when only MNIST is checked. Timing was deferred. The benchmark was only checked to run, and at a load average near 9 an MNIST epoch took about 1.0 s and the character run 17 s, against 4.5 to 19.2 s and 478 s here, so every timing in this post still needs a quiet machine.
 
-Code is in `projects/11-smolgrad`, with the library in `src/smolgrad/`, the tests in `tests/`, and the design notes and full build log in `DESIGN.md` and `DEVLOG.md`.
+Code is in `projects/smolgrad`, with the library in `src/smolgrad/`, the tests in `tests/`, and the design notes and full build log in `DESIGN.md` and `DEVLOG.md`.

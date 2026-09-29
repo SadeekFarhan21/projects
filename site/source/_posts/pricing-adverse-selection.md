@@ -19,7 +19,7 @@ The market has four kinds of agents on one event heap. Noise traders send market
 
 The market-making result was the easy part. Getting there took three bugs in the market maker's model of the world, one of which crashed the price by 98 ticks with no news, and one performance bug in CPython's `dict` that I would not have guessed. The stylized facts are more modest than the market-making story. Fat tails are present but mostly come from the jumps I put in, and volatility clustering dies within about five lags.
 
-Code is in `projects/10-adverse-selection-lob-sim`. Every number below is read from a file in its `results/` directory, and the file is named next to the number. The exceptions are in the verification note under [reproducibility](#reproducibility), which come from the project's devlog.
+Code is in `projects/adverse-selection-lob-sim`. Every number below is read from a file in its `results/` directory, and the file is named next to the number. The exceptions are in the verification note under [reproducibility](#reproducibility), which come from the project's devlog.
 
 *Reading note.* The problems section is the most useful part. If you only want the claim and its limits, read [results](#results) and [what i would change](#what-i-would-change).
 
@@ -428,7 +428,7 @@ Unit sizes keep the Glosten-Milgrom comparison clean, but they hide the depth an
 You need [uv](https://docs.astral.sh/uv/). The project is pinned to Python 3.12.
 
 ```bash
-cd projects/10-adverse-selection-lob-sim
+cd projects/adverse-selection-lob-sim
 uv sync
 uv run pytest -q                                   # 32 tests
 
@@ -448,7 +448,7 @@ res = run(SimConfig(seed=1, informed_frac=0.2, mm_adaptive=True, t_end=20_000))
 print(summarize(res))
 ```
 
-Runs are bit-identical for the same `SimConfig`. The code is in `projects/10-adverse-selection-lob-sim`, with the book in `src/marketsim/orderbook.py`, the scheduler and market in `src/marketsim/engine.py`, the agents in `src/marketsim/agents.py`, and the metrics and PnL decomposition in `src/marketsim/metrics.py`.
+Runs are bit-identical for the same `SimConfig`. The code is in `projects/adverse-selection-lob-sim`, with the book in `src/marketsim/orderbook.py`, the scheduler and market in `src/marketsim/engine.py`, the agents in `src/marketsim/agents.py`, and the metrics and PnL decomposition in `src/marketsim/metrics.py`.
 
 ### verification
 

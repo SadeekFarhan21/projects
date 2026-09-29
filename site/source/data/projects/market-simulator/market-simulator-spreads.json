@@ -158,5 +158,5 @@
   }
  ],
  "caption": "The adaptive maker adds its measured 10 unit markout loss to its half spread, so its own spread rises with alpha. The fixed maker's own spread is flat because the Avellaneda Stoikov formula has no alpha in it. The book spread in the fixed run narrows because stale liquidity provider orders end up inside the maker's moved quotes.",
- "source": "projects/10-market-simulator/results/sweep/aggregate.csv, means over 8 seeds of 20,000 time units"
+ "source": "projects/adverse-selection-lob-sim/results/sweep/aggregate.csv, means over 8 seeds of 20,000 time units"
 }

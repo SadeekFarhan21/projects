@@ -10,5 +10,5 @@
     { "name": "IdMap, identity hash", "values": [9.8, 1.5, 0.27, 0.06] }
   ],
   "caption": "The identity hash makes sequential inserts fast and then collapses on FIFO deletion, where backward shift deletion walks one long probe run, and on ids that share their low bits. Strided ids are 20,000 multiples of 2 to the 16th. Throughput in thread CPU time on a shared machine at load averages of 172 to 352, indicative only.",
-  "source": "projects/06-exchange-from-scratch/results/bench/summary_burst.csv"
+  "source": "projects/price-time-matching-engine/results/bench/summary_burst.csv"
 }

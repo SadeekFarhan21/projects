@@ -60,5 +60,5 @@
     }
   ],
   "caption": "Every flush is paid per append while the partition lock is held, so batching is the only thing that amortises it. Shared Apple M4 Pro at a 1 minute load average of 8 to 9, internal SSD, indicative only.",
-  "source": "projects/04-kafka-from-scratch/results/flush_policy.csv"
+  "source": "projects/minikafka-log-broker/results/flush_policy.csv"
 }

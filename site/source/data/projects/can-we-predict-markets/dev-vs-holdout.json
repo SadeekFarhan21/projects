@@ -16,5 +16,5 @@
     { "label": "rev_1d", "value": -3.68, "detail": "dev net Sharpe -2.66, holdout IC 0.019" }
   ],
   "caption": "Only mom_20d was a pre-registered test. The other rows were computed for context after selection was frozen and cannot be claimed without a fresh holdout. Hover a bar for its development Sharpe and holdout IC.",
-  "source": "projects/09-can-we-predict-markets/results/holdout/all_trials_posthoc.csv and results/holdout/dev_vs_holdout_sharpe.csv"
+  "source": "projects/crypto-reversal-preregistered/results/holdout/all_trials_posthoc.csv and results/holdout/dev_vs_holdout_sharpe.csv"
 }

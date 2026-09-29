@@ -32,7 +32,7 @@ results/         raw outputs of every experiment quoted in DEVLOG.md
 Requires [uv](https://docs.astral.sh/uv/). uv picks up Python 3.12 from `.python-version`.
 
 ```
-cd projects/03-abd-quorum-kv-cluster
+cd projects/abd-quorum-kv-cluster
 uv sync
 ```
 

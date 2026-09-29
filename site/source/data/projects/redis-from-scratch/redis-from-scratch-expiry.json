@@ -128,5 +128,5 @@
     }
   ],
   "caption": "Only active expiry can remove these keys, since nothing reads them. At load 8 two cron cycles did it within 171 ms. At load 222 the same code needed until 791 ms, in eight uneven steps, because each cycle's 25 ms budget is wall clock time.",
-  "source": "projects/02-redis-from-scratch/results/bench_expiry.jsonl and results/run1_loaded/bench_expiry.jsonl"
+  "source": "projects/kvd-resp-server/results/bench_expiry.jsonl and results/run1_loaded/bench_expiry.jsonl"
 }

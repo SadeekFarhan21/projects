@@ -21,7 +21,7 @@ A fuzzer that passes proves little unless it can fail. So I planted six known bu
 
 The latency numbers are less solid. They were measured on a shared Apple M4 Pro at 1 minute load averages of 172 to 352 on 14 cores, not rerun independently, and quantized by a 41.7 ns timer tick. With 10,000 resting orders the median add took 167 ns, cancel 209 ns and a single-fill match 84 ns, which I treat as indicative upper bounds.
 
-Code is in `projects/06-price-time-matching-engine`. Skip to [problems](#problems) for the bugs.
+Code is in `projects/price-time-matching-engine`. Skip to [problems](#problems) for the bugs.
 
 ## table of contents
 
@@ -435,7 +435,7 @@ A post-only order modified across the spread currently trades as a plain limit o
 Build. The `asan` preset needs Homebrew LLVM (`brew install llvm`) because of problem 7. GoogleTest is fetched by CMake at configure time.
 
 ```sh
-cd projects/06-price-time-matching-engine
+cd projects/price-time-matching-engine
 cmake --preset release && cmake --build --preset release
 cmake --preset asan && cmake --build --preset asan
 ```
@@ -472,4 +472,4 @@ python3 -m venv .venv && .venv/bin/pip install matplotlib
 .venv/bin/python scripts/plot_bench.py results/bench
 ```
 
-Code is in `projects/06-price-time-matching-engine`, with the engine, reference matcher and market-data feed in `src/` and `include/exchange/`, the `exch` tool in `tools/`, the benchmark in `bench/`, the tests in `tests/`, the data structures, invariants and rejected alternatives in `DESIGN.md`, and the build log with its verification note in `DEVLOG.md`.
+Code is in `projects/price-time-matching-engine`, with the engine, reference matcher and market-data feed in `src/` and `include/exchange/`, the `exch` tool in `tools/`, the benchmark in `bench/`, the tests in `tests/`, the data structures, invariants and rejected alternatives in `DESIGN.md`, and the build log with its verification note in `DEVLOG.md`.

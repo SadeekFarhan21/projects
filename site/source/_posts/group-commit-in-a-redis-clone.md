@@ -21,7 +21,7 @@ The headline measurement is how little the server's own work matters. At 50 conn
 
 Two gaps should be stated up front. The epoll backend exists as source but has **never been compiled**, because there was no Linux machine in the session, so the Linux half of the poller abstraction is a claim rather than a result. And there was **no comparison against real Redis**, because neither `redis-server` nor `redis-benchmark` was installed. Every number below is internally consistent, and none of them says whether kvd is fast relative to the thing it imitates.
 
-Code is in `projects/02-kvd-resp-server`. The argument of this post is that a single-threaded server's speed is decided by how many system calls each command shares, and that the hardest thing to keep honest was the measurement rather than the code. Skip to [problems](#problems) for the bugs.
+Code is in `projects/kvd-resp-server`. The argument of this post is that a single-threaded server's speed is decided by how many system calls each command shares, and that the hardest thing to keep honest was the measurement rather than the code. Skip to [problems](#problems) for the bugs.
 
 ## table of contents
 
@@ -401,7 +401,7 @@ I lost the first full benchmark run to other jobs. Recording load and server CPU
 Build. This needs CMake 3.24 or newer, Ninja and a C++20 compiler, and GoogleTest is fetched at configure time. The `asan` preset uses Homebrew LLVM at `/opt/homebrew/opt/llvm/bin/clang++` because Apple clang 17's ASan runtime hangs on macOS 26.5.
 
 ```sh
-cd projects/02-kvd-resp-server
+cd projects/kvd-resp-server
 cmake --preset release && cmake --build --preset release   # -O2, build/release/
 cmake --preset asan    && cmake --build --preset asan      # Debug + ASan/UBSan, build/asan/
 ```
@@ -430,4 +430,4 @@ python3 -m venv .venv && .venv/bin/pip install matplotlib
 .venv/bin/python scripts/plot_results.py                      # results/summary.csv and PNGs
 ```
 
-Code is in `projects/02-kvd-resp-server`, with the server in `src/`, the load generator in `bench/loadgen.cpp`, the tests in `tests/`, the benchmark runner, plotter and end-to-end client in `scripts/`, the raw results in `results/` (and the loaded run in `results/run1_loaded/`), the invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.
+Code is in `projects/kvd-resp-server`, with the server in `src/`, the load generator in `bench/loadgen.cpp`, the tests in `tests/`, the benchmark runner, plotter and end-to-end client in `scripts/`, the raw results in `results/` (and the loaded run in `results/run1_loaded/`), the invariants and trade-offs in `DESIGN.md`, and the build log in `DEVLOG.md`.

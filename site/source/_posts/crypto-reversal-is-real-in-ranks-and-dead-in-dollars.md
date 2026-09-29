@@ -20,7 +20,7 @@ The result splits in two. Among the 50 most liquid USDT pairs on Binance, yester
 
 So the honest answer to "can we predict markets" from this study is yes, a little, at the level of daily cross-sectional ranks, and no, not in a way that paid after costs in the pre-registered test. There is also a post-hoc observation that the ridge and gradient boosting models did much better in the holdout than the model my selection rule picked. I explain below why I cannot claim that as a result.
 
-Code, the pre-registration, the lock file and every result file are in `projects/09-crypto-reversal-preregistered`. Every number in this post comes from a file in its `results/` directory, named where it is used.
+Code, the pre-registration, the lock file and every result file are in `projects/crypto-reversal-preregistered`. Every number in this post comes from a file in its `results/` directory, named where it is used.
 
 *Reading note.* If you only want the verdicts, read [results](#results). The most useful sections for anyone building a backtest are [problems](#problems) and the selection failure at the end of [experiments](#experiments).
 
@@ -411,7 +411,7 @@ A coin with no next bar currently earns 0. A pessimistic delisting return, or at
 The project is a `uv` environment pinned to Python 3.12. The tests use synthetic panels, so they need no download.
 
 ```bash
-cd projects/09-crypto-reversal-preregistered
+cd projects/crypto-reversal-preregistered
 uv sync
 uv run pytest -q
 ```
@@ -432,4 +432,4 @@ The holdout has already been evaluated and the lock file is in place, so `run_ho
 
 An independent reviewer who did not build the project reran it on 2026-09-26, with threads capped at 2 on a shared machine. The test suite passed (25 tests). Re-running the download from the cached archive produced an identical parquet (829,342 rows, 734 symbols). The full development study, run into a scratch folder seeded so the trial count again reached 32, reproduced `summary.csv`, `fold_ic.csv`, `ridge_coefs.csv` and `daily_net_returns.csv` exactly, with the same selection, the same deflated Sharpe of 0.00018 and the same threshold of 2.01. `run_holdout.py` refused to run because the lock exists, so the reviewer recomputed the same code path from the frozen `selection.json` into a scratch folder, which makes no new decision. Every field of `holdout_report.json` and every cell of `all_trials_posthoc.csv` matched exactly. The reviewer also confirmed the pre-registration hash against the lock and the file timestamps described above, and fixed the look-ahead test. Timing was deferred. The load average was between 9 and 60, so the benchmark was only checked to run, and the stage timings above have not been remeasured on a quiet machine.
 
-Code, the pre-registration and every result file are in [`projects/09-crypto-reversal-preregistered`](https://github.com/SadeekFarhan21/blog/tree/main/projects/09-crypto-reversal-preregistered).
+Code, the pre-registration and every result file are in [`projects/crypto-reversal-preregistered`](https://github.com/SadeekFarhan21/blog/tree/main/projects/crypto-reversal-preregistered).

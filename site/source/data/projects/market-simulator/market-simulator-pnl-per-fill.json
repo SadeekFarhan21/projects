@@ -158,5 +158,5 @@
   }
  ],
  "caption": "The fixed maker loses 60 percent of its per fill PnL between alpha 0 and 0.6. The adaptive maker holds 2.0 or more. The naive maker is worst at low alpha, where it chases noise, and meets the fixed maker exactly at alpha 0.3, where both learning rates equal 0.3.",
- "source": "projects/10-market-simulator/results/sweep/aggregate.csv, means over 8 seeds"
+ "source": "projects/adverse-selection-lob-sim/results/sweep/aggregate.csv, means over 8 seeds"
 }

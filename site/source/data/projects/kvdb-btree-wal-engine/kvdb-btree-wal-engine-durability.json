@@ -48,5 +48,5 @@
     }
   ],
   "caption": "Each step down the durability ladder costs one to two orders of magnitude. The F_FULLFSYNC row is the drive flushing its own cache, about 4 ms per commit. SQLite's fullfsync commits finish faster than a single F_FULLFSYNC takes on this machine, so Apple's SQLite is probably issuing a lighter barrier, which I have not verified. Shared Apple M4 Pro at a 1 minute load average of 4.3 to 4.6, single runs, indicative only.",
-  "source": "projects/01-kvdb-btree-wal-engine/results/bench_sync.csv"
+  "source": "projects/kvdb-btree-wal-engine/results/bench_sync.csv"
 }

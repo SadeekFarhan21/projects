@@ -59,5 +59,5 @@
     }
   ],
   "caption": "Every biased estimator here is biased low. DM with a cross-fitted LightGBM reward model is 11.0 percent low and its intervals covered the truth in none of 200 replicates. DR with the same model is 0.02 percent low and covered in 192 of 200, and with a context-free model that makes DM 24.4 percent low, DR stays at 0.17 percent. Switch-DR at tau 2 falls back to the model on 13.8 percent of rounds and inherits its bias.",
-  "source": "projects/25-cuped-msprt-ope-engine/results/synthetic_ope.csv"
+  "source": "projects/cuped-msprt-ope-engine/results/synthetic_ope.csv"
 }

@@ -17,5 +17,5 @@
     { "label": "Holdout 2024 to 2026", "value": 0.019, "emphasis": true, "detail": "792 days, Newey-West t 2.24, hit rate 53.1%" }
   ],
   "caption": "Development averages 0.036 over all folds. The holdout IC is about half that and clears the pre-registered t above 2 by a small margin. Hover a bar for the day count.",
-  "source": "projects/09-can-we-predict-markets/results/dev/fold_ic.csv (model rev_1d) and results/holdout/holdout_report.json (H1_rev_1d)"
+  "source": "projects/crypto-reversal-preregistered/results/dev/fold_ic.csv (model rev_1d) and results/holdout/holdout_report.json (H1_rev_1d)"
 }
