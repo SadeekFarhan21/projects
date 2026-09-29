@@ -76,7 +76,7 @@ html body .toc-article li a span {
 .nav .avatar-name .name i {
   font-family: "Quicksand", Helvetica, Arial, sans-serif !important;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 /* Collapsible in-post TOC (shown below 1180px): keep the accent bar next to
@@ -121,7 +121,7 @@ html .about-content {
 }
 html .post-content p:not(.fig-source):not(.fig-hint),
 html .post-content li {
-  font-weight: 400;
+  font-weight: 450;
   font-size: 17px;
   line-height: 1.7;
 }
@@ -151,7 +151,7 @@ html .post-content pre * {
 }
 .toc-article a.is-active {
   color: #4990E2 !important;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 /* Some theme rules (lists, nested blocks) are more specific than the
@@ -169,4 +169,188 @@ html .post-content pre * {
 }
 .toc-article li.is-open > .toc-child {
   display: block;
+}
+
+/* Quicksand is loaded as a variable font (300..700) and every weight on the
+   site sits 50 above its usual step (the theme and site rules were shifted).
+   Text with no explicit weight starts at 450; bold stays at 700, the font's
+   maximum. */
+html body {
+  font-weight: 450;
+}
+html body strong,
+html body b {
+  font-weight: 700;
+}
+
+/* TOC: the current subsection (accent) and its section (dark) are both bold. */
+html .toc-article a.is-active,
+html .toc-article li.active > a {
+  font-weight: 700;
+}
+html .toc-article a.is-trail {
+  color: #2f3339 !important;
+  font-weight: 700;
+}
+
+/* The theme's mobile subtitle is width: 100vw inside a padded container, so
+   it pokes out and the whole page scrolls sideways on phones. */
+html .index-about-mobile {
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Guard: nothing should make the page itself scroll horizontally. clip (not
+   hidden) keeps position: sticky working for the contents sidebar. */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* Post meta and tag pills (post.ejs, index.ejs): the theme's meta line was
+   faint gray with slash-separated tags; make it readable and clickable. */
+html .post-container .post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.6rem;
+  margin: 0.9rem 0 1.4rem;
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 550;
+}
+html .post-container .post-meta .post-meta-sep {
+  color: #94a3b8;
+}
+html .post-container .post-meta .post-read {
+  color: #475569;
+}
+html .post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+html .post-container .post-meta .post-tags {
+  flex-basis: 100%;
+  justify-content: center;
+  margin-top: 0.35rem;
+}
+html .post-tags li {
+  margin: 0 !important;
+  padding: 0;
+  list-style: none;
+}
+html .post-tags li::before,
+html .post-tags li::marker {
+  content: none;
+}
+html a.tag-pill {
+  display: inline-block;
+  padding: 0.18rem 0.7rem;
+  border-radius: 999px;
+  background: #e8f1f9;
+  border: 1px solid #cfe0ef;
+  color: #0b4f7c !important;
+  font-size: 0.8rem;
+  font-weight: 650;
+  line-height: 1.5;
+  text-decoration: none !important;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+html a.tag-pill::before {
+  content: "#";
+  margin-right: 1px;
+  opacity: 0.55;
+}
+html a.tag-pill:hover,
+html a.tag-pill:focus-visible {
+  background: #006cac;
+  border-color: #006cac;
+  color: #fff !important;
+  outline: none;
+}
+/* the home page list: pills under each title, date in a darker gray */
+html .post-preview .post-tags {
+  margin-top: 0.45rem;
+}
+html .post-preview a.tag-pill {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.6rem;
+}
+html .post-preview .post-time {
+  color: #475569 !important;
+  font-weight: 550;
+}
+
+/* Nav: the theme's #999 labels were too faint. Dark slate text, mid-slate
+   icons, accent for the current page, and a clear hover state. */
+html .nav .contents ul li a span,
+html .nav .contents ul li button span {
+  color: #334155;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+html .nav .contents ul li a i,
+html .nav .contents ul li button i,
+html .nav .contents .nav-svg-icon {
+  color: #475569;
+}
+html .nav .contents ul li a:hover span,
+html .nav .contents ul li button:hover span,
+html .nav .contents ul li a:focus-visible span,
+html .nav .contents ul li button:focus-visible span,
+html .nav .contents ul li a:hover i,
+html .nav .contents ul li button:hover i {
+  color: #0b4f7c;
+}
+html .nav .contents ul li a:hover,
+html .nav .contents ul li button:hover {
+  background-color: #eef3f8;
+}
+html .nav .contents ul li.active a span,
+html .nav .contents ul li.active a i {
+  color: #006cac;
+  font-weight: 700;
+}
+html .nav .nav-toggle-btn {
+  color: #334155;
+}
+
+/* Contrast pass (WCAG AA, measured on every page): links move from the theme's
+   #4990E2 (3.3:1) to the site accent #006cac (5.6:1); faint grays darken. */
+html .post-content a,
+html .about-content a,
+html .post-content a:visited {
+  color: #006cac;
+}
+html .post-content a:hover {
+  color: #0b4f7c;
+}
+html .toc-article a,
+html .toc-article .toc-text {
+  color: #5b6472;
+}
+html .toc-article a.is-active,
+html .toc-article a.is-active .toc-text,
+html .toc-article li.active > a,
+html .toc-article li.active > a .toc-text {
+  color: #006cac !important;
+}
+html .toc-article a.is-trail .toc-text {
+  color: #2f3339;
+}
+html .footer-copyright,
+html .footer-copyright a,
+html .archive li span,
+html .post-preview .post-time {
+  color: #5b6472 !important;
+}
+html .tag-page-header .tag-page-description {
+  color: #5b6472;
+}
+html .tag-page-header .tag-page-eyebrow {
+  color: #006cac;
 }

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a Kafka-style log broker and the cost of durability
+title: "What Durability Costs a Kafka-Style Log Broker"
 tags:
   - distributed-systems
   - storage
@@ -68,17 +68,7 @@ A consumer asks for "offset 1,048,576 onwards". Records have variable length, so
 
 Kafka's index is sparse. Every few KiB of log, it writes an entry mapping a relative offset to a file position. A lookup is a binary search for the last entry at or below the target, then a short forward scan through record headers. Because offsets are dense, the floor entry is never more than one interval of bytes behind the target, so the scan is bounded.
 
-```
-index (one entry per ~4 KiB of log)       log file
-  rel_offset  position                    +--------------------------------+
-  0           0          ---------------> | rec 0 | rec 1 | ... | rec a-1 |  |
-  a           pos_a      ---------------> | rec a | ...     | rec b-1 |     |
-  b           pos_b      ---------------> | rec b | ...                    |
-  ...                                     +--------------------------------+
-
-fetch(offset n), a <= n < b:  binary search -> entry (a, pos_a)
-                              pread from pos_a, skip headers of a..n-1, return from n
-```
+<figure data-figure="diagram:kafka-sparse-index"></figure>
 
 A dense index would cost 8 bytes per record for no real gain, since the fetch reads a chunk of the file anyway. At a 4 KiB interval, a 64 MiB segment needs at most 16,384 entries, or 128 KiB, small enough to keep in memory.
 
@@ -94,36 +84,7 @@ Acknowledging a write after `write(2)` means the data is in the kernel. It survi
 
 Clients hold one TCP connection each, with one request in flight. The broker accepts connections on one thread and serves each connection on its own thread. A request frame is decoded and dispatched to one of ten APIs, which are CreateTopic, Metadata, Produce, Fetch, ListOffsets, OffsetCommit, OffsetFetch, JoinGroup, Heartbeat and LeaveGroup.
 
-```
-   producer app                                        consumer app
-  +-------------------+                              +---------------------+
-  | Producer          |                              | Consumer            |
-  |  per-partition    |                              |  join / heartbeat   |
-  |  batch buffers    |                              |  positions map      |
-  +---------+---------+                              +----------+----------+
-            | 1 TCP conn, 1 request in flight                   |
-            | Produce(topic, p, records)       Fetch(p, offset, max_bytes, max_wait)
-            v                                                   v
-  +---------------------------------------------------------------------------+
-  |                                Broker                                     |
-  |  accept thread (poll + self-pipe) --> one thread per connection           |
-  |                                          |                                |
-  |         +-------------------+------------+-----------+-----------------+  |
-  |         |                   |                        |                 |  |
-  |   topics_ map         GroupCoordinator          OffsetStore       long-poll|
-  |   (shared_mutex)      generation, members,      map<group/topic/p, condvar |
-  |         |             range assignment          offset>           + epoch  |
-  |         v                                          |                      |
-  |   Topic -> PartitionLog[p] (one mutex)             v                      |
-  |         |                          PartitionLog "__consumer_offsets-0"    |
-  |         v                                                                 |
-  |   Segment 0 | Segment 1 | ... | active Segment                            |
-  +---------------------------------------------------------------------------+
-            |
-            v   data/<topic>-<p>/00000000000000000000.log
-                                 00000000000000000000.index
-                                 00000000000000004817.log  ...
-```
+<figure data-figure="diagram:kafka-broker"></figure>
 
 ### one byte format for the wire and the disk
 

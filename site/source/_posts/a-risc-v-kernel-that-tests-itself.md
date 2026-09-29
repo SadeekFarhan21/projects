@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a RISC-V kernel that tests itself on every boot
+title: "A RISC-V Kernel That Tests Itself on Every Boot"
 tags:
   - operating-systems
   - risc-v
@@ -63,15 +63,7 @@ When an exception or interrupt is taken in S-mode, the hardware does very little
 
 Sv39 translates a 39-bit virtual address through three levels of page tables. Each table is one 4 KiB page of 512 eight-byte entries, and each level is indexed by 9 bits of the address.
 
-```
- 38        30 29        21 20        12 11            0
-+------------+------------+------------+---------------+
-|  VPN[2]    |  VPN[1]    |  VPN[0]    |  page offset  |
-+------------+------------+------------+---------------+
-      |            |            |
-      v            v            v
-   L2 table --> L1 table --> L0 table --> leaf PTE: PPN | D A G U X W R V
-```
+<figure data-figure="diagram:sv39-translation"></figure>
 
 An entry with any of R, W or X set is a leaf. One with only V set points to the next level. The A (accessed) and D (dirty) bits have a subtle rule. Without the Svadu extension enabled, hardware that finds A clear on an access, or D clear on a write, raises a page fault instead of setting the bit. QEMU's hart advertises Svadu, but I did not want correctness to depend on it, so every leaf is created with A set, and D set if it is writable.
 
@@ -89,63 +81,19 @@ The classic scheduling bug is the lost wakeup. A thread checks a condition, find
 
 The kernel is one image linked at `0x80200000`. Text, rodata and data each start on a page boundary so they can get different permissions. After them come the boot stack slots, each a guard page followed by a 16 KiB stack. This is the physical layout from a 128 MiB boot, with addresses taken from the boot log.
 
-```
-0x0000_0000_0010_0000  sifive,test0      write (code<<16)|0x3333 -> QEMU exits with code
-0x0000_0000_0c00_0000  PLIC              interrupt controller
-0x0000_0000_1000_0000  NS16550A UART     irq 10
-0x0000_0000_8000_0000  +-----------------------------+
-                       | OpenSBI (reserved in DT)    |  0x80000000..0x80060000
-                       | unused gap                  |  0x80060000..0x80200000
-0x0000_0000_8020_0000  +-----------------------------+ _kernel_start
-                       | .text              R-X      |
-0x0000_0000_8020_a000  +-----------------------------+
-                       | .rodata + ksyms    R--      |
-0x0000_0000_8020_f000  +-----------------------------+
-                       | .data, .bss        RW-      |
-0x0000_0000_8025_5000  +-----------------------------+
-                       | boot stacks, 8 slots        |  slot = [guard 4K][stack 16K]
-0x0000_0000_8027_d000  +-----------------------------+ _kernel_end
-                       | page bitmap (4 KiB)         |
-                       | free page frames   RW-      |  page tables, stacks, heap
-0x0000_0000_87e0_0000  | device tree blob (reserved) |
-0x0000_0000_8800_0000  +-----------------------------+ end of RAM (from the DT)
-```
+<figure data-figure="diagram:riscv-memory-map"></figure>
 
 The kernel page table identity-maps all of RAM and the three devices it uses, each region with its own permissions. Thread stacks are the exception. Each lives at its own high virtual address starting at `0x0000_003f_0000_0000`, as four separately allocated frames mapped contiguously above an unmapped guard page. The boot log shows the table needed **71 pages**, which is mostly the cost of using 4 KiB leaves for 128 MiB of identity-mapped RAM.
 
 Traps follow one path, and the important design choice is where the frame goes.
 
-```
- trap (exception or interrupt, S-mode)
-   |
-   v
- kernelvec (arch/trapvec.S)
-   - is sp within one frame of the stack bottom?  ---- yes --> emergency stack,
-   - push a 304-byte frame on the CURRENT stack:                report, exit 3
-       x1..x31, sepc, sstatus, scause, stval,
-       and a fake frame record so backtraces cross the trap
-   - call kernel_trap(tf)
-   |
-   v
- kernel_trap (core/trap.c)
-   - interrupt 5, timer     -> rearm, ticks++, wakeup, then maybe yield()
-   - interrupt 9, external  -> PLIC claim, UART receive, complete
-   - exception with a probe armed -> resume at the recovery address
-   - any other exception    -> readable report, panic, exit code 3
-   |
-   v
- back in kernelvec: interrupts off, restore sepc and sstatus and registers, sret
-```
+<figure data-figure="diagram:riscv-trap-path"></figure>
 
 The frame lives on the interrupted thread's own stack, not a per-hart trap stack, and that is what makes preemption simple. The timer path calls `yield()` inside `kernel_trap`, other threads run on their own stacks, and when this thread is picked again it returns out of `kernel_trap` and `sret`s to where it was interrupted. A per-hart trap stack would be overwritten by the next trap.
 
 The scheduler is a static table of 32 threads, a FIFO run queue under one spinlock, and one idle thread per hart made from the boot flow. Its states are these.
 
-```
- thread_create -> RUNNABLE --sched picks--> RUNNING --yield/preempt--> RUNNABLE
-                                              |  \--sleep_on--> SLEEPING --wakeup--> RUNNABLE
-                                              \--thread_exit--> ZOMBIE --thread_join--> UNUSED
-```
+<figure data-figure="diagram:riscv-thread-states"></figure>
 
 xv6 switches from a thread to a per-CPU scheduler context and from there to the next thread, which is two `swtch` calls per switch. I switch directly from the old thread to the new one. That halves the switches, and the price is a lock handoff that I describe below.
 

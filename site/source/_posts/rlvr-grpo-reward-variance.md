@@ -1,5 +1,5 @@
 ---
-title: "GRPO on a 500M model and reward variance"
+title: "GRPO on Qwen2.5-0.5B and the Prompts That Teach Nothing"
 date: 2026-09-18T20:15:07.000Z
 description: "An RLVR pipeline on Qwen2.5-0.5B-Instruct, published before the training run. GRPO learns from the spread of rewards rather than their level, and four bugs never raised an exception."
 tags:

@@ -13,17 +13,13 @@ layout: layout
                                 }) %>
                     </h3>
                 </a>
-                <p>
-                    <% if (post.tags.length){ %>
-                        <span>/</span>
-                        <% post.tags.forEach(function(tag){ %>
-                            <a class="tag" href="<%= config.root %>tags/#<%= tag.name %>" title="<%= tag.name %>">
-                                <%= tag.name %>
-                            </a>
-                            <span>/</span>
-                            <% }) %>
-                                <% } %>
-                </p>
+                <% if (post.tags.length){ %>
+                <ul class="post-tags" aria-label="Tags">
+                    <% post.tags.forEach(function(tag){ %>
+                    <li><a class="tag-pill" href="<%= config.root %>tags/#<%= tag.name %>" title="All posts tagged <%= tag.name %>"><%= tag.name %></a></li>
+                    <% }) %>
+                </ul>
+                <% } %>
             </div>
             <div class="post-time">
                 <%= post.date.format(config.date_format) %>

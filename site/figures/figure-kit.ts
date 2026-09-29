@@ -82,12 +82,23 @@ function blurMark() {
 
 // Touch has no mouseleave: a tap outside any figure dismisses the tooltip.
 document.addEventListener("pointerdown", e => {
-  if (!(e.target instanceof Element) || !e.target.closest(".fig")) hideTip();
+  if (!(e.target instanceof Element) || !e.target.closest(".fig")) hideTip(true);
 });
 
+/**
+ * Tooltip state shared with interact.ts: the element that last opened the
+ * tooltip (so interact.ts can discover each chart's hoverable marks), and
+ * whether the reader pinned it with a click.
+ */
+export const tipState = { seq: 0, target: null as Element | null, pinned: false };
+
 export function showTip(html: string, event: MouseEvent) {
+  if (tipState.pinned && event.currentTarget !== tipState.target) return;
+  tipState.seq++;
+  tipState.target = event.currentTarget instanceof Element ? event.currentTarget : null;
   focusMark(event.currentTarget);
   const t = tooltip();
+  t.classList.toggle("is-pinned", tipState.pinned);
   t.innerHTML = html;
   t.style.opacity = "1";
   const pad = 12;
@@ -99,9 +110,20 @@ export function showTip(html: string, event: MouseEvent) {
   t.style.top = `${event.clientY + window.scrollY - rect.height - pad}px`;
 }
 
-export function hideTip() {
-  if (tip) tip.style.opacity = "0";
+export function hideTip(force: unknown = false) {
+  if (tipState.pinned && force !== true) return;
+  tipState.pinned = false;
+  if (tip) {
+    tip.style.opacity = "0";
+    tip.classList.remove("is-pinned");
+  }
   blurMark();
+}
+
+/** Keep the current tooltip open until the reader clicks elsewhere. */
+export function pinTip(on: boolean) {
+  tipState.pinned = on && !!tipState.target;
+  tip?.classList.toggle("is-pinned", tipState.pinned);
 }
 
 /** A one-line cue under charts that answer hover, since nothing else says so. */
@@ -111,8 +133,8 @@ export function hoverHint(node: Element) {
   const p = document.createElement("p");
   p.className = "fig-hint";
   p.textContent = touch
-    ? "Tap a bar or point for exact values"
-    : "Hover over a bar or point for exact values";
+    ? "Tap a bar or point for exact values, tap again to let go"
+    : "Hover for exact values · click to pin · arrow keys step through";
   node.appendChild(p);
 }
 

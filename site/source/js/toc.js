@@ -58,8 +58,16 @@
   }
 
   // Open only the sub-lists on the path to the active entry; collapse the rest.
+  // The section that contains the active entry is marked too (.is-trail), so
+  // both the current section and the current subsection read as bold.
   function expandBranch() {
     tocs.forEach(function (t) {
+      Array.prototype.forEach.call(t.querySelectorAll('a.is-trail'), function (a) { a.classList.remove('is-trail') })
+      var active = t.querySelector('a.is-active')
+      for (var li = active && active.parentElement ? active.parentElement.parentElement.closest('li') : null; li; li = li.parentElement.closest('li')) {
+        var head = li.querySelector(':scope > a')
+        if (head) head.classList.add('is-trail')
+      }
       var branches = t.querySelectorAll('li')
       Array.prototype.forEach.call(branches, function (li) {
         if (!li.querySelector(':scope > ol, :scope > ul')) return

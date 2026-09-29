@@ -5,18 +5,22 @@
         }) %>
     </div>
 
-<div class="post-meta">
-        <!-- <span class="attr"><%= __('post.postTime') %>：<span><%- page.date.format(config.date_format) +" "+ page.date.format(config.time_format)%></span></span> -->
-        <span class="attr"><%= __('post.postTime') %>：<span><%- page.date.format(config.date_format)%></span></span>
+<%
+  var plain = (page.content || '').replace(/<figure[\s\S]*?<\/figure>/g, ' ').replace(/<[^>]+>/g, ' ');
+  var words = (plain.match(/[A-Za-z0-9_'-]+/g) || []).length;
+  var minutes = Math.max(1, Math.round(words / 230));
+%>
+    <div class="post-meta">
+        <time class="post-date" datetime="<%= page.date.toISOString() %>"><%- page.date.format(config.date_format) %></time>
+        <span class="post-meta-sep" aria-hidden="true">·</span>
+        <span class="post-read"><%= minutes %> min read</span>
         <% if (page.tags.length){ %>
-        <span class="attr"><%= __('post.tags') %>：/
-        <% page.tags.forEach(function(tag){ %>
-        <a class="tag" href="<%= config.root %>tags/#<%= tag.name %>" title="<%= tag.name %>"><%= tag.name %></a>
-        <span>/</span>
-        <% }) %>
+        <ul class="post-tags" aria-label="Tags">
+            <% page.tags.forEach(function(tag){ %>
+            <li><a class="tag-pill" href="<%= config.root %>tags/#<%= tag.name %>" title="All posts tagged <%= tag.name %>"><%= tag.name %></a></li>
+            <% }) %>
+        </ul>
         <% } %>
-        </span>
-</span>
     </div>
     <%- partial('_partial/toc', {item: Object.assign({}, page, {toc_mobile: true}), index: false}) %>
     <div class="post-content <% if(config.post_style && !config.post_style.indent) {%>no-indent<% } %>">

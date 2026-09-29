@@ -18,3 +18,6 @@ UPSTREAM_COMMIT (the theme is not published on npm). MIT license kept in LICENSE
 - Post list links on index pages use url_for (relative) instead of full_url_for, so local previews stay on localhost.
 - source/js/toc.js (site) replaces the theme's TOC scroll-spy, which never ran: it expected the list as the TOC's first child. Adds active-section highlighting, smooth jumps and closing the mobile TOC after a pick.
 - Charts: hover focus (fade sibling marks), tap-away dismissal on touch, and a hover hint line (figures/figure-kit.ts).
+- Quicksand loaded as a variable font (300..700); every font-weight shifted +50 (bold capped at 700).
+- css/code.css restyles code blocks (header bar with language and actions, one scroll area, no ligatures, GitHub-light syntax colors) and inline code.
+- Post meta: date, reading time and tag pills (post.ejs); home list tags as pills (index.ejs); no fullwidth colons or slash separators.

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: peeking, sequential tests and off-policy evaluation
+title: "Why Peeking Breaks A/B Tests, and What to Use Instead"
 tags:
   - statistics
   - experimentation
@@ -97,39 +97,7 @@ The Open Bandit data is a slate, three items shown per impression, so everything
 
 ## architecture
 
-```
-                A/B side                                         OPE side
-
- sim/eventlog.py or production logs              sim/bandit.py or Open Bandit CSVs
-            |                                                |
-            v                                                v
- +------------------------------+              +------------------------------+
- | DuckDB raw tables            |              | numpy arrays, obp layout     |
- | experiments  assignments     |              | reward action pscore         |
- | exposures    events          |              | position  action_dist(n,A,L) |
- +------------------------------+              +------------------------------+
-            | SQL, first exposure,                 |                   |
-            | post and pre windows                 |      reward_model.py
-            v                                      |      K-fold cross-fit LightGBM
- +------------------------------+                  |      q_hat (n, A, L)
- | user_metrics                 |                  v                   v
- | one row per exposed user     |              +------------------------------+
- +------------------------------+              | RowTerms per round           |
-            | SQL, SUM(y) SUM(y*y) SUM(x*y)    | w, reward, dm, q_factual     |
-            v                                  +------------------------------+
- +------------------------------+                  |                   |
- | per-arm sufficient stats     |                  v                   v
- | a handful of floats per arm  |              estimators          bootstrap
- +------------------------------+              IPS SNIPS DM        multinomial
-            | Python                           DR switch-DR        resampling
-            v                                      |                   |
- Welch  delta  CUPED  SRM                          v                   v
- Holm   BH     mSPRT                           policy value and percentile CI
-            |                                      |
-            +--------------> results/ <------------+
-                                ^
-                   obp cross-check on identical arrays
-```
+<figure data-figure="diagram:peeking-pipeline"></figure>
 
 The A/B side is two SQL stages and one Python stage. The contract between SQL and Python is a set of frozen dataclasses of per-arm sums (`MeanStats`, `RatioStats`, `CovariateStats`). Every test takes those, and each dataclass has a `from_array` constructor, so the same Welch code runs on SQL output and on numpy arrays in the simulations. That is what lets the SQL layer be tested against a polars reference and the statistics be tested against scipy independently.
 

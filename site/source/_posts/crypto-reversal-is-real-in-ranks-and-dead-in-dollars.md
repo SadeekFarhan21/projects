@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a pre-registered test of crypto reversal
+title: "Testing Crypto Reversal Under a Pre-Registered Protocol"
 tags:
   - quant
   - crypto
@@ -131,40 +131,7 @@ A formula like this is easy to get subtly wrong and impossible to eyeball, so `t
 
 The pipeline is a straight line from a public archive to a report, with two scripts that carry the protocol.
 
-```
- data.binance.vision (public archive, all USDT spot pairs incl. delisted)
-          |
-          |  download_data.py   27,721 monthly zips -> one parquet
-          v
- load_panel()                    long panel (date, symbol, OHLC, quote volume)
-          |                      the only entry point to the data
-          v
- build_dataset(panel, end=...)   truncate at `end` FIRST, then
-          |   split_relistings   LUNAUSDT -> LUNAUSDT#2 after a gap > 7 days
-          |   to_wide            date x symbol frames on a gap-free daily index
-          |   9 raw features     each uses rows <= t only
-          |   eligibility        point-in-time top 50 mask
-          |   cs_rank            centered ranks in [-0.5, 0.5] among members
-          v
- long frame (date, symbol)       members only: 9 ranked features, fwd_ret, y_rank
-          |
-          |  walk_forward        per fold, fit on dates <= test_start - 6 days
-          v
- forecast (date, symbol)
-          |------------------> daily_ic -> mean IC, Newey-West t, hit rate
-          v
- weights_rank / weights_quintile   dollar neutral, gross exposure 1
-          |
- backtest(weights, fwd_ret)      gross = sum w*r, turnover = sum |dw|
-          |                      net at any cost = gross - turnover * c
-          v
- summarize                       Sharpe, PSR, drawdown, cost grid
-
- run_dev.py      cut data at 2024-06-30, run 18 trials on 9 folds,
-                 append every trial to trials.jsonl, freeze selection.json
- run_holdout.py  refuse if LOCK.json exists, write lock, refit once,
-                 evaluate once, record verdicts in the lock
-```
+<figure data-figure="diagram:crypto-pipeline"></figure>
 
 Three design choices carry most of the weight.
 

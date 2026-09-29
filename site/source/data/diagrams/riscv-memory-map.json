@@ -1,0 +1,89 @@
+{
+  "type": "memmap",
+  "title": "Physical memory after a 128 MiB boot",
+  "subtitle": "Addresses from the running kernel. Each kernel section starts on a page so it can get its own permissions.",
+  "regions": [
+    {
+      "addr": "0x0000_0000_0010_0000",
+      "name": "sifive,test0",
+      "kind": "device",
+      "note": "write (code<<16)|0x3333 and QEMU exits with that code",
+      "detail": "The test device. Writing (code<<16)|0x3333 makes QEMU exit with code, which is how make test gets a pass or fail"
+    },
+    {
+      "addr": "0x0000_0000_0c00_0000",
+      "name": "PLIC",
+      "kind": "device",
+      "note": "interrupt controller"
+    },
+    {
+      "addr": "0x0000_0000_1000_0000",
+      "name": "NS16550A UART",
+      "kind": "device",
+      "note": "irq 10"
+    },
+    {
+      "addr": "0x0000_0000_8000_0000",
+      "name": "OpenSBI",
+      "kind": "reserved",
+      "note": "0x80000000 to 0x80060000, reserved in the device tree"
+    },
+    {
+      "addr": "0x0000_0000_8006_0000",
+      "name": "unused gap",
+      "kind": "reserved",
+      "note": "0x80060000 to 0x80200000"
+    },
+    {
+      "addr": "0x0000_0000_8020_0000",
+      "name": ".text",
+      "perm": "R-X",
+      "kind": "kernel",
+      "mark": "_kernel_start"
+    },
+    {
+      "addr": "0x0000_0000_8020_a000",
+      "name": ".rodata + ksyms",
+      "perm": "R--",
+      "kind": "kernel",
+      "detail": "Read-only data and the symbol table that backtraces use"
+    },
+    {
+      "addr": "0x0000_0000_8020_f000",
+      "name": ".data, .bss",
+      "perm": "RW-",
+      "kind": "kernel"
+    },
+    {
+      "addr": "0x0000_0000_8025_5000",
+      "name": "boot stacks, 8 slots",
+      "perm": "RW-",
+      "kind": "stack",
+      "note": "slot = guard 4K + stack 16K",
+      "detail": "Each slot is a 4 KiB guard page followed by a 16 KiB stack, so an overflow faults instead of corrupting the neighbour"
+    },
+    {
+      "addr": "0x0000_0000_8027_d000",
+      "name": "page bitmap (4 KiB)",
+      "kind": "free",
+      "mark": "_kernel_end"
+    },
+    {
+      "addr": "0x0000_0000_8027_e000",
+      "name": "free page frames",
+      "perm": "RW-",
+      "kind": "free",
+      "note": "page tables, stacks, heap"
+    },
+    {
+      "addr": "0x0000_0000_87e0_0000",
+      "name": "device tree blob",
+      "kind": "reserved",
+      "note": "reserved"
+    }
+  ],
+  "end": {
+    "addr": "0x0000_0000_8800_0000",
+    "mark": "end of RAM (from the DT)"
+  }
+}

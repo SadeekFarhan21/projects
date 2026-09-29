@@ -1,0 +1,75 @@
+{
+  "type": "fields",
+  "title": "Price levels and the queue inside one",
+  "subtitle": "Each side is sorted worst to best, so the best level is always back()",
+  "rows": [
+    {
+      "label": "bids, vector<Level>",
+      "arrow": "→",
+      "chain": [
+        {
+          "name": "9980",
+          "detail": "A deep bid level. Inserting here costs a memmove of the levels above it"
+        },
+        {
+          "name": "9985",
+          "detail": "Bid level"
+        },
+        {
+          "name": "9990",
+          "kind": "accent",
+          "detail": "back(), the best bid. Matching reads it and pop_back() removes it once empty, both O(1)"
+        }
+      ],
+      "note": "worst → best, back() is the best bid"
+    },
+    {
+      "label": "asks, vector<Level>",
+      "arrow": "→",
+      "chain": [
+        {
+          "name": "10030",
+          "detail": "A deep ask level"
+        },
+        {
+          "name": "10020",
+          "detail": "Ask level"
+        },
+        {
+          "name": "10010",
+          "kind": "accent",
+          "detail": "back(), the best ask"
+        }
+      ],
+      "note": "worst → best, back() is the best ask"
+    },
+    {
+      "label": "one Level",
+      "arrow": "↔",
+      "chain": [
+        {
+          "name": "head",
+          "detail": "Level{price, total, count, head, tail}. head is the oldest order at this price"
+        },
+        {
+          "name": "slot 17",
+          "detail": "An order in the pool. Orders link by 32-bit slot index, not pointer"
+        },
+        {
+          "name": "slot 4",
+          "detail": "The next order in time priority"
+        },
+        {
+          "name": "slot 52",
+          "detail": "The newest order at this price"
+        },
+        {
+          "name": "tail",
+          "detail": "New orders at this price are appended here"
+        }
+      ],
+      "note": "a FIFO through the order pool, doubly linked by slot index"
+    }
+  ],
+  "hint": "Hover or tap a level or a slot"
+}

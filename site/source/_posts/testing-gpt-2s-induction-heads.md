@@ -1,6 +1,6 @@
 ---
 layout: post
-title: testing GPT-2's induction heads and their backups
+title: "Testing GPT-2's Induction Heads and the Backups Behind Them"
 tags:
   - interpretability
   - transformers

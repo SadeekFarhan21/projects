@@ -1,0 +1,94 @@
+{
+  "type": "flow",
+  "title": "One thread, one loop",
+  "subtitle": "Replies and AOF writes are buffered and flushed once per loop iteration. Click a stage for details.",
+  "steps": [
+    {
+      "name": "TCP clients",
+      "code": false,
+      "role": "kvbench, client_test.py, nc and friends",
+      "kind": "source"
+    },
+    {
+      "via": "bytes in",
+      "name": "Poller",
+      "role": "kqueue or epoll behind one interface",
+      "details": [
+        "Reports readable sockets, and writable ones only while a reply is stuck on EAGAIN"
+      ]
+    },
+    {
+      "via": "ready",
+      "name": "on_readable",
+      "role": "read() up to 16 KB into the client's in buffer",
+      "details": [
+        "Client { in, in_pos, out, out_pos }"
+      ]
+    },
+    {
+      "name": "process_input",
+      "role": "Loops over every complete frame in the buffer",
+      "details": [
+        "parse_request (resp.cpp) turns a frame into argv",
+        "CommandProcessor::execute (commands.cpp) runs it"
+      ]
+    },
+    {
+      "parallel": [
+        {
+          "name": "Client.out",
+          "role": "Reply bytes, queued for this client"
+        },
+        {
+          "name": "Aof buffer",
+          "role": "propagate(argv'), the command as it should be replayed",
+          "details": [
+            "aof.cpp"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "before_sleep",
+      "role": "Once per iteration, in this order",
+      "kind": "guard",
+      "details": [
+        "(1) Aof::flush, write() and fsync if appendfsync is always",
+        "(2) try_write, send() pending replies",
+        "So a reply never leaves before its write is durable"
+      ]
+    },
+    {
+      "via": "bytes out",
+      "name": "TCP clients",
+      "code": false,
+      "role": "Replies go back on the same connections",
+      "kind": "output"
+    }
+  ],
+  "loop": {
+    "from": 5,
+    "to": 1,
+    "label": "next iteration"
+  },
+  "extras": {
+    "title": "Alongside the loop",
+    "cards": [
+      {
+        "name": "cron every 1000/hz ms",
+        "role": "Store::active_expire_cycle and Aof::tick",
+        "kind": "note"
+      },
+      {
+        "name": "Store",
+        "role": "store.cpp, unordered_map<key, Entry> plus ttl_nodes_",
+        "kind": "store"
+      },
+      {
+        "name": "appendonly.aof",
+        "role": "RESP arrays on disk, replayed at start",
+        "kind": "store"
+      }
+    ]
+  }
+}

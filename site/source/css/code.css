@@ -1,0 +1,206 @@
+/* Code blocks and inline code. Overrides the theme's table-based layout: a
+   framed block with a header bar (language, Copy, View), code that scrolls
+   as one unit, no font ligatures, and a GitHub-light syntax palette. */
+
+:root {
+  --code-bg: #f8fafc;
+  --code-head: #f1f5f9;
+  --code-border: #e2e8f0;
+  --code-ink: #1f2937;
+  --code-muted: #475569;
+}
+
+/* ---------------------------------------------------------------- block */
+
+html .post-content figure.highlight,
+html .post-content pre:not(figure.highlight pre) {
+  position: relative;
+  margin: 1.6rem 0;
+  padding: 0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+  overflow: hidden;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--code-ink);
+}
+html .post-content figure.highlight {
+  padding-top: 36px; /* room for the header bar */
+}
+html .post-content figure.highlight table {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+html .post-content figure.highlight tbody,
+html .post-content figure.highlight tr {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+}
+html .post-content figure.highlight td {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+html .post-content figure.highlight .gutter {
+  display: none;
+}
+html .post-content figure.highlight pre,
+html .post-content figure.highlight .code pre {
+  margin: 0;
+  padding: 14px 20px 16px !important;
+  width: auto;
+  background: transparent !important;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+html .post-content figure.highlight .line {
+  height: auto;
+  display: inline;
+}
+html .post-content pre:not(figure.highlight pre) {
+  padding: 14px 20px 16px;
+  overflow-x: auto;
+}
+
+/* font: monospaced, no ligatures (== and != stay two characters) */
+html .post-content :is(pre, code, kbd, samp),
+html .post-content :is(pre, code) * {
+  font-family: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  letter-spacing: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  tab-size: 4;
+  text-shadow: none;
+}
+html .post-content figure.highlight pre,
+html .post-content figure.highlight pre * {
+  font-size: 13.5px;
+  line-height: 1.65;
+  white-space: pre;
+}
+
+/* header bar: language on the left, actions on the right, always visible */
+html .post-content figure.highlight .code-actions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  float: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 36px;
+  padding: 0 8px 0 14px;
+  box-sizing: border-box;
+  background: var(--code-head);
+  border-bottom: 1px solid var(--code-border);
+  opacity: 1;
+  pointer-events: auto;
+}
+html .post-content figure.highlight .code-lang {
+  margin-right: auto;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: 11.5px !important;
+  letter-spacing: 0.02em !important;
+  text-transform: lowercase;
+  color: var(--code-muted);
+}
+html .post-content figure.highlight :is(.btn-copy, .btn-view-raw) {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--code-muted);
+  font-family: "Quicksand", sans-serif;
+  font-size: 12px;
+  font-weight: 550;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+html .post-content figure.highlight :is(.btn-copy, .btn-view-raw):hover {
+  background: #fff;
+  border-color: var(--code-border);
+  color: var(--code-ink);
+}
+html .post-content figure.highlight .btn-copy.is-copied {
+  color: #2f7a54;
+}
+html .post-content figure.highlight :is(.btn-copy, .btn-view-raw) svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------- syntax colors */
+
+html .post-content pre :is(.keyword, .selector-tag, .meta .keyword) { color: #cf222e; }
+html .post-content pre :is(.title, .title.function_, .section) { color: #8250df; }
+html .post-content pre :is(.title.class_, .type, .built_in, .class .title) { color: #953800; }
+html .post-content pre :is(.string, .regexp, .meta .string, .symbol) { color: #0a3069; }
+html .post-content pre :is(.number, .literal, .attr, .attribute, .variable.constant_, .selector-attr) { color: #0550ae; }
+html .post-content pre :is(.comment, .quote) { color: #57606a; font-style: italic; }
+html .post-content pre :is(.params, .variable, .property, .subst) { color: var(--code-ink); }
+html .post-content pre :is(.meta, .doctag, .decorator) { color: #57606a; }
+html .post-content pre .operator { color: var(--code-ink); }
+html .post-content pre .addition { color: #116329; background: #dafbe1; }
+html .post-content pre .deletion { color: #82071e; background: #ffebe9; }
+html .post-content pre .emphasis { font-style: italic; }
+html .post-content pre .strong { font-weight: 700; }
+
+/* -------------------------------------------------------------- inline */
+
+html .post-content :not(pre) > code {
+  padding: 0.12em 0.4em;
+  margin: 0 0.05em;
+  border-radius: 5px;
+  background: #eef2f7;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-size: 0.86em;
+  white-space: break-spaces;
+  word-break: break-word !important;
+}
+html .post-content a > code {
+  color: inherit;
+}
+html .post-content :is(h1, h2, h3, h4) code {
+  font-size: 0.9em;
+  background: #f1f5f9;
+}
+
+/* --------------------------------------------------------------- mobile */
+
+@media (max-width: 680px) {
+  html .post-content figure.highlight pre,
+  html .post-content figure.highlight pre * {
+    font-size: 12.5px;
+  }
+  html .post-content figure.highlight,
+  html .post-content pre:not(figure.highlight pre) {
+    border-radius: 8px;
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+  html .post-content figure.highlight .btn-view-raw {
+    display: none;
+  }
+}

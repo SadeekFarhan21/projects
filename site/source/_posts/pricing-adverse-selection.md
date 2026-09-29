@@ -1,6 +1,6 @@
 ---
 layout: post
-title: adverse selection in a simulated order book
+title: "Measuring What Informed Traders Cost a Market Maker"
 tags:
   - market-microstructure
   - simulation
@@ -97,43 +97,7 @@ Real asset returns have positive excess kurtosis with a tail index near 3, almos
 
 Everything runs on one event heap keyed by `(time, seq)`. Agents act only through a `Market` object and hear about the world through callbacks.
 
-```
-                      +----------------------------------------------+
-                      |  Scheduler: heap of (time, seq, fn, args)    |
-                      |  pops the earliest event, sets t, calls fn   |
-                      +----------------------------------------------+
-                         ^ schedule wake-ups / cancels / markouts   |
-                         |                                          v
- +-------------+   +-----+-------+   +--------------+   +----------------------+
- | Fundamental |   | NoiseTaker  |   | Informed     |   | NoiseLiquidity       |
- | V: RW+jumps |-->| Poisson mkt |   | reads V+eps, |   | joins/behind best,   |
- | step every  |   | orders,     |   | trades if    |   | cancels after Exp()  |
- | fund_dt     |   | price-elast.|   | V outside    |   +----------+-----------+
- +------+------+   +-----+-------+   | the quote    |              |
-        | V (analysis    |           +------+-------+              |
-        |  and informed  | market()        | market()              | limit()/cancel()
-        |  only)         v                 v                       v
-        |          +---------------------------------------------------------+
-        |          | Market: order entry API, stamps mid_before and V on     |
-        +--------->| each trade, appends to the tape, calls on_fill() on      |
-                   | maker and taker, then every trade listener              |
-                   |        +------------------------------------+           |
-                   |        | OrderBook (price-time priority)    |           |
-                   |        +------------------------------------+           |
-                   +---------------------------+-----------------------------+
-                         on_fill / on_trade    |    limit()/cancel()
-                                               v    ^
-                                  +-----------------+------------------+
-                                  | MarketMaker (Avellaneda-Stoikov)   |
-                                  | fair value, inventory skew,        |
-                                  | requote on trades and on a timer,  |
-                                  | schedules 10-unit markout checks   |
-                                  +------------------------------------+
-                                               |
-   Recorder (every sample_dt): t, V, bid, ask, mid, spread, last, MM inventory, MM wealth, MM spread
-                                               v
-                        SimResult -> metrics.summarize / mm_pnl_decomposition -> experiments/*
-```
+<figure data-figure="diagram:market-sim"></figure>
 
 Data flows one way. The hidden fundamental $V$ is read by exactly two things, the informed traders and the analysis stamps on each trade. The market maker never reads it to make a decision. That separation is what makes "edge against $V$" a ground-truth check that only a simulator can offer and a real desk cannot.
 

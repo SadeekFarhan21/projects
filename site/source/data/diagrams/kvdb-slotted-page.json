@@ -1,0 +1,84 @@
+{
+  "type": "fields",
+  "title": "A slotted page",
+  "subtitle": "A 16-byte header, slot offsets growing forward, cells growing back from the end",
+  "unit": "bytes",
+  "rows": [
+    {
+      "label": "header, bytes 0 to 15",
+      "cells": [
+        {
+          "name": "type",
+          "bits": 1,
+          "range": "0",
+          "detail": "Leaf or internal node"
+        },
+        {
+          "name": "rsvd",
+          "bits": 1,
+          "range": "1",
+          "kind": "muted",
+          "detail": "Reserved"
+        },
+        {
+          "name": "nslots",
+          "bits": 2,
+          "range": "2",
+          "detail": "Number of slots, one per key"
+        },
+        {
+          "name": "link",
+          "bits": 4,
+          "range": "4",
+          "kind": "accent",
+          "detail": "A leaf's right sibling, or an internal node's leftmost child"
+        },
+        {
+          "name": "cellStart",
+          "bits": 2,
+          "range": "8",
+          "detail": "Where the cell area currently begins"
+        },
+        {
+          "name": "frag",
+          "bits": 2,
+          "range": "10",
+          "detail": "Bytes lost to fragmentation, reclaimed by compaction"
+        },
+        {
+          "name": "rsvd",
+          "bits": 4,
+          "range": "12",
+          "kind": "muted",
+          "detail": "Reserved"
+        }
+      ]
+    },
+    {
+      "label": "body, to the end of the page",
+      "scale": true,
+      "cells": [
+        {
+          "name": "slot[0] slot[1] …",
+          "bits": 4,
+          "grow": "right",
+          "kind": "accent",
+          "detail": "u16 offsets to cells, kept sorted by key, growing toward the end of the page"
+        },
+        {
+          "name": "free space",
+          "bits": 6,
+          "kind": "empty",
+          "detail": "Shrinks from both sides as slots and cells are added"
+        },
+        {
+          "name": "cells",
+          "bits": 5,
+          "grow": "left",
+          "detail": "klen u16, vlen u16, key, value. Written backward from the end of the page"
+        }
+      ]
+    }
+  ],
+  "hint": "Hover or tap a field"
+}

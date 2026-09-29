@@ -324,7 +324,7 @@ function bars(node: Element, d: BarsSpec) {
     .attr("y", r => (subFits(r) ? mid - 2 : mid + 4))
     .attr("text-anchor", "end")
     .attr("class", "fig-label")
-    .attr("font-weight", r => (r.emphasis ? 600 : 400))
+    .attr("font-weight", r => (r.emphasis ? 650 : 450))
     .text(r => r.label);
   g.filter(subFits)
     .append("text")
@@ -1039,7 +1039,7 @@ function timeline(node: Element, d: TimelineSpec) {
       .attr("x", padL - 12)
       .attr("y", y0 + laneH / 2 + 4)
       .attr("text-anchor", "end")
-      .attr("font-weight", 600)
+      .attr("font-weight", 650)
       .text(l.name);
     svg
       .append("line")
@@ -1166,7 +1166,7 @@ function matrix(node: Element, d: MatrixSpec) {
       .attr("x", padL - 12)
       .attr("y", y0 + rowH / 2 + 4)
       .attr("text-anchor", "end")
-      .attr("font-weight", r.emphasis ? 600 : 400)
+      .attr("font-weight", r.emphasis ? 650 : 450)
       .text(r.label);
     r.cells.forEach((c, ci) => {
       const cx = padL + ci * colW + colW / 2;

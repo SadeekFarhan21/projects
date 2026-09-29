@@ -1,0 +1,77 @@
+{
+  "type": "flow",
+  "title": "Clients, the broker and the files underneath",
+  "subtitle": "One request in flight per connection, one thread per connection. Click a stage for details.",
+  "steps": [
+    {
+      "parallel": [
+        {
+          "name": "Producer",
+          "role": "Per-partition batch buffers",
+          "kind": "source",
+          "details": [
+            "Produce(topic, p, records)",
+            "One TCP connection, one request in flight"
+          ]
+        },
+        {
+          "name": "Consumer",
+          "role": "Join, heartbeat and a positions map",
+          "kind": "source",
+          "details": [
+            "Fetch(p, offset, max_bytes, max_wait)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Broker",
+      "role": "An accept thread (poll plus a self-pipe) hands each connection its own thread",
+      "details": [
+        "A request frame is decoded and dispatched to one of ten APIs"
+      ]
+    },
+    {
+      "parallel": [
+        {
+          "name": "topics_ map",
+          "role": "Guarded by a shared_mutex"
+        },
+        {
+          "name": "GroupCoordinator",
+          "role": "Generation, members and range assignment"
+        },
+        {
+          "name": "OffsetStore",
+          "role": "map<group/topic/p, offset>, persisted to __consumer_offsets-0",
+          "kind": "store"
+        },
+        {
+          "name": "long-poll",
+          "code": false,
+          "role": "A condvar plus an epoch, wakes waiting fetches"
+        }
+      ]
+    },
+    {
+      "name": "PartitionLog[p]",
+      "role": "Topic → PartitionLog, one mutex per partition"
+    },
+    {
+      "name": "segments",
+      "code": false,
+      "role": "Segment 0, Segment 1, …, the active segment",
+      "kind": "store"
+    },
+    {
+      "name": "data/<topic>-<p>/",
+      "role": "On disk, a .log and a sparse .index per segment",
+      "kind": "store",
+      "details": [
+        "00000000000000000000.log",
+        "00000000000000000000.index",
+        "00000000000000004817.log …"
+      ]
+    }
+  ]
+}

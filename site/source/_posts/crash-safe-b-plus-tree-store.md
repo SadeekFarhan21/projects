@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a crash-safe B+ tree storage engine
+title: "A Crash-Safe B+ Tree That Survives kill -9"
 tags:
   - databases
   - storage
@@ -81,36 +81,13 @@ On macOS, `fsync()` pushes data to the drive but does not make the drive flush i
 
 A database at path `P` is three files. `P` is the page file, where page 0 is a meta page and every other page is a B+ tree node. `P-wal` holds one CRC-framed record per committed batch since the last checkpoint. `P-journal` is empty except while a checkpoint runs.
 
-```
-  put/del/write(batch) --> DB --> Wal::append + sync      <-- commit point
-                            |
-                            +--> BTree --> BufferPool (LRU, pins, NO-STEAL) --> Pager --> P
-                            |
-                            +--> checkpoint:
-                                   dirty pages --> P-journal, header last, sync   <-- atomicity point
-                                   dirty pages --> P in place, sync
-                                   truncate P-wal and P-journal
-
-  open:  P-journal complete? replay it : discard it
-         --> load meta page (root, height, page count, checkpoint LSN)
-         --> redo P-wal records with LSN > checkpoint LSN
-         --> checkpoint, so the WAL starts empty
-```
+<figure data-figure="diagram:kvdb-write-and-recovery"></figure>
 
 The meta page holds the magic number, format version, root page id, page count, tree height and checkpoint LSN. It lives in the buffer pool like any node, so a root split or a page allocation is checkpointed atomically with the nodes it refers to. There is no separate "superblock write" to get wrong.
 
 Nodes are slotted pages. A 16-byte header is followed by an array of 2-byte slot offsets sorted by key, growing toward the end of the page, while cells (`klen, vlen, key, value`) grow backward from the end.
 
-```
- 0      1      2        4        8           10     12      16
- +------+------+--------+--------+-----------+------+-------+
- | type | rsvd | nslots |  link  | cellStart | frag | rsvd  |
- +------+------+--------+--------+-----------+------+-------+
- | slot[0] slot[1] ...  (u16 offsets, sorted by key)  -->   |
- |                     free space                           |
- |          <-- cells (klen u16, vlen u16, key, value)      |
- +----------------------------------------------------------+
-```
+<figure data-figure="diagram:kvdb-slotted-page"></figure>
 
 A leaf's `link` is its right sibling. An internal node's `link` is its leftmost child, and each cell's value is a 4-byte child id. Keys are capped at 128 bytes and values at 512, which makes a worst-case cell plus slot 646 bytes, so any overflowing node holds at least 6 cells and a byte-balanced split always produces two halves that fit. That cap is what lets v0 skip overflow pages.
 

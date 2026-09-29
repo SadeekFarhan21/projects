@@ -15,6 +15,9 @@ import { scaleLinear, scaleSequential } from "d3-scale";
 import { interpolateRgb } from "d3-interpolate";
 import { max } from "d3-array";
 import { theme, fmt, showTip, hideTip, caption, json, hoverHint } from "./figure-kit";
+import { animateIn } from "./motion";
+import { interactive } from "./interact";
+import { diagramFigure } from "./diagrams";
 import { ventureFigure, specFigure } from "./venture-figures";
 
 /* ---------------------------------------------------------------- heatmap */
@@ -523,12 +526,19 @@ function render() {
       ? (n: Element) => ventureFigure(n, name.slice("venture:".length))
       : name.startsWith("chart:")
         ? (n: Element) => specFigure(n, name.slice("chart:".length))
-        : FIGURES[name];
+        : name.startsWith("diagram:")
+          ? (n: Element) => diagramFigure(n as HTMLElement, name.slice("diagram:".length))
+          : FIGURES[name];
     if (!fn) return;
     node.dataset.rendered = "1";
     node.classList.add("fig");
     Promise.resolve(fn(node))
-      .then(() => hoverHint(node))
+      .then(() => {
+        if (node.dataset.motion === "self") return; // diagrams animate themselves
+        animateIn(node);
+        interactive(node);
+        hoverHint(node);
+      })
       .catch(err => {
         // Leave the post readable: every figure restates numbers the prose already has.
         node.dataset.rendered = "";

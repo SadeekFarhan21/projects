@@ -1,5 +1,5 @@
 ---
-title: "locating GPT-2's induction heads"
+title: "Finding GPT-2's Induction Heads in One Forward Pass"
 date: 2026-09-18T18:33:41.000Z
 description: "All 144 attention heads of GPT-2 small scored on the induction diagonal in one cached forward pass on a laptop, recovering the five canonical heads. An induction score is a correlation, not a cause."
 tags:
@@ -185,4 +185,4 @@ Had we stopped at the score table, this post would have told a circuit-discovery
 - The reported scores support an ordering, not three decimal places. No seed sweep has been run.
 - Laptop-scale interpretability on a real pretrained model is genuinely accessible. The whole experiment is one cached forward pass over eight sequences of 101 tokens.
 
-*Next.* The four experiments are now run, in [Testing GPT-2's induction heads, and finding their backups](/posts/testing-gpt-2s-induction-heads/).
+*Next.* The four experiments are now run, in [Testing GPT-2's Induction Heads and the Backups Behind Them](/posts/testing-gpt-2s-induction-heads/).

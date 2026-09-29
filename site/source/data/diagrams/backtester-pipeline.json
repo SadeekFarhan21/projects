@@ -1,0 +1,91 @@
+{
+  "type": "flow",
+  "title": "From the Binance archive to a tracked run",
+  "subtitle": "Each stage takes one data structure in and hands one out. Click a stage for details.",
+  "steps": [
+    {
+      "name": "data.binance.vision",
+      "role": "Public S3 archive, one zip per symbol-month",
+      "kind": "source",
+      "code": false
+    },
+    {
+      "via": "qrp ingest",
+      "name": "data/binance.py",
+      "role": "Fetches the archive and stamps when each bar became visible",
+      "details": [
+        "Lists pairs, keeps 300 and fetches them in parallel",
+        "Fixes millisecond and microsecond timestamps",
+        "Stamps available_at on every row"
+      ]
+    },
+    {
+      "name": "data/store.py",
+      "role": "BarStore, append only, with an as-of read path",
+      "kind": "store",
+      "details": [
+        "bars/freq=1d/year=YYYY/<ingest_id>.parquet",
+        "meta/ingests.parquet",
+        "load(as_of) keeps the latest version visible at that instant"
+      ]
+    },
+    {
+      "via": "long polars frame",
+      "name": "panel.py",
+      "role": "split_relisted, then wide (T, N) float64 arrays"
+    },
+    {
+      "parallel": [
+        {
+          "name": "universe_mask",
+          "role": "Trailing dollar volume, enough history, has a bar"
+        },
+        {
+          "name": "features/spec.py",
+          "role": "FeatureSpec DAG plus audit_causality",
+          "kind": "guard",
+          "details": [
+            "The causality audit fails the whole run if any feature peeks"
+          ]
+        },
+        {
+          "name": "forward_label",
+          "role": "y[t] = close[t+d+h] / close[t+d] − 1"
+        }
+      ]
+    },
+    {
+      "name": "cv.py",
+      "role": "Purged walk-forward or k-fold splits"
+    },
+    {
+      "name": "research.py",
+      "role": "Ridge per split, out-of-sample scores, dollar-neutral rank weights W (T, N)"
+    },
+    {
+      "name": "backtest/engine",
+      "role": "run_backtest(W, close, costs, delay)",
+      "details": [
+        "Three kernels with identical results, reference, numpy and numba"
+      ]
+    },
+    {
+      "name": "backtest/metrics",
+      "role": "Sharpe, IC, drawdown, turnover, cost drag"
+    },
+    {
+      "name": "tracker.py",
+      "role": "Records every run with its config, metadata, metrics and artifacts",
+      "kind": "store",
+      "details": [
+        "runs/<id>/{config,meta,metrics}.json plus artifacts"
+      ],
+      "outputs": [
+        {
+          "name": "qrp runs list | show | compare",
+          "role": "Query past runs from the command line"
+        }
+      ]
+    }
+  ]
+}

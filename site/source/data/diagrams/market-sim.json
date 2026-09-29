@@ -1,0 +1,68 @@
+{
+  "type": "flow",
+  "title": "Agents, one market and a single event heap",
+  "subtitle": "Agents act only through the Market and hear about the world through callbacks. Click a stage for details.",
+  "steps": [
+    {
+      "name": "Scheduler",
+      "role": "A heap of (time, seq, fn, args). Pops the earliest event, sets t, calls fn",
+      "details": [
+        "Every agent schedules its own wake-ups, cancels and markout checks here"
+      ]
+    },
+    {
+      "parallel": [
+        {
+          "name": "Fundamental",
+          "role": "V follows a random walk with jumps, stepping every fund_dt",
+          "kind": "source",
+          "details": [
+            "Read by the informed traders and by the analysis stamps on each trade, nothing else"
+          ]
+        },
+        {
+          "name": "NoiseTaker",
+          "role": "Poisson market orders, price elastic"
+        },
+        {
+          "name": "Informed",
+          "role": "Reads V plus noise, trades when V is outside the quote"
+        },
+        {
+          "name": "NoiseLiquidity",
+          "role": "Joins at or behind the best, cancels after an exponential wait"
+        }
+      ]
+    },
+    {
+      "via": "market(), limit(), cancel()",
+      "name": "Market",
+      "role": "Order entry, trade stamping and fan-out",
+      "details": [
+        "Stamps mid_before and V on each trade",
+        "Appends the trade to the tape",
+        "Calls on_fill() on maker and taker, then every trade listener",
+        "Holds the OrderBook, price-time priority"
+      ]
+    },
+    {
+      "via": "on_fill / on_trade  ↓   limit() / cancel()  ↑",
+      "name": "MarketMaker",
+      "role": "Avellaneda-Stoikov quotes with inventory skew",
+      "details": [
+        "Fair value and an inventory skew",
+        "Requotes on trades and on a timer",
+        "Schedules 10-unit markout checks"
+      ]
+    },
+    {
+      "name": "Recorder",
+      "role": "Every sample_dt, t, V, bid, ask, mid, spread, last, and the maker's inventory, wealth and spread"
+    },
+    {
+      "name": "SimResult",
+      "role": "metrics.summarize and mm_pnl_decomposition, then experiments/*",
+      "kind": "output"
+    }
+  ]
+}

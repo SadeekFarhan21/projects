@@ -1,6 +1,6 @@
 ---
 layout: post
-title: smolgrad, autograd in NumPy checked against PyTorch
+title: "smolgrad, a NumPy Autograd Engine Checked Against PyTorch"
 tags:
   - autograd
   - numpy
@@ -113,47 +113,11 @@ whose truncation error is $O(h^2)$. I run it in float64 with $h = 10^{-6}$. For 
 
 The value and the graph node are the same object. A `Tensor` wraps one `np.ndarray` (float32 by default, float64 when given float64) and uses `__slots__`, and there is no separate `Node` or `Function` class.
 
-```
-                         user code / scripts
-                 (train_mnist.py, train_char.py, bench.py)
-                                  |
-            +---------------------+----------------------+
-            |                     |                      |
-            v                     v                      v
-      smolgrad.nn           smolgrad.optim        smolgrad.gradcheck
-  Module, Linear,           SGD (momentum,        central differences,
-  Embedding, LayerNorm,     weight decay),        random output projection
-  Sequential, ReLU, Tanh    AdamW (decoupled)
-            |                     |
-            v                     | mutates p.data in place,
-     smolgrad.functional          | reads p.grad
-  linear, layer_norm (composed)   |
-  embedding, cross_entropy (fused)|
-            |                     |
-            v                     v
-  +------------------------------------------------------------------+
-  |                        smolgrad.tensor.Tensor                    |
-  |  data  grad  requires_grad  _parents  _backward  _op             |
-  |                                                                  |
-  |  forward op   ->  Tensor._make(out, parents, closure)            |
-  |  backward()   ->  iterative DFS topo sort                        |
-  |               ->  reverse sweep, grads in a dict keyed by id()   |
-  |               ->  leaves store or accumulate into .grad          |
-  +------------------------------------------------------------------+
-                                  |
-                                  v
-                    numpy (Accelerate BLAS on macOS)
-```
+<figure data-figure="diagram:smolgrad-layers"></figure>
 
 One training step flows like this.
 
-```
- x --Tensor--> Linear --> relu --> Linear --> cross_entropy --> loss (0-d)
-                 ^ W, b leaves      each op appends one node and one closure
- loss.backward()   seed 1.0, closures in reverse topo order, W.grad and b.grad filled
- opt.step()        reads p.grad, updates p.data in place, outside the graph
- opt.zero_grad()   p.grad = None
-```
+<figure data-figure="diagram:smolgrad-step"></figure>
 
 ### closures, not Function objects
 

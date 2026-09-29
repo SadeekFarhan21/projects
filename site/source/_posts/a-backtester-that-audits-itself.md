@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a backtester that checks itself for look-ahead bias
+title: "A Backtester That Refuses to Run on Leaky Features"
 tags:
   - quant
   - backtesting
@@ -113,39 +113,7 @@ Every stored bar carries two timestamps, `available_at` (the bar's close plus 1 
 
 The pipeline is a straight line of stages, each with one data structure in and one out.
 
-```
-            data.binance.vision (public S3 archive, one zip per symbol-month)
-                                   |
-  qrp ingest --> data/binance.py   list pairs, keep 300, fetch in parallel,
-                                   fix ms/us timestamps, stamp available_at
-                                   |
-                 data/store.py     BarStore, append only
-                                     bars/freq=1d/year=YYYY/<ingest_id>.parquet
-                                     meta/ingests.parquet
-                                   load(as_of) keeps the latest visible version
-                                   |  long polars frame
-                 panel.py          split_relisted, then wide (T, N) float64 arrays
-                                   |
-        +--------------------------+---------------------------+
-        |                          |                           |
-  universe_mask             features/spec.py              forward_label
-  (trailing $vol,           FeatureSpec DAG               y[t] = close[t+d+h]
-   history, has bar)        + audit_causality                  / close[t+d] - 1
-        |                   (fails the run on leak)            |
-        +--------------------------+---------------------------+
-                                   |
-                 cv.py             purged walk-forward or k-fold splits
-                 research.py       ridge per split, out of sample scores,
-                                   dollar-neutral rank weights W (T, N)
-                                   |
-                 backtest/engine   run_backtest(W, close, costs, delay)
-                                   reference | numpy | numba kernels
-                                   |
-                 backtest/metrics  Sharpe, IC, drawdown, turnover, cost drag
-                 tracker.py        runs/<id>/{config,meta,metrics}.json + artifacts
-                                   |
-                 qrp runs list | show | compare
-```
+<figure data-figure="diagram:backtester-pipeline"></figure>
 
 The one deliberate split is between storage and compute. Storage is long parquet through polars, which is good at partition pruning and the point-in-time group-by. Compute is wide numpy arrays of shape (dates, symbols) with NaN meaning "no bar", which is good at rolling and cross-sectional operations over a whole block. Nothing is forward filled at the panel layer, so `np.isfinite(close)` stays exactly "this asset traded today". Partitions are by year, not symbol, which gives five files per ingest instead of 1,500 tiny ones.
 

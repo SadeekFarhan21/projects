@@ -58,7 +58,8 @@
     }
 
     function buildActionsHtml(lang) {
-        var langLabel = lang ? '<span class="code-lang">' + escapeHtml(lang) + '</span>' : '';
+        var shown = lang === 'plaintext' ? 'text' : lang;
+        var langLabel = shown ? '<span class="code-lang">' + escapeHtml(shown) + '</span>' : '';
         return '<div class="code-actions">'
             + langLabel
             + '<button class="btn-copy" type="button" title="Copy code">' + ICONS.copy + '<span>Copy</span></button>'

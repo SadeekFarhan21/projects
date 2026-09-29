@@ -1,6 +1,6 @@
 ---
 layout: post
-title: a single-threaded Redis server and group commit
+title: "Group Commit in a Single-Threaded Redis Clone"
 tags:
   - databases
   - storage
@@ -79,36 +79,7 @@ The AOF is a log of write commands in the same RESP format clients send, and rep
 
 Everything runs on one thread.
 
-```
-                 TCP clients (kvbench, client_test.py, nc, ...)
-                      |  bytes in                      ^  bytes out
-                      v                                |
- +---------------------------------------------------------------------------+
- | Server (server.cpp)                                                       |
- |                                                                           |
- |  Poller (poller.h)           Client { in, in_pos, out, out_pos }          |
- |  kqueue | epoll  --ready-->  on_readable  read() up to 16 KB into `in`    |
- |       ^                        |                                          |
- |       |                        v                                          |
- |       |                  process_input  loop over complete frames         |
- |       |                    parse_request (resp.cpp)  ->  argv             |
- |       |                    CommandProcessor::execute (commands.cpp)       |
- |       |                       |                     |                     |
- |       |           reply bytes |                     | propagate(argv')    |
- |       |                       v                     v                     |
- |       |                  Client.out           Aof buffer (aof.cpp)        |
- |       |                       |                     |                     |
- |       |  before_sleep   (1) Aof::flush   write(), fsync if "always"       |
- |       +--- write        (2) try_write    send() pending replies           |
- |            interest only on EAGAIN                                        |
- |                                                                           |
- |  cron every 1000/hz ms   Store::active_expire_cycle, Aof::tick            |
- +---------------------------------------------------------------------------+
-                      |                                |
-                      v                                v
-              Store (store.cpp)                appendonly.aof on disk
-      unordered_map<key, Entry> + ttl_nodes_   (RESP arrays, replayed at start)
-```
+<figure data-figure="diagram:redis-event-loop"></figure>
 
 One loop iteration does four things in order.
 

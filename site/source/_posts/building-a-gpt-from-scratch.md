@@ -1,5 +1,5 @@
 ---
-title: "writing a 5.26M-parameter transformer by hand"
+title: "Every Line of a Small GPT, Written by Hand"
 date: 2026-09-18T15:04:52.000Z
 description: "A 5.26M-parameter GPT built from scratch in PyTorch and trained on TinyStories to a cross-entropy of 2.14 on a laptop, where the loss is a receipt that the pipeline works rather than a result."
 tags:

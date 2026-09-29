@@ -1,6 +1,6 @@
 ---
 layout: post
-title: fuzzing a price-time matching engine
+title: "Fuzzing a Matching Engine Against a Brute-Force Twin"
 tags:
   - trading
   - market-microstructure
@@ -91,30 +91,7 @@ Unit tests check the cases I thought of, and the bugs that hurt live in combinat
 
 The engine is a single-threaded state machine. Inputs arrive as `InputEvent`s (new, cancel, modify), each gets the next sequence number, and the engine appends `OutputEvent`s to a vector the caller owns. There are no callbacks or virtual calls in the hot path.
 
-```
-                     input log (text, one event per line)
-                                   |
-                                   v
-                   +--------------------------------------+
-                   |            MatchingEngine            |
-                   |   validate -> match -> rest/cancel   |
-                   |                                      |
-                   |   IdMap           two book sides     |
-                   |   id -> slot      vector<Level>      |
-                   |                   worst ... best     |
-                   |   order pool      each Level is a    |
-                   |   + free list     FIFO of pool slots |
-                   +--------------------------------------+
-                                   |
-                   OutputEvents, each tagged with input seq
-                                   |
-           +-----------------------+------------------------+
-           v                       v                        v
-      output log            MarketDataFeed             StreamDigest
-      (exch replay)         L2 mirror + tape           FNV-1a over outputs
-
-   test side: same InputEvents -> ReferenceMatcher -> identical outputs required
-```
+<figure data-figure="diagram:matching-engine"></figure>
 
 For one input the outputs always come in the same order. First exactly one of `ACCEPTED`, `REJECTED` or `MODIFIED`. Then trades, in match order. Then a `CANCELED` for any unfilled market, IOC or FOK remainder. Then `L2` book updates, one per price level whose aggregate changed, bids first and then asks, each by ascending price. Here is part of the hand-written golden session in `examples/`, with each input shown as a comment above the outputs it caused.
 
@@ -140,13 +117,7 @@ The `exch` tool wraps this in four commands, `gen`, `replay`, `verify` and `fuzz
 
 Each side is a `std::vector<Level>` sorted from the worst price to the best, so the best level is always `back()`. Most activity happens near the touch, so matching reads `back()` and removes an emptied level with `pop_back()`, both O(1). Inserting a level deep in the book costs a `memmove`, which I accepted. Finding a level scans the last 8 entries and falls back to binary search.
 
-```
- bids  vector<Level>, worst -> best              asks  vector<Level>, worst -> best
- [9980][9985][9990]<- back() = best bid          [10030][10020][10010]<- back() = best ask
-                 |
-                 v  Level{price, total, count, head, tail}
-            head -> slot 17 <-> slot 4 <-> slot 52 <- tail     (FIFO through the pool)
-```
+<figure data-figure="diagram:order-book-levels"></figure>
 
 Each level owns a FIFO queue, an intrusive doubly linked list through a pool, which is a `std::vector<Order>` plus a free list. Orders link by 32-bit slot index rather than pointer, which keeps an order at 40 bytes and keeps links valid when the vector grows. Once the engine knows an order's slot, cancelling it from the middle of a queue is O(1).
 
