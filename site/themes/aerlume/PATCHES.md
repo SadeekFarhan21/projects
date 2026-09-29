@@ -16,3 +16,5 @@ UPSTREAM_COMMIT (the theme is not published on npm). MIT license kept in LICENSE
 - The sidebar TOC skips the posts' own "table of contents" heading.
 - WRITING and CODE use inline SVG pen and code icons instead of duplicating other nav icons.
 - Post list links on index pages use url_for (relative) instead of full_url_for, so local previews stay on localhost.
+- source/js/toc.js (site) replaces the theme's TOC scroll-spy, which never ran: it expected the list as the TOC's first child. Adds active-section highlighting, smooth jumps and closing the mobile TOC after a pick.
+- Charts: hover focus (fade sibling marks), tap-away dismissal on touch, and a hover hint line (figures/figure-kit.ts).

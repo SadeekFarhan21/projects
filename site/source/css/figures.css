@@ -118,3 +118,27 @@
   overflow-y: hidden;
   padding: 0.25rem 0;
 }
+
+/* Hover focus (figure-kit.ts): the hovered mark stays solid, its siblings fade. */
+.fig svg {
+  cursor: crosshair;
+}
+.fig svg .fig-dim {
+  opacity: 0.28;
+}
+.fig svg .fig-hot,
+.fig svg .fig-dim {
+  transition: opacity 120ms ease;
+}
+.fig-hint {
+  margin: 0.5rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig svg .fig-hot,
+  .fig svg .fig-dim {
+    transition: none;
+  }
+}

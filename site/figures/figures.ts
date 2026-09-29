@@ -14,7 +14,7 @@ import { select } from "d3-selection";
 import { scaleLinear, scaleSequential } from "d3-scale";
 import { interpolateRgb } from "d3-interpolate";
 import { max } from "d3-array";
-import { theme, fmt, showTip, hideTip, caption, json } from "./figure-kit";
+import { theme, fmt, showTip, hideTip, caption, json, hoverHint } from "./figure-kit";
 import { ventureFigure, specFigure } from "./venture-figures";
 
 /* ---------------------------------------------------------------- heatmap */
@@ -527,11 +527,13 @@ function render() {
     if (!fn) return;
     node.dataset.rendered = "1";
     node.classList.add("fig");
-    Promise.resolve(fn(node)).catch(err => {
-      // Leave the post readable: every figure restates numbers the prose already has.
-      node.dataset.rendered = "";
-      console.error(`[figure:${name}]`, err);
-    });
+    Promise.resolve(fn(node))
+      .then(() => hoverHint(node))
+      .catch(err => {
+        // Leave the post readable: every figure restates numbers the prose already has.
+        node.dataset.rendered = "";
+        console.error(`[figure:${name}]`, err);
+      });
   });
 }
 

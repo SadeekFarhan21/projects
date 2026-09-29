@@ -119,14 +119,45 @@ html .post-preview-container,
 html .about-content {
   letter-spacing: normal;
 }
-html .post-content p,
+html .post-content p:not(.fig-source):not(.fig-hint),
 html .post-content li {
   font-weight: 400;
   font-size: 17px;
   line-height: 1.7;
 }
+
+/* Chart source and hint lines stay small inside post text. */
+html .post-content .fig .fig-source,
+html .post-content .fig figcaption {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+html .post-content .fig .fig-hint {
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
 html .post-content code,
 html .post-content pre,
 html .post-content pre * {
   letter-spacing: normal;
+}
+
+/* TOC (source/js/toc.js): headings land a little below the top edge, and the
+   active entry is marked in the accent color. */
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  scroll-margin-top: 24px;
+}
+.toc-article a.is-active {
+  color: #4990E2 !important;
+  font-weight: 600;
+}
+
+/* Some theme rules (lists, nested blocks) are more specific than the
+   word-break override above, so force word-boundary wrapping for all text. */
+.index-middle *,
+.toc-article * {
+  word-break: normal !important;
+  overflow-wrap: break-word;
 }

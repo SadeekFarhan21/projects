@@ -53,7 +53,40 @@ function tooltip(): HTMLDivElement {
   return tip;
 }
 
+/**
+ * Hover focus. Every chart reports hovers through showTip, and the element that
+ * carries the listener is the mark (or the group for one item). Keep it solid
+ * and fade its same-kind siblings, so the reader sees which mark the tooltip
+ * describes. Axes and labels are different element kinds and stay untouched.
+ */
+let hot: Element | null = null;
+function focusMark(el: EventTarget | null) {
+  if (!(el instanceof SVGElement) || el === hot) return;
+  blurMark();
+  const parent = el.parentElement;
+  if (!parent) return;
+  const kin = [...parent.children].filter(c => c !== el && c.tagName === el.tagName);
+  if (kin.length === 0) return;
+  hot = el;
+  el.classList.add("fig-hot");
+  kin.forEach(k => k.classList.add("fig-dim"));
+}
+function blurMark() {
+  if (!hot) return;
+  hot.parentElement
+    ?.querySelectorAll(":scope > .fig-dim")
+    .forEach(k => k.classList.remove("fig-dim"));
+  hot.classList.remove("fig-hot");
+  hot = null;
+}
+
+// Touch has no mouseleave: a tap outside any figure dismisses the tooltip.
+document.addEventListener("pointerdown", e => {
+  if (!(e.target instanceof Element) || !e.target.closest(".fig")) hideTip();
+});
+
 export function showTip(html: string, event: MouseEvent) {
+  focusMark(event.currentTarget);
   const t = tooltip();
   t.innerHTML = html;
   t.style.opacity = "1";
@@ -68,6 +101,19 @@ export function showTip(html: string, event: MouseEvent) {
 
 export function hideTip() {
   if (tip) tip.style.opacity = "0";
+  blurMark();
+}
+
+/** A one-line cue under charts that answer hover, since nothing else says so. */
+export function hoverHint(node: Element) {
+  if (node.querySelector(".fig-controls, .fig-hint")) return;
+  const touch = window.matchMedia("(hover: none)").matches;
+  const p = document.createElement("p");
+  p.className = "fig-hint";
+  p.textContent = touch
+    ? "Tap a bar or point for exact values"
+    : "Hover over a bar or point for exact values";
+  node.appendChild(p);
 }
 
 export function caption(node: Element, text: string) {
