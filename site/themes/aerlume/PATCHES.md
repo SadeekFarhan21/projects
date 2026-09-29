@@ -10,3 +10,4 @@ UPSTREAM_COMMIT (the theme is not published on npm). MIT license kept in LICENSE
 - On post pages, load KaTeX CSS and css/figures.css, and js/figures.js when a post contains `data-figure`.
 - Dropped the 404 page's image, which the theme references but does not ship.
 - Added css/site.css (loaded on every page) to undo the theme's word-break: break-all for English text.
+- Fonts: Quicksand (text) and Fragment Mono (code) from Google Fonts, set in head.ejs and css/site.css.

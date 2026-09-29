@@ -9,3 +9,34 @@ html .toc-article * {
   word-break: normal;
   overflow-wrap: break-word;
 }
+
+/* Fonts: Quicksand for text, Fragment Mono for code (loaded from Google Fonts
+   in head.ejs). The theme's `*` rule reads --aerlume-local-font, so setting
+   it switches every element; KaTeX's own, more specific rules keep math fonts. */
+:root {
+  --aerlume-local-font: "Quicksand";
+}
+.index-about i,
+.index-about-mobile i {
+  font-family: "Quicksand", Helvetica, Arial, sans-serif !important;
+}
+code,
+kbd,
+samp,
+pre,
+pre *,
+.highlight,
+.highlight *,
+.hljs,
+.hljs *,
+.code-modal .code-modal-body pre,
+.lb-overlay .lb-counter {
+  font-family: "Fragment Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+/* The theme's `*` font rule also hits every span inside KaTeX output, which
+   pulls math glyphs out of KaTeX's fonts. Inherit instead; :where() keeps the
+   specificity at zero so KaTeX's own class rules (math italic, sizes) still win. */
+:where(.katex *) {
+  font-family: inherit;
+}
