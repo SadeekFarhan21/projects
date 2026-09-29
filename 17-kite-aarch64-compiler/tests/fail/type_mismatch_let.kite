@@ -1,0 +1,5 @@
+// expect: 4:18: type error: `x` is declared as int but initialised with bool
+fn main() {
+    let y = 1;
+    let x: int = y == 1;
+}

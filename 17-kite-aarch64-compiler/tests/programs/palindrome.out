@@ -1,0 +1,6 @@
+'racecar' -> 'racecar' true
+'kite' -> 'etik' false
+'abba' -> 'abba' true
+'a' -> 'a' true
+'' -> '' true
+'abca' -> 'acba' false

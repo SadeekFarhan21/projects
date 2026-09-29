@@ -1,0 +1,41 @@
+// A growable integer stack built from a struct and arrays.
+struct Stack {
+    items: [int],
+    size: int,
+}
+
+fn new_stack() -> Stack {
+    return Stack { items: [0; 2], size: 0 };
+}
+
+fn push(s: Stack, v: int) {
+    if s.size == len(s.items) {
+        var bigger = [0; 2 * len(s.items)];
+        for i in 0..s.size {
+            bigger[i] = s.items[i];
+        }
+        s.items = bigger;
+    }
+    s.items[s.size] = v;
+    s.size = s.size + 1;
+}
+
+fn pop(s: Stack) -> int {
+    s.size = s.size - 1;
+    return s.items[s.size];
+}
+
+fn main() {
+    let s = new_stack();
+    for i in 0..100 {
+        push(s, i * i);
+    }
+    println(s.size);
+    println(len(s.items));
+    var total = 0;
+    while s.size > 90 {
+        total = total + pop(s);
+    }
+    println(total);
+    println(pop(s));
+}

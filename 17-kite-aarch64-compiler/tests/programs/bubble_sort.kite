@@ -1,0 +1,23 @@
+// In-place bubble sort; arrays are passed by reference.
+fn sort(a: [int]) {
+    let n = len(a);
+    for i in 0..n {
+        for j in 0..n - 1 - i {
+            if a[j] > a[j + 1] {
+                let t = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = t;
+            }
+        }
+    }
+}
+
+fn main() {
+    let a = [5, -2, 9, 0, 3, 3, 12, -7, 1];
+    sort(a);
+    for i in 0..len(a) {
+        print(a[i]);
+        print(" ");
+    }
+    println();
+}

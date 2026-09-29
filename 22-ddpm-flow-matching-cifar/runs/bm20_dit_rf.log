@@ -1,0 +1,5 @@
+dit/rf: 4.15M params on mps
+step 50 loss 1.1520 97 img/s t=32s
+step 100 loss 0.4808 60 img/s t=85s
+step 150 loss 0.3551 55 img/s t=144s
+step 200 loss 0.2929 50 img/s t=207s

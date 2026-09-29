@@ -1,0 +1,26 @@
+[project]
+name = "tcm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Farhan Sadeek", email = "farhan@farhansadeek.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.3",
+    "pybind11>=3.1.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.168.1",
+    "matplotlib>=3.11.2",
+    "mlx>=0.32.2",
+    "pytest>=9.1.1",
+    "torch>=2.14.0",
+]

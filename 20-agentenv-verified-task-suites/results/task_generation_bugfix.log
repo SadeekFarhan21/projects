@@ -1,0 +1,106 @@
+inflection: tried 8, kept 7/34
+inflection: tried 16, kept 12/34
+inflection: tried 24, kept 17/34
+inflection: tried 32, kept 25/34
+inflection: tried 40, kept 31/34
+inflection: tried 48, kept 34/34
+toolz: tried 8, kept 8/33
+toolz: tried 16, kept 15/33
+toolz: tried 24, kept 22/33
+toolz: tried 32, kept 28/33
+toolz: tried 40, kept 33/33
+semver: tried 8, kept 7/33
+semver: tried 16, kept 13/33
+semver: tried 24, kept 21/33
+semver: tried 32, kept 28/33
+semver: tried 40, kept 33/33
+bugfix {
+ "n": 100,
+ "difficulty": {
+  "easy": 34,
+  "medium": 33,
+  "hard": 33
+ },
+ "operator": {
+  "flip_comparison": 19,
+  "off_by_one": 32,
+  "wrong_variable": 32,
+  "dropped_branch": 17
+ },
+ "package": {
+  "inflection": 34,
+  "toolz": 33,
+  "semver": 33
+ },
+ "mutation_stats": {
+  "inflection": {
+   "candidates": 134,
+   "tried": 48,
+   "kept": 34,
+   "operators": {
+    "flip_comparison": {
+     "tried": 1,
+     "kept": 1
+    },
+    "off_by_one": {
+     "tried": 22,
+     "kept": 16
+    },
+    "wrong_variable": {
+     "tried": 21,
+     "kept": 14
+    },
+    "dropped_branch": {
+     "tried": 4,
+     "kept": 3
+    }
+   }
+  },
+  "toolz": {
+   "candidates": 1051,
+   "tried": 40,
+   "kept": 33,
+   "operators": {
+    "flip_comparison": {
+     "tried": 10,
+     "kept": 8
+    },
+    "off_by_one": {
+     "tried": 10,
+     "kept": 8
+    },
+    "wrong_variable": {
+     "tried": 10,
+     "kept": 9
+    },
+    "dropped_branch": {
+     "tried": 10,
+     "kept": 8
+    }
+   }
+  },
+  "semver": {
+   "candidates": 343,
+   "tried": 40,
+   "kept": 33,
+   "operators": {
+    "flip_comparison": {
+     "tried": 11,
+     "kept": 10
+    },
+    "off_by_one": {
+     "tried": 10,
+     "kept": 8
+    },
+    "wrong_variable": {
+     "tried": 10,
+     "kept": 9
+    },
+    "dropped_branch": {
+     "tried": 9,
+     "kept": 6
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,8 @@
+# tick/ntimer snapshot race: 'only=ticks' self-test, 30 boots per kernel, plain TCG
+# date 2026-09-26 23:40:26, host load { 299.31 243.59 250.87 }
+before-fix boot 6:     8 ticks during 100 ms busy wait (expect about 10)     check failed: mycpu()->ntimer - n0 == dt (kernel/test/selftest.c:306) 
+before-fix boot 17:     4 ticks during 100 ms busy wait (expect about 10)     check failed: mycpu()->ntimer - n0 == dt (kernel/test/selftest.c:306) 
+before-fix boot 28:     9 ticks during 100 ms busy wait (expect about 10)     check failed: mycpu()->ntimer - n0 == dt (kernel/test/selftest.c:306) 
+before-fix boot 30:     3 ticks during 100 ms busy wait (expect about 10)     check failed: mycpu()->ntimer - n0 == dt (kernel/test/selftest.c:306) 
+before-fix: 4 of 30 boots failed the timer ticks test
+after-fix: 0 of 30 boots failed the timer ticks test

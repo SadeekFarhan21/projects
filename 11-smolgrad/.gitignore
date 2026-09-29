@@ -1,0 +1,18 @@
+# virtualenv and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# downloaded datasets (fetch with scripts/download_data.py)
+data/
+
+# large or temporary artifacts
+*.npz
+*.pt
+*.ckpt
+*.part
+.DS_Store

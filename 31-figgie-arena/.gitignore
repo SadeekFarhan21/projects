@@ -1,0 +1,12 @@
+build/
+build-*/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+python/figgie_arena/*.so
+data/
+*.npz
+.DS_Store
+compile_commands.json

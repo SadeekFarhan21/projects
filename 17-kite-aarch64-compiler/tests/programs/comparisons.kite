@@ -1,0 +1,18 @@
+// Comparison operators on ints, bools and strings.
+fn main() {
+    println(1 < 2);
+    println(2 < 1);
+    println(2 <= 2);
+    println(3 > 2);
+    println(3 >= 4);
+    println(5 == 5);
+    println(5 != 5);
+    println(true == true);
+    println(true != false);
+    println("abc" == "abc");
+    println("abc" == "abd");
+    println("abc" != "ab");
+    println(-1 < 0);
+    let min = -9223372036854775807 - 1;
+    println(min < 9223372036854775807);
+}

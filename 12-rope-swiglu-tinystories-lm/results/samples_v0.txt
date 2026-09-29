@@ -1,0 +1,15 @@
+--- sample 0 (170 tokens, 15 tok/s)
+Once upon a time, there was a little boy named Tim. Tim loved to watch cartoons on his mom's phone. One day, Tim was watching the cartoon, but he did not know that. He saw a big chair in the room. Tim was scared of the chair.
+Tim's mom told him to close the door. She said, "Don't be scared, Tim. You will be safe." Tim did what his mom said. He went to his room and lay down on the chair. He felt safe and happy.
+After his nap, Tim felt better. He said, "Thank you, Mom. I will watch your favorite cartoon on the TV." His mom hugged him and said, "You are safe, Tim." Tim went back to watch his favorite show on the TV. He was very happy and loved watching cartoons.
+
+--- sample 1 (145 tokens, 16 tok/s)
+Once upon a time, there was a big, hairy dog named Max. Max loved to run and play all day. He was very fast and fast. One day, Max was playing with his ball when he saw a cat named Luna. Luna looked sad and lost.
+Max said, "Don't worry, Luna. I will help you find your ball." Max looked around the house and found the ball under a tree. He was so happy! Max thanked Luna and they played together for the rest of the day.
+As the sun went down, Max and Luna were very tired. They went to sleep, but it was still night. Max and Luna were tired but happy. They were good friends and played together every night.
+
+--- sample 2 (190 tokens, 19 tok/s)
+Once upon a time, there was a little dog named Spot. Spot loved to run and play all day. One day, Spot found a big bone in the yard. The bone was old and not very nice to eat. Spot wanted to show his friend, Sam, the big bone.
+Spot ran to Sam and said, "Look at my bone! It's so big and red!" Sam looked at the bone and said, "Wow, that's a big bone! Can we have it?" Spot barked and they both started to walk to the big bone.
+As they walked closer, they saw a big, red bone on the ground. Spot and Sam were very curious about what the bone was. They decided to take the bone back to their mom. Mom said, "Hold your hand, Spot and Sam! The bone will fit in a safe place." And they did, and they learned that sometimes, things are not what they seem.
+

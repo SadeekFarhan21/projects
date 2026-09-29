@@ -1,0 +1,13 @@
+inputs        1000000
+outputs       2072205
+trades        358590 (volume 9181454)
+l2 updates    675925
+resting       95 orders, 17 bid levels, 14 ask levels
+digest        fa2ff178540c7510
+elapsed       6.874 s (including I/O)
+     bid qty      bid | ask      ask qty     
+          95    10043 | 10046    24          
+          30    10040 | 10049    34          
+          87    10037 | 10051    93          
+          29    10035 | 10055    84          
+          20    10034 | 10057    66          

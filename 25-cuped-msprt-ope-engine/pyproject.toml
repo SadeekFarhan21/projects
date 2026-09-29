@@ -1,0 +1,37 @@
+[project]
+name = "expope"
+version = "0.1.0"
+description = "Experimentation (A/B statistics on a DuckDB metrics layer) and off-policy evaluation engine"
+readme = "README.md"
+authors = [
+    { name = "Farhan Sadeek", email = "farhan@farhansadeek.com" }
+]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "duckdb>=1.5.5",
+    "lightgbm>=4.7.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "polars>=1.44.2",
+    "pyarrow>=25.0.1",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+crosscheck = [
+    "obp>=0.4.1",
+]
+dev = [
+    "hypothesis>=6.168.1",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+filterwarnings = ["ignore::SyntaxWarning", "ignore::DeprecationWarning", "ignore::FutureWarning"]

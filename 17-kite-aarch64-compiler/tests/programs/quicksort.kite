@@ -1,0 +1,46 @@
+// Recursive quicksort with a linear congruential generator for input.
+fn partition(a: [int], lo: int, hi: int) -> int {
+    let pivot = a[hi];
+    var i = lo;
+    for j in lo..hi {
+        if a[j] < pivot {
+            let t = a[i];
+            a[i] = a[j];
+            a[j] = t;
+            i = i + 1;
+        }
+    }
+    let t = a[i];
+    a[i] = a[hi];
+    a[hi] = t;
+    return i;
+}
+
+fn quicksort(a: [int], lo: int, hi: int) {
+    if lo < hi {
+        let p = partition(a, lo, hi);
+        quicksort(a, lo, p - 1);
+        quicksort(a, p + 1, hi);
+    }
+}
+
+fn main() {
+    let n = 1000;
+    var a = [0; n];
+    var seed = 12345;
+    for i in 0..n {
+        seed = (seed * 1103515245 + 12345) % 2147483648;
+        a[i] = seed % 1000;
+    }
+    quicksort(a, 0, n - 1);
+    var sorted = true;
+    for i in 1..n {
+        if a[i - 1] > a[i] {
+            sorted = false;
+        }
+    }
+    println(sorted);
+    println(a[0]);
+    println(a[n / 2]);
+    println(a[n - 1]);
+}

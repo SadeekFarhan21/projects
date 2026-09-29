@@ -1,0 +1,6 @@
+// expect: 4:9: type error: `break` outside of a loop
+fn main() {
+    if true {
+        break;
+    }
+}

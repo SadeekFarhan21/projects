@@ -1,0 +1,28 @@
+// Longest Collatz chain below 10000.
+fn chain(n0: int) -> int {
+    var n = n0;
+    var steps = 1;
+    while n != 1 {
+        if n % 2 == 0 {
+            n = n / 2;
+        } else {
+            n = 3 * n + 1;
+        }
+        steps = steps + 1;
+    }
+    return steps;
+}
+
+fn main() {
+    var best = 0;
+    var best_n = 0;
+    for n in 1..10000 {
+        let c = chain(n);
+        if c > best {
+            best = c;
+            best_n = n;
+        }
+    }
+    println(best_n);
+    println(best);
+}

@@ -1,0 +1,10 @@
+// Escape sequences in string literals.
+fn main() {
+    println("tab:\t|");
+    println("quote: \" backslash: \\");
+    println("two\nlines");
+    println(len("a\0b"));
+    println(len("\n\t\r"));
+    let s = "x\"y";
+    println(substr(s, 1, 1));
+}

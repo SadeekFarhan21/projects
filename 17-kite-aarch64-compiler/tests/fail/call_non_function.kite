@@ -1,0 +1,5 @@
+// expect: 4:5: type error: cannot call a value of type int
+fn main() {
+    let x = 3;
+    x(1);
+}

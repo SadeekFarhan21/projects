@@ -1,0 +1,35 @@
+Kite benchmark summary (wall-clock seconds)
+machine: arm64 macOS-26.5-arm64-arm-64bit-Mach-O, cpu: Apple M4 Pro
+cc: Apple clang version 17.0.0 (clang-1700.4.4.1)
+runs per configuration: 3 (after one warm-up run)
+
+benchmark config       median      min      max  vs c-O2
+fib       kite-O0       0.246    0.226    0.282    5.21x
+fib       kite-O1       0.235    0.118    0.258    4.98x
+fib       kite-O2       0.097    0.085    0.220    2.06x
+fib       c-O0          0.184    0.089    0.193    3.90x
+fib       c-O2          0.047    0.047    0.048    1.00x
+
+sieve     kite-O0       0.891    0.568    1.048    1.97x
+sieve     kite-O1       1.176    1.107    1.408    2.60x
+sieve     kite-O2       0.323    0.274    0.485    0.71x
+sieve     c-O0          0.695    0.466    0.961    1.53x
+sieve     c-O2          0.453    0.391    0.495    1.00x
+
+loops     kite-O0       2.324    2.315    2.659   10.50x
+loops     kite-O1       2.488    2.191    3.192   11.23x
+loops     kite-O2       0.367    0.347    0.373    1.66x
+loops     c-O0          1.349    1.304    1.531    6.09x
+loops     c-O2          0.221    0.112    0.273    1.00x
+
+matmul    kite-O0       0.166    0.120    0.245   15.59x
+matmul    kite-O1       0.242    0.144    0.367   22.69x
+matmul    kite-O2       0.022    0.021    0.023    2.09x
+matmul    c-O0          0.030    0.029    0.031    2.79x
+matmul    c-O2          0.011    0.011    0.013    1.00x
+
+speedups from the Kite optimisation levels (median time ratio):
+  fib      O0/O1 = 1.05x   O1/O2 = 2.41x   O0/O2 = 2.53x   kite-O2 vs c-O0 = 0.53x
+  sieve    O0/O1 = 0.76x   O1/O2 = 3.65x   O0/O2 = 2.76x   kite-O2 vs c-O0 = 0.46x
+  loops    O0/O1 = 0.93x   O1/O2 = 6.79x   O0/O2 = 6.34x   kite-O2 vs c-O0 = 0.27x
+  matmul   O0/O1 = 0.69x   O1/O2 = 10.83x   O0/O2 = 7.45x   kite-O2 vs c-O0 = 0.75x

@@ -1,0 +1,19 @@
+panel (1704, 308) snapshot 417cbe2508ff loaded in 2.88s
+baseline               sharpe=+0.490 ic=+0.1253 ret=+0.073 to=0.159 leak_free=True
+no_costs               sharpe=+0.988 ic=+0.1253 ret=+0.171 to=0.159 leak_free=True
+fee_5                  sharpe=+0.822 ic=+0.1253 ret=+0.137 to=0.159 leak_free=True
+fee_20                 sharpe=+0.159 ic=+0.1253 ret=+0.012 to=0.159 leak_free=True
+fee_40                 sharpe=-0.659 ic=+0.1253 ret=-0.125 to=0.159 leak_free=True
+impact_aum_50m         sharpe=-1.078 ic=+0.1253 ret=-0.191 to=0.159 leak_free=True
+daily_rebalance        sharpe=+0.122 ic=+0.1253 ret=+0.006 to=0.316 leak_free=True
+delay_0                sharpe=+0.692 ic=+0.1329 ret=+0.112 to=0.178 leak_free=True
+random_control         sharpe=-1.339 ic=+0.0005 ret=-0.126 to=0.306 leak_free=True
+signal_reversal_1d     sharpe=-0.848 ic=-0.0000 ret=-0.130 to=0.299 leak_free=True
+signal_momentum_30d    sharpe=-0.324 ic=-0.0488 ret=-0.069 to=0.151 leak_free=True
+leak_forward_return    sharpe=+19.400 ic=+0.7243 ret=+91.615 to=0.307 leak_free=False
+leak_centered_mean     sharpe=+13.330 ic=+0.4381 ret=+14.271 to=0.336 leak_free=False
+kfold_h20_purged       sharpe=+0.850 ic=+0.1750 ret=+0.140 to=0.114 leak_free=True
+kfold_h20_unpurged     sharpe=+0.844 ic=+0.1738 ret=+0.139 to=0.114 leak_free=True
+wf_h20_purged          sharpe=+0.842 ic=+0.1769 ret=+0.142 to=0.136 leak_free=True
+wf_h20_unpurged        sharpe=+0.847 ic=+0.1762 ret=+0.144 to=0.136 leak_free=True
+total 891.3s; wrote results/experiments.* runs_compare.txt *.png

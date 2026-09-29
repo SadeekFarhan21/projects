@@ -1,0 +1,115 @@
+{
+  "machine": "macOS-26.5-arm64-arm-64bit",
+  "processor": "arm",
+  "threads": 1,
+  "rows": [
+    {
+      "num_envs": 1,
+      "step_calls": 2486240,
+      "seconds": 3.0000141250056913,
+      "env_steps_per_sec": 828742.7646679108,
+      "calls_per_sec": 828742.7646679108,
+      "episodes": 12431,
+      "opponents": "random"
+    },
+    {
+      "num_envs": 8,
+      "step_calls": 1077568,
+      "seconds": 3.0000379999983124,
+      "env_steps_per_sec": 2873478.2692768723,
+      "calls_per_sec": 359184.78365960903,
+      "episodes": 43096,
+      "opponents": "random"
+    },
+    {
+      "num_envs": 64,
+      "step_calls": 177536,
+      "seconds": 3.0002675830037333,
+      "env_steps_per_sec": 3787096.8790805554,
+      "calls_per_sec": 59173.38873563368,
+      "episodes": 56768,
+      "opponents": "random"
+    },
+    {
+      "num_envs": 256,
+      "step_calls": 46816,
+      "seconds": 3.0005377910129027,
+      "env_steps_per_sec": 3994249.3095393456,
+      "calls_per_sec": 15602.536365388069,
+      "episodes": 59904,
+      "opponents": "random"
+    },
+    {
+      "num_envs": 1,
+      "step_calls": 2434816,
+      "seconds": 3.0000126660015667,
+      "env_steps_per_sec": 811601.9067496592,
+      "calls_per_sec": 811601.9067496592,
+      "episodes": 12174,
+      "opponents": "scripted"
+    },
+    {
+      "num_envs": 8,
+      "step_calls": 941056,
+      "seconds": 3.0000257909996435,
+      "env_steps_per_sec": 2509461.0928299497,
+      "calls_per_sec": 313682.6366037437,
+      "episodes": 37640,
+      "opponents": "scripted"
+    },
+    {
+      "num_envs": 64,
+      "step_calls": 150144,
+      "seconds": 3.000319540995406,
+      "env_steps_per_sec": 3202730.8653970845,
+      "calls_per_sec": 50042.669771829445,
+      "episodes": 48000,
+      "opponents": "scripted"
+    },
+    {
+      "num_envs": 256,
+      "step_calls": 36960,
+      "seconds": 3.000888082999154,
+      "env_steps_per_sec": 3152986.628726156,
+      "calls_per_sec": 12316.354018461547,
+      "episodes": 47104,
+      "opponents": "scripted"
+    },
+    {
+      "num_envs": 1,
+      "step_calls": 63216,
+      "seconds": 3.0067461659928085,
+      "env_steps_per_sec": 21024.721246838766,
+      "calls_per_sec": 21024.721246838766,
+      "episodes": 316,
+      "opponents": "bayes"
+    },
+    {
+      "num_envs": 8,
+      "step_calls": 7072,
+      "seconds": 3.0023979999969015,
+      "env_steps_per_sec": 18843.604345612537,
+      "calls_per_sec": 2355.450543201567,
+      "episodes": 280,
+      "opponents": "bayes"
+    },
+    {
+      "num_envs": 64,
+      "step_calls": 832,
+      "seconds": 3.1027161670062924,
+      "env_steps_per_sec": 17161.737372637996,
+      "calls_per_sec": 268.1521464474687,
+      "episodes": 256,
+      "opponents": "bayes"
+    },
+    {
+      "num_envs": 256,
+      "step_calls": 208,
+      "seconds": 3.576312124991091,
+      "env_steps_per_sec": 14889.080745471188,
+      "calls_per_sec": 58.16047166199683,
+      "episodes": 256,
+      "opponents": "bayes"
+    }
+  ]
+}

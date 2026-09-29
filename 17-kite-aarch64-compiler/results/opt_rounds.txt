@@ -1,0 +1,8 @@
+Optimiser rounds until fixed point, per function, over tests/programs/*.kite and bench/*.kite
+(KITE_OPT_STATS=1 kitec ir FILE -O1; the last round is the one that changes nothing)
+
+functions rounds
+  10 1
+ 123 2
+  11 3
+   1 4

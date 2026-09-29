@@ -1,0 +1,4 @@
+// expect: 2:9: type error: unknown type `Foo`
+fn f(x: Foo) {}
+
+fn main() {}

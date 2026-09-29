@@ -1,0 +1,11 @@
+// expect: 8:20: parse error: expected ';', found ':'
+struct P {
+    x: int,
+}
+
+fn main() {
+    let p = P { x: 1 };
+    if p.x == P { x: 1 }.x {
+        println("same");
+    }
+}

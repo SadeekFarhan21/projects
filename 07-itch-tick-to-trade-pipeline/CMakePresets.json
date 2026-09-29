@@ -1,0 +1,99 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "release",
+      "displayName": "Release -O2 (measured build)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang++"
+      }
+    },
+    {
+      "name": "asan",
+      "displayName": "Debug + AddressSanitizer + UBSan (Homebrew LLVM: Apple clang 17 ASan runtime hangs at init on macOS 26.5)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/asan",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "/opt/homebrew/opt/llvm/bin/clang++",
+        "LLT_SANITIZE": "ON",
+        "LLT_BUILD_BENCH": "OFF"
+      }
+    },
+    {
+      "name": "tsan",
+      "displayName": "Debug + ThreadSanitizer (Homebrew LLVM: Apple clang 17 ASan runtime hangs at init on macOS 26.5)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/tsan",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "/opt/homebrew/opt/llvm/bin/clang++",
+        "LLT_TSAN": "ON",
+        "LLT_BUILD_BENCH": "OFF"
+      }
+    },
+    {
+      "name": "ubsan-apple",
+      "displayName": "Debug + UBSan with Apple clang 17",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/ubsan-apple",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "LLT_UBSAN_ONLY": "ON",
+        "LLT_BUILD_BENCH": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan"
+    },
+    {
+      "name": "tsan",
+      "configurePreset": "tsan"
+    },
+    {
+      "name": "ubsan-apple",
+      "configurePreset": "ubsan-apple"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "asan",
+      "configurePreset": "asan",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "tsan",
+      "configurePreset": "tsan",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "ubsan-apple",
+      "configurePreset": "ubsan-apple",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

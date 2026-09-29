@@ -1,0 +1,24 @@
+// Arrays of arrays. Note [[0; 3]; 3] would share one inner array,
+// because arrays are references; build rows separately instead.
+fn main() {
+    let n = 4;
+    var grid = [[0]; n];
+    for i in 0..n {
+        grid[i] = [0; n];
+    }
+    for i in 0..n {
+        for j in 0..n {
+            grid[i][j] = i * 10 + j;
+        }
+    }
+    for i in 0..n {
+        for j in 0..n {
+            print(grid[i][j]);
+            print(" ");
+        }
+        println();
+    }
+    let shared = [[0; 2]; 2];
+    shared[0][0] = 99;
+    println(shared[1][0]);
+}

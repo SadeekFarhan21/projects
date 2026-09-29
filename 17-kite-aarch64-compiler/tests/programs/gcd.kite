@@ -1,0 +1,33 @@
+// Euclid's algorithm, recursive and iterative.
+fn gcd(a: int, b: int) -> int {
+    if b == 0 {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+fn gcd_iter(a: int, b: int) -> int {
+    var x = a;
+    var y = b;
+    while y != 0 {
+        let t = x % y;
+        x = y;
+        y = t;
+    }
+    return x;
+}
+
+fn main() {
+    println(gcd(48, 18));
+    println(gcd(17, 5));
+    println(gcd_iter(1071, 462));
+    println(gcd_iter(0, 9));
+    var total = 0;
+    for a in 1..30 {
+        for b in 1..30 {
+            assert(gcd(a, b) == gcd_iter(a, b));
+            total = total + gcd(a, b);
+        }
+    }
+    println(total);
+}

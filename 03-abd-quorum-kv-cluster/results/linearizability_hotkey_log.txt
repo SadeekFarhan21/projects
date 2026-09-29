@@ -1,0 +1,17 @@
+{'config': 'safe', 'r': 2, 'w': 2, 'writeback': True, 'seed': 0, 'ops': 1545, 'ok': 1543, 'info': 2, 'fail': 0, 'linearizable': True, 'states_explored': 329890, 'check_seconds': 4.448, 'bad_key': ''}
+{'config': 'no-wb', 'r': 2, 'w': 2, 'writeback': False, 'seed': 0, 'ops': 1423, 'ok': 1421, 'info': 2, 'fail': 0, 'linearizable': False, 'states_explored': 51867, 'check_seconds': 1.074, 'bad_key': 'k0'}
+    could linearize at most 70/1421 ok ops; first unplaceable: [Op(process=0, f='read', key='k0', value=5000004, call=85881.928469458, ret=85881.9431355, status='ok'), Op(process=4, f='read', key='k0', value=5000005, call=85881.94610125, ret=85881.955782708, status='ok'), Op(process=8, f='write', key='k0', value=8000004, call=85881.946223375, ret=85881.973606958, status='ok')]
+{'config': 'safe', 'r': 2, 'w': 2, 'writeback': True, 'seed': 1, 'ops': 1003, 'ok': 1000, 'info': 3, 'fail': 0, 'linearizable': True, 'states_explored': 211640, 'check_seconds': 6.335, 'bad_key': ''}
+{'config': 'no-wb', 'r': 2, 'w': 2, 'writeback': False, 'seed': 1, 'ops': 1301, 'ok': 1299, 'info': 2, 'fail': 0, 'linearizable': True, 'states_explored': 178299, 'check_seconds': 5.889, 'bad_key': ''}
+{'config': 'safe', 'r': 2, 'w': 2, 'writeback': True, 'seed': 2, 'ops': 772, 'ok': 770, 'info': 2, 'fail': 0, 'linearizable': True, 'states_explored': 146981, 'check_seconds': 4.177, 'bad_key': ''}
+{'config': 'no-wb', 'r': 2, 'w': 2, 'writeback': False, 'seed': 2, 'ops': 927, 'ok': 926, 'info': 1, 'fail': 0, 'linearizable': True, 'states_explored': 134619, 'check_seconds': 7.325, 'bad_key': ''}
+{'config': 'safe', 'r': 2, 'w': 2, 'writeback': True, 'seed': 3, 'ops': 654, 'ok': 651, 'info': 3, 'fail': 0, 'linearizable': True, 'states_explored': 151004, 'check_seconds': 6.727, 'bad_key': ''}
+{'config': 'no-wb', 'r': 2, 'w': 2, 'writeback': False, 'seed': 3, 'ops': 846, 'ok': 845, 'info': 1, 'fail': 0, 'linearizable': True, 'states_explored': 111164, 'check_seconds': 5.652, 'bad_key': ''}
+{'config': 'safe', 'r': 2, 'w': 2, 'writeback': True, 'seed': 4, 'ops': 864, 'ok': 864, 'info': 0, 'fail': 0, 'linearizable': True, 'states_explored': 151990, 'check_seconds': 6.879, 'bad_key': ''}
+{'config': 'no-wb', 'r': 2, 'w': 2, 'writeback': False, 'seed': 4, 'ops': 839, 'ok': 837, 'info': 2, 'fail': 0, 'linearizable': True, 'states_explored': 123773, 'check_seconds': 5.859, 'bad_key': ''}
+{'config': 'safe', 'r': 2, 'w': 2, 'writeback': True, 'seed': 5, 'ops': 518, 'ok': 516, 'info': 2, 'fail': 0, 'linearizable': True, 'states_explored': 82024, 'check_seconds': 2.942, 'bad_key': ''}
+{'config': 'no-wb', 'r': 2, 'w': 2, 'writeback': False, 'seed': 5, 'ops': 847, 'ok': 845, 'info': 2, 'fail': 0, 'linearizable': True, 'states_explored': 118715, 'check_seconds': 2.779, 'bad_key': ''}
+
+summary (violations / runs):
+  safe        0/6
+  no-wb       1/6

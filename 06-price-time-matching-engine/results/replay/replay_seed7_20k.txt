@@ -1,0 +1,13 @@
+inputs        20000
+outputs       41862
+trades        7246 (volume 184817)
+l2 updates    13805
+resting       81 orders, 17 bid levels, 13 ask levels
+digest        58e59cbfebb1a31d
+elapsed       0.032 s (including I/O)
+     bid qty      bid | ask      ask qty     
+          28    10014 | 10015    6           
+         167    10007 | 10016    100         
+           3    10004 | 10017    80          
+         108    10003 | 10024    88          
+         215     9999 | 10027    243         

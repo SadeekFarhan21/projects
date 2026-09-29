@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-09-26 23:27:21",
+  "machine": "arm64",
+  "config": {
+    "sims": 2000,
+    "max_n": 10000,
+    "batch": 200,
+    "tau": 0.1,
+    "effect": 0.05,
+    "alpha": 0.05,
+    "seed": 3
+  },
+  "n_looks": 50,
+  "null": {
+    "effect": 0.0,
+    "naive_peeking_reject_rate": 0.328,
+    "naive_ci": [
+      0.30777111780000993,
+      0.34888834647512473
+    ],
+    "msprt_reject_rate": 0.0195,
+    "msprt_ci": [
+      0.014297256313892035,
+      0.026545026152399693
+    ],
+    "msprt_mean_stop_n": 2697.4358974358975,
+    "naive_mean_stop_n": 2410.670731707317,
+    "fixed_horizon_reject_rate": 0.0525
+  },
+  "effect": {
+    "effect": 0.05,
+    "naive_peeking_reject_rate": 0.9735,
+    "naive_ci": [
+      0.9655014765685911,
+      0.9796830796274772
+    ],
+    "msprt_reject_rate": 0.7275,
+    "msprt_ci": [
+      0.7075643113362454,
+      0.7465634321370503
+    ],
+    "msprt_mean_stop_n": 5112.164948453608,
+    "naive_mean_stop_n": 2630.2003081664097,
+    "fixed_horizon_reject_rate": 0.9375
+  }
+}

@@ -1,0 +1,24 @@
+// && and || short-circuit: the right side runs only when needed.
+fn noisy(name: string, v: bool) -> bool {
+    print("[");
+    print(name);
+    print("]");
+    return v;
+}
+
+fn main() {
+    println(noisy("a", false) && noisy("b", true));
+    println(noisy("c", true) && noisy("d", true));
+    println(noisy("e", true) || noisy("f", false));
+    println(noisy("g", false) || noisy("h", true));
+    println(!noisy("i", false));
+    let x = 0;
+    // guards against division by zero
+    if x != 0 && 10 / x > 1 {
+        println("unreachable");
+    } else {
+        println("guarded");
+    }
+    let b = noisy("j", true) && (noisy("k", false) || noisy("l", true));
+    println(b);
+}

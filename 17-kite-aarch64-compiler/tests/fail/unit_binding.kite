@@ -1,0 +1,6 @@
+// expect: 5:13: type error: cannot bind `x` to a value of type unit
+fn nothing() {}
+
+fn main() {
+    let x = nothing();
+}

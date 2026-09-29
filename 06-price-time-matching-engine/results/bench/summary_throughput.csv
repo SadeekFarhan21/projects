@@ -1,0 +1,4 @@
+key,runs,median_events_per_wall_sec,median_events_per_cpu_sec,median_new_orders_per_cpu_sec,max_events_per_wall_sec,max_events_per_cpu_sec,max_new_orders_per_cpu_sec
+identity,9,7610240,15851000,7900410,17479500,22071500,11000300
+idmap,9,4752840,13123300,6539930,12761900,17373300,8657900
+stdmap,9,7399960,16031100,7989850,15092700,17746600,8843910

@@ -1,0 +1,54 @@
+id: sql-chinook-genre_top_artist-01
+family: sql
+prompt: |-
+  db.sqlite is the Chinook digital music store database (artists, albums, tracks, genres, playlists, customers, employees, invoices, invoice lines).
+  Tables and columns
+  Album(AlbumId, Title, ArtistId)
+  Artist(ArtistId, Name)
+  Customer(CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+  Employee(EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email)
+  Genre(GenreId, Name)
+  Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total)
+  InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
+  MediaType(MediaTypeId, Name)
+  Playlist(PlaylistId, Name)
+  PlaylistTrack(PlaylistId, TrackId)
+  Track(TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+
+  Question: Which artist has the most tracks in the genre 'Heavy Metal'? Submit the artist name exactly.
+
+  Use run_sql to compute the answer, then call submit with the answer.
+fixtures:
+- copy: data/chinook.sqlite
+  to: db.sqlite
+allowed_tools:
+- run_sql
+- list_dir
+- submit
+verifier:
+  type: python
+  function: agentenv.verifiers:numeric_or_text_answer
+  args:
+    expected: Iron Maiden
+    kind: text
+    rel_tol: 0.0001
+    abs_tol: 0.01
+difficulty: hard
+tags:
+- chinook
+- argmax
+- join3
+timeout_s: 300
+limits:
+  step_limit: 8
+  token_budget: 1500
+reference:
+  sql: SELECT ar.Name, COUNT(*) AS n FROM Track t JOIN Album al ON al.AlbumId = t.AlbumId JOIN Artist
+    ar ON ar.ArtistId = al.ArtistId JOIN Genre g ON g.GenreId = t.GenreId WHERE g.Name = 'Heavy Metal'
+    GROUP BY ar.ArtistId ORDER BY n DESC LIMIT 1
+metadata:
+  template: genre_top_artist
+  params:
+  - Heavy Metal
+  db: chinook
+  answer_kind: text

@@ -1,0 +1,33 @@
+{
+ "day": "2026-09-01",
+ "all": {
+  "n": 32624,
+  "median_diff_vp": 0.010141324449375322,
+  "mean_diff_vp": 1.0493064826559144,
+  "mad_vp": 0.17742417272074706,
+  "p95_abs_vp": 5.516101328262746,
+  "share_within_half_spread": 0.9942808648808206,
+  "n_no_bid_iv": 5522,
+  "share_mid_equals_mark": 0.10798798430603238,
+  "median_price_part_vp": 0.0,
+  "median_forward_part_vp": 0.0,
+  "median_residual_vp": 0.001838988919714013,
+  "median_half_spread_vp": 0.9291143306153576
+ },
+ "otm_only": {
+  "n": 16390,
+  "median_diff_vp": 0.012235829839335466,
+  "mean_diff_vp": 0.14172810566360552,
+  "mad_vp": 0.09130997037333777,
+  "p95_abs_vp": 0.8379801191115921,
+  "share_within_half_spread": 0.9905430140329469,
+  "n_no_bid_iv": 0,
+  "share_mid_equals_mark": 0.17181208053691274,
+  "median_price_part_vp": 0.0,
+  "median_forward_part_vp": -0.0009460730922533633,
+  "median_residual_vp": 0.0006386805260827355,
+  "median_half_spread_vp": 0.6393234672874087
+ },
+ "share_abs_diff_below_0p5vp": 0.704205492888671,
+ "corr_diff_vs_price_part": 0.7976291659299242
+}

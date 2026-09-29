@@ -1,0 +1,23 @@
+fn sieve(n: int) -> int {
+    var composite = [false; n + 1];
+    var count = 0;
+    for i in 2..n + 1 {
+        if !composite[i] {
+            count = count + 1;
+            var j = i * i;
+            while j <= n {
+                composite[j] = true;
+                j = j + i;
+            }
+        }
+    }
+    return count;
+}
+
+fn main() {
+    var total = 0;
+    for r in 0..10 {
+        total = total + sieve(2000000);
+    }
+    println(total);
+}

@@ -1,0 +1,54 @@
+id: sql-chinook-genre_top_country-02
+family: sql
+prompt: |-
+  db.sqlite is the Chinook digital music store database (artists, albums, tracks, genres, playlists, customers, employees, invoices, invoice lines).
+  Tables and columns
+  Album(AlbumId, Title, ArtistId)
+  Artist(ArtistId, Name)
+  Customer(CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+  Employee(EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email)
+  Genre(GenreId, Name)
+  Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total)
+  InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
+  MediaType(MediaTypeId, Name)
+  Playlist(PlaylistId, Name)
+  PlaylistTrack(PlaylistId, TrackId)
+  Track(TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+
+  Question: Which billing country has the highest total revenue (UnitPrice * Quantity over invoice lines) from tracks in the genre 'R&B/Soul'? Submit the country name exactly.
+
+  Use run_sql to compute the answer, then call submit with the answer.
+fixtures:
+- copy: data/chinook.sqlite
+  to: db.sqlite
+allowed_tools:
+- run_sql
+- list_dir
+- submit
+verifier:
+  type: python
+  function: agentenv.verifiers:numeric_or_text_answer
+  args:
+    expected: USA
+    kind: text
+    rel_tol: 0.0001
+    abs_tol: 0.01
+difficulty: hard
+tags:
+- chinook
+- argmax
+- join3
+timeout_s: 300
+limits:
+  step_limit: 8
+  token_budget: 1500
+reference:
+  sql: SELECT i.BillingCountry, SUM(il.UnitPrice * il.Quantity) AS rev FROM InvoiceLine il JOIN Invoice
+    i ON i.InvoiceId = il.InvoiceId JOIN Track t ON t.TrackId = il.TrackId JOIN Genre g ON g.GenreId =
+    t.GenreId WHERE g.Name = 'R&B/Soul' GROUP BY 1 ORDER BY rev DESC LIMIT 1
+metadata:
+  template: genre_top_country
+  params:
+  - R&B/Soul
+  db: chinook
+  answer_kind: text

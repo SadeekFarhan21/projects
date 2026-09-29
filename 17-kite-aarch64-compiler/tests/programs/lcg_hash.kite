@@ -1,0 +1,27 @@
+// A string hash (FNV-1a style, using wrapping multiplication).
+fn byte_at(s: string, i: int) -> int {
+    // find the byte by comparing against every chr; slow but pure Kite
+    let c = substr(s, i, 1);
+    for b in 0..256 {
+        if chr(b) == c {
+            return b;
+        }
+    }
+    return -1;
+}
+
+fn fnv1a(s: string) -> int {
+    var h = 0xcbf29ce484222325;
+    for i in 0..len(s) {
+        h = h ^ byte_at(s, i);
+        h = h * 0x100000001b3;
+    }
+    return h;
+}
+
+fn main() {
+    println(fnv1a(""));
+    println(fnv1a("a"));
+    println(fnv1a("kite"));
+    println(fnv1a("hello, world"));
+}

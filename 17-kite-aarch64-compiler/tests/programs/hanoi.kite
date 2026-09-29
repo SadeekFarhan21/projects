@@ -1,0 +1,21 @@
+// Towers of Hanoi: count moves and print the first few.
+fn hanoi(n: int, from: string, to: string, via: string, moves: [int]) {
+    if n == 0 {
+        return;
+    }
+    hanoi(n - 1, from, via, to, moves);
+    moves[0] = moves[0] + 1;
+    if moves[0] <= 7 {
+        println("move " + to_str(n) + " " + from + "->" + to);
+    }
+    hanoi(n - 1, via, to, from, moves);
+}
+
+fn main() {
+    let moves = [0];
+    hanoi(3, "A", "C", "B", moves);
+    println(moves[0]);
+    moves[0] = 0;
+    hanoi(16, "A", "C", "B", moves);
+    println(moves[0]);
+}

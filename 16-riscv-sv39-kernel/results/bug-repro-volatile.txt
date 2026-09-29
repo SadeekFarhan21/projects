@@ -1,0 +1,10 @@
+# bug reproduction: interrupt-updated counters without volatile
+# kernel built from this tree with the volatile qualifiers in cpu.h and trap.h removed
+# (and without the n == 0 guard in bench.c). Run under -icount shift=0,sleep=off.
+## mode=test, timer ticks test:
+    10 ticks during 100 ms busy wait (expect about 10)
+[PASS] timer ticks                    148936 us
+SELFTEST SUMMARY: 21 passed, 0 failed, 21 total
+## mode=bench, timer latency lines:
+BENCH timer_latency_idle     n=200 min=0 p50=100 p99=100 max=100 mean=86 ns (resolution 100 ns)
+BENCH timer_latency_busy     n=0 min=0 p50=0 p99=0 max=0 mean=18446744073709551615 ns (resolution 100 ns)

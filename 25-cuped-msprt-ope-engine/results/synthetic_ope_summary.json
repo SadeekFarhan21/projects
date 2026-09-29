@@ -1,0 +1,126 @@
+{
+  "generated_at": "2026-09-26 23:39:14",
+  "machine": "arm64",
+  "config": {
+    "reps": 200,
+    "n": 5000,
+    "n_boot": 500,
+    "tau": 2.0,
+    "workers": 6,
+    "seed": 0
+  },
+  "truth": 0.5049217741738781,
+  "weights_rep0": {
+    "mean": 0.9755906196124895,
+    "max": 4.1849608265864715,
+    "p99": 3.534608223266299,
+    "share_above_tau": 0.1376
+  },
+  "wall_s": 548.1019648749934,
+  "rows": [
+    {
+      "estimator": "ips",
+      "reward_model": "none",
+      "reps": 200,
+      "mean_rel_bias": -0.0024524796300379186,
+      "mean_abs_rel_err": 0.01908879461775814,
+      "rmse": 0.01184226591436726,
+      "sd": 0.011806898989275068,
+      "ci_coverage": 0.95,
+      "covered_n": 190,
+      "cov_lo": 0.9104218514713903,
+      "cov_hi": 0.972617354526543
+    },
+    {
+      "estimator": "snips",
+      "reward_model": "none",
+      "reps": 200,
+      "mean_rel_bias": -0.0010156193092699909,
+      "mean_abs_rel_err": 0.012866463788133909,
+      "rmse": 0.008362471838701292,
+      "sd": 0.008367679078617005,
+      "ci_coverage": 0.97,
+      "covered_n": 194,
+      "cov_lo": 0.9361057071903662,
+      "cov_hi": 0.9861796857408085
+    },
+    {
+      "estimator": "dm",
+      "reward_model": "gbm",
+      "reps": 200,
+      "mean_rel_bias": -0.11002997528369723,
+      "mean_abs_rel_err": 0.11002997528369723,
+      "rmse": 0.056111988099943895,
+      "sd": 0.007895494926673075,
+      "ci_coverage": 0.0,
+      "covered_n": 0,
+      "cov_lo": 0.0,
+      "cov_hi": 0.018845326668962936
+    },
+    {
+      "estimator": "dr",
+      "reward_model": "gbm",
+      "reps": 200,
+      "mean_rel_bias": -0.00021555108002457315,
+      "mean_abs_rel_err": 0.01274385404512089,
+      "rmse": 0.00826382527400314,
+      "sd": 0.008283844104986534,
+      "ci_coverage": 0.96,
+      "covered_n": 192,
+      "cov_lo": 0.9230679314255735,
+      "cov_hi": 0.9795943680389804
+    },
+    {
+      "estimator": "switch_dr",
+      "reward_model": "gbm",
+      "reps": 200,
+      "mean_rel_bias": -0.0850266149213362,
+      "mean_abs_rel_err": 0.0850266149213362,
+      "rmse": 0.043686322449659955,
+      "sd": 0.0081046075533254,
+      "ci_coverage": 0.0,
+      "covered_n": 0,
+      "cov_lo": 0.0,
+      "cov_hi": 0.018845326668962936
+    },
+    {
+      "estimator": "dm",
+      "reward_model": "weak",
+      "reps": 200,
+      "mean_rel_bias": -0.2435434654753903,
+      "mean_abs_rel_err": 0.2435434654753903,
+      "rmse": 0.12317107269812953,
+      "sd": 0.007045737084068289,
+      "ci_coverage": 0.0,
+      "covered_n": 0,
+      "cov_lo": 0.0,
+      "cov_hi": 0.018845326668962936
+    },
+    {
+      "estimator": "dr",
+      "reward_model": "weak",
+      "reps": 200,
+      "mean_rel_bias": -0.0016575682505165154,
+      "mean_abs_rel_err": 0.013592006231806144,
+      "rmse": 0.00868231737867629,
+      "sd": 0.008663570274251686,
+      "ci_coverage": 0.965,
+      "covered_n": 193,
+      "cov_lo": 0.9295293881131225,
+      "cov_hi": 0.9829444580847418
+    },
+    {
+      "estimator": "switch_dr",
+      "reward_model": "weak",
+      "reps": 200,
+      "mean_rel_bias": -0.18077981920030572,
+      "mean_abs_rel_err": 0.18077981920030572,
+      "rmse": 0.09159633760339382,
+      "sd": 0.007629053592684611,
+      "ci_coverage": 0.0,
+      "covered_n": 0,
+      "cov_lo": 0.0,
+      "cov_hi": 0.018845326668962936
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# OCaml / dune
+_build/
+_opam/
+*.install
+
+# Verilator / CMake
+verilator/build/
+build/
+obj_dir/
+
+# Generated RTL and test vectors (regenerate with make targets)
+generated/
+vectors/
+
+# Waveforms and failure dumps
+*.vcd
+results/failures/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store

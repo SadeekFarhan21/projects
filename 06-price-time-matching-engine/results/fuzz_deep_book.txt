@@ -1,0 +1,2 @@
+seed 21: 300000 events OK (resting at end: 884)
+fuzz OK: 300000 events, 620999 outputs, 101890 trades, 325.4 s

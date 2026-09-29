@@ -1,0 +1,57 @@
+// Top-level functions are first-class values.
+fn square(x: int) -> int {
+    return x * x;
+}
+
+fn negate(x: int) -> int {
+    return -x;
+}
+
+fn map(a: [int], f: fn(int) -> int) -> [int] {
+    var out = [0; len(a)];
+    for i in 0..len(a) {
+        out[i] = f(a[i]);
+    }
+    return out;
+}
+
+fn fold(a: [int], init: int, f: fn(int, int) -> int) -> int {
+    var acc = init;
+    for i in 0..len(a) {
+        acc = f(acc, a[i]);
+    }
+    return acc;
+}
+
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+fn max(a: int, b: int) -> int {
+    if a > b {
+        return a;
+    }
+    return b;
+}
+
+fn show(a: [int]) {
+    for i in 0..len(a) {
+        print(a[i]);
+        print(" ");
+    }
+    println();
+}
+
+fn main() {
+    let xs = [1, -2, 3, -4, 5];
+    show(map(xs, square));
+    show(map(xs, negate));
+    show(map(map(xs, square), negate));
+    println(fold(xs, 0, add));
+    println(fold(xs, -1000, max));
+    let f = square;
+    println(f(12));
+    var g = square;
+    g = negate;
+    println(g(12));
+}

@@ -1,0 +1,23 @@
+# A small hand-written session. Prices in ticks, quantities in lots.
+# Build a book: two bid levels, two ask levels.
+N 1 B LMT 9990 10
+N 2 B LMT 9990 5
+N 3 B LMT 9980 20
+N 4 S LMT 10010 10
+N 5 S LMT 10020 15
+# Post-only that would cross is rejected; one that does not cross rests.
+N 6 B POST 10010 5
+N 7 B POST 10000 5
+# Aggressive limit takes all of 10010 and 2 lots of 10020.
+N 8 B LMT 10020 12
+# IOC for more than is available at its limit: partial fill, rest cancelled.
+N 9 S IOC 10000 8
+# FOK that cannot fill completely is cancelled with no trades.
+N 10 S FOK 9990 100
+# Modify down keeps priority, modify up loses it.
+M 1 9990 4
+M 2 9990 9
+# Market sell sweeps the bids.
+N 11 S MKT 0 12
+C 3
+C 3

@@ -1,0 +1,8 @@
+# build outputs
+build/
+*.o
+*.d
+*.elf
+*.bin
+*.asm
+.DS_Store

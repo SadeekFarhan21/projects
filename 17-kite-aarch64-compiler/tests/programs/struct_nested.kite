@@ -1,0 +1,31 @@
+// Structs containing structs, arrays and strings.
+struct Vec2 {
+    x: int,
+    y: int,
+}
+
+struct Body {
+    name: string,
+    pos: Vec2,
+    vel: Vec2,
+    history: [int],
+}
+
+fn step(b: Body, t: int) {
+    b.pos.x = b.pos.x + b.vel.x;
+    b.pos.y = b.pos.y + b.vel.y;
+    b.history[t] = b.pos.x * 1000 + b.pos.y;
+}
+
+fn main() {
+    let b = Body { name: "rock", pos: Vec2 { x: 0, y: 0 }, vel: Vec2 { x: 2, y: 3 }, history: [0; 4] };
+    for t in 0..4 {
+        step(b, t);
+    }
+    println(b.name);
+    println(b.pos.x);
+    println(b.pos.y);
+    for t in 0..4 {
+        println(b.history[t]);
+    }
+}

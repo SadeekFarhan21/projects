@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-09-26 23:27:38",
+  "machine": "arm64",
+  "config": {
+    "sims": 2000,
+    "n": 1000,
+    "seed": 7
+  },
+  "max_abs_gap": 0.03113329419082178,
+  "max_abs_gap_by_dist": {
+    "lognormal": 0.03113329419082178,
+    "normal": 0.02618008828121715
+  },
+  "analytic_inside_wilson_95": "19/22"
+}

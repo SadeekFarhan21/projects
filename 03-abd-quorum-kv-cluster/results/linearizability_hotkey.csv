@@ -1,0 +1,13 @@
+config,r,w,writeback,seed,ops,ok,info,fail,linearizable,states_explored,check_seconds,bad_key
+safe,2,2,True,0,1545,1543,2,0,True,329890,4.448,
+no-wb,2,2,False,0,1423,1421,2,0,False,51867,1.074,k0
+safe,2,2,True,1,1003,1000,3,0,True,211640,6.335,
+no-wb,2,2,False,1,1301,1299,2,0,True,178299,5.889,
+safe,2,2,True,2,772,770,2,0,True,146981,4.177,
+no-wb,2,2,False,2,927,926,1,0,True,134619,7.325,
+safe,2,2,True,3,654,651,3,0,True,151004,6.727,
+no-wb,2,2,False,3,846,845,1,0,True,111164,5.652,
+safe,2,2,True,4,864,864,0,0,True,151990,6.879,
+no-wb,2,2,False,4,839,837,2,0,True,123773,5.859,
+safe,2,2,True,5,518,516,2,0,True,82024,2.942,
+no-wb,2,2,False,5,847,845,2,0,True,118715,2.779,

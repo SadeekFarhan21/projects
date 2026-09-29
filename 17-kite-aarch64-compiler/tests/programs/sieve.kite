@@ -1,0 +1,20 @@
+// Sieve of Eratosthenes.
+fn main() {
+    let n = 200;
+    var composite = [false; n + 1];
+    var count = 0;
+    for i in 2..n + 1 {
+        if !composite[i] {
+            count = count + 1;
+            print(i);
+            print(" ");
+            var j = i * i;
+            while j <= n {
+                composite[j] = true;
+                j = j + i;
+            }
+        }
+    }
+    println();
+    println(count);
+}

@@ -1,0 +1,36 @@
+{
+ "threads": 1,
+ "n": 2000000,
+ "price_per_s": 21078869.226633716,
+ "greeks_per_s": 13400589.372099958,
+ "iv_per_s_best": 2011810.4175700443,
+ "iv_per_s_median": 1898969.4456982655,
+ "share_ok": 0.9798195,
+ "share_at_intrinsic": 0.0201805,
+ "n_brent": 493,
+ "n_not_converged": 0,
+ "max_price_err_rel_F": 1.1368683772161603e-15,
+ "p99_price_err_rel_F": 2.842170943040401e-16,
+ "max_vol_err_vega_gt_1e3": 5.645750533744831e-11,
+ "mean_iters": 6.1828025467956085,
+ "p99_iters": 12.0,
+ "max_iters": 40
+}
+{
+ "threads": 2,
+ "n": 2000000,
+ "price_per_s": 33263410.873044927,
+ "greeks_per_s": 28888827.64745235,
+ "iv_per_s_best": 2944476.015783682,
+ "iv_per_s_median": 2938253.7032139343,
+ "share_ok": 0.9798195,
+ "share_at_intrinsic": 0.0201805,
+ "n_brent": 493,
+ "n_not_converged": 0,
+ "max_price_err_rel_F": 1.1368683772161603e-15,
+ "p99_price_err_rel_F": 2.842170943040401e-16,
+ "max_vol_err_vega_gt_1e3": 5.645750533744831e-11,
+ "mean_iters": 6.1828025467956085,
+ "p99_iters": 12.0,
+ "max_iters": 40
+}

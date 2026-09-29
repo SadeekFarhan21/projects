@@ -1,0 +1,21 @@
+{
+  "config": {
+    "epochs": 3,
+    "batch_size": 128,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "seed": 0,
+    "torch_twin": true,
+    "dtype": "float64",
+    "tag": "_f64_twin"
+  },
+  "params": 535818,
+  "architecture": "784-512-256-10 ReLU MLP",
+  "final_test_acc": 0.9775,
+  "best_test_acc": 0.9775,
+  "final_test_loss": 0.06793128804990448,
+  "mean_smolgrad_epoch_seconds": 5.69150344778609,
+  "total_wall_seconds": 52.52488766600436,
+  "torch_final_test_acc": 0.9775,
+  "final_max_abs_weight_diff": 5.260722413247265e-14
+}

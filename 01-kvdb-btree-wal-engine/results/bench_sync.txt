@@ -1,0 +1,13 @@
+# exp=sync n=2000 key=16B value=100B dir=/var/folders/d_/gjdwfdmj1_g699ng1bn05z000000gn/T//kvdb_bench loadavg=4.6 7.0 33.6
+# sqlite 3.51.0
+sync   kvdb             put_none     n=2000     batch=1        693922 ops/s     693963 ops/cpu-s  p50=   1209 ns  p99=    4458 ns  p99.9=    16667 ns  load=4.6
+sync   kvdb             put_fsync    n=2000     batch=1         38162 ops/s      87839 ops/cpu-s  p50=  24000 ns  p99=   37250 ns  p99.9=   719166 ns  load=4.6
+sync   kvdb             put_fullfsync n=2000     batch=1           247 ops/s      23100 ops/cpu-s  p50=4006833 ns  p99= 5003500 ns  p99.9=  8123583 ns  load=4.3
+sync   sqlite           put_none     n=2000     batch=1         70517 ops/s      70651 ops/cpu-s  p50=  10292 ns  p99=   41875 ns  p99.9=   251541 ns  load=4.3
+sync   sqlite           put_fsync    n=2000     batch=1          4900 ops/s      14292 ops/cpu-s  p50=  67542 ns  p99= 1735750 ns  p99.9=  8494250 ns  load=4.3
+sync   sqlite           put_fullfsync n=2000     batch=1          1006 ops/s      11206 ops/cpu-s  p50= 690708 ns  p99= 3705416 ns  p99.9=  8867000 ns  load=4.3
+sync   kvdb             batch_fullfsync n=2000     batch=1           243 ops/s      16886 ops/cpu-s  p50=4014708 ns  p99= 6097000 ns  p99.9=  8335791 ns  load=5.1
+sync   kvdb             batch_fullfsync n=2000     batch=4           980 ops/s      66386 ops/cpu-s  p50=4002708 ns  p99= 6060583 ns  p99.9=  8032292 ns  load=5.1
+sync   kvdb             batch_fullfsync n=2000     batch=16         3960 ops/s     233127 ops/cpu-s  p50=4007500 ns  p99= 4980125 ns  p99.9=  5979750 ns  load=5.1
+sync   kvdb             batch_fullfsync n=1984     batch=64        15485 ops/s     500126 ops/cpu-s  p50=3999834 ns  p99= 7020750 ns  p99.9=  7020750 ns  load=5.1
+sync   kvdb             batch_fullfsync n=1792     batch=256       59450 ops/s    1104128 ops/cpu-s  p50=4052875 ns  p99= 6026375 ns  p99.9=  6026375 ns  load=5.1

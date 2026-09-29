@@ -1,0 +1,42 @@
+# macOS-26.5-arm64-arm-64bit python 3.12.13 cpus=14
+# generators=4 concurrency=32 duration=5.0s read_frac=0.5 keyspace=2000
+nodes  size=3 R=2 W=2 trial=0 thr=     499 ops/s  p50=117.17ms p99=980.09ms  cpu/op=525us net=432us idle=0.046 load=307 errors=0
+nodes  size=5 R=2 W=2 trial=0 thr=     649 ops/s  p50=97.47ms p99=751.73ms  cpu/op=666us net=490us idle=0.115 load=315 errors=0
+nodes  size=7 R=2 W=2 trial=0 thr=     709 ops/s  p50=132.27ms p99=639.96ms  cpu/op=781us net=634us idle=0.104 load=318 errors=0
+nodes  size=9 R=2 W=2 trial=0 thr=     717 ops/s  p50=118.04ms p99=661.01ms  cpu/op=880us net=697us idle=0.131 load=316 errors=0
+quorum size=5 R=1 W=1 trial=0 thr=     820 ops/s  p50=67.99ms p99=739.02ms  cpu/op=617us net=553us idle=0.053 load=308 errors=0
+quorum size=5 R=1 W=2 trial=0 thr=     595 ops/s  p50=142.36ms p99=707.20ms  cpu/op=769us net=651us idle=0.070 load=315 errors=0
+quorum size=5 R=2 W=1 trial=0 thr=     522 ops/s  p50=164.54ms p99=780.70ms  cpu/op=671us net=534us idle=0.072 load=319 errors=0
+quorum size=5 R=1 W=3 trial=0 thr=     354 ops/s  p50=362.13ms p99=813.86ms  cpu/op=837us net=694us idle=0.051 load=337 errors=0
+quorum size=5 R=3 W=1 trial=0 thr=     304 ops/s  p50=384.57ms p99=828.97ms  cpu/op=856us net=687us idle=0.051 load=340 errors=0
+quorum size=5 R=2 W=2 trial=0 thr=     533 ops/s  p50=140.93ms p99=879.48ms  cpu/op=720us net=581us idle=0.074 load=341 errors=0
+quorum size=5 R=2 W=3 trial=0 thr=     392 ops/s  p50=300.84ms p99=877.42ms  cpu/op=877us net=670us idle=0.081 load=344 errors=0
+quorum size=5 R=3 W=2 trial=0 thr=     516 ops/s  p50=210.63ms p99=810.34ms  cpu/op=736us net=605us idle=0.068 load=343 errors=0
+quorum size=5 R=3 W=3 trial=0 thr=     443 ops/s  p50=217.27ms p99=908.95ms  cpu/op=793us net=590us idle=0.090 load=345 errors=0
+nodes  size=3 R=2 W=2 trial=1 thr=     436 ops/s  p50=108.50ms p99=1084.07ms  cpu/op=535us net=453us idle=0.036 load=354 errors=0
+nodes  size=5 R=2 W=2 trial=1 thr=     627 ops/s  p50=92.88ms p99=792.84ms  cpu/op=684us net=579us idle=0.066 load=361 errors=0
+nodes  size=7 R=2 W=2 trial=1 thr=     487 ops/s  p50=116.48ms p99=958.89ms  cpu/op=856us net=721us idle=0.066 load=358 errors=0
+nodes  size=9 R=2 W=2 trial=1 thr=     375 ops/s  p50=170.12ms p99=1192.42ms  cpu/op=1030us net=744us idle=0.107 load=378 errors=0
+quorum size=5 R=1 W=1 trial=1 thr=     396 ops/s  p50=136.07ms p99=1280.99ms  cpu/op=632us net=443us idle=0.075 load=398 errors=0
+quorum size=5 R=1 W=2 trial=1 thr=     428 ops/s  p50=173.08ms p99=968.25ms  cpu/op=750us net=582us idle=0.072 load=400 errors=0
+quorum size=5 R=2 W=1 trial=1 thr=     956 ops/s  p50=84.84ms p99=590.01ms  cpu/op=634us net=551us idle=0.080 load=394 errors=0
+quorum size=5 R=1 W=3 trial=1 thr=     570 ops/s  p50=180.68ms p99=681.05ms  cpu/op=798us net=686us idle=0.064 load=387 errors=0
+quorum size=5 R=3 W=1 trial=1 thr=     687 ops/s  p50=77.08ms p99=610.21ms  cpu/op=746us net=649us idle=0.066 load=379 errors=0
+quorum size=5 R=2 W=2 trial=1 thr=    4300 ops/s  p50=16.04ms p99=148.81ms  cpu/op=467us net=449us idle=0.075 load=377 errors=0
+quorum size=5 R=2 W=3 trial=1 thr=    2795 ops/s  p50=32.52ms p99=195.63ms  cpu/op=560us net=537us idle=0.063 load=360 errors=0
+quorum size=5 R=3 W=2 trial=1 thr=    2574 ops/s  p50=30.01ms p99=232.96ms  cpu/op=488us net=461us idle=0.070 load=352 errors=0
+quorum size=5 R=3 W=3 trial=1 thr=    1579 ops/s  p50=56.76ms p99=319.84ms  cpu/op=533us net=499us idle=0.054 load=358 errors=0
+nodes  size=3 R=2 W=2 trial=2 thr=    2110 ops/s  p50=33.73ms p99=266.67ms  cpu/op=369us net=353us idle=0.034 load=374 errors=0
+nodes  size=5 R=2 W=2 trial=2 thr=    2622 ops/s  p50=21.94ms p99=260.13ms  cpu/op=475us net=446us idle=0.076 load=376 errors=0
+nodes  size=7 R=2 W=2 trial=2 thr=    2824 ops/s  p50=20.70ms p99=216.01ms  cpu/op=579us net=543us idle=0.103 load=343 errors=0
+nodes  size=9 R=2 W=2 trial=2 thr=    2432 ops/s  p50=41.63ms p99=204.31ms  cpu/op=644us net=552us idle=0.223 load=309 errors=0
+quorum size=5 R=1 W=1 trial=2 thr=    1986 ops/s  p50=34.35ms p99=306.04ms  cpu/op=427us net=399us idle=0.057 load=282 errors=0
+quorum size=5 R=1 W=2 trial=2 thr=    2417 ops/s  p50=28.99ms p99=243.78ms  cpu/op=508us net=478us idle=0.071 load=274 errors=0
+quorum size=5 R=2 W=1 trial=2 thr=    2251 ops/s  p50=17.70ms p99=284.47ms  cpu/op=440us net=411us idle=0.065 load=262 errors=0
+quorum size=5 R=1 W=3 trial=2 thr=    2075 ops/s  p50=43.80ms p99=226.82ms  cpu/op=570us net=537us idle=0.068 load=250 errors=0
+quorum size=5 R=3 W=1 trial=2 thr=    2564 ops/s  p50=34.84ms p99=191.01ms  cpu/op=503us net=471us idle=0.080 load=244 errors=0
+quorum size=5 R=2 W=2 trial=2 thr=    1416 ops/s  p50=35.09ms p99=489.09ms  cpu/op=530us net=487us idle=0.061 load=227 errors=0
+quorum size=5 R=2 W=3 trial=2 thr=    2688 ops/s  p50=31.29ms p99=240.70ms  cpu/op=525us net=504us idle=0.056 load=216 errors=0
+quorum size=5 R=3 W=2 trial=2 thr=    1823 ops/s  p50=50.13ms p99=300.35ms  cpu/op=533us net=502us idle=0.057 load=214 errors=0
+quorum size=5 R=3 W=3 trial=2 thr=     638 ops/s  p50=110.53ms p99=1012.59ms  cpu/op=710us net=606us idle=0.066 load=204 errors=0
+wrote /Users/farhan/Documents/deep-dive/projects/03-abd-quorum-kv-cluster/results/bench_raw.csv and /Users/farhan/Documents/deep-dive/projects/03-abd-quorum-kv-cluster/results/bench_summary.csv

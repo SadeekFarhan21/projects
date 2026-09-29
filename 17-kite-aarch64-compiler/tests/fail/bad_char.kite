@@ -1,0 +1,4 @@
+// expect: 3:15: lex error: unexpected character '$'
+fn main() {
+    let x = 1 $ 2;
+}

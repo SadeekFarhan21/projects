@@ -1,0 +1,10 @@
+// expect: 9:15: type error: struct Point has no field `z`
+struct Point {
+    x: int,
+    y: int,
+}
+
+fn main() {
+    let p = Point { x: 1, y: 2 };
+    println(p.z);
+}

@@ -1,0 +1,19 @@
+NONE
+produced 3 messages
+--- consume with group demo
+offset=0 key= value=hello
+offset=1 key= value=foo
+offset=0 key= value=world
+--- same group again (expect nothing: offsets were committed)
+--- restart broker
+produced 1 messages
+--- group demo resumes and sees only the new message
+offset=2 key=k value=after-restart
+--- a new group sees everything
+offset=0 key= value=hello
+offset=1 key= value=foo
+offset=2 key=k value=after-restart
+offset=0 key= value=world
+log_start=0 log_end=3
+log_start=0 log_end=1
+smoke test OK

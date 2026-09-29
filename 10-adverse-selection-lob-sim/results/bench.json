@@ -1,0 +1,57 @@
+{
+  "machine": "macOS-26.5-arm64-arm-64bit",
+  "python": "3.12.13",
+  "processor": "arm",
+  "cpu_count": 14,
+  "load_avg_1_5_15_at_start": [
+    291.28076171875,
+    313.63671875,
+    277.75927734375
+  ],
+  "order_book": {
+    "n_ops": 500000,
+    "repeats": 5,
+    "ops_per_s_median": 33199.67200716736,
+    "ops_per_s_all": [
+      38043.814452394254,
+      26004.034122828714,
+      27384.145769471088,
+      33531.7500132571,
+      33199.67200716736
+    ],
+    "fills": 242513,
+    "resting_orders_at_end": 31603
+  },
+  "simulation": {
+    "config": "SimConfig(t_end=20000, informed_frac=0.2)",
+    "runs": [
+      {
+        "seed": 0,
+        "events": 124091,
+        "wall_s": 8.957034916995326,
+        "events_per_s": 13854.026600314608,
+        "trades": 14644
+      },
+      {
+        "seed": 1,
+        "events": 122788,
+        "wall_s": 8.632547625005827,
+        "events_per_s": 14223.84275579564,
+        "trades": 14063
+      },
+      {
+        "seed": 2,
+        "events": 123377,
+        "wall_s": 9.259541833002004,
+        "events_per_s": 13324.309369203462,
+        "trades": 14333
+      }
+    ],
+    "events_per_s_median": 13854.026600314608
+  },
+  "load_avg_1_5_15_at_end": [
+    319.58837890625,
+    316.52490234375,
+    283.22216796875
+  ]
+}

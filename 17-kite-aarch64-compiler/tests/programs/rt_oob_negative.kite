@@ -1,0 +1,8 @@
+// Negative indices are out of bounds too.
+fn main() {
+    let a = [10, 20];
+    let k = 1 - 2;
+    println("before");
+    a[k] = 5;
+    println("after");
+}

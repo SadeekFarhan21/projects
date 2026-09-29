@@ -1,0 +1,7 @@
+// substr checks its bounds.
+fn main() {
+    let s = "kite";
+    println(substr(s, 1, 3));
+    println(substr(s, 4, 0) == "");
+    println(substr(s, 2, 3));
+}

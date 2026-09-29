@@ -1,0 +1,3 @@
+load average at start: 356.2
+cold cache, stories 0-3000: 0.75 s, 600,640 tokens, 804,126 tokens/s, cache size 6,277
+warm cache, stories 3000-6000: 0.58 s, 604,285 tokens, 1,036,604 tokens/s, cache size 7,951

@@ -1,0 +1,75 @@
+id: bugfix-inflection-010
+family: bugfix
+prompt: |-
+  The Python package `inflection` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_inflection.py::test_parameterize[Allow_Under_Scores-allow_under_scores], _hidden/test_inflection.py::test_parameterize_and_normalize[Malm\xf6-malmo], _hidden/test_inflection.py::test_parameterize_and_normalize[Gar\xe7ons-garcons]
+  The bug is in inflection/__init__.py.
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/inflection/inflection
+  to: inflection
+- patch: inflection/__init__.py
+  offset: 7784
+  old: string
+  new: separator
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/inflection/test_inflection.py
+    to: _hidden/test_inflection.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: medium
+tags:
+- inflection
+- wrong_variable
+- __init__
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: inflection/__init__.py
+    from: data/packages/inflection/inflection/__init__.py
+metadata:
+  package: inflection
+  module: inflection/__init__.py
+  operator: wrong_variable
+  function: parameterize
+  lineno: 281
+  mutation: string -> separator
+  failing_tests:
+  - _hidden/test_inflection.py::test_parameterize[Allow_Under_Scores-allow_under_scores]
+  - _hidden/test_inflection.py::test_parameterize_and_normalize[Malm\xf6-malmo]
+  - _hidden/test_inflection.py::test_parameterize_and_normalize[Gar\xe7ons-garcons]
+  - _hidden/test_inflection.py::test_parameterize_and_normalize[Ops\xd9-opsu]
+  - _hidden/test_inflection.py::test_parameterize_and_normalize[\xc6r\xf8sk\xf8bing-rskbing]
+  - _hidden/test_inflection.py::test_parameterize_and_normalize[A\xdflar-alar]
+  - _hidden/test_inflection.py::test_parameterize_with_custom_separator[With-some-dashes-with-some-dashes]
+  - _hidden/test_inflection.py::test_parameterize_with_custom_separator[Retain_underscore-retain_underscore]
+  - _hidden/test_inflection.py::test_parameterize_with_multi_character_separator[Allow_Under_Scores-allow_under_scores]
+  - _hidden/test_inflection.py::test_parameterize_with_no_separator[With-some-dashes-with-some-dashes]
+  n_failing: 10

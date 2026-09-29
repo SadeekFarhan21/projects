@@ -1,0 +1,6 @@
+// expect: 4:1: type error: function `f` is defined twice
+fn f() {}
+
+fn f() {}
+
+fn main() {}

@@ -1,0 +1,10 @@
+{
+  "steps": 4000,
+  "stopped_early_by_time_budget": false,
+  "tokens_seen": 32768000,
+  "wall_seconds": 1888.9,
+  "final_val_loss": 1.6391603380441666,
+  "params": 12194688,
+  "device": "mps",
+  "amp": "bf16"
+}

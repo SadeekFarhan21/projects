@@ -1,0 +1,78 @@
+id: bugfix-toolz-011
+family: bugfix
+prompt: |-
+  The Python package `toolz` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_dicttoolz.py::TestDict::test_merge_iterable_arg, _hidden/test_dicttoolz.py::TestDefaultDict::test_merge_iterable_arg, _hidden/test_dicttoolz.py::TestCustomMapping::test_merge
+  Failure message: ValueEr...
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/toolz/toolz
+  to: toolz
+  exclude:
+  - tests
+- copy: data/packages/toolz/tlz
+  to: tlz
+- path: toolz/_version.py
+  content: |
+    """Stub replacing versioneer output so imports never shell out to git."""
+    def get_versions():
+        return {"version": "1.0.0", "full-revisionid": None, "dirty": False, "error": None, "date": None}
+- patch: toolz/dicttoolz.py
+  offset: 832
+  old: ==
+  new: '!='
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/toolz/toolz/tests/test_dicttoolz.py
+    to: _hidden/test_dicttoolz.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: hard
+tags:
+- toolz
+- flip_comparison
+- dicttoolz
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: toolz/dicttoolz.py
+    from: data/packages/toolz/toolz/dicttoolz.py
+metadata:
+  package: toolz
+  module: toolz/dicttoolz.py
+  operator: flip_comparison
+  function: merge
+  lineno: 33
+  mutation: == -> !=
+  failing_tests:
+  - _hidden/test_dicttoolz.py::TestDict::test_merge_iterable_arg
+  - _hidden/test_dicttoolz.py::TestDefaultDict::test_merge_iterable_arg
+  - _hidden/test_dicttoolz.py::TestCustomMapping::test_merge
+  - _hidden/test_dicttoolz.py::TestCustomMapping::test_merge_iterable_arg
+  n_failing: 4

@@ -1,0 +1,20 @@
+// [value; count] creates an array with count copies of value.
+fn main() {
+    let zeros = [0; 10];
+    println(len(zeros));
+    println(zeros[9]);
+    let n = 5;
+    var squares = [0; n];
+    for i in 0..n {
+        squares[i] = i * i;
+    }
+    for i in 0..len(squares) {
+        print(squares[i]);
+        print(" ");
+    }
+    println();
+    let empty = [7; 0];
+    println(len(empty));
+    let words = ["ab"; 3];
+    println(words[0] + words[1] + words[2]);
+}

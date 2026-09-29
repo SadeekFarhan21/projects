@@ -1,0 +1,16 @@
+{
+  "sql": {
+    "n": 100,
+    "difficulty": {
+      "easy": 33,
+      "medium": 34,
+      "hard": 33
+    },
+    "db": {
+      "chinook": 60,
+      "tpch": 40
+    }
+  },
+  "wall_s": 16.3,
+  "seed": 0
+}

@@ -1,0 +1,9 @@
+build/
+.venv/
+__pycache__/
+data/
+*.zip
+*.part
+*.bag
+.DS_Store
+compile_commands.json

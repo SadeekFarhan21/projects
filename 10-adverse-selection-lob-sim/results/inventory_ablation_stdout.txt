@@ -1,0 +1,12 @@
+noise_k=0  mm_inventory_learning=0  informed_frac=0  mean_abs_inventory=29.4  p95_abs_inventory=49  frac_time_at_limit=0.0291  mm_pnl_per_fill=2.46  mean_abs_mid_minus_V=33.3
+noise_k=0  mm_inventory_learning=0  informed_frac=0.2  mean_abs_inventory=23.6  p95_abs_inventory=48  frac_time_at_limit=0.0164  mm_pnl_per_fill=1.84  mean_abs_mid_minus_V=4.75
+noise_k=0  mm_inventory_learning=0  informed_frac=0.4  mean_abs_inventory=18.5  p95_abs_inventory=38  frac_time_at_limit=0  mm_pnl_per_fill=1.42  mean_abs_mid_minus_V=2.61
+noise_k=0  mm_inventory_learning=0.02  informed_frac=0  mean_abs_inventory=4.17  p95_abs_inventory=11  frac_time_at_limit=0  mm_pnl_per_fill=1.45  mean_abs_mid_minus_V=122
+noise_k=0  mm_inventory_learning=0.02  informed_frac=0.2  mean_abs_inventory=2.56  p95_abs_inventory=7  frac_time_at_limit=0  mm_pnl_per_fill=1.55  mean_abs_mid_minus_V=5.31
+noise_k=0  mm_inventory_learning=0.02  informed_frac=0.4  mean_abs_inventory=1.91  p95_abs_inventory=5  frac_time_at_limit=0  mm_pnl_per_fill=1.35  mean_abs_mid_minus_V=2.64
+noise_k=0.1  mm_inventory_learning=0  informed_frac=0  mean_abs_inventory=7.92  p95_abs_inventory=20  frac_time_at_limit=0  mm_pnl_per_fill=2.5  mean_abs_mid_minus_V=26.7
+noise_k=0.1  mm_inventory_learning=0  informed_frac=0.2  mean_abs_inventory=25.5  p95_abs_inventory=44  frac_time_at_limit=0.00325  mm_pnl_per_fill=1.74  mean_abs_mid_minus_V=6.44
+noise_k=0.1  mm_inventory_learning=0  informed_frac=0.4  mean_abs_inventory=27.3  p95_abs_inventory=48  frac_time_at_limit=0.0188  mm_pnl_per_fill=1.29  mean_abs_mid_minus_V=2.77
+noise_k=0.1  mm_inventory_learning=0.02  informed_frac=0  mean_abs_inventory=1.16  p95_abs_inventory=3  frac_time_at_limit=0  mm_pnl_per_fill=2.21  mean_abs_mid_minus_V=24.9
+noise_k=0.1  mm_inventory_learning=0.02  informed_frac=0.2  mean_abs_inventory=1.44  p95_abs_inventory=4  frac_time_at_limit=0  mm_pnl_per_fill=1.81  mean_abs_mid_minus_V=5.96
+noise_k=0.1  mm_inventory_learning=0.02  informed_frac=0.4  mean_abs_inventory=1.62  p95_abs_inventory=5  frac_time_at_limit=0  mm_pnl_per_fill=1.39  mean_abs_mid_minus_V=2.6

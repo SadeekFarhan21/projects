@@ -1,0 +1,53 @@
+id: sql-chinook-genre_revenue-01
+family: sql
+prompt: |-
+  db.sqlite is the Chinook digital music store database (artists, albums, tracks, genres, playlists, customers, employees, invoices, invoice lines).
+  Tables and columns
+  Album(AlbumId, Title, ArtistId)
+  Artist(ArtistId, Name)
+  Customer(CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+  Employee(EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email)
+  Genre(GenreId, Name)
+  Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total)
+  InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
+  MediaType(MediaTypeId, Name)
+  Playlist(PlaylistId, Name)
+  PlaylistTrack(PlaylistId, TrackId)
+  Track(TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+
+  Question: What is the total revenue, summing UnitPrice * Quantity over invoice lines, for tracks in the genre 'Heavy Metal'?
+  Submit only the number.
+  Use run_sql to compute the answer, then call submit with the answer.
+fixtures:
+- copy: data/chinook.sqlite
+  to: db.sqlite
+allowed_tools:
+- run_sql
+- list_dir
+- submit
+verifier:
+  type: python
+  function: agentenv.verifiers:numeric_or_text_answer
+  args:
+    expected: 11.879999999999999
+    kind: number
+    rel_tol: 0.0001
+    abs_tol: 0.01
+difficulty: medium
+tags:
+- chinook
+- sum
+- join
+timeout_s: 300
+limits:
+  step_limit: 8
+  token_budget: 1500
+reference:
+  sql: SELECT SUM(il.UnitPrice * il.Quantity) FROM InvoiceLine il JOIN Track t ON t.TrackId = il.TrackId
+    JOIN Genre g ON g.GenreId = t.GenreId WHERE g.Name = 'Heavy Metal'
+metadata:
+  template: genre_revenue
+  params:
+  - Heavy Metal
+  db: chinook
+  answer_kind: number

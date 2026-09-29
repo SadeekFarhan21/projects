@@ -1,0 +1,9 @@
+# bug reproduction: new threads started with ra = thread_start instead of thread_trampoline
+## crash=panic backtrace:
+backtrace (innermost first):
+  #0  0x0000000080206328  crash_leaf+0x8e
+  #1  0x0000000080206284  crash_middle+0x10
+  #2  0x000000008020625e  crash_outer+0x10
+  #3  0x0000000080206204  crash_thread+0x48
+  #4  0x0000000080200d94  thread_start+0x2c
+  #5  0x0000000080200d68  thread_init+0x6c

@@ -1,0 +1,35 @@
+// Function values stored in structs and arrays and returned from functions.
+struct Op {
+    name: string,
+    f: fn(int, int) -> int,
+}
+
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+fn sub(a: int, b: int) -> int {
+    return a - b;
+}
+
+fn choose(which: int) -> fn(int, int) -> int {
+    if which == 0 {
+        return add;
+    }
+    return sub;
+}
+
+fn main() {
+    let ops = [Op { name: "add", f: add }, Op { name: "sub", f: sub }, Op { name: "mul", f: fn(a: int, b: int) -> int { return a * b; } }];
+    for i in 0..len(ops) {
+        println(ops[i].name + " " + to_str(ops[i].f(7, 3)));
+    }
+    println(choose(0)(1, 2));
+    println(choose(1)(1, 2));
+    let table = [add, sub, add];
+    var acc = 0;
+    for i in 0..3 {
+        acc = table[i](acc, 10);
+    }
+    println(acc);
+}

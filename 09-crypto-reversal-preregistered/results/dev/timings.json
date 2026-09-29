@@ -1,0 +1,13 @@
+{
+  "load_s": 1.5306737500068266,
+  "build_dataset_s": 25.24801395800023,
+  "walk_forward_rev_1d_s": 0.04311429199879058,
+  "walk_forward_rev_5d_s": 0.5574317499995232,
+  "walk_forward_mom_20d_s": 0.67802574999223,
+  "walk_forward_mom_60d_s": 0.506384624997736,
+  "walk_forward_ridge_a1_s": 3.0351577080000425,
+  "walk_forward_ridge_a10_s": 2.9243039169959957,
+  "walk_forward_ridge_a100_s": 3.0796352079923963,
+  "walk_forward_gbm_d3_s": 76.43742345798819,
+  "walk_forward_gbm_d6_s": 95.8098147080018
+}

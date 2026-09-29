@@ -1,0 +1,16 @@
+# environments and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+
+# downloaded data (scripts/download_data.sh recreates it)
+data/
+
+# large raw traces; summaries, CSVs and plots under results/ are kept
+results/runs/*.jsonl
+results/runs/*.log

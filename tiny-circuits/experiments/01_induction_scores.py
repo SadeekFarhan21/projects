@@ -1,4 +1,4 @@
-"""Experiment 01 — Discover induction heads via the induction score.
+"""Experiment 01. Discover induction heads via the induction score.
 
 An induction head, at position i in the *second* copy of a repeated random
 sequence, attends back to the token that came *after* the previous occurrence
@@ -51,7 +51,11 @@ def induction_scores(model, tokens: torch.Tensor) -> torch.Tensor:
         pattern = cache["pattern", layer]
         # induction diagonal: query at (1 + seq_len + k) attends to key (1 + k + 1)
         # i.e. offset of -(seq_len - 1) from the query position.
+        # That diagonal also starts with two first-half queries (positions
+        # seq_len - 1 and seq_len) that have no earlier copy to look back to,
+        # so keep only the last seq_len entries, one per second-half query.
         diag = pattern.diagonal(offset=-(seq_len - 1), dim1=-2, dim2=-1)
+        diag = diag[..., -seq_len:]
         scores[layer] = diag.mean(dim=(0, -1))  # mean over batch and diagonal
     return scores
 
@@ -100,7 +104,7 @@ def main() -> None:
     im = ax.imshow(scores.numpy(), aspect="auto", cmap="viridis", origin="lower")
     ax.set_xlabel("head")
     ax.set_ylabel("layer")
-    ax.set_title("Induction score per head — GPT-2 small")
+    ax.set_title("Induction score per head, GPT-2 small")
     fig.colorbar(im, ax=ax, label="mean induction-diagonal attention")
     fig.tight_layout()
     fig.savefig(FIGURES / "01_induction_scores.png", dpi=150)

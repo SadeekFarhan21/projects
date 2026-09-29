@@ -1,0 +1,4 @@
+// expect: 3:13: type error: unknown variable `count`
+fn main() {
+    println(count + 1);
+}

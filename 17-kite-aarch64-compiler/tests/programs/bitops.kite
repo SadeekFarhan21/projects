@@ -1,0 +1,25 @@
+// Bitwise operators and shifts. Shift amounts are taken modulo 64;
+// >> is an arithmetic shift.
+fn main() {
+    println(12 & 10);
+    println(12 | 10);
+    println(12 ^ 10);
+    println(1 << 10);
+    println(1024 >> 3);
+    println(-16 >> 2);
+    println(1 << 63);
+    println(1 << 64);
+    println(1 << 65);
+    let s = 70;
+    println(3 << s);
+    println(0xff & 0x0f | 0x100);
+    println(1 + 2 << 3);
+    println(6 & 3 == 2);
+    var popcount = 0;
+    var v = 0xdeadbeef;
+    while v != 0 {
+        popcount = popcount + (v & 1);
+        v = v >> 1;
+    }
+    println(popcount);
+}

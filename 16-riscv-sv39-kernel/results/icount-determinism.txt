@@ -1,0 +1,3 @@
+# raw diff of BENCH lines between bench-icount.txt and bench-icount-rerun.txt
+(no differences)
+cycles/op columns identical in both runs: 34 cycles/op 190 cycles/op 140 cycles/op 291 cycles/op 105 cycles/op 103 cycles/op 2184 cycles/op 204 cycles/op 222 cycles/op 119 cycles/op 119 cycles/op 

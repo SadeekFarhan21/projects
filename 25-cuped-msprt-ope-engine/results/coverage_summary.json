@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-09-26 23:27:19",
+  "machine": "arm64",
+  "config": {
+    "sims": 1000,
+    "n": 2000,
+    "seed": 11
+  },
+  "truths": {
+    "revenue": 0.33115451958692294,
+    "ctr": 0.009999999999999981,
+    "cuped": 0.1
+  },
+  "rows": [
+    {
+      "method": "welch_revenue",
+      "sims": 1000,
+      "n_per_arm": 2000,
+      "covered": 952.0,
+      "coverage": 0.952,
+      "cov_lo": 0.9369339112161272,
+      "cov_hi": 0.9636066990585652,
+      "mean_ci_width": 2.1290057470565427
+    },
+    {
+      "method": "delta_ctr",
+      "sims": 1000,
+      "n_per_arm": 2000,
+      "covered": 951.0,
+      "coverage": 0.951,
+      "cov_lo": 0.9358092983587265,
+      "cov_hi": 0.9627389654330574,
+      "mean_ci_width": 0.022371077857292063
+    },
+    {
+      "method": "cuped",
+      "sims": 1000,
+      "n_per_arm": 2000,
+      "covered": 940.0,
+      "coverage": 0.94,
+      "cov_lo": 0.9235289250644817,
+      "cov_hi": 0.9531035274153073,
+      "mean_ci_width": 0.12397797754339433
+    },
+    {
+      "method": "welch_same_data_as_cuped",
+      "sims": 1000,
+      "n_per_arm": 2000,
+      "covered": 944.0,
+      "coverage": 0.944,
+      "cov_lo": 0.9279766517094281,
+      "cov_hi": 0.9566251867019955,
+      "mean_ci_width": 0.27718810036107033
+    }
+  ]
+}

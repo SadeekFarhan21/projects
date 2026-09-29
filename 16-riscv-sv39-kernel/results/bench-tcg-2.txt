@@ -1,0 +1,111 @@
+# 2026-09-26 23:41:45 host: Apple M4 Pro, 14 cpus
+# host load average before run: { 139.96 214.17 239.54 }
+# qemu: QEMU emulator version 11.1.1
+# command: qemu-system-riscv64 -machine virt -cpu rv64 -smp 2 -m 128M -nographic -bios default -kernel build/kernel.elf  -append "mode=bench"
+
+OpenSBI v1.8.1
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name               : riscv-virtio,qemu
+Platform Features           : medeleg
+Platform HART Count         : 2
+Platform HART Protection    : pmp
+Platform IPI Device         : aclint-mswi
+Platform Timer Device       : aclint-mtimer @ 10000000Hz
+Platform Console Device     : uart8250
+Platform HSM Device         : ---
+Platform PMU Device         : ---
+Platform Reboot Device      : syscon-reboot
+Platform Shutdown Device    : syscon-poweroff
+Platform Suspend Device     : ---
+Platform CPPC Device        : ---
+Firmware Base               : 0x80000000
+Firmware Size               : 333 KB
+Firmware RW Offset          : 0x40000
+Firmware RW Size            : 77 KB
+Firmware Heap Offset        : 0x49000
+Firmware Heap Size          : 41 KB (total), 0 KB (reserved), 12 KB (used), 27 KB (free)
+Firmware Scratch Size       : 4096 B (total), 1464 B (used), 2632 B (free)
+Runtime SBI Version         : 3.0
+Standard SBI Extensions     : time,rfnc,ipi,base,hsm,srst,pmu,dbcn,fwft,legacy,dbtr,sse
+Experimental SBI Extensions : none
+
+Domain0 Name                : root
+Domain0 Boot HART           : 0
+Domain0 HARTs               : 0*,1*
+Domain0 Region00            : 0x0000000080040000-0x000000008005ffff M: (F,R,W) S/U: ()
+Domain0 Region01            : 0x0000000080000000-0x000000008003ffff M: (F,R,X) S/U: ()
+Domain0 Region02            : 0x0000000000100000-0x0000000000100fff M: (I,R,W) S/U: (R,W)
+Domain0 Region03            : 0x0000000010000000-0x0000000010000fff M: (I,R,W) S/U: (R,W)
+Domain0 Region04            : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+Domain0 Region05            : 0x000000000c400000-0x000000000c5fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region06            : 0x000000000c000000-0x000000000c3fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region07            : 0x0000000000000000-0xffffffffffffffff M: () S/U: (R,W,X)
+Domain0 Next Address        : 0x0000000080200000
+Domain0 Next Arg1           : 0x0000000087e00000
+Domain0 Next Mode           : S-mode
+Domain0 SysReset            : yes
+Domain0 SysSuspend          : yes
+
+Boot HART ID                : 0
+Boot HART Domain            : root
+Boot HART Priv Version      : v1.12
+Boot HART Base ISA          : rv64imafdch
+Boot HART ISA Extensions    : sstc,zicntr,zihpm,zicboz,zicbom,sdtrig,svadu
+Boot HART PMP Count         : 16
+Boot HART PMP Granularity   : 2 bits
+Boot HART PMP Address Bits  : 54
+Boot HART MHPM Info         : 16 (0x0007fff8)
+Boot HART Debug Triggers    : 2 triggers
+Boot HART MIDELEG           : 0x0000000000001666
+Boot HART MEDELEG           : 0x0000000000f4b509
+
+16-os v0: RISC-V 64 kernel, boot hart 0, dtb at 0x0000000087e00000
+sbi: spec v3.0, impl OpenSBI (id 1) version 0x10008
+sbi: extensions TIME=1 HSM=1 SRST=1 DBCN=1
+fdt: blob at 0x0000000087e00000, 10352 bytes, 2 cpu(s)
+fdt: memory   0x0000000080000000..0x0000000088000000 (128 MiB)
+fdt: reserved 0x0000000080000000..0x0000000080040000
+fdt: reserved 0x0000000080040000..0x0000000080060000
+fdt: uart ns16550a at 0x0000000010000000 irq 10, plic at 0x000000000c000000 (95 sources), test device at 0x0000000000100000
+fdt: timebase 10000000 Hz, bootargs "mode=bench"
+console: now on ns16550a at 0x0000000010000000 (was SBI debug console)
+pmm: RAM 0x0000000080000000..0x0000000088000000 (32768 pages), bitmap 4096 bytes at 0x000000008027d000, 32127 pages free
+kvm: text   0x0000000080200000..0x000000008020a000 R-X
+kvm: rodata 0x000000008020a000..0x000000008020f000 R--
+kvm: data   0x000000008020f000..0x0000000080255000 RW-
+kvm: stacks 0x0000000080255000..0x000000008027d000 RW- (8 boot stacks, guard page below each)
+kvm: RAM    0x000000008027d000..0x0000000088000000 RW-
+kvm: kernel page table uses 71 pages
+kvm: Sv39 paging enabled, satp=0x800000000008027e
+kmalloc: 7 size classes, 32..2048 bytes
+timer: timebase 10000000 Hz, tick every 100000 timebase units (100 Hz)
+smp: hart 1 is stopped (parked by SBI HSM; v0 runs on one hart)
+boot: 51012 us since reset (timebase clock), starting "bench"
+
+=== kernel benchmarks (QEMU TCG) ===
+caveat: timings are for QEMU's emulated RISC-V hart, not real hardware
+rdcycle from S-mode: available; timebase 10000000 Hz (resolution 100 ns)
+BENCH swtch (one direction)        50.932 ns/op  50 cycles/op  50 instret/op  (n=400000, total 20373 us)
+  (yield benchmark performed 100008 switches for 100000 yields)
+BENCH yield thread->thread switch  570.154 ns/op  570 cycles/op  570 instret/op  (n=100008, total 57020 us)
+BENCH trap round trip (ebreak)     1158.980 ns/op  1159 cycles/op  1159 instret/op  (n=50000, total 57949 us)
+BENCH SBI ecall round trip         1520.260 ns/op  1520 cycles/op  1520 instret/op  (n=50000, total 76013 us)
+BENCH timer_latency_idle     n=200 min=164000 p50=2442000 p99=3487000 max=3524000 mean=2333915 ns (resolution 100 ns)
+BENCH timer_latency_busy     n=200 min=66000 p50=2614000 p99=3248000 max=3357000 mean=2331735 ns (resolution 100 ns)
+BENCH pmm_alloc_nozero             302.250 ns/op  302 cycles/op  302 instret/op  (n=20000, total 6045 us)
+BENCH pmm_free                     374.700 ns/op  374 cycles/op  374 instret/op  (n=20000, total 7494 us)
+BENCH pmm_alloc (zeroing 4 KiB)    1622.400 ns/op  1622 cycles/op  1623 instret/op  (n=20000, total 32448 us)
+BENCH pmm alloc+free pair          820.500 ns/op  820 cycles/op  820 instret/op  (n=100000, total 82050 us)
+BENCH kmalloc(64)+kfree pair       859.620 ns/op  859 cycles/op  859 instret/op  (n=100000, total 85962 us)
+BENCH kmalloc(64) batch            436.600 ns/op  436 cycles/op  436 instret/op  (n=10000, total 4366 us)
+BENCH kfree(64) batch              447.800 ns/op  447 cycles/op  447 instret/op  (n=10000, total 4478 us)
+BENCH done
+# host load average after run: { 129.23 210.72 238.17 }

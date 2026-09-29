@@ -1,0 +1,106 @@
+ 0:14  up 2 days, 14:05, 1 user, load averages: 4.21 6.36 30.96
+Running main() from /Users/farhan/Documents/deep-dive/projects/01-database-from-scratch/build/asan/_deps/googletest-src/googletest/src/gtest_main.cc
+[==========] Running 36 tests from 8 test suites.
+[----------] Global test environment set-up.
+[----------] 6 tests from Node
+[ RUN      ] Node.InsertKeepsSortedAndLookupWorks
+[       OK ] Node.InsertKeepsSortedAndLookupWorks (0 ms)
+[ RUN      ] Node.FillsUntilFullThenRefuses
+[       OK ] Node.FillsUntilFullThenRefuses (0 ms)
+[ RUN      ] Node.EraseAndCompactionReclaimSpace
+[       OK ] Node.EraseAndCompactionReclaimSpace (0 ms)
+[ RUN      ] Node.UpdateInPlaceAndResize
+[       OK ] Node.UpdateInPlaceAndResize (0 ms)
+[ RUN      ] Node.RandomOpsMatchMap
+[       OK ] Node.RandomOpsMatchMap (120 ms)
+[ RUN      ] Node.InternalFindChild
+[       OK ] Node.InternalFindChild (0 ms)
+[----------] 6 tests from Node (120 ms total)
+
+[----------] 4 tests from BufferPool
+[ RUN      ] BufferPool.HitsMissesAndLruEviction
+[       OK ] BufferPool.HitsMissesAndLruEviction (0 ms)
+[ RUN      ] BufferPool.PinnedAndDirtyPagesAreNeverEvicted
+[       OK ] BufferPool.PinnedAndDirtyPagesAreNeverEvicted (0 ms)
+[ RUN      ] BufferPool.DirtyPagesSortedAndCreateZeroes
+[       OK ] BufferPool.DirtyPagesSortedAndCreateZeroes (0 ms)
+[ RUN      ] BufferPool.UnpinErrorsAreDetected
+[       OK ] BufferPool.UnpinErrorsAreDetected (0 ms)
+[----------] 4 tests from BufferPool (2 ms total)
+
+[----------] 10 tests from BTree
+[ RUN      ] BTree.EmptyTree
+[       OK ] BTree.EmptyTree (1 ms)
+[ RUN      ] BTree.SequentialInsertsSplitAndStayFull
+[       OK ] BTree.SequentialInsertsSplitAndStayFull (678 ms)
+[ RUN      ] BTree.RandomOpsMatchStdMap
+[       OK ] BTree.RandomOpsMatchStdMap (4384 ms)
+[ RUN      ] BTree.RangeScanBounds
+[       OK ] BTree.RangeScanBounds (64 ms)
+[ RUN      ] BTree.DeleteEverythingThenReinsert
+[       OK ] BTree.DeleteEverythingThenReinsert (236 ms)
+[ RUN      ] BTree.MaxSizeKeysAndValuesSplitCorrectly
+[       OK ] BTree.MaxSizeKeysAndValuesSplitCorrectly (97 ms)
+[ RUN      ] BTree.GrowingAndShrinkingValuesForceSplitsOnUpdate
+[       OK ] BTree.GrowingAndShrinkingValuesForceSplitsOnUpdate (157 ms)
+[ RUN      ] BTree.PersistsAcrossCleanReopen
+[       OK ] BTree.PersistsAcrossCleanReopen (915 ms)
+[ RUN      ] BTree.AtomicBatchApplies
+[       OK ] BTree.AtomicBatchApplies (1 ms)
+[ RUN      ] BTree.SecondOpenOfSameFileIsRejected
+[       OK ] BTree.SecondOpenOfSameFileIsRejected (1 ms)
+[----------] 10 tests from BTree (6540 ms total)
+
+[----------] 4 tests from Wal
+[ RUN      ] Wal.RoundTrip
+[       OK ] Wal.RoundTrip (1 ms)
+[ RUN      ] Wal.TornTailIsTruncatedAtEveryCutPoint
+[       OK ] Wal.TornTailIsTruncatedAtEveryCutPoint (162 ms)
+[ RUN      ] Wal.PreallocatedZeroTailIsIgnoredAndTrimmed
+[       OK ] Wal.PreallocatedZeroTailIsIgnoredAndTrimmed (1 ms)
+[ RUN      ] Wal.CorruptByteStopsReplayThere
+[       OK ] Wal.CorruptByteStopsReplayThere (1 ms)
+[----------] 4 tests from Wal (166 ms total)
+
+[----------] 1 test from WriteBatch
+[ RUN      ] WriteBatch.EncodeDecode
+[       OK ] WriteBatch.EncodeDecode (0 ms)
+[----------] 1 test from WriteBatch (0 ms total)
+
+[----------] 1 test from Crc32
+[ RUN      ] Crc32.KnownVectorAndHardwareMatchesTable
+[       OK ] Crc32.KnownVectorAndHardwareMatchesTable (0 ms)
+[----------] 1 test from Crc32 (0 ms total)
+
+[----------] 5 tests from Recovery
+[ RUN      ] Recovery.KillNineDuringWritesLosesNothingAcknowledged
+[kill-9] 12 rounds, 9693 ops acknowledged, 2212 WAL records redone, 0 rounds recovered an interrupted checkpoint from the journal
+[       OK ] Recovery.KillNineDuringWritesLosesNothingAcknowledged (1749 ms)
+[ RUN      ] Recovery.KillNineWithFsyncCommits
+[       OK ] Recovery.KillNineWithFsyncCommits (330 ms)
+[ RUN      ] Recovery.KillNineDuringLargeCheckpoint
+[kill-9 in checkpoint] calibration: total 45170 us, journal 39391 us, data+tail 6001 us
+[kill-9 in checkpoint] 10 killed rounds, 2 repaired from a complete journal
+[       OK ] Recovery.KillNineDuringLargeCheckpoint (24142 ms)
+[ RUN      ] Recovery.CrashWithoutCloseThenTornWalTail
+[       OK ] Recovery.CrashWithoutCloseThenTornWalTail (183 ms)
+[ RUN      ] Recovery.CorruptMagicIsRejected
+[       OK ] Recovery.CorruptMagicIsRejected (1 ms)
+[----------] 5 tests from Recovery (26408 ms total)
+
+[----------] 5 tests from Steps/CheckpointCrash
+[ RUN      ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_before_journal_header
+[       OK ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_before_journal_header (328 ms)
+[ RUN      ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_journal_synced
+[       OK ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_journal_synced (293 ms)
+[ RUN      ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_mid_data
+[       OK ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_mid_data (279 ms)
+[ RUN      ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_data_synced
+[       OK ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_data_synced (292 ms)
+[ RUN      ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_wal_reset
+[       OK ] Steps/CheckpointCrash.RecoversAllCommittedData/ckpt_wal_reset (279 ms)
+[----------] 5 tests from Steps/CheckpointCrash (1473 ms total)
+
+[----------] Global test environment tear-down
+[==========] 36 tests from 8 test suites ran. (34714 ms total)
+[  PASSED  ] 36 tests.

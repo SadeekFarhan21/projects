@@ -1,0 +1,6 @@
+modify_up_keeps_priority: CAUGHT -> STATE DIVERGENCE seed 1 event 3000
+fok_off_by_one: CAUGHT -> DIVERGENCE seed 1 event 593: N 347 S FOK 9982 9
+lifo_within_level: CAUGHT -> DIVERGENCE seed 1 event 86: N 57 B LMT 10000 75
+no_l2_on_amend: CAUGHT -> DIVERGENCE seed 1 event 3487: M 1908 9989 9
+trade_at_taker_price: CAUGHT -> DIVERGENCE seed 1 event 9: N 7 S LMT 9982 76
+post_only_allows_lock: CAUGHT -> DIVERGENCE seed 1 event 112: N 73 B POST 10004 71

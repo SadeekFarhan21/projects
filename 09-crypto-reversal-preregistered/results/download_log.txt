@@ -1,0 +1,17 @@
+735 USDT symbols in archive
+27721 monthly files to fetch (cached ones skipped)
+  2000/27721
+  4000/27721
+  6000/27721
+  8000/27721
+  10000/27721
+  12000/27721
+  14000/27721
+  16000/27721
+  18000/27721
+  20000/27721
+  22000/27721
+  24000/27721
+  26000/27721
+wrote 829,342 rows, 734 symbols -> /Users/farhan/Documents/deep-dive/projects/09-can-we-predict-markets/data/processed/klines_1d.parquet
+done in 399.8s

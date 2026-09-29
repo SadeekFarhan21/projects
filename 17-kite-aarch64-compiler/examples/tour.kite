@@ -1,0 +1,47 @@
+// A short tour of Kite.
+struct Account {
+    owner: string,
+    balance: int,
+}
+
+fn deposit(a: Account, amount: int) {
+    a.balance = a.balance + amount;
+}
+
+fn make_scaler(k: int) -> fn(int) -> int {
+    return fn(x: int) -> int {
+        return x * k;
+    };
+}
+
+fn map(xs: [int], f: fn(int) -> int) -> [int] {
+    var out = [0; len(xs)];
+    for i in 0..len(xs) {
+        out[i] = f(xs[i]);
+    }
+    return out;
+}
+
+fn fib(n: int) -> int {
+    if n < 2 {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+fn main() {
+    let acct = Account { owner: "farhan", balance: 10 };
+    deposit(acct, 32);
+    println(acct.owner + " has " + to_str(acct.balance));
+
+    let triple = make_scaler(3);
+    let ys = map([1, 2, 3, 4], triple);
+    var total = 0;
+    for i in 0..len(ys) {
+        total = total + ys[i];
+    }
+    println(total);
+
+    println(fib(20));
+    println(9223372036854775807 + 1);
+}

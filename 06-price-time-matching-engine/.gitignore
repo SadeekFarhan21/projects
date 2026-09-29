@@ -1,0 +1,26 @@
+# Build outputs
+build/
+cmake-build-*/
+compile_commands.json
+.cache/
+*.o
+*.a
+*.dSYM/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Generated logs and large artifacts. Input logs are reproducible with
+# `exch gen --seed S`, so never commit big ones.
+data/
+*.log
+!examples/*.log
+results/**/*.bin
+results/**/raw_*.csv
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

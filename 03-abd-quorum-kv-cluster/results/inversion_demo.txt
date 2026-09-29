@@ -1,0 +1,11 @@
+scenario: 3 nodes N=3 R=2 W=2; put(new) reaches n1 only; read via n1; crash n1; read via n2
+writeback=False trial=0 read1=new read2=old linearizable=False
+writeback=False trial=1 read1=new read2=old linearizable=False
+writeback=False trial=2 read1=new read2=old linearizable=False
+writeback=False trial=3 read1=new read2=old linearizable=False
+writeback=False trial=4 read1=new read2=old linearizable=False
+writeback=True trial=0 read1=new read2=new linearizable=True
+writeback=True trial=1 read1=new read2=new linearizable=True
+writeback=True trial=2 read1=new read2=new linearizable=True
+writeback=True trial=3 read1=new read2=new linearizable=True
+writeback=True trial=4 read1=new read2=new linearizable=True

@@ -1,0 +1,24 @@
+fn main() {
+    let n = 400;
+    var a = [0; n * n];
+    var b = [0; n * n];
+    var c = [0; n * n];
+    for i in 0..n * n {
+        a[i] = i % 7 - 3;
+        b[i] = i % 5 - 2;
+    }
+    for i in 0..n {
+        for j in 0..n {
+            var s = 0;
+            for k in 0..n {
+                s = s + a[i * n + k] * b[k * n + j];
+            }
+            c[i * n + j] = s;
+        }
+    }
+    var check = 0;
+    for i in 0..n * n {
+        check = check * 31 + c[i];
+    }
+    println(check);
+}

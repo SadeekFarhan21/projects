@@ -1,0 +1,53 @@
+id: sql-chinook-playlist_artists-03
+family: sql
+prompt: |-
+  db.sqlite is the Chinook digital music store database (artists, albums, tracks, genres, playlists, customers, employees, invoices, invoice lines).
+  Tables and columns
+  Album(AlbumId, Title, ArtistId)
+  Artist(ArtistId, Name)
+  Customer(CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+  Employee(EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email)
+  Genre(GenreId, Name)
+  Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total)
+  InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
+  MediaType(MediaTypeId, Name)
+  Playlist(PlaylistId, Name)
+  PlaylistTrack(PlaylistId, TrackId)
+  Track(TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+
+  Question: How many distinct artists have at least one track in the playlist named 'Grunge'?
+  Submit only the number.
+  Use run_sql to compute the answer, then call submit with the answer.
+fixtures:
+- copy: data/chinook.sqlite
+  to: db.sqlite
+allowed_tools:
+- run_sql
+- list_dir
+- submit
+verifier:
+  type: python
+  function: agentenv.verifiers:numeric_or_text_answer
+  args:
+    expected: 6.0
+    kind: number
+    rel_tol: 0.0001
+    abs_tol: 0.01
+difficulty: hard
+tags:
+- chinook
+- count_distinct
+- join3
+timeout_s: 300
+limits:
+  step_limit: 8
+  token_budget: 1500
+reference:
+  sql: SELECT COUNT(DISTINCT al.ArtistId) FROM Playlist p JOIN PlaylistTrack pt ON pt.PlaylistId = p.PlaylistId
+    JOIN Track t ON t.TrackId = pt.TrackId JOIN Album al ON al.AlbumId = t.AlbumId WHERE p.Name = 'Grunge'
+metadata:
+  template: playlist_artists
+  params:
+  - Grunge
+  db: chinook
+  answer_kind: number

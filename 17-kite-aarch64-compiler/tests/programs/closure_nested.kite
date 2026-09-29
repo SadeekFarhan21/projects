@@ -1,0 +1,23 @@
+// Closures inside closures; captures flow through each level.
+fn curry3(a: int) -> fn(int) -> fn(int) -> int {
+    return fn(b: int) -> fn(int) -> int {
+        return fn(c: int) -> int {
+            return a * 100 + b * 10 + c;
+        };
+    };
+}
+
+fn main() {
+    let f = curry3(1);
+    let g = f(2);
+    println(g(3));
+    println(curry3(4)(5)(6));
+    let base = 1000;
+    let outer = fn(x: int) -> int {
+        let inner = fn(y: int) -> int {
+            return base + x + y;
+        };
+        return inner(1) + inner(2);
+    };
+    println(outer(10));
+}

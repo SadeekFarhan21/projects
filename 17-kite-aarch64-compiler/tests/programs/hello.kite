@@ -1,0 +1,8 @@
+// The smallest program: print a few strings.
+fn main() {
+    println("hello, kite");
+    print("no newline, ");
+    println("then a newline");
+    println();
+    println("done");
+}

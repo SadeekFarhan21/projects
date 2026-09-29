@@ -1,0 +1,19 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+# builds
+build/
+# data (download with scripts/download_tardis.sh)
+data/
+# large artifacts
+*.parquet
+*.npz
+.DS_Store
+.ruff_cache/
+# numba on-disk JIT cache
+*.nbi
+*.nbc

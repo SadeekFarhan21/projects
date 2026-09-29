@@ -1,0 +1,22 @@
+{
+  "config": {
+    "steps": 6000,
+    "batch_size": 256,
+    "context": 16,
+    "emb": 32,
+    "hidden": 512,
+    "lr": 0.003,
+    "eval_every": 500,
+    "seed": 0
+  },
+  "vocab": 65,
+  "params": 299105,
+  "final_val_loss": 1.794060331583023,
+  "best_val_loss": 1.794060331583023,
+  "final_train_loss": 1.5764493827819823,
+  "baseline_uniform": 4.174387269895637,
+  "baseline_unigram": 3.3473303372775036,
+  "baseline_bigram": 2.4818894321158234,
+  "mean_step_ms": 71.06316121657194,
+  "total_wall_seconds": 477.7922293750016
+}

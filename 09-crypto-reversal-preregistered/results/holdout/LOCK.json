@@ -1,0 +1,26 @@
+{
+  "started_utc": "2026-09-27T03:07:00.868573+00:00",
+  "preregistration_sha256": "0f38b396fb4079ac45601917651bdc46aa1a70a9b6ecdd779e90c0583879f6dc",
+  "selection": {
+    "run_id": "20260927T025636Z",
+    "selected_trial": "mom_20d|quintile",
+    "model": "mom_20d",
+    "construction": "quintile",
+    "dev_sharpe_net": 0.32512545798340164,
+    "dev_ic_mean": -0.029118093292904032,
+    "dev_psr": 0.7540160900099052,
+    "trials_logged_total": 32,
+    "trials_this_run": 18,
+    "deflated_sharpe": {
+      "dsr": 0.0001800060378817628,
+      "sr_star_ann": 2.0131455757872128,
+      "n_trials": 32,
+      "var_sr": 0.002518102609654262
+    },
+    "cost_bps": 15.0
+  },
+  "status": "completed",
+  "completed_utc": "2026-09-27T03:11:12.912023+00:00",
+  "h1": "supported",
+  "h2": "not supported"
+}

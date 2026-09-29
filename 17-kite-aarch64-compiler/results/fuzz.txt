@@ -1,0 +1,2 @@
+fuzz: seed 2026, 500 random programs x 3 optimisation levels, 0 mismatches
+./_build/default/tests/fuzz.exe 500 2026   118.04s user 100.78s system 35% cpu 10:22.08 total

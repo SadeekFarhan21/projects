@@ -1,0 +1,4 @@
+// expect: 3:20: type error: operator + needs two ints or two strings, found string and int
+fn main() {
+    println("n = " + 5);
+}

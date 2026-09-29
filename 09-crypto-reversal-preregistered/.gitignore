@@ -1,0 +1,20 @@
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Downloaded market data (about 25 MB parquet + 27k zips); recreate with
+# `uv run python scripts/download_data.py`
+data/
+*.parquet
+*.zip
+*.part
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

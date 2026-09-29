@@ -1,0 +1,4 @@
+// expect: 3:12: type error: this function returns no value, but a value of type int was returned
+fn main() {
+    return 1;
+}

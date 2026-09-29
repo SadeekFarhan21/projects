@@ -1,0 +1,106 @@
+{
+ "bins_hit": 50,
+ "bins_total": 50,
+ "holes": [],
+ "sources": [
+  "n16_random_s0.random.json",
+  "n16_random_s1.random.json",
+  "n16_test_all_ones.all_ones.json",
+  "n16_test_identity.identity.json",
+  "n16_test_int8_extremes.int8_extremes.json",
+  "n16_test_weight_reuse_and_chunks.weight_reuse.json",
+  "n4_random_s0.random.json",
+  "n4_random_s1.random.json",
+  "n4_test_all_ones.all_ones.json",
+  "n4_test_identity.identity.json",
+  "n4_test_int8_extremes.int8_extremes.json",
+  "n4_test_weight_reuse_and_chunks.weight_reuse.json",
+  "n8_random_s0.random.json",
+  "n8_random_s1.random.json",
+  "n8_test_all_ones.all_ones.json",
+  "n8_test_identity.identity.json",
+  "n8_test_int8_extremes.int8_extremes.json",
+  "n8_test_weight_reuse_and_chunks.weight_reuse.json",
+  "reg_n16_s0.random.json",
+  "reg_n16_s1.random.json",
+  "reg_n4_s0.random.json",
+  "reg_n4_s1.random.json",
+  "reg_n8_s0.random.json",
+  "reg_n8_s1.random.json",
+  "reg_n8_s2.random.json"
+ ],
+ "bins": {
+  "m_shape": {
+   "one": 46,
+   "lt_n": 76,
+   "eq_n": 80,
+   "n_to_buf": 81,
+   "eq_buf": 56,
+   "multi_chunk_even": 49,
+   "multi_chunk_ragged": 110
+  },
+  "k_shape": {
+   "lt_n": 90,
+   "eq_n": 88,
+   "mult_n": 114,
+   "gt_n_ragged": 206
+  },
+  "n_shape": {
+   "lt_n": 90,
+   "eq_n": 97,
+   "mult_n": 105,
+   "gt_n_ragged": 206
+  },
+  "tile_edge": {
+   "partial_k_tile": 296,
+   "partial_n_tile": 296,
+   "partial_m_chunk": 364,
+   "all_full": 29
+  },
+  "cmd_kind": {
+   "lw1_acc0_dr1": 351,
+   "lw1_acc0_dr0": 983,
+   "lw1_acc1_dr0": 1156,
+   "lw1_acc1_dr1": 983,
+   "lw0_acc0_dr1": 192
+  },
+  "values": {
+   "a_min": 235,
+   "a_max": 227,
+   "w_min": 218,
+   "w_max": 219,
+   "out_abs_gt_2p20": 12,
+   "out_neg": 476,
+   "out_zero": 114
+  },
+  "o_stall_run": {
+   "0": 21047,
+   "1": 1341,
+   "2_4": 1638,
+   "5_15": 1645,
+   "16_plus": 301
+  },
+  "o_stall_pos": {
+   "first_beat": 485,
+   "middle_beat": 4192,
+   "last_beat": 248
+  },
+  "in_gap_run": {
+   "0": 76080,
+   "1": 8386,
+   "2_4": 5084,
+   "5_15": 558,
+   "16_plus": 1
+  },
+  "in_gap_stream": {
+   "cmd": 87,
+   "w": 4452,
+   "a": 9490
+  },
+  "array_n": {
+   "4": 156,
+   "8": 216,
+   "16": 126
+  }
+ }
+}

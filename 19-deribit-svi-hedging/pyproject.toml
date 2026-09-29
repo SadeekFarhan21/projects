@@ -1,0 +1,26 @@
+[project]
+name = "optvol"
+version = "0.1.0"
+description = "Black-76 pricing, implied vol, SVI/SSVI surfaces and delta hedging on Deribit BTC and ETH options"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "numba>=0.60",
+    "polars>=1.0",
+    "matplotlib>=3.9",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "hypothesis>=6.100"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/optvol"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

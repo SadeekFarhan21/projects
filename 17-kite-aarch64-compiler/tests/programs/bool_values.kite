@@ -1,0 +1,28 @@
+// Booleans as values: variables, arrays, parameters, printing.
+fn xor(a: bool, b: bool) -> bool {
+    return a != b;
+}
+
+fn main() {
+    let t = true;
+    let f = !t;
+    println(t);
+    println(f);
+    println(xor(t, f));
+    println(xor(t, t));
+    let flags = [t, f, t && f, t || f];
+    for i in 0..len(flags) {
+        print(flags[i]);
+        print(" ");
+    }
+    println();
+    var count = 0;
+    for i in 0..len(flags) {
+        if flags[i] {
+            count = count + 1;
+        }
+    }
+    println(count);
+    println(to_str(1 < 2) + to_str(!(1 < 2)));
+    println(!!t);
+}

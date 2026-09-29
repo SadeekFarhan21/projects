@@ -1,0 +1,6 @@
+// expect: 5:15: type error: values of type [int] cannot be compared with ==
+fn main() {
+    let a = [1];
+    let b = [1];
+    println(a == b);
+}

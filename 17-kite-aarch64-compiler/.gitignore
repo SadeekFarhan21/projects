@@ -1,0 +1,11 @@
+# dune build output
+_build/
+# local opam switch created by tools/setup.sh
+_opam/
+# generated executables and assembly
+bench/build/
+*.s
+a.out
+/tour
+/fuzz_failures/
+*.install

@@ -1,0 +1,17 @@
+// Large literals exercise constant materialisation in the backend.
+fn main() {
+    println(65535);
+    println(65536);
+    println(-65536);
+    println(-65537);
+    println(4294967296);
+    println(123456789012345);
+    println(0x1234_5678_9abc_def0);
+    println(1_000_000);
+    println(-1);
+    println(0);
+    let big = 9223372036854775807;
+    println(big - 9223372036854775000);
+    println(0x0001000000000000);
+    println(0x0000000100000000);
+}

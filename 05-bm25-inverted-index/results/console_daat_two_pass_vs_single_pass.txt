@@ -1,0 +1,15 @@
+# Console output copied verbatim from two runs during development (quora index,
+# first 300 queries, 1 rep). The first is the original DAAT loop (one pass to
+# find the minimum doc, a second pass to score); the second is after merging
+# them into a single pass. Machine load average was ~300 for both runs, so only
+# the CPU-time lines are meaningful.
+
+## before: two passes per candidate doc
+mode=bm25 queries=300 reps=1 k=10 load=299
+  wall us: mean=11873.1 p50=6522.0 p90=32751.3 p99=60916.8 p99.9=96654.4 max=96654.4  qps(1t)=84
+  cpu  us: mean=4069.6 p50=3662.6 p90=7473.4 p99=11691.5 p99.9=13771.5 max=13771.5  qps(1t, cpu)=246
+  postings/query=222504  cpu ns/posting=18.29
+
+## after: single pass (score, advance and find next minimum together)
+  cpu  us: mean=2764.4 p50=2347.7 p90=5224.8 p99=8904.4 p99.9=11958.1 max=11958.1  qps(1t, cpu)=362
+  postings/query=222504  cpu ns/posting=12.42

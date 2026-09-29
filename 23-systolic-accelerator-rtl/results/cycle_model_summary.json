@@ -1,0 +1,9 @@
+{
+ "jobs": 12,
+ "exact_matches": 12,
+ "max_abs_err_pct": 0.0,
+ "mean_abs_err_pct": 0.0,
+ "within_2pct": 12,
+ "total_measured_cycles": 539324,
+ "wall_seconds": 12.0
+}

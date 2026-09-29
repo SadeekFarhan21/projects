@@ -1,0 +1,29 @@
+// Struct declaration, literals, field access and field assignment.
+struct Point {
+    x: int,
+    y: int,
+}
+
+fn add(a: Point, b: Point) -> Point {
+    return Point { x: a.x + b.x, y: a.y + b.y };
+}
+
+fn show(p: Point) {
+    print("(");
+    print(p.x);
+    print(", ");
+    print(p.y);
+    println(")");
+}
+
+fn main() {
+    let p = Point { x: 1, y: 2 };
+    // field order in a literal does not matter
+    let q = Point { y: 20, x: 10 };
+    show(p);
+    show(q);
+    show(add(p, q));
+    p.x = 100;
+    show(p);
+    println(add(p, q).y);
+}

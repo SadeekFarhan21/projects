@@ -1,0 +1,32 @@
+// Count N-queens solutions with backtracking.
+fn safe(cols: [int], row: int, col: int) -> bool {
+    for r in 0..row {
+        let c = cols[r];
+        if c == col || c - col == row - r || col - c == row - r {
+            return false;
+        }
+    }
+    return true;
+}
+
+fn solve(cols: [int], row: int, n: int) -> int {
+    if row == n {
+        return 1;
+    }
+    var count = 0;
+    for c in 0..n {
+        if safe(cols, row, c) {
+            cols[row] = c;
+            count = count + solve(cols, row + 1, n);
+        }
+    }
+    return count;
+}
+
+fn main() {
+    for n in 1..9 {
+        print(n);
+        print(": ");
+        println(solve([0; n], 0, n));
+    }
+}

@@ -1,0 +1,5 @@
+// expect: 4:14: type error: strings cannot be indexed with []; use substr(s, i, 1)
+fn main() {
+    let s = "abc";
+    println(s[0]);
+}

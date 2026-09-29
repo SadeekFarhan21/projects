@@ -1,0 +1,24 @@
+// Functions and closures with the maximum of eight parameters.
+fn weighted(a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int) -> int {
+    return a * 1 + b * 2 + c * 3 + d * 4 + e * 5 + f * 6 + g * 7 + h * 8;
+}
+
+fn pick(a: string, b: bool, c: int, d: string, e: bool, f: int, g: string, h: bool) -> string {
+    if b && !e && h {
+        return a + d + g + to_str(c + f);
+    }
+    return "no";
+}
+
+fn main() {
+    println(weighted(1, 1, 1, 1, 1, 1, 1, 1));
+    println(weighted(8, 7, 6, 5, 4, 3, 2, 1));
+    println(pick("a", true, 1, "b", false, 2, "c", true));
+    println(pick("a", false, 1, "b", false, 2, "c", true));
+    let off = 100;
+    let g = fn(a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int) -> int {
+        return off + a - b + c - d + e - f + g - h;
+    };
+    println(g(10, 1, 10, 1, 10, 1, 10, 1));
+    println(weighted(weighted(1, 0, 0, 0, 0, 0, 0, 0), 0, 0, 0, 0, 0, 0, weighted(0, 0, 0, 0, 0, 0, 0, 1)));
+}

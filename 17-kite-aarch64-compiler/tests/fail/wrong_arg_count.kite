@@ -1,0 +1,8 @@
+// expect: 7:13: type error: function expects 2 arguments but 1 was given
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+fn main() {
+    println(add(1));
+}

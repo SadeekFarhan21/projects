@@ -1,0 +1,14 @@
+[project]
+name = "vio-to-policy"
+version = "0.1.0"
+description = "Error-state EKF visual-inertial odometry on EuRoC, evaluation tooling"
+requires-python = "==3.12.*"
+dependencies = [
+    "evo>=1.28",
+    "numpy",
+    "matplotlib",
+    "remotezip",
+]
+
+[tool.uv]
+package = false

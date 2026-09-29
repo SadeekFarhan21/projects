@@ -1,0 +1,36 @@
+{
+  "model": {
+    "vocab_size": 4096,
+    "d_model": 384,
+    "n_layers": 6,
+    "n_heads": 6,
+    "max_seq_len": 256,
+    "ffn_hidden": 1024,
+    "rope_theta": 10000.0,
+    "norm_eps": 1e-05,
+    "attn_impl": "manual"
+  },
+  "train": {
+    "data_dir": "data",
+    "out_dir": "runs/v0",
+    "device": "auto",
+    "amp": "bf16",
+    "attn_impl": "manual",
+    "d_model": "384",
+    "n_layers": "6",
+    "n_heads": "6",
+    "seq_len": "256",
+    "batch_size": "32",
+    "grad_accum": "1",
+    "steps": "4000",
+    "warmup": "200",
+    "lr": "0.001",
+    "min_lr": "0.0001",
+    "weight_decay": "0.1",
+    "clip": "1.0",
+    "eval_every": "250",
+    "eval_batches": "40",
+    "max_minutes": "45.0",
+    "seed": "1337"
+  }
+}

@@ -1,0 +1,26 @@
+// Code after return, break or continue is allowed and never runs.
+fn f(x: int) -> int {
+    if x > 0 {
+        return 1;
+        println("dead 1");
+    } else {
+        return -1;
+    }
+    println("dead 2");
+}
+
+fn main() {
+    println(f(5));
+    println(f(-5));
+    for i in 0..3 {
+        continue;
+        println("dead 3");
+    }
+    while true {
+        break;
+        println("dead 4");
+    }
+    println("done");
+    return;
+    println("dead 5");
+}

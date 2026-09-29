@@ -1,0 +1,13 @@
+fn main() {
+    let n = 400;
+    var acc = 0;
+    for i in 0..n {
+        for j in 0..n {
+            for k in 0..n {
+                acc = acc ^ (i * j + k);
+                acc = acc + (acc >> 7);
+            }
+        }
+    }
+    println(acc);
+}

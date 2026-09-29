@@ -1,0 +1,23 @@
+// Array literals, indexing, assignment and len.
+fn sum(a: [int]) -> int {
+    var s = 0;
+    for i in 0..len(a) {
+        s = s + a[i];
+    }
+    return s;
+}
+
+fn main() {
+    let a = [3, 1, 4, 1, 5, 9, 2, 6];
+    println(len(a));
+    println(a[0]);
+    println(a[7]);
+    println(sum(a));
+    a[2] = 40;
+    println(a[2]);
+    println(sum(a));
+    let bs = [true, false, true];
+    println(bs[1]);
+    let ss = ["x", "y", "z"];
+    println(ss[0] + ss[1] + ss[2]);
+}

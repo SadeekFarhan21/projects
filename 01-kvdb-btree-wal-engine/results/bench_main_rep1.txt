@@ -1,0 +1,34 @@
+# exp=main n=1000000 key=16B value=100B dir=/var/folders/d_/gjdwfdmj1_g699ng1bn05z000000gn/T//kvdb_bench loadavg=6.1 9.7 42.0
+# sqlite 3.51.0
+main   std::map         fillseq      n=1000000  batch=1       3951577 ops/s    3956807 ops/cpu-s  p50=    208 ns  p99=    1000 ns  p99.9=     1625 ns  load=6.1
+main   std::map         readseq@seq  n=1000000  batch=1       6986963 ops/s    6995453 ops/cpu-s  p50=    125 ns  p99=     250 ns  p99.9=     2209 ns  load=6.1
+main   std::map         readrandom@seq n=1000000  batch=1       1089436 ops/s    1091162 ops/cpu-s  p50=    875 ns  p99=    1542 ns  p99.9=     2458 ns  load=6.1
+main   std::map         scanall@seq  n=1000000  batch=1000000  111156401 ops/s  111395789 ops/cpu-s  p50=8996292 ns  p99= 8996292 ns  p99.9=  8996292 ns  load=6.1
+main   std::map         fillrandom   n=1000000  batch=1       1051067 ops/s    1052694 ops/cpu-s  p50=    917 ns  p99=    1792 ns  p99.9=     3167 ns  load=6.1
+main   std::map         readseq@random n=1000000  batch=1       3972863 ops/s    3978247 ops/cpu-s  p50=    125 ns  p99=     958 ns  p99.9=     1458 ns  load=6.3
+main   std::map         readrandom@random n=1000000  batch=1        779367 ops/s     823605 ops/cpu-s  p50=   1166 ns  p99=    2125 ns  p99.9=     4584 ns  load=6.3
+main   std::map         scanall@random n=1000000  batch=1000000   11357624 ops/s   11364928 ops/cpu-s  p50=88046500 ns  p99=88046500 ns  p99.9= 88046500 ns  load=6.3
+main   kvdb             fillseq      n=1000000  batch=1        714352 ops/s     720833 ops/cpu-s  p50=   1083 ns  p99=    3958 ns  p99.9=    11750 ns  load=6.3
+main   kvdb             readseq@seq  n=1000000  batch=1       3598746 ops/s    3644873 ops/cpu-s  p50=    250 ns  p99=     375 ns  p99.9=      583 ns  load=6.3
+main   kvdb             readrandom@seq n=1000000  batch=1        901825 ops/s     912475 ops/cpu-s  p50=   1041 ns  p99=    2083 ns  p99.9=     6208 ns  load=6.3
+main   kvdb             scanall@seq  n=1000000  batch=1000000  130719655 ops/s  137381508 ops/cpu-s  p50=7649875 ns  p99= 7649875 ns  p99.9=  7649875 ns  load=6.3
+main   kvdb             fillrandom   n=1000000  batch=1        439183 ops/s     442181 ops/cpu-s  p50=   1833 ns  p99=    5083 ns  p99.9=    12375 ns  load=6.2
+main   kvdb             readseq@random n=1000000  batch=1       4268719 ops/s    4279540 ops/cpu-s  p50=    208 ns  p99=     708 ns  p99.9=      959 ns  load=6.2
+main   kvdb             readrandom@random n=1000000  batch=1       1080156 ops/s    1087254 ops/cpu-s  p50=    875 ns  p99=    1625 ns  p99.9=     3583 ns  load=6.2
+main   kvdb             scanall@random n=1000000  batch=1000000   51954913 ops/s   52064352 ops/cpu-s  p50=19247375 ns  p99=19247375 ns  p99.9= 19247375 ns  load=6.2
+main   kvdb_pool16MiB   fillseq      n=1000000  batch=1        706594 ops/s     714972 ops/cpu-s  p50=   1125 ns  p99=    3667 ns  p99.9=     8959 ns  load=6.2
+main   kvdb_pool16MiB   readseq@seq  n=1000000  batch=1       3324059 ops/s    3326835 ops/cpu-s  p50=    250 ns  p99=    1125 ns  p99.9=     3833 ns  load=6.2
+main   kvdb_pool16MiB   readrandom@seq n=1000000  batch=1        680107 ops/s     680657 ops/cpu-s  p50=   1500 ns  p99=    2125 ns  p99.9=     5542 ns  load=6.0
+main   kvdb_pool16MiB   scanall@seq  n=1000000  batch=1000000   37637023 ops/s   37697440 ops/cpu-s  p50=26569541 ns  p99=26569541 ns  p99.9= 26569541 ns  load=6.0
+main   kvdb_pool16MiB   fillrandom   n=1000000  batch=1        181423 ops/s     185519 ops/cpu-s  p50=   2625 ns  p99=    6458 ns  p99.9=    29625 ns  load=6.1
+main   kvdb_pool16MiB   readseq@random n=1000000  batch=1       3012292 ops/s    3023797 ops/cpu-s  p50=    250 ns  p99=    1708 ns  p99.9=     3250 ns  load=6.1
+main   kvdb_pool16MiB   readrandom@random n=1000000  batch=1        579585 ops/s     582334 ops/cpu-s  p50=   1667 ns  p99=    2791 ns  p99.9=    10667 ns  load=6.1
+main   kvdb_pool16MiB   scanall@random n=1000000  batch=1000000   19798795 ops/s   19876369 ops/cpu-s  p50=50507875 ns  p99=50507875 ns  p99.9= 50507875 ns  load=6.1
+main   sqlite           fillseq      n=1000000  batch=1         92893 ops/s      93712 ops/cpu-s  p50=   8583 ns  p99=   35625 ns  p99.9=   121167 ns  load=6.1
+main   sqlite           readseq@seq  n=1000000  batch=1        223107 ops/s     230080 ops/cpu-s  p50=   4042 ns  p99=    8209 ns  p99.9=    52125 ns  load=5.9
+main   sqlite           readrandom@seq n=1000000  batch=1        180770 ops/s     181224 ops/cpu-s  p50=   5250 ns  p99=    8959 ns  p99.9=    23542 ns  load=5.8
+main   sqlite           scanall@seq  n=1000000  batch=1000000   19701473 ops/s   19702492 ops/cpu-s  p50=50757458 ns  p99=50757458 ns  p99.9= 50757458 ns  load=5.8
+main   sqlite           fillrandom   n=1000000  batch=1         49984 ops/s      50188 ops/cpu-s  p50=  10583 ns  p99=   70958 ns  p99.9=  2191667 ns  load=4.8
+main   sqlite           readseq@random n=1000000  batch=1        234574 ops/s     235275 ops/cpu-s  p50=   4084 ns  p99=    6333 ns  p99.9=    10542 ns  load=4.7
+main   sqlite           readrandom@random n=1000000  batch=1        166720 ops/s     166819 ops/cpu-s  p50=   5833 ns  p99=    8834 ns  p99.9=    13500 ns  load=4.4
+main   sqlite           scanall@random n=1000000  batch=1000000   13348655 ops/s   13348283 ops/cpu-s  p50=74913625 ns  p99=74913625 ns  p99.9= 74913625 ns  load=4.4

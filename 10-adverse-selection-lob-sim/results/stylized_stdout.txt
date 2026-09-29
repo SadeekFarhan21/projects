@@ -1,0 +1,5 @@
+baseline     kurt(h=10)=2.61 kurt h1/h10/h100=3.88/2.61/2.78 hill=4.63 acf_r1=-0.135 acf|r|1/5/20=0.192/0.023/-0.006 spread=4.85 mm_pnl=97116 (capture 177634, advsel -80589, carry 71) fills=71520 max|move100|=37.0 mean|inv|=1.7 |mid-V|=2.65 wall=60.1s
+no_jumps     kurt(h=10)=1.09 kurt h1/h10/h100=3.51/1.09/0.39 hill=7.42 acf_r1=-0.321 acf|r|1/5/20=0.171/-0.003/0.003 spread=4.83 mm_pnl=99167 (capture 163117, advsel -68458, carry 4508) fills=66440 max|move100|=11.5 mean|inv|=1.3 |mid-V|=1.61 wall=52.9s
+no_informed  kurt(h=10)=0.78 kurt h1/h10/h100=2.28/0.78/0.38 hill=4.47 acf_r1=-0.211 acf|r|1/5/20=0.096/-0.007/0.003 spread=5.48 mm_pnl=227631 (capture 284544, advsel -63166, carry 6252) fills=103318 max|move100|=11.0 mean|inv|=1.2 |mid-V|=102.15 wall=63.9s
+price_learning_bug kurt(h=10)=8.54 kurt h1/h10/h100=6.91/8.54/19.21 hill=3.76 acf_r1=-0.027 acf|r|1/5/20=0.270/0.083/0.019 spread=4.95 mm_pnl=82072 (capture 248787, advsel -179262, carry 12548) fills=97469 max|move100|=98.0 mean|inv|=0.8 |mid-V|=3.17 wall=62.6s
+jump event study: 836 jumps; spread pre=4.84 peak=4.99; |mid-V| pre=2.68 at +1=10.28 at +50=4.25 at +150=2.69

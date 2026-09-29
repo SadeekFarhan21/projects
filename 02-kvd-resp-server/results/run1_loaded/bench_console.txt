@@ -1,0 +1,99 @@
+== pipeline -> results/bench_pipeline.jsonl
+  pipeline           c=50  P=1        16187 ops/s  p50    590.2  p99   51888.2 us      93458 ops/cpu-s  load 374
+  pipeline           c=50  P=2        51180 ops/s  p50    588.4  p99   31276.4 us     169492 ops/cpu-s  load 380
+  pipeline           c=50  P=4        85699 ops/s  p50    656.1  p99   45503.7 us     310078 ops/cpu-s  load 376
+  pipeline           c=50  P=8       106162 ops/s  p50    845.8  p99   81363.3 us     496894 ops/cpu-s  load 365
+  pipeline           c=50  P=16      181965 ops/s  p50   1017.0  p99   88742.0 us     800000 ops/cpu-s  load 343
+  pipeline           c=50  P=32      352867 ops/s  p50   1390.9  p99   68741.1 us    1149425 ops/cpu-s  load 324
+  pipeline           c=50  P=64      253328 ops/s  p50   2870.3  p99  121907.6 us    1351351 ops/cpu-s  load 309
+  pipeline           c=50  P=128     295883 ops/s  p50   3498.6  p99  162865.9 us    1818182 ops/cpu-s  load 294
+  pipeline           c=50  P=1        17325 ops/s  p50    564.6  p99   53981.0 us      92593 ops/cpu-s  load 294
+  pipeline           c=50  P=2        32892 ops/s  p50    628.9  p99   58752.4 us     170940 ops/cpu-s  load 282
+  pipeline           c=50  P=4        73386 ops/s  p50    661.4  p99   61480.1 us     300752 ops/cpu-s  load 274
+  pipeline           c=50  P=8       106230 ops/s  p50    814.8  p99   83342.5 us     506329 ops/cpu-s  load 262
+  pipeline           c=50  P=16      183123 ops/s  p50   1030.0  p99   80098.7 us     793651 ops/cpu-s  load 252
+  pipeline           c=50  P=32      278840 ops/s  p50   1383.8  p99  104476.3 us    1123596 ops/cpu-s  load 250
+  pipeline           c=50  P=64      328850 ops/s  p50   2250.8  p99  110327.1 us    1408451 ops/cpu-s  load 248
+  pipeline           c=50  P=128     528618 ops/s  p50   3206.9  p99  114823.6 us    1818182 ops/cpu-s  load 244
+  pipeline           c=50  P=1        20434 ops/s  p50    616.6  p99   51473.8 us      84746 ops/cpu-s  load 244
+  pipeline           c=50  P=2        25562 ops/s  p50    631.9  p99  102936.6 us     165289 ops/cpu-s  load 233
+  pipeline           c=50  P=4        58679 ops/s  p50    704.7  p99   78117.7 us     300752 ops/cpu-s  load 223
+  pipeline           c=50  P=8       129253 ops/s  p50    829.8  p99   58385.1 us     493827 ops/cpu-s  load 216
+  pipeline           c=50  P=16      167474 ops/s  p50   1183.5  p99   77583.1 us     751880 ops/cpu-s  load 214
+  pipeline           c=50  P=32      211905 ops/s  p50   1730.8  p99   85652.2 us    1030928 ops/cpu-s  load 204
+  pipeline           c=50  P=64      137482 ops/s  p50   3557.7  p99  257914.7 us    1234568 ops/cpu-s  load 204
+  pipeline           c=50  P=128     119469 ops/s  p50  19193.8  p99  401713.0 us    1369863 ops/cpu-s  load 206
+== clients -> results/bench_clients.jsonl
+  clients            c=1   P=1         4422 ops/s  p50     49.1  p99    3872.0 us      54348 ops/cpu-s  load 196
+  clients            c=2   P=1         4971 ops/s  p50     52.5  p99    8764.3 us      68493 ops/cpu-s  load 208
+  clients            c=4   P=1         4676 ops/s  p50     73.7  p99   19920.6 us      80645 ops/cpu-s  load 224
+  clients            c=8   P=1         8036 ops/s  p50    113.2  p99   23052.8 us      89286 ops/cpu-s  load 233
+  clients            c=16  P=1         8375 ops/s  p50    187.4  p99   43286.5 us     102041 ops/cpu-s  load 239
+  clients            c=32  P=1         6868 ops/s  p50    502.1  p99   94053.2 us      85333 ops/cpu-s  load 248
+  clients            c=64  P=1         9219 ops/s  p50    857.0  p99  111767.5 us      88276 ops/cpu-s  load 242
+  clients            c=128 P=1         7792 ops/s  p50   2560.5  p99  182237.1 us      79012 ops/cpu-s  load 238
+  clients            c=256 P=1        11840 ops/s  p50   5107.3  p99  188992.8 us      82448 ops/cpu-s  load 232
+  clients            c=1   P=1         4682 ops/s  p50     51.3  p99    2887.0 us      53763 ops/cpu-s  load 198
+  clients            c=2   P=1         6614 ops/s  p50     69.3  p99    4828.3 us      61728 ops/cpu-s  load 197
+  clients            c=4   P=1         8828 ops/s  p50     74.9  p99    7862.9 us      76923 ops/cpu-s  load 204
+  clients            c=8   P=1        12080 ops/s  p50    107.4  p99   12797.1 us      83333 ops/cpu-s  load 212
+  clients            c=16  P=1        12967 ops/s  p50    188.5  p99   23004.2 us      87719 ops/cpu-s  load 215
+  clients            c=32  P=1        11635 ops/s  p50    381.2  p99   61687.6 us      98462 ops/cpu-s  load 209
+  clients            c=64  P=1        10792 ops/s  p50    740.7  p99  111549.7 us      98462 ops/cpu-s  load 206
+  clients            c=128 P=1        10868 ops/s  p50   1845.6  p99  145930.0 us      91103 ops/cpu-s  load 198
+  clients            c=256 P=1         7650 ops/s  p50   5299.2  p99  328566.5 us      97338 ops/cpu-s  load 171
+  clients            c=1   P=1         3291 ops/s  p50     46.8  p99    6478.2 us      56180 ops/cpu-s  load 279
+  clients            c=2   P=1         5511 ops/s  p50     59.5  p99    6241.4 us      66667 ops/cpu-s  load 300
+  clients            c=4   P=1         6465 ops/s  p50     79.7  p99   14041.8 us      78125 ops/cpu-s  load 299
+  clients            c=8   P=1         8309 ops/s  p50    120.0  p99   19767.1 us      84746 ops/cpu-s  load 300
+  clients            c=16  P=1         9998 ops/s  p50    189.3  p99   36631.1 us      94340 ops/cpu-s  load 291
+  clients            c=32  P=1         6766 ops/s  p50    484.5  p99  102322.1 us      88889 ops/cpu-s  load 287
+  clients            c=64  P=1         3612 ops/s  p50   1805.0  p99  336121.3 us      87075 ops/cpu-s  load 298
+  clients            c=128 P=1         9031 ops/s  p50   2190.3  p99  220043.8 us      91103 ops/cpu-s  load 324
+  clients            c=256 P=1         6221 ops/s  p50   4849.0  p99  480049.2 us      94465 ops/cpu-s  load 300
+== workload -> results/bench_workload.jsonl
+  workload-set       c=50  P=16       55032 ops/s  p50   2021.0  p99  287427.5 us     606061 ops/cpu-s  load 315
+  workload-get       c=50  P=16       49594 ops/s  p50   1886.2  p99  276334.3 us     653595 ops/cpu-s  load 314
+  workload-mix       c=50  P=16       40969 ops/s  p50   2220.6  p99  363766.7 us     595238 ops/cpu-s  load 326
+  workload-set       c=50  P=16       42893 ops/s  p50   1941.9  p99  322454.5 us     641026 ops/cpu-s  load 332
+  workload-get       c=50  P=16       49625 ops/s  p50   1937.8  p99  340679.2 us     641026 ops/cpu-s  load 337
+  workload-mix       c=50  P=16       27832 ops/s  p50   2914.3  p99  348374.4 us     602410 ops/cpu-s  load 338
+  workload-set       c=50  P=16       33558 ops/s  p50   2773.9  p99  358227.0 us     625000 ops/cpu-s  load 340
+  workload-get       c=50  P=16       46491 ops/s  p50   2121.5  p99  276059.0 us     680272 ops/cpu-s  load 330
+  workload-mix       c=50  P=16      480780 ops/s  p50   1050.8  p99    8081.0 us     847458 ops/cpu-s  load 341
+== aof -> results/bench_aof.jsonl
+  aof-off            c=50  P=1        64203 ops/s  p50    444.0  p99    4508.5 us     141844 ops/cpu-s  load 341
+  aof-off            c=50  P=16      511620 ops/s  p50   1168.2  p99    6757.2 us     862069 ops/cpu-s  load 341
+  aof-no             c=50  P=1        53460 ops/s  p50    503.4  p99    7670.6 us     116279 ops/cpu-s  load 334
+  aof-no             c=50  P=16      360339 ops/s  p50   1187.3  p99   25239.0 us     724638 ops/cpu-s  load 332
+  aof-everysec       c=50  P=1        53272 ops/s  p50    505.9  p99    6699.3 us     114943 ops/cpu-s  load 332
+  aof-everysec       c=50  P=16      258133 ops/s  p50   1281.3  p99   30736.4 us     781250 ops/cpu-s  load 318
+  aof-always         c=50  P=1        39676 ops/s  p50    388.3  p99    8936.8 us     151515 ops/cpu-s  load 309
+  aof-always         c=50  P=16      380195 ops/s  p50   1066.1  p99   21751.5 us     819672 ops/cpu-s  load 314
+  aof-off            c=50  P=1        55728 ops/s  p50    543.4  p99    5867.9 us     104167 ops/cpu-s  load 314
+  aof-off            c=50  P=16      358232 ops/s  p50   1272.2  p99   18671.0 us     724638 ops/cpu-s  load 316
+  aof-no             c=50  P=1        43829 ops/s  p50    524.3  p99   14706.2 us      90909 ops/cpu-s  load 299
+  aof-no             c=50  P=16      255091 ops/s  p50   1411.2  p99   39478.4 us     621118 ops/cpu-s  load 292
+  aof-everysec       c=50  P=1        73287 ops/s  p50    460.5  p99    3671.9 us     103093 ops/cpu-s  load 292
+  aof-everysec       c=50  P=16      298115 ops/s  p50   1167.5  p99   29340.5 us     675676 ops/cpu-s  load 275
+  aof-always         c=50  P=1        55932 ops/s  p50    388.1  p99    6156.7 us     121212 ops/cpu-s  load 264
+  aof-always         c=50  P=16      535773 ops/s  p50   1112.2  p99    4127.4 us     746269 ops/cpu-s  load 264
+  aof-off            c=50  P=1        62237 ops/s  p50    446.6  p99    5386.8 us     109890 ops/cpu-s  load 256
+  aof-off            c=50  P=16      372066 ops/s  p50    959.5  p99   28095.5 us     787402 ops/cpu-s  load 256
+  aof-no             c=50  P=1        79620 ops/s  p50    432.7  p99    3166.2 us     107527 ops/cpu-s  load 246
+  aof-no             c=50  P=16      543744 ops/s  p50   1146.2  p99    7453.8 us     689655 ops/cpu-s  load 246
+  aof-everysec       c=50  P=1        37859 ops/s  p50    445.1  p99   25523.0 us     100000 ops/cpu-s  load 239
+  aof-everysec       c=50  P=16      230344 ops/s  p50   1499.2  p99   48419.2 us     588235 ops/cpu-s  load 235
+  aof-always         c=50  P=1        19877 ops/s  p50    711.7  p99   20200.0 us      86580 ops/cpu-s  load 225
+  aof-always         c=50  P=16       85961 ops/s  p50   2410.8  p99  162170.3 us     602410 ops/cpu-s  load 214
+== expiry -> results/bench_expiry.jsonl
+== replay -> results/bench_replay.jsonl
+  replay   100000 cmds    5.9 MB  wall    164 ms  cpu     45 ms
+  replay   100000 cmds    5.9 MB  wall     39 ms  cpu     34 ms
+  replay   100000 cmds    5.9 MB  wall     27 ms  cpu     26 ms
+  replay   400000 cmds   23.6 MB  wall    578 ms  cpu    195 ms
+  replay   400000 cmds   23.6 MB  wall    901 ms  cpu    203 ms
+  replay   400000 cmds   23.6 MB  wall    817 ms  cpu    179 ms
+  replay  1600000 cmds   94.4 MB  wall   1685 ms  cpu   1248 ms
+  replay  1600000 cmds   94.4 MB  wall   4785 ms  cpu   1241 ms
+  replay  1600000 cmds   94.4 MB  wall   3601 ms  cpu   1233 ms

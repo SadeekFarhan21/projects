@@ -1,0 +1,360 @@
+{
+  "machine": "arm64",
+  "processor": "arm",
+  "cpu_count": 14,
+  "numba_threads": 14,
+  "python": "3.12.13",
+  "numpy": "2.5.3",
+  "numba": "0.67.0",
+  "T": 1825,
+  "costs": {
+    "fee_bps": 10,
+    "slippage_bps": 5,
+    "impact_coef": 0.0,
+    "aum": 1000000.0
+  },
+  "timing": "best of 5 (1 for the largest numpy cases)",
+  "loadavg_before": [
+    360.0791015625,
+    351.154296875,
+    310.8818359375
+  ],
+  "loadavg_after": [
+    230.60791015625,
+    285.546875,
+    291.81982421875
+  ],
+  "note": "machine shared with other concurrent jobs; see loadavg",
+  "rows": [
+    {
+      "engine": "reference",
+      "threads": 1,
+      "S": 1,
+      "T": 365,
+      "N": 100,
+      "seconds": 0.26333091700507794,
+      "strategy_days_per_s": 1386.0886680197964,
+      "asset_days_per_s": 138608.86680197963
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.09099212499859277,
+      "strategy_days_per_s": 20056.680729549116,
+      "asset_days_per_s": 2005668.0729549115
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.004587292001815513,
+      "strategy_days_per_s": 397838.2015528376,
+      "asset_days_per_s": 39783820.155283764
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 1,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.004503584001213312,
+      "strategy_days_per_s": 405232.81002604286,
+      "asset_days_per_s": 40523281.00260428
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 16,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.3078145420004148,
+      "strategy_days_per_s": 94862.3148543796,
+      "asset_days_per_s": 9486231.48543796
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 16,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.023700792007730342,
+      "strategy_days_per_s": 1232026.3386335787,
+      "asset_days_per_s": 123202633.86335787
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 16,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.013783917005639523,
+      "strategy_days_per_s": 2118410.897864023,
+      "asset_days_per_s": 211841089.78640231
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 128,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.8063706250104588,
+      "strategy_days_per_s": 289693.0924250498,
+      "asset_days_per_s": 28969309.24250498
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 128,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.2899111660080962,
+      "strategy_days_per_s": 805764.0663398125,
+      "asset_days_per_s": 80576406.63398124
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 128,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.16994116599380504,
+      "strategy_days_per_s": 1374593.3696166093,
+      "asset_days_per_s": 137459336.96166092
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.05454233400814701,
+      "strategy_days_per_s": 33460.247589100225,
+      "asset_days_per_s": 10038074.276730066
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.015638292010407895,
+      "strategy_days_per_s": 116700.72401675268,
+      "asset_days_per_s": 35010217.2050258
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 1,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.020328707993030548,
+      "strategy_days_per_s": 89774.51988713101,
+      "asset_days_per_s": 26932355.9661393
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 16,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.555189207996591,
+      "strategy_days_per_s": 52594.68228024219,
+      "asset_days_per_s": 15778404.684072657
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 16,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.16026054199028295,
+      "strategy_days_per_s": 182203.30243092825,
+      "asset_days_per_s": 54660990.729278475
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 16,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.17311708300258033,
+      "strategy_days_per_s": 168671.9732885331,
+      "asset_days_per_s": 50601591.986559935
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 128,
+      "T": 1825,
+      "N": 300,
+      "seconds": 2.917026541006635,
+      "strategy_days_per_s": 80081.54767059031,
+      "asset_days_per_s": 24024464.301177092
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 128,
+      "T": 1825,
+      "N": 300,
+      "seconds": 1.0613032080000266,
+      "strategy_days_per_s": 220106.75011546194,
+      "asset_days_per_s": 66032025.03463858
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 128,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.8491922920075012,
+      "strategy_days_per_s": 275084.92740527197,
+      "asset_days_per_s": 82525478.2215816
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 0.08435720899433363,
+      "strategy_days_per_s": 21634.191336541106,
+      "asset_days_per_s": 21634191.336541105
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 0.06833558299695142,
+      "strategy_days_per_s": 26706.437846318175,
+      "asset_days_per_s": 26706437.846318174
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 1,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 0.060125916003016755,
+      "strategy_days_per_s": 30352.967926649675,
+      "asset_days_per_s": 30352967.926649675
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 16,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 2.2199002080014907,
+      "strategy_days_per_s": 13153.744431731857,
+      "asset_days_per_s": 13153744.431731857
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 16,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 0.6575060409959406,
+      "strategy_days_per_s": 44410.23835426674,
+      "asset_days_per_s": 44410238.35426674
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 16,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 0.42926874999830034,
+      "strategy_days_per_s": 68022.65480567969,
+      "asset_days_per_s": 68022654.8056797
+    },
+    {
+      "engine": "numpy",
+      "threads": 1,
+      "S": 128,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 16.07169995800359,
+      "strategy_days_per_s": 14534.865671360973,
+      "asset_days_per_s": 14534865.671360973
+    },
+    {
+      "engine": "numba_1t",
+      "threads": 1,
+      "S": 128,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 5.422499374995823,
+      "strategy_days_per_s": 43079.76522361147,
+      "asset_days_per_s": 43079765.223611474
+    },
+    {
+      "engine": "numba_mt",
+      "threads": 14,
+      "S": 128,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 8.808418041997356,
+      "strategy_days_per_s": 26520.08554614762,
+      "asset_days_per_s": 26520085.54614762
+    },
+    {
+      "engine": "numba_1t_cached_market",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 100,
+      "seconds": 0.0023625419999007136,
+      "strategy_days_per_s": 772473.039665198,
+      "asset_days_per_s": 77247303.96651979
+    },
+    {
+      "engine": "numba_1t_cached_market",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 300,
+      "seconds": 0.006751499997335486,
+      "strategy_days_per_s": 270310.30152117985,
+      "asset_days_per_s": 81093090.45635395
+    },
+    {
+      "engine": "numba_1t_cached_market",
+      "threads": 1,
+      "S": 1,
+      "T": 1825,
+      "N": 1000,
+      "seconds": 0.023022166002192535,
+      "strategy_days_per_s": 79271.4291012494,
+      "asset_days_per_s": 79271429.10124941
+    },
+    {
+      "engine": "numba_mt_real",
+      "threads": 14,
+      "S": 1,
+      "T": 1704,
+      "N": 300,
+      "seconds": 0.010815999994520098,
+      "strategy_days_per_s": 157544.37877804437,
+      "asset_days_per_s": 47263313.63341331
+    },
+    {
+      "engine": "numba_mt_real",
+      "threads": 14,
+      "S": 64,
+      "T": 1704,
+      "N": 300,
+      "seconds": 0.740640167001402,
+      "strategy_days_per_s": 147245.59220374224,
+      "asset_days_per_s": 44173677.66112268
+    }
+  ]
+}

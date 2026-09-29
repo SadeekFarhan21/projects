@@ -1,0 +1,83 @@
+Test project /Users/farhan/Documents/deep-dive/projects/06-exchange-from-scratch/build/release
+      Start  1: FixedPoint.ParsesExactDecimals
+ 1/39 Test  #1: FixedPoint.ParsesExactDecimals ........................   Passed    0.09 sec
+      Start  2: FixedPoint.RejectsInexactOrMalformed
+ 2/39 Test  #2: FixedPoint.RejectsInexactOrMalformed ..................   Passed    0.02 sec
+      Start  3: FixedPoint.FormatRoundTrips
+ 3/39 Test  #3: FixedPoint.FormatRoundTrips ...........................   Passed    0.02 sec
+      Start  4: IdMap.BasicInsertFindErase
+ 4/39 Test  #4: IdMap.BasicInsertFindErase ............................   Passed    0.01 sec
+      Start  5: IdMap.MatchesUnorderedMapUnderChurn
+ 5/39 Test  #5: IdMap.MatchesUnorderedMapUnderChurn ...................   Passed    0.23 sec
+      Start  6: Engine.RestingLimitIsAcceptedAndPublished
+ 6/39 Test  #6: Engine.RestingLimitIsAcceptedAndPublished .............   Passed    0.06 sec
+      Start  7: Engine.PricePriorityBeatsTime
+ 7/39 Test  #7: Engine.PricePriorityBeatsTime .........................   Passed    0.03 sec
+      Start  8: Engine.TimePriorityWithinLevel
+ 8/39 Test  #8: Engine.TimePriorityWithinLevel ........................   Passed    0.01 sec
+      Start  9: Engine.SweepsLevelsAndRestsRemainder
+ 9/39 Test  #9: Engine.SweepsLevelsAndRestsRemainder ..................   Passed    0.09 sec
+      Start 10: Engine.TradeIdsAreSequential
+10/39 Test #10: Engine.TradeIdsAreSequential ..........................   Passed    0.02 sec
+      Start 11: Engine.MarketOrderTakesAnyPriceAndCancelsRemainder
+11/39 Test #11: Engine.MarketOrderTakesAnyPriceAndCancelsRemainder ....   Passed    0.01 sec
+      Start 12: Engine.IocRespectsLimitAndNeverRests
+12/39 Test #12: Engine.IocRespectsLimitAndNeverRests ..................   Passed    0.01 sec
+      Start 13: Engine.FokAllOrNothing
+13/39 Test #13: Engine.FokAllOrNothing ................................   Passed    0.01 sec
+      Start 14: Engine.FokIgnoresLiquidityBeyondLimit
+14/39 Test #14: Engine.FokIgnoresLiquidityBeyondLimit .................   Passed    0.01 sec
+      Start 15: Engine.PostOnlyRejectsWhenCrossingAndRestsOtherwise
+15/39 Test #15: Engine.PostOnlyRejectsWhenCrossingAndRestsOtherwise ...   Passed    0.01 sec
+      Start 16: Engine.CancelRemovesAndReportsOpenQty
+16/39 Test #16: Engine.CancelRemovesAndReportsOpenQty .................   Passed    0.02 sec
+      Start 17: Engine.CancelUnknownOrFilledIsRejected
+17/39 Test #17: Engine.CancelUnknownOrFilledIsRejected ................   Passed    0.02 sec
+      Start 18: Engine.ModifyDownKeepsPriority
+18/39 Test #18: Engine.ModifyDownKeepsPriority ........................   Passed    0.04 sec
+      Start 19: Engine.ModifyUpLosesPriority
+19/39 Test #19: Engine.ModifyUpLosesPriority ..........................   Passed    0.01 sec
+      Start 20: Engine.ModifyPriceLosesPriorityAndCanCross
+20/39 Test #20: Engine.ModifyPriceLosesPriorityAndCanCross ............   Passed    0.01 sec
+      Start 21: Engine.ModifyValidation
+21/39 Test #21: Engine.ModifyValidation ...............................   Passed    0.01 sec
+      Start 22: Engine.NewOrderValidation
+22/39 Test #22: Engine.NewOrderValidation .............................   Passed    0.02 sec
+      Start 23: Engine.IdCanBeReusedAfterOrderIsGone
+23/39 Test #23: Engine.IdCanBeReusedAfterOrderIsGone ..................   Passed    0.01 sec
+      Start 24: Engine.BookUpdatesAreCoalescedPerInput
+24/39 Test #24: Engine.BookUpdatesAreCoalescedPerInput ................   Passed    0.01 sec
+      Start 25: Engine.NoOpModifyPublishesNoL2
+25/39 Test #25: Engine.NoOpModifyPublishesNoL2 ........................   Passed    0.01 sec
+      Start 26: Engine.SeqNumbersTagEveryOutput
+26/39 Test #26: Engine.SeqNumbersTagEveryOutput .......................   Passed    0.01 sec
+      Start 27: Engine.ManyLevelsInsertAndDrainInOrder
+27/39 Test #27: Engine.ManyLevelsInsertAndDrainInOrder ................   Passed    0.01 sec
+      Start 28: MarketData.MirrorTracksBookAndTape
+28/39 Test #28: MarketData.MirrorTracksBookAndTape ....................   Passed    0.01 sec
+      Start 29: Differential.DefaultFlow
+29/39 Test #29: Differential.DefaultFlow ..............................   Passed   18.02 sec
+      Start 30: Differential.NarrowBookHeavyCrossing
+30/39 Test #30: Differential.NarrowBookHeavyCrossing ..................   Passed    3.52 sec
+      Start 31: Differential.WideBookManyLevels
+31/39 Test #31: Differential.WideBookManyLevels .......................   Passed   34.44 sec
+      Start 32: Differential.AggressiveMix
+32/39 Test #32: Differential.AggressiveMix ............................   Passed    0.48 sec
+      Start 33: Differential.ManySeedsShort
+33/39 Test #33: Differential.ManySeedsShort ...........................   Passed   16.04 sec
+      Start 34: Replay.InputEncodingRoundTrips
+34/39 Test #34: Replay.InputEncodingRoundTrips ........................   Passed    0.35 sec
+      Start 35: Replay.DecodeRejectsGarbage
+35/39 Test #35: Replay.DecodeRejectsGarbage ...........................   Passed    0.01 sec
+      Start 36: Replay.SameInputsSameOutputs
+36/39 Test #36: Replay.SameInputsSameOutputs ..........................   Passed    0.47 sec
+      Start 37: Replay.DecodedLogReplaysIdentically
+37/39 Test #37: Replay.DecodedLogReplaysIdentically ...................   Passed    0.41 sec
+      Start 38: replay_cli_roundtrip
+38/39 Test #38: replay_cli_roundtrip ..................................   Passed    3.83 sec
+      Start 39: golden_basic_session
+39/39 Test #39: golden_basic_session ..................................   Passed    0.01 sec
+
+100% tests passed out of 39
+
+Total Test time (real) =  78.44 sec

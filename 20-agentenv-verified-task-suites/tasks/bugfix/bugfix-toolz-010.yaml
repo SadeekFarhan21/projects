@@ -1,0 +1,80 @@
+id: bugfix-toolz-010
+family: bugfix
+prompt: |-
+  The Python package `toolz` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_itertoolz.py::test_unique
+  Failure message: assert () == (1, 2)
+  The bug is in toolz/itertoolz.py.
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/toolz/toolz
+  to: toolz
+  exclude:
+  - tests
+- copy: data/packages/toolz/tlz
+  to: tlz
+- path: toolz/_version.py
+  content: |
+    """Stub replacing versioneer output so imports never shell out to git."""
+    def get_versions():
+        return {"version": "1.0.0", "full-revisionid": None, "dirty": False, "error": None, "date": None}
+- patch: toolz/itertoolz.py
+  offset: 6992
+  old: |2
+                if val not in seen:
+                    seen_add(val)
+                    yield item
+  new: |2
+                pass
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/toolz/toolz/tests/test_itertoolz.py
+    to: _hidden/test_itertoolz.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: medium
+tags:
+- toolz
+- dropped_branch
+- itertoolz
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: toolz/itertoolz.py
+    from: data/packages/toolz/toolz/itertoolz.py
+metadata:
+  package: toolz
+  module: toolz/itertoolz.py
+  operator: dropped_branch
+  function: unique
+  lineno: 271
+  mutation: dropped if at line 271
+  failing_tests:
+  - _hidden/test_itertoolz.py::test_unique
+  n_failing: 1

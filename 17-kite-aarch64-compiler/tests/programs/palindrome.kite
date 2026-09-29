@@ -1,0 +1,26 @@
+// String reversal and palindrome checks, one byte at a time.
+fn reverse(s: string) -> string {
+    var out = "";
+    var i = len(s) - 1;
+    while i >= 0 {
+        out = out + substr(s, i, 1);
+        i = i - 1;
+    }
+    return out;
+}
+
+fn is_palindrome(s: string) -> bool {
+    return s == reverse(s);
+}
+
+fn main() {
+    let words = ["racecar", "kite", "abba", "a", "", "abca"];
+    for i in 0..len(words) {
+        print("'");
+        print(words[i]);
+        print("' -> '");
+        print(reverse(words[i]));
+        print("' ");
+        println(is_palindrome(words[i]));
+    }
+}

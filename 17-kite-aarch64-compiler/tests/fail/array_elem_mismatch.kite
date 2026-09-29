@@ -1,0 +1,4 @@
+// expect: 3:17: type error: array element: expected int, found bool
+fn main() {
+    let a = [1, true];
+}

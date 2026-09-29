@@ -1,0 +1,4 @@
+A
+--- exit 101
+--- stderr
+runtime error: chr argument out of range: 256

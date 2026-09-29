@@ -1,0 +1,2 @@
+// expect: 2:1: type error: `main` must take no parameters and return nothing
+fn main(x: int) {}

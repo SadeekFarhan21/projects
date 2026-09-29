@@ -1,0 +1,4 @@
+// expect: 3:15: lex error: unknown escape sequence '\q'
+fn main() {
+    println("a\qb");
+}

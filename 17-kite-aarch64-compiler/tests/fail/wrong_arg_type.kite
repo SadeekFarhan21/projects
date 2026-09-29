@@ -1,0 +1,8 @@
+// expect: 7:20: type error: argument 2: expected int, found string
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+fn main() {
+    println(add(1, "2"));
+}

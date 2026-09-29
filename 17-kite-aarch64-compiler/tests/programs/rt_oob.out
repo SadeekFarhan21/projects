@@ -1,0 +1,4 @@
+3
+123--- exit 101
+--- stderr
+runtime error: index out of bounds: index 3, length 3

@@ -1,0 +1,230 @@
+[reference] 10/1000 done, 10 passed, 15s elapsed, 2399 episodes/h
+[reference] 20/1000 done, 20 passed, 24s elapsed, 2978 episodes/h
+[reference] 30/1000 done, 30 passed, 35s elapsed, 3069 episodes/h
+[reference] 40/1000 done, 40 passed, 42s elapsed, 3454 episodes/h
+[reference] 50/1000 done, 50 passed, 50s elapsed, 3599 episodes/h
+[reference] 60/1000 done, 60 passed, 58s elapsed, 3701 episodes/h
+[reference] 70/1000 done, 70 passed, 61s elapsed, 4110 episodes/h
+[reference] 80/1000 done, 80 passed, 64s elapsed, 4510 episodes/h
+[reference] 90/1000 done, 90 passed, 66s elapsed, 4910 episodes/h
+[reference] 100/1000 done, 100 passed, 70s elapsed, 5149 episodes/h
+[reference] 110/1000 done, 110 passed, 73s elapsed, 5400 episodes/h
+[reference] 120/1000 done, 120 passed, 76s elapsed, 5670 episodes/h
+[reference] 130/1000 done, 130 passed, 79s elapsed, 5941 episodes/h
+[reference] 140/1000 done, 140 passed, 81s elapsed, 6233 episodes/h
+[reference] 150/1000 done, 150 passed, 83s elapsed, 6471 episodes/h
+[reference] 160/1000 done, 160 passed, 87s elapsed, 6644 episodes/h
+[reference] 170/1000 done, 170 passed, 90s elapsed, 6790 episodes/h
+[reference] 180/1000 done, 180 passed, 94s elapsed, 6871 episodes/h
+[reference] 190/1000 done, 190 passed, 99s elapsed, 6929 episodes/h
+[reference] 200/1000 done, 200 passed, 104s elapsed, 6955 episodes/h
+[reference] 210/1000 done, 210 passed, 109s elapsed, 6918 episodes/h
+[reference] 220/1000 done, 220 passed, 116s elapsed, 6809 episodes/h
+[reference] 230/1000 done, 230 passed, 123s elapsed, 6737 episodes/h
+[reference] 240/1000 done, 240 passed, 130s elapsed, 6656 episodes/h
+[reference] 250/1000 done, 250 passed, 138s elapsed, 6515 episodes/h
+[reference] 260/1000 done, 260 passed, 145s elapsed, 6472 episodes/h
+[reference] 270/1000 done, 270 passed, 150s elapsed, 6466 episodes/h
+[reference] 280/1000 done, 280 passed, 156s elapsed, 6470 episodes/h
+[reference] 290/1000 done, 290 passed, 160s elapsed, 6530 episodes/h
+[reference] 300/1000 done, 300 passed, 165s elapsed, 6536 episodes/h
+[reference] 310/1000 done, 310 passed, 171s elapsed, 6523 episodes/h
+[reference] 320/1000 done, 320 passed, 178s elapsed, 6462 episodes/h
+[reference] 330/1000 done, 330 passed, 183s elapsed, 6486 episodes/h
+[reference] 340/1000 done, 340 passed, 185s elapsed, 6599 episodes/h
+[reference] 350/1000 done, 350 passed, 188s elapsed, 6701 episodes/h
+[reference] 360/1000 done, 360 passed, 192s elapsed, 6747 episodes/h
+[reference] 370/1000 done, 370 passed, 196s elapsed, 6780 episodes/h
+[reference] 380/1000 done, 380 passed, 199s elapsed, 6858 episodes/h
+[reference] 390/1000 done, 390 passed, 203s elapsed, 6928 episodes/h
+[reference] 400/1000 done, 400 passed, 205s elapsed, 7023 episodes/h
+[reference] 410/1000 done, 410 passed, 208s elapsed, 7113 episodes/h
+[reference] 420/1000 done, 420 passed, 212s elapsed, 7131 episodes/h
+[reference] 430/1000 done, 430 passed, 217s elapsed, 7141 episodes/h
+[reference] 440/1000 done, 440 passed, 222s elapsed, 7138 episodes/h
+[reference] 450/1000 done, 450 passed, 225s elapsed, 7187 episodes/h
+[reference] 460/1000 done, 460 passed, 230s elapsed, 7213 episodes/h
+[reference] 470/1000 done, 470 passed, 232s elapsed, 7287 episodes/h
+[reference] 480/1000 done, 480 passed, 236s elapsed, 7317 episodes/h
+[reference] 490/1000 done, 490 passed, 239s elapsed, 7384 episodes/h
+[reference] 500/1000 done, 500 passed, 243s elapsed, 7398 episodes/h
+[reference] 510/1000 done, 510 passed, 244s elapsed, 7536 episodes/h
+[reference] 520/1000 done, 520 passed, 244s elapsed, 7671 episodes/h
+[reference] 530/1000 done, 530 passed, 244s elapsed, 7807 episodes/h
+[reference] 540/1000 done, 540 passed, 245s elapsed, 7941 episodes/h
+[reference] 550/1000 done, 550 passed, 245s elapsed, 8078 episodes/h
+[reference] 560/1000 done, 560 passed, 246s elapsed, 8211 episodes/h
+[reference] 570/1000 done, 570 passed, 246s elapsed, 8346 episodes/h
+[reference] 580/1000 done, 580 passed, 246s elapsed, 8480 episodes/h
+[reference] 590/1000 done, 590 passed, 247s elapsed, 8613 episodes/h
+[reference] 600/1000 done, 600 passed, 247s elapsed, 8748 episodes/h
+[reference] 610/1000 done, 610 passed, 247s elapsed, 8883 episodes/h
+[reference] 620/1000 done, 620 passed, 248s elapsed, 9015 episodes/h
+[reference] 630/1000 done, 630 passed, 248s elapsed, 9145 episodes/h
+[reference] 640/1000 done, 640 passed, 248s elapsed, 9274 episodes/h
+[reference] 650/1000 done, 6/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 5 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+9921 episodes/h
+[reference] 700/1000 done, 700 passed, 251s elapsed, 10053 episodes/h
+[reference] 710/1000 done, 710 passed, 251s elapsed, 10184 episodes/h
+[reference] 720/1000 done, 720 passed, 251s elapsed, 10313 episodes/h
+[reference] 730/1000 done, 730 passed, 252s elapsed, 10440 episodes/h
+[reference] 740/1000 done, 740 passed, 252s elapsed, 10563 episodes/h
+[reference] 750/1000 done, 750 passed, 253s elapsed, 10691 episodes/h
+[reference] 760/1000 done, 760 passed, 253s elapsed, 10814 episodes/h
+[reference] 770/1000 done, 770 passed, 253s elapsed, 10937 episodes/h
+[reference] 780/1000 done, 780 passed, 254s elapsed, 11061 episodes/h
+[reference] 790/1000 done, 790 passed, 254s elapsed, 11192 episodes/h
+[reference] 800/1000 done, 800 passed, 254s elapsed, 11316 episodes/h
+[reference] 810/1000 done, 810 passed, 255s elapsed, 11417 episodes/h
+[reference] 820/1000 done, 820 passed, 256s elapsed, 11532 episodes/h
+[reference] 830/1000 done, 830 passed, 256s elapsed, 11654 episodes/h
+[reference] 840/1000 done, 840 passed, 257s elapsed, 11782 episodes/h
+[reference] 850/1000 done, 850 passed, 257s elapsed, 11906 episodes/h
+[reference] 860/1000 done, 860 passed, 257s elapsed, 12030 episodes/h
+[reference] 870/1000 done, 870 passed, 258s elapsed, 12154 episodes/h
+[reference] 880/1000 done, 880 passed, 258s elapsed, 12272 episodes/h
+[reference] 890/1000 done, 890 passed, 258s elapsed, 12395 episodes/h
+[reference] 900/1000 done, 900 passed, 259s elapsed, 12520 episodes/h
+[reference] 910/1000 done, 910 passed, 259s elapsed, 12639 episodes/h
+[reference] 920/1000 done, 920 passed, 260s elapsed, 12759 episodes/h
+[reference] 930/1000 done, 930 passed, 260s elapsed, 12879 episodes/h
+[reference] 940/1000 done, 940 passed, 260s elapsed, 12997 episodes/h
+[reference] 950/1000 done, 950 passed, 261s elapsed, 13112 episodes/h
+[reference] 960/1000 done, 960 passed, 262s elapsed, 13211 episodes/h
+[reference] 970/1000 done, 970 passed, 262s elapsed, 13323 episodes/h
+[reference] 980/1000 done, 980 passed, 262s elapsed, 13442 episodes/h
+[reference] 990/1000 done, 990 passed, 263s elapsed, 13562 episodes/h
+[reference] 1000/1000 done, 1000 passed, 263s elapsed, 13681 episodes/h
+[null] 10/1000 done, 0 passed, 9s elapsed, 4019 episodes/h
+[null] 20/1000 done, 0 passed, 15s elapsed, 4690 episodes/h
+[null] 30/1000 done, 0 passed, 21s elapsed, 5051 episodes/h
+[null] 40/1000 done, 0 passed, 26s elapsed, 5610 episodes/h
+[null] 50/1000 done, 0 passed, 32s elapsed, 5581 episodes/h
+[null] 60/1000 done, 0 passed, 38s elapsed, 5668 episodes/h
+[null] 70/1000 done, 0 passed, 44s elapsed, 5754 episodes/h
+[null] 80/1000 done, 0 passed, 49s elapsed, 5838 episodes/h
+[null] 90/1000 done, 0 passed, 54s elapsed, 6056 episodes/h
+[null] 100/1000 done, 0 passed, 57s elapsed, 6264 episodes/h
+[null] 110/1000 done, 0 passed, 59s elapsed, 6743 episodes/h
+[null] 120/1000 done, 0 passed, 61s elapsed, 7118 episodes/h
+[null] 130/1000 done, 0 passed, 62s elapsed, 7576 episodes/h
+[null] 140/1000 done, 0 passed, 63s elapsed, 7961 episodes/h
+[null] 150/1000 done, 0 passed, 65s elapsed, 8329 episodes/h
+[null] 160/1000 done, 0 passed, 67s elapsed, 8655 episodes/h
+[null] 170/1000 done, 0 passed, 68s elapsed, 8962 episodes/h
+[null] 180/1000 done, 0 passed, 70s elapsed, 9219 episodes/h
+[null] 190/1000 done, 0 passed, 73s elapsed, 9434 episodes/h
+[null] 200/1000 done, 0 passed, 74s elapsed, 9691 episodes/h
+[null] 210/1000 done, 0 passed, 76s elapsed, 9921 episodes/h
+[null] 220/1000 done, 0 passed, 78s elapsed, 10169 episodes/h
+[null] 230/1000 done, 0 passed, 80s elapsed, 10409 episodes/h
+[null] 240/1000 done, 0 passed, 81s elapsed, 10605 episodes/h
+[null] 250/1000 done, 0 passed, 83s elapsed, 10790 episodes/h
+[null] 260/1000 done, 0 passed, 85s elapsed, 10951 episodes/h
+[null] 270/1000 done, 0 passed, 87s elapsed, 11120 episodes/h
+[null] 280/1000 done, 0 passed, 89s elapsed, 11296 episodes/h
+[null] 290/1000 done, 0 passed, 91s elapsed, 11446 episodes/h
+[null] 300/1000 done, 0 passed, 93s elapsed, 11562 episodes/h
+[null] 310/1000 done, 0 passed, 101s elapsed, 11095 episodes/h
+[null] 320/1000 done, 0 passed, 119s elapsed, 9698 episodes/h
+[null] 330/1000 done, 0 passed, 132s elapsed, 8986 episodes/h
+[null] 340/1000 done, 0 passed, 136s elapsed, 8981 episodes/h
+[null] 350/1000 done, 0 passed, 141s elapsed, 8956 episodes/h
+[null] 360/1000 done, 0 passed, 146s elapsed, 8882 episodes/h
+[null] 370/1000 done, 0 passed, 152s elapsed, 8783 episodes/h
+[null] 380/1000 done, 0 passed, 156s elapsed, 8795 episodes/h
+[null] 390/1000 done, 0 passed, 160s elapsed, 8789 episodes/h
+[null] 400/1000 done, 0 passed, 163s elapsed, 8814 episodes/h
+[null] 410/1000 done, 0 passed, 167s elapsed, 8821 episodes/h
+[null] 420/1000 done, 0 passed, 172s elapsed, 8807 episodes/h
+[null] 430/1000 done, 0 passed, 178s elapsed, 8709 episodes/h
+[null] 440/1000 done, 0 passed, 184s elapsed, 8628 episodes/h
+[null] 450/1000 done, 0 passed, 190s elapsed, 8526 episodes/h
+[null] 460/1000 done, 0 passed, 196s elapsed, 8434 episodes/h
+[null] 470/1000 done, 0 passed, 200s elapsed, 8462 episodes/h
+[null] 480/1000 done, 0 passed, 205s elapsed, 8426 episodes/h
+[null] 490/1000 done, 0 passed, 211s elapsed, 8362 episodes/h
+[null] 500/1000 done, 0 passed, 214s elapsed, 8417 episodes/h
+[null] 510/1000 done, 0 passed, 214s elapsed, 8584 episodes/h
+[null] 520/1000 done, 0 passed, 214s elapsed, 8751 episodes/h
+[null] 530/1000 done, 0 passed, 214s elapsed, 8918 episodes/h
+[null] 540/1000 done, 0 passed, 214s elapsed, 9086 episodes/h
+[null] 550/1000 done, 0 passed, 214s elapsed, 9253 episodes/h
+[null] 560/1000 done, 0 passed, 214s elapsed, 9406 episodes/h
+[null] 570/1000 done, 0 passed, 214s elapsed, 9569 episodes/h
+[null] 580/1000 done, 0 passed, 214s elapsed, 9736 episodes/h
+[null] 590/1000 done, 0 passed, 214s elapsed, 9903 episodes/h
+[null] 600/1000 done, 0 passed, 215s elapsed, 10061 episodes/h
+[null] 610/1000 done, 0 passed, 215s elapsed, 10228 episodes/h
+[null] 620/1000 done, 0 passed, 215s elapsed, 10389 episodes/h
+[null] 630/1000 done, 0 passed, 215s elapsed, 10556 episodes/h
+[null] 640/1000 done, 0 passed, 215s elapsed, 10722 episodes/h
+[null] 650/1000 done, 0 passed, 215s elapsed, 10888 episodes/h
+[null] 660/1000 done, 0 passed, 215s elapsed, 11055 episodes/h
+[null] 670/1000 done, 0 passed, 215s elapsed, 11219 episodes/h
+[null] 680/1000 done, 0 passed, 215s elapsed, 11386 episodes/h
+[null] 690/1000 done, 0 passed, 215s elapsed, 11552 episodes/h
+[null] 700/1000 done, 0 passed, 215s elapsed, 11718 episodes/h
+[null] 710/1000 done, 0 passed, 215s elapsed, 11884 episodes/h
+[null] 720/1000 done, 0 passed, 215s elapsed, 12050 episodes/h
+[null] 730/1000 done, 0 passed, 215s elapsed, 12217 episodes/h
+[null] 740/1000 done, 0 passed, 215s elapsed, 12383 episodes/h
+[null] 750/1000 done, 0 passed, 215s elapsed, 12544 episodes/h
+[null] 760/1000 done, 0 passed, 215s elapsed, 12710 episodes/h
+[null] 770/1000 done, 0 passed, 215s elapsed, 12877 episodes/h
+[null] 780/1000 done, 0 passed, 215s elapsed, 13043 episodes/h
+[null] 790/1000 done, 0 passed, 215s elapsed, 13209 episodes/h
+[null] 800/1000 done, 0 passed, 215s elapsed, 13373 episodes/h
+[null] 810/1000 done, 0 passed, 215s elapsed, 13535 episodes/h
+[null] 820/1000 done, 0 passed, 215s elapsed, 13700 episodes/h
+[null] 830/1000 done, 0 passed, 216s elapsed, 13863 episodes/h
+[null] 840/1000 done, 0 passed, 216s elapsed, 14027 episodes/h
+[null] 850/1000 done, 0 passed, 216s elapsed, 14190 episodes/h
+[null] 860/1000 done, 0 passed, 216s elapsed, 14352 episodes/h
+[null] 870/1000 done, 0 passed, 216s elapsed, 14508 episodes/h
+[null] 880/1000 done, 0 passed, 216s elapsed, 14671 episodes/h
+[null] 890/1000 done, 0 passed, 216s elapsed, 14833 episodes/h
+[null] 900/1000 done, 0 passed, 216s elapsed, 14994 episodes/h
+[null] 910/1000 done, 0 passed, 216s elapsed, 15158 episodes/h
+[null] 920/1000 done, 0 passed, 216s elapsed, 15310 episodes/h
+[null] 930/1000 done, 0 passed, 216s elapsed, 15473 episodes/h
+[null] 940/1000 done, 0 passed, 216s elapsed, 15631 episodes/h
+[null] 950/1000 done, 0 passed, 217s elapsed, 15794 episodes/h
+[null] 960/1000 done, 0 passed, 217s elapsed, 15952 episodes/h
+[null] 970/1000 done, 0 passed, 217s elapsed, 16115 episodes/h
+[null] 980/1000 done, 0 passed, 217s elapsed, 16277 episodes/h
+[null] 990/1000 done, 0 passed, 217s elapsed, 16438 episodes/h
+[null] 1000/1000 done, 0 passed, 218s elapsed, 16478 episodes/h
+{
+  "repeats": 5,
+  "n_tasks": 200,
+  "wall_s": 483.5,
+  "all": {
+    "tasks": 200,
+    "reference_pass_rate": 1.0,
+    "null_pass_rate": 0.0,
+    "sound_tasks": 200,
+    "flaky_verifiers": 0,
+    "median_verify_wall_s": 0.3053,
+    "p95_verify_wall_s": 7.258919999999999
+  },
+  "bugfix": {
+    "tasks": 100,
+    "reference_pass_rate": 1.0,
+    "null_pass_rate": 0.0,
+    "sound_tasks": 100,
+    "flaky_verifiers": 0,
+    "median_verify_wall_s": 4.1762999999999995,
+    "p95_verify_wall_s": 8.80162
+  },
+  "sql": {
+    "tasks": 100,
+    "reference_pass_rate": 1.0,
+    "null_pass_rate": 0.0,
+    "sound_tasks": 100,
+    "flaky_verifiers": 0,
+    "median_verify_wall_s": 0.0,
+    "p95_verify_wall_s": 0.0001
+  }
+}

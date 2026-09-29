@@ -1,0 +1,11 @@
+{
+  "index": "build/idx/scifact.idx",
+  "qrels": "data/scifact/qrels/test.tsv",
+  "k1": 0.900,
+  "b": 0.400,
+  "num_queries": 300,
+  "ndcg@10": 0.673646,
+  "mrr@10": 0.639868,
+  "recall@100": 0.928667,
+  "seconds": 1.0255
+}

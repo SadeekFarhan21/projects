@@ -1,0 +1,5 @@
+// chr only accepts byte values 0..255.
+fn main() {
+    println(chr(65));
+    println(chr(256));
+}

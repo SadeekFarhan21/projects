@@ -1,0 +1,26 @@
+{
+  "adapter": "reference",
+  "n_tasks": 200,
+  "n_samples": 5,
+  "episodes": 1000,
+  "base_seed": 0,
+  "workers": 10,
+  "config": {
+    "temperature": 0.0,
+    "max_tokens_per_turn": 512,
+    "max_context_tokens": 12000,
+    "max_parse_errors": 3,
+    "sandbox": {
+      "cpu_s": 20,
+      "wall_s": 30,
+      "mem_mb": 1024,
+      "fsize_mb": 64,
+      "nofile": 256,
+      "network": false
+    }
+  },
+  "wall_s": 263.71,
+  "episodes_per_hour": 13651.2,
+  "passed": 1000,
+  "traces": "/Users/farhan/Documents/deep-dive/projects/20-agent-environments-and-evals/results/runs/validation_reference.jsonl"
+}

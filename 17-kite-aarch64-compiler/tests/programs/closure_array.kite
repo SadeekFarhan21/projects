@@ -1,0 +1,28 @@
+// An array of closures, each capturing a different loop value.
+fn main() {
+    let n = 5;
+    var fs = [fn(x: int) -> int { return x; }; n];
+    for i in 0..n {
+        fs[i] = fn(x: int) -> int {
+            return x * i;
+        };
+    }
+    for i in 0..n {
+        print(fs[i](10));
+        print(" ");
+    }
+    println();
+    // captures are copies taken when the closure is created
+    var counter = 0;
+    var snapshots = [fn() -> int { return 0; }; 3];
+    for i in 0..3 {
+        counter = counter + 10;
+        let c = counter;
+        snapshots[i] = fn() -> int {
+            return c;
+        };
+    }
+    for i in 0..3 {
+        println(snapshots[i]());
+    }
+}

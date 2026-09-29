@@ -1,0 +1,19 @@
+// Strings: concatenation, length, equality, substrings.
+fn main() {
+    let a = "hello";
+    let b = "world";
+    let c = a + ", " + b + "!";
+    println(c);
+    println(len(c));
+    println(len(""));
+    println(substr(c, 7, 5));
+    println(substr(c, 0, 0) == "");
+    println(a == "hel" + "lo");
+    println(a != b);
+    var s = "";
+    for i in 0..5 {
+        s = s + "ab";
+    }
+    println(s);
+    println(len(s));
+}

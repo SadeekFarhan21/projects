@@ -1,0 +1,7 @@
+// expect: 5:16: type error: closure cannot capture mutable variable `n` (declare it with `let`)
+fn main() {
+    var n = 1;
+    let f = fn() -> int {
+        return n;
+    };
+}

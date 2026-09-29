@@ -1,0 +1,4 @@
+// expect: 3:13: type error: builtin `println` can only be called, not used as a value
+fn main() {
+    let p = println;
+}

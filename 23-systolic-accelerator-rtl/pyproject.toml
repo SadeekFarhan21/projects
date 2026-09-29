@@ -1,0 +1,22 @@
+[project]
+name = "systolic-accel"
+version = "0.1.0"
+description = "Weight-stationary int8 systolic array in SystemVerilog with a cocotb testbench and a Python cycle model"
+requires-python = "==3.12.*"
+dependencies = [
+    "cocotb>=2.0",
+    "pytest>=8",
+    "pytest-xdist>=3.6",
+    "numpy>=2.0",
+    "matplotlib>=3.9",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sysarray"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

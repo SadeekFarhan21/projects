@@ -1,0 +1,48 @@
+{
+ "day": "2026-09-01",
+ "n_slices": 501,
+ "n_snapshots": 22,
+ "empty_hours": [
+  20,
+  21
+ ],
+ "svi_rmse_vp_median": 0.28749292084051753,
+ "svi_rmse_vp_p90": 0.6175249098259763,
+ "half_spread_vp_median": 0.6811562708034541,
+ "share_rmse_below_half_spread": 0.9520958083832335,
+ "svi_inside_spread_mean": 0.9863854949250576,
+ "share_butterfly_ok": 0.9820359281437125,
+ "share_calendar_ok": 0.9800399201596807,
+ "share_both_ok": 0.9640718562874252,
+ "ssvi_rmse_vp_median": 1.8851647009768218,
+ "ssvi_rmse_vp_p90": 3.7720321472003473,
+ "ssvi_share_butterfly_ok": 1.0,
+ "by_coin": {
+  "ETH": {
+   "svi_rmse_vp_median": 0.2802107426244849,
+   "ssvi_rmse_vp_median": 1.975620891964756,
+   "half_spread_vp_median": 0.789583721135606,
+   "share_both_ok": 0.9800796812749004,
+   "n": 251
+  },
+  "BTC": {
+   "svi_rmse_vp_median": 0.29701864115051985,
+   "ssvi_rmse_vp_median": 1.7388061795228915,
+   "half_spread_vp_median": 0.644454807310648,
+   "share_both_ok": 0.948,
+   "n": 250
+  }
+ },
+ "forward_minus_underlying_bp_median_abs": 1.6575049073663806,
+ "forward_minus_underlying_bp_max_abs": 9.706795945260138,
+ "parity_intercept_median": 0.9998006494425118,
+ "forward_share_accepted": 0.95,
+ "forward_n_expiry_snapshots": 500,
+ "drop_totals": {
+  "one_sided_or_empty": 3391,
+  "zero_bid": 0,
+  "crossed_or_locked": 0,
+  "kept": 34783
+ },
+ "wall_s": 40.32451295852661
+}

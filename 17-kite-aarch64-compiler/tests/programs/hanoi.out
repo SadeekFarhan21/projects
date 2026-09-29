@@ -1,0 +1,16 @@
+move 1 A->C
+move 2 A->B
+move 1 C->B
+move 3 A->C
+move 1 B->A
+move 2 B->C
+move 1 A->C
+7
+move 1 A->B
+move 2 A->C
+move 1 B->C
+move 3 A->B
+move 1 C->A
+move 2 C->B
+move 1 A->B
+65535

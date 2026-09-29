@@ -1,0 +1,37 @@
+# section sizes of build/kernel.elf
+
+build/kernel.elf:	file format elf64-littleriscv
+
+Sections:
+Idx Name               Size     VMA              Type
+  0                    00000000 0000000000000000 
+  1 .text              000096ce 0000000080200000 TEXT
+  2 .rodata            00004708 000000008020a000 DATA
+  3 .data              000001a4 000000008020f000 DATA
+  4 .bss               00045e00 000000008020f1b0 BSS
+  5 .bootstacks        00028000 0000000080255000 BSS
+  6 .debug_loclists    00005905 0000000000000000 DEBUG
+  7 .debug_abbrev      0000298c 0000000000000000 DEBUG
+  8 .debug_info        0000c51e 0000000000000000 DEBUG
+  9 .debug_rnglists    00000da0 0000000000000000 DEBUG
+ 10 .debug_str_offsets 00001abc 0000000000000000 DEBUG
+ 11 .debug_str         000015d2 0000000000000000 DEBUG
+ 12 .debug_addr        00003a90 0000000000000000 DEBUG
+ 13 .riscv.attributes  00000063 0000000000000000 
+ 14 .debug_frame       00002590 0000000000000000 DEBUG
+ 15 .debug_line        00006592 0000000000000000 DEBUG
+ 16 .debug_line_str    0000021d 0000000000000000 DEBUG
+ 17 .symtab            000123a8 0000000000000000 
+ 18 .shstrtab          000000df 0000000000000000 
+ 19 .strtab            00006b9a 0000000000000000 
+# lines per directory (C, assembly, headers, linker script)
+kernel/boot         111
+kernel/arch         289
+kernel/core         758
+kernel/mm           432
+kernel/dev          304
+kernel/lib          252
+kernel/include      478
+kernel/test         897
+total              3521
+tools               391

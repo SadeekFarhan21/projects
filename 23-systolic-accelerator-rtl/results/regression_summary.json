@@ -1,0 +1,36 @@
+{
+ "gemms_total": 300,
+ "gemms_passed": 300,
+ "failed_shards": 0,
+ "sva_errors": 0,
+ "stability_errors": 0,
+ "sim_cycles": 182966,
+ "wall_seconds": 5.2,
+ "workers": 6,
+ "per_array_size": {
+  "4": {
+   "gemms": 90,
+   "shards": 2,
+   "failed_shards": 0,
+   "sim_cycles": 41388,
+   "sva_errors": 0,
+   "stability_errors": 0
+  },
+  "8": {
+   "gemms": 150,
+   "shards": 3,
+   "failed_shards": 0,
+   "sim_cycles": 83385,
+   "sva_errors": 0,
+   "stability_errors": 0
+  },
+  "16": {
+   "gemms": 60,
+   "shards": 2,
+   "failed_shards": 0,
+   "sim_cycles": 58193,
+   "sva_errors": 0,
+   "stability_errors": 0
+  }
+ }
+}

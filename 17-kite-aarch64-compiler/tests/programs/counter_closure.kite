@@ -1,0 +1,23 @@
+// A closure cannot capture a `var`, but it can capture a struct and
+// mutate its fields, which gives shared mutable state.
+struct Counter {
+    n: int,
+}
+
+fn make_counter() -> fn() -> int {
+    let state = Counter { n: 0 };
+    return fn() -> int {
+        state.n = state.n + 1;
+        return state.n;
+    };
+}
+
+fn main() {
+    let c1 = make_counter();
+    let c2 = make_counter();
+    println(c1());
+    println(c1());
+    println(c1());
+    println(c2());
+    println(c1() + c2());
+}

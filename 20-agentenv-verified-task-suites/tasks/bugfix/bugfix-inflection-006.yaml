@@ -1,0 +1,78 @@
+id: bugfix-inflection-006
+family: bugfix
+prompt: |-
+  The Python package `inflection` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_inflection.py::test_ordinal[-2--2nd], _hidden/test_inflection.py::test_ordinal[-22--22nd], _hidden/test_inflection.py::test_ordinal[-102--102nd]
+  Failure message: AssertionError: as...
+  The bug is in the function `ordinal` in inflection/__init__.py, near line 231.
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/inflection/inflection
+  to: inflection
+- patch: inflection/__init__.py
+  offset: 6501
+  old: '2'
+  new: '3'
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/inflection/test_inflection.py
+    to: _hidden/test_inflection.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: easy
+tags:
+- inflection
+- off_by_one
+- __init__
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: inflection/__init__.py
+    from: data/packages/inflection/inflection/__init__.py
+metadata:
+  package: inflection
+  module: inflection/__init__.py
+  operator: off_by_one
+  function: ordinal
+  lineno: 231
+  mutation: 2 -> 3
+  failing_tests:
+  - _hidden/test_inflection.py::test_ordinal[-2--2nd]
+  - _hidden/test_inflection.py::test_ordinal[-22--22nd]
+  - _hidden/test_inflection.py::test_ordinal[-102--102nd]
+  - _hidden/test_inflection.py::test_ordinal[2-2nd]
+  - _hidden/test_inflection.py::test_ordinal[22-22nd]
+  - _hidden/test_inflection.py::test_ordinal[102-102nd]
+  - _hidden/test_inflection.py::test_ordinalize[-2--2nd]
+  - _hidden/test_inflection.py::test_ordinalize[-22--22nd]
+  - _hidden/test_inflection.py::test_ordinalize[-102--102nd]
+  - _hidden/test_inflection.py::test_ordinalize[2-2nd]
+  - _hidden/test_inflection.py::test_ordinalize[22-22nd]
+  - _hidden/test_inflection.py::test_ordinalize[102-102nd]
+  n_failing: 12

@@ -1,0 +1,6 @@
+order book: 33,200 ops/s median over 5 x 500,000 ops (min 26,004, max 38,044); 242,513 fills
+simulation seed 0: 124,091 events in 8.96s = 13,854 events/s, 14,644 trades
+simulation seed 1: 122,788 events in 8.63s = 14,224 events/s, 14,063 trades
+simulation seed 2: 123,377 events in 9.26s = 13,324 events/s, 14,333 trades
+load average at start/end: (291.28076171875, 313.63671875, 277.75927734375) / (319.58837890625, 316.52490234375, 283.22216796875)
+simulation median: 13,854 events/s

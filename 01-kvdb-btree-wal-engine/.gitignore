@@ -1,0 +1,30 @@
+# Build outputs
+build/
+cmake-build-*/
+compile_commands.json
+*.o
+*.a
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Database files produced by the REPL, tests or benchmarks
+*.db
+*.db-wal
+*.db-journal
+*.db-shm
+*.kv
+*.kv-wal
+*.kv-journal
+
+# Downloaded data and large artifacts (none needed for v0; keep it that way)
+data/
+*.bin
+*.tar.gz
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,5 @@
+variant,path,orders,wall_s,cpu_s,orders_per_wall_sec,orders_per_cpu_sec
+stdmap_r2,add,1000000,0.168454,0.0868616,5.93633e+06,1.15126e+07
+stdmap_r2,cancel,1000000,0.975508,0.733084,1.02511e+06,1.3641e+06
+stdmap_r2,match,1000000,1.01507,0.448365,985156,2.23033e+06
+stdmap_r2,add_strided_ids,20000,0.00154775,0.00154783,1.2922e+07,1.29213e+07

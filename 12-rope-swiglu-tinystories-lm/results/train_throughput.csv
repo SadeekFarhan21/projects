@@ -1,0 +1,7 @@
+device,attn_impl,amp,batch_size,seq_len,train_tok_per_s,driver_mem_mb,status
+mps,manual,none,32,256,13800,3299,ok
+mps,manual,bf16,32,256,20237,3307,ok
+mps,manual,fp16,32,256,21949,3308,ok
+mps,sdpa,none,32,256,17695,3308,ok
+mps,sdpa,bf16,32,256,17892,3308,ok
+mps,sdpa,fp16,32,256,17417,3308,ok

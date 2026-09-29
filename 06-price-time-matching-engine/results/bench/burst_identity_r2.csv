@@ -1,0 +1,5 @@
+variant,path,orders,wall_s,cpu_s,orders_per_wall_sec,orders_per_cpu_sec
+identity_r2,add,1000000,0.206443,0.102117,4.84394e+06,9.79273e+06
+identity_r2,cancel,1000000,0.98221,0.46787,1.01811e+06,2.13735e+06
+identity_r2,match,1000000,5.34992,3.14299,186919,318169
+identity_r2,add_strided_ids,20000,0.87503,0.360055,22856.4,55547.1

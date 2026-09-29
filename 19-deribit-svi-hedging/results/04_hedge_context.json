@@ -1,0 +1,120 @@
+{
+ "day": "2026-09-01",
+ "experiment_A": {
+  "BTC": {
+   "n_options": 7,
+   "F_entry": 78610.51,
+   "settlement_proxy": 78650.746,
+   "F_last": 78634.48,
+   "realized_vol": 0.29381923309100344,
+   "atm_iv_entry": 0.338263527221189,
+   "minutes": 475,
+   "svi_fits": 475
+  },
+  "ETH": {
+   "n_options": 6,
+   "F_entry": 2466.86,
+   "settlement_proxy": 2471.418,
+   "F_last": 2471.47,
+   "realized_vol": 0.3229641368273762,
+   "atm_iv_entry": 0.4027552602408249,
+   "minutes": 475,
+   "svi_fits": 475
+  }
+ },
+ "experiment_B": {
+  "BTC": [
+   {
+    "entry_hour": 8,
+    "n_options": 8,
+    "realized_vol": 0.3549737914333985,
+    "atm_iv_entry": 0.33268654223237165
+   },
+   {
+    "entry_hour": 9,
+    "n_options": 8,
+    "realized_vol": 0.3264813954062849,
+    "atm_iv_entry": 0.338665864747133
+   },
+   {
+    "entry_hour": 10,
+    "n_options": 7,
+    "realized_vol": 0.4517047725440335,
+    "atm_iv_entry": 0.33473932726901
+   },
+   {
+    "entry_hour": 11,
+    "n_options": 7,
+    "realized_vol": 0.4826425749239218,
+    "atm_iv_entry": 0.33767607709532954
+   },
+   {
+    "entry_hour": 12,
+    "n_options": 7,
+    "realized_vol": 0.4903851374395512,
+    "atm_iv_entry": 0.3217065104359908
+   },
+   {
+    "entry_hour": 13,
+    "n_options": 7,
+    "realized_vol": 0.5137883565857837,
+    "atm_iv_entry": 0.3463222374911858
+   },
+   {
+    "entry_hour": 14,
+    "n_options": 7,
+    "realized_vol": 0.4317505438788636,
+    "atm_iv_entry": 0.33993683226504584
+   }
+  ],
+  "ETH": [
+   {
+    "entry_hour": 8,
+    "n_options": 7,
+    "realized_vol": 0.40069767765737896,
+    "atm_iv_entry": 0.4097296749243723
+   },
+   {
+    "entry_hour": 9,
+    "n_options": 8,
+    "realized_vol": 0.3749305367525047,
+    "atm_iv_entry": 0.40764370742250877
+   },
+   {
+    "entry_hour": 10,
+    "n_options": 7,
+    "realized_vol": 0.4807914406046247,
+    "atm_iv_entry": 0.4122594355683551
+   },
+   {
+    "entry_hour": 11,
+    "n_options": 7,
+    "realized_vol": 0.5054998311261153,
+    "atm_iv_entry": 0.41673745490134406
+   },
+   {
+    "entry_hour": 12,
+    "n_options": 7,
+    "realized_vol": 0.5154212332595656,
+    "atm_iv_entry": 0.4196281672310228
+   },
+   {
+    "entry_hour": 13,
+    "n_options": 7,
+    "realized_vol": 0.5503289937714493,
+    "atm_iv_entry": 0.43765694536728056
+   },
+   {
+    "entry_hour": 14,
+    "n_options": 7,
+    "realized_vol": 0.5026823154616376,
+    "atm_iv_entry": 0.40863121209347064
+   }
+  ]
+ },
+ "wall_s": 56.50704002380371,
+ "n_positions": {
+  "A_to_expiry": 13,
+  "B_rolling_4h": 101
+ }
+}

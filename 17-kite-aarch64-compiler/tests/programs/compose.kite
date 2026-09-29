@@ -1,0 +1,32 @@
+// Function composition with closures.
+fn compose(f: fn(int) -> int, g: fn(int) -> int) -> fn(int) -> int {
+    return fn(x: int) -> int {
+        return f(g(x));
+    };
+}
+
+fn inc(x: int) -> int {
+    return x + 1;
+}
+
+fn dbl(x: int) -> int {
+    return x * 2;
+}
+
+fn iterate(f: fn(int) -> int, n: int) -> fn(int) -> int {
+    var h = fn(x: int) -> int { return x; };
+    for i in 0..n {
+        let prev = h;
+        h = compose(f, prev);
+    }
+    return h;
+}
+
+fn main() {
+    println(compose(inc, dbl)(5));
+    println(compose(dbl, inc)(5));
+    println(iterate(dbl, 10)(1));
+    println(iterate(inc, 100)(0));
+    let h = compose(compose(inc, inc), compose(dbl, dbl));
+    println(h(3));
+}

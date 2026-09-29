@@ -1,0 +1,21 @@
+// The Ackermann function: deep, non-primitive recursion.
+fn ack(m: int, n: int) -> int {
+    if m == 0 {
+        return n + 1;
+    }
+    if n == 0 {
+        return ack(m - 1, 1);
+    }
+    return ack(m - 1, ack(m, n - 1));
+}
+
+fn main() {
+    for m in 0..4 {
+        for n in 0..5 {
+            print(ack(m, n));
+            print(" ");
+        }
+        println();
+    }
+    println(ack(3, 6));
+}

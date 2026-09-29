@@ -1,0 +1,65 @@
+{
+  "alphas": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6
+  ],
+  "variants": {
+    "fixed": {
+      "mm_adaptive": false
+    },
+    "adaptive": {
+      "mm_adaptive": true
+    },
+    "naive": {
+      "mm_adaptive": false,
+      "mm_learning_mode": "fixed",
+      "mm_learning": 0.3
+    }
+  },
+  "seeds": 8,
+  "t_end": 20000.0,
+  "wall_s": 61.208718042005785,
+  "n_runs": 216,
+  "base_config": {
+    "seed": 0,
+    "t_end": 20000.0,
+    "sample_dt": 1.0,
+    "p0": 10000,
+    "fund_dt": 1.0,
+    "fund_sigma": 0.3,
+    "jump_rate": 0.004,
+    "jump_sd": 12.0,
+    "taker_rate": 1.0,
+    "informed_frac": 0.1,
+    "noise_k": 0.1,
+    "noise_ref_tau": 50.0,
+    "informed_signal_sd": 0.5,
+    "informed_edge": 0.0,
+    "lp_rate": 0.5,
+    "lp_offset_p": 0.5,
+    "lp_lifetime": 30.0,
+    "mm_enabled": true,
+    "mm_gamma": 0.1,
+    "mm_sigma": 1.0,
+    "mm_k": 0.5,
+    "mm_horizon": 10.0,
+    "mm_size": 1,
+    "mm_requote_dt": 1.0,
+    "mm_learning": 1.0,
+    "mm_learning_mode": "gm",
+    "mm_alpha_belief": null,
+    "mm_inventory_learning": 0.02,
+    "mm_learning_signal": "direction",
+    "mm_max_inventory": 50,
+    "mm_adaptive": false,
+    "mm_markout_h": 10.0,
+    "mm_as_ewma": 0.02
+  }
+}

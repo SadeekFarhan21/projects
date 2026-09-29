@@ -1,0 +1,119 @@
+id: bugfix-semver-022
+family: bugfix
+prompt: |-
+  The Python package `semver` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_build-args0-kwargs0], _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_major-args1-kwargs1], _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_minor-args2-kwargs2]
+  The bug is in semver/_deprecated.py.
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/semver/src/semver
+  to: semver
+- patch: semver/_deprecated.py
+  offset: 2078
+  old: msg
+  new: r
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/semver/tests/coerce.py
+    to: _hidden/coerce.py
+  - copy: data/packages/semver/tests/conftest.py
+    to: _hidden/conftest.py
+  - copy: data/packages/semver/tests/semverwithvprefix.py
+    to: _hidden/semverwithvprefix.py
+  - copy: data/packages/semver/tests/test_bump.py
+    to: _hidden/test_bump.py
+  - copy: data/packages/semver/tests/test_compare.py
+    to: _hidden/test_compare.py
+  - copy: data/packages/semver/tests/test_deprecated_functions.py
+    to: _hidden/test_deprecated_functions.py
+  - copy: data/packages/semver/tests/test_docstrings.py
+    to: _hidden/test_docstrings.py
+  - copy: data/packages/semver/tests/test_format.py
+    to: _hidden/test_format.py
+  - copy: data/packages/semver/tests/test_immutable.py
+    to: _hidden/test_immutable.py
+  - copy: data/packages/semver/tests/test_index.py
+    to: _hidden/test_index.py
+  - copy: data/packages/semver/tests/test_match.py
+    to: _hidden/test_match.py
+  - copy: data/packages/semver/tests/test_max-min.py
+    to: _hidden/test_max-min.py
+  - copy: data/packages/semver/tests/test_parsing.py
+    to: _hidden/test_parsing.py
+  - copy: data/packages/semver/tests/test_pysemver-cli.py
+    to: _hidden/test_pysemver-cli.py
+  - copy: data/packages/semver/tests/test_replace.py
+    to: _hidden/test_replace.py
+  - copy: data/packages/semver/tests/test_semver.py
+    to: _hidden/test_semver.py
+  - copy: data/packages/semver/tests/test_subclass.py
+    to: _hidden/test_subclass.py
+  - copy: data/packages/semver/tests/test_typeerror-274.py
+    to: _hidden/test_typeerror-274.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: medium
+tags:
+- semver
+- wrong_variable
+- _deprecated
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: semver/_deprecated.py
+    from: data/packages/semver/src/semver/_deprecated.py
+metadata:
+  package: semver
+  module: semver/_deprecated.py
+  operator: wrong_variable
+  function: wrapper
+  lineno: 71
+  mutation: msg -> r
+  failing_tests:
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_build-args0-kwargs0]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_major-args1-kwargs1]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_minor-args2-kwargs2]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_patch-args3-kwargs3]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[bump_prerelease-args4-kwargs4]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[format_version-args5-kwargs5]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[finalize_version-args6-kwargs6]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[match-args7-kwargs7]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[parse-args8-kwargs8]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[parse_version_info-args9-kwargs9]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[replace-args10-kwargs10]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[max_ver-args11-kwargs11]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[min_ver-args12-kwargs12]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[cmd_bump-args13-kwargs13]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[cmd_compare-args14-kwargs14]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[cmd_check-args15-kwargs15]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[cmd_nextver-args16-kwargs16]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[createparser-args17-kwargs17]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[process-args18-kwargs18]
+  - _hidden/test_deprecated_functions.py::test_should_raise_deprecation_warnings[main-args19-kwargs19]
+  n_failing: 20

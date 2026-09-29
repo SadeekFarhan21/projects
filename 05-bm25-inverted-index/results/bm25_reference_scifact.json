@@ -1,0 +1,7 @@
+{
+  "queries": 300,
+  "identical_top10_sets": 300,
+  "identical_top1": 300,
+  "max_abs_score_diff_top10": 9.296939246894453e-06,
+  "mean_abs_score_diff_top10": 5.736598674115356e-07
+}

@@ -1,0 +1,8 @@
+# exp=walgrow n=3000 key=16B value=100B dir=/var/folders/d_/gjdwfdmj1_g699ng1bn05z000000gn/T//kvdb_bench loadavg=5.1 6.9 32.9
+# sqlite 3.51.0
+walgrow extend           append_none  n=3000     batch=1        601253 ops/s     602652 ops/cpu-s  p50=   1417 ns  p99=    5167 ns  p99.9=    16708 ns  load=5.1
+walgrow prealloc         append_none  n=3000     batch=1       1021581 ops/s    1053741 ops/cpu-s  p50=    833 ns  p99=    3084 ns  p99.9=    21708 ns  load=5.1
+walgrow extend           append_fsync n=3000     batch=1         34394 ops/s      60309 ops/cpu-s  p50=  27542 ns  p99=   58709 ns  p99.9=    68667 ns  load=5.1
+walgrow prealloc         append_fsync n=3000     batch=1         37525 ops/s      87232 ops/cpu-s  p50=  24792 ns  p99=   50584 ns  p99.9=   198250 ns  load=5.1
+walgrow extend           append_fullfsync n=3000     batch=1           247 ops/s      15703 ops/cpu-s  p50=4010416 ns  p99= 5128542 ns  p99.9=  8926167 ns  load=5.0
+walgrow prealloc         append_fullfsync n=3000     batch=1           248 ops/s      21481 ops/cpu-s  p50=4003208 ns  p99= 5934500 ns  p99.9=  8063833 ns  load=4.8

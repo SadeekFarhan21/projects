@@ -1,0 +1,25 @@
+// Structs and arrays are references: assignment copies the reference.
+struct Cell {
+    value: int,
+}
+
+fn bump(c: Cell) {
+    c.value = c.value + 1;
+}
+
+fn main() {
+    let a = Cell { value: 1 };
+    let b = a;
+    b.value = 50;
+    println(a.value);
+    bump(a);
+    println(b.value);
+    let xs = [1, 2, 3];
+    let ys = xs;
+    ys[0] = 9;
+    println(xs[0]);
+    var c = Cell { value: 0 };
+    c = Cell { value: 7 };
+    println(c.value);
+    println(a.value);
+}

@@ -1,0 +1,86 @@
+{
+  "repeats": 5,
+  "n_tasks": 200,
+  "wall_s": 483.5,
+  "all": {
+    "tasks": 200,
+    "reference_pass_rate": 1.0,
+    "null_pass_rate": 0.0,
+    "sound_tasks": 200,
+    "flaky_verifiers": 0,
+    "median_verify_wall_s": 0.3053,
+    "p95_verify_wall_s": 7.258919999999999
+  },
+  "bugfix": {
+    "tasks": 100,
+    "reference_pass_rate": 1.0,
+    "null_pass_rate": 0.0,
+    "sound_tasks": 100,
+    "flaky_verifiers": 0,
+    "median_verify_wall_s": 4.1762999999999995,
+    "p95_verify_wall_s": 8.80162
+  },
+  "sql": {
+    "tasks": 100,
+    "reference_pass_rate": 1.0,
+    "null_pass_rate": 0.0,
+    "sound_tasks": 100,
+    "flaky_verifiers": 0,
+    "median_verify_wall_s": 0.0,
+    "p95_verify_wall_s": 0.0001
+  },
+  "runner": {
+    "reference": {
+      "adapter": "reference",
+      "n_tasks": 200,
+      "n_samples": 5,
+      "episodes": 1000,
+      "base_seed": 0,
+      "workers": 10,
+      "config": {
+        "temperature": 0.0,
+        "max_tokens_per_turn": 512,
+        "max_context_tokens": 12000,
+        "max_parse_errors": 3,
+        "sandbox": {
+          "cpu_s": 20,
+          "wall_s": 30,
+          "mem_mb": 1024,
+          "fsize_mb": 64,
+          "nofile": 256,
+          "network": false
+        }
+      },
+      "wall_s": 263.71,
+      "episodes_per_hour": 13651.2,
+      "passed": 1000,
+      "traces": "/Users/farhan/Documents/deep-dive/projects/20-agentenv-verified-task-suites/results/runs/validation_reference.jsonl"
+    },
+    "null": {
+      "adapter": "null",
+      "n_tasks": 200,
+      "n_samples": 5,
+      "episodes": 1000,
+      "base_seed": 0,
+      "workers": 10,
+      "config": {
+        "temperature": 0.0,
+        "max_tokens_per_turn": 512,
+        "max_context_tokens": 12000,
+        "max_parse_errors": 3,
+        "sandbox": {
+          "cpu_s": 20,
+          "wall_s": 30,
+          "mem_mb": 1024,
+          "fsize_mb": 64,
+          "nofile": 256,
+          "network": false
+        }
+      },
+      "wall_s": 219.32,
+      "episodes_per_hour": 16414.1,
+      "passed": 0,
+      "traces": "/Users/farhan/Documents/deep-dive/projects/20-agentenv-verified-task-suites/results/runs/validation_null.jsonl"
+    }
+  }
+}

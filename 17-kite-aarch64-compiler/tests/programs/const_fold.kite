@@ -1,0 +1,27 @@
+// Expressions the optimiser folds away. The results must not change.
+fn main() {
+    let a = 6 * 7;
+    let b = a + 0;
+    let c = b * 1;
+    let d = c - c;
+    println(c);
+    println(d);
+    println(2 + 3 * 4 - 10 / 2);
+    println(1 << 62 >> 60);
+    if 1 > 2 {
+        println(1 / 0);
+    }
+    if a == 42 {
+        println("folded branch");
+    } else {
+        println("wrong branch");
+    }
+    let unused = 99 * 99;
+    var x = 5;
+    x = 10;
+    println(x);
+    println((3 * 0) + (a & 0) + (a | 0) + (a ^ 0));
+    println(-(-9223372036854775807 - 1) == -9223372036854775807 - 1);
+    println(7 % 1);
+    println(-7 / 1);
+}

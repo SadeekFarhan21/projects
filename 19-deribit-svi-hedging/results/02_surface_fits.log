@@ -1,0 +1,72 @@
+hour 00 done, 6 slices, 3s
+hour 01 done, 30 slices, 5s
+hour 02 done, 54 slices, 7s
+hour 03 done, 78 slices, 9s
+hour 04 done, 101 slices, 10s
+hour 05 done, 123 slices, 12s
+hour 06 done, 145 slices, 15s
+hour 07 done, 167 slices, 16s
+hour 08 done, 189 slices, 21s
+hour 09 done, 213 slices, 22s
+hour 10 done, 237 slices, 24s
+hour 11 done, 261 slices, 25s
+hour 12 done, 285 slices, 27s
+hour 13 done, 309 slices, 29s
+hour 14 done, 333 slices, 30s
+hour 15 done, 357 slices, 32s
+hour 16 done, 381 slices, 33s
+hour 17 done, 405 slices, 34s
+hour 18 done, 429 slices, 35s
+hour 19 done, 453 slices, 37s
+hour 20 empty (no quote younger than 10 min)
+hour 21 empty (no quote younger than 10 min)
+hour 22 done, 477 slices, 39s
+hour 23 done, 501 slices, 40s
+{
+ "day": "2026-09-01",
+ "n_slices": 501,
+ "n_snapshots": 22,
+ "empty_hours": [
+  20,
+  21
+ ],
+ "svi_rmse_vp_median": 0.28749292084051753,
+ "svi_rmse_vp_p90": 0.6175249098259763,
+ "half_spread_vp_median": 0.6811562708034541,
+ "share_rmse_below_half_spread": 0.9520958083832335,
+ "svi_inside_spread_mean": 0.9863854949250576,
+ "share_butterfly_ok": 0.9820359281437125,
+ "share_calendar_ok": 0.9800399201596807,
+ "share_both_ok": 0.9640718562874252,
+ "ssvi_rmse_vp_median": 1.8851647009768218,
+ "ssvi_rmse_vp_p90": 3.7720321472003473,
+ "ssvi_share_butterfly_ok": 1.0,
+ "by_coin": {
+  "ETH": {
+   "svi_rmse_vp_median": 0.2802107426244849,
+   "ssvi_rmse_vp_median": 1.975620891964756,
+   "half_spread_vp_median": 0.789583721135606,
+   "share_both_ok": 0.9800796812749004,
+   "n": 251
+  },
+  "BTC": {
+   "svi_rmse_vp_median": 0.29701864115051985,
+   "ssvi_rmse_vp_median": 1.7388061795228915,
+   "half_spread_vp_median": 0.644454807310648,
+   "share_both_ok": 0.948,
+   "n": 250
+  }
+ },
+ "forward_minus_underlying_bp_median_abs": 1.6575049073663806,
+ "forward_minus_underlying_bp_max_abs": 9.706795945260138,
+ "parity_intercept_median": 0.9998006494425118,
+ "forward_share_accepted": 0.95,
+ "forward_n_expiry_snapshots": 500,
+ "drop_totals": {
+  "one_sided_or_empty": 3391,
+  "zero_bid": 0,
+  "crossed_or_locked": 0,
+  "kept": 34783
+ },
+ "wall_s": 40.32451295852661
+}

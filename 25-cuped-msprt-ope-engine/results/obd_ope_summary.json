@@ -1,0 +1,136 @@
+{
+  "generated_at": "2026-09-27 00:19:52",
+  "machine": "arm64",
+  "config": {
+    "data_dir": "/Users/farhan/Documents/deep-dive/projects/25-experimentation-and-ope/data/obd",
+    "n_sim": "100000",
+    "n_boot": "2000",
+    "tau": "10.0",
+    "seed": "12345"
+  },
+  "n_random": 10000,
+  "n_bts": 10000,
+  "clicks_random": 38,
+  "clicks_bts": 42,
+  "random_policy_ctr": 0.0038,
+  "on_policy_bts_ctr": 0.0042,
+  "on_policy_ci": {
+    "estimate": 0.0042,
+    "lower": 0.003,
+    "upper": 0.0055,
+    "se": 0.0006526766070395724
+  },
+  "weights": {
+    "mean": 0.95322456,
+    "max": 19.6592,
+    "share_above_tau": 0.0104
+  },
+  "reward_model_seconds": 2.438750625005923,
+  "q_hat_mean": 0.00384127200064071,
+  "estimates": [
+    {
+      "estimator": "ips",
+      "estimate": 0.004552639999999999,
+      "lower": 0.0014949619999999999,
+      "upper": 0.009498885999999996,
+      "boot_se": 0.0021868372612993572,
+      "on_policy": 0.0042,
+      "rel_error": 0.08396190476190465,
+      "within_truth_ci": true
+    },
+    {
+      "estimator": "snips",
+      "estimate": 0.004776041439805117,
+      "lower": 0.0015656448263738439,
+      "upper": 0.009872534514057087,
+      "boot_se": 0.0022875192319682896,
+      "on_policy": 0.0042,
+      "rel_error": 0.13715272376312312,
+      "within_truth_ci": true
+    },
+    {
+      "estimator": "dm",
+      "estimate": 0.004746237180068748,
+      "lower": 0.004697148814279976,
+      "upper": 0.004790927855637518,
+      "boot_se": 2.420172856133285e-05,
+      "on_policy": 0.0042,
+      "rel_error": 0.13005647144493998,
+      "within_truth_ci": true
+    },
+    {
+      "estimator": "dr",
+      "estimate": 0.004857775154331799,
+      "lower": 0.0016802628526743919,
+      "upper": 0.009836909025311895,
+      "boot_se": 0.002202692237136217,
+      "on_policy": 0.0042,
+      "rel_error": 0.15661313198376176,
+      "within_truth_ci": true
+    },
+    {
+      "estimator": "switch_dr",
+      "estimate": 0.00461176387900782,
+      "lower": 0.0032978196059364525,
+      "upper": 0.006205865289788222,
+      "boot_se": 0.0007481516247633646,
+      "on_policy": 0.0042,
+      "rel_error": 0.09803901881138581,
+      "within_truth_ci": true
+    }
+  ],
+  "switch_dr_tau_grid": {
+    "1.0": 0.0047621917565755095,
+    "2.0": 0.00453897037989008,
+    "5.0": 0.0046913719267760445,
+    "10.0": 0.00461176387900782,
+    "20.0": 0.004857775154331799
+  },
+  "obp_crosscheck": {
+    "estimators": {
+      "ips": {
+        "ours": 0.004552639999999999,
+        "obp": 0.004552639999999999,
+        "abs_diff": 0.0
+      },
+      "snips": {
+        "ours": 0.004776041439805117,
+        "obp": 0.0047760414398051185,
+        "abs_diff": 1.734723475976807e-18
+      },
+      "dm": {
+        "ours": 0.004746237180068748,
+        "obp": 0.004746237180068748,
+        "abs_diff": 0.0
+      },
+      "dr": {
+        "ours": 0.004857775154331799,
+        "obp": 0.004857775154331799,
+        "abs_diff": 0.0
+      },
+      "switch_dr": {
+        "ours": 0.00461176387900782,
+        "obp": 0.00461176387900782,
+        "abs_diff": 0.0
+      }
+    },
+    "max_abs_diff": 1.734723475976807e-18,
+    "bts_action_dist": {
+      "max_abs_diff": 0.0022000000000000075,
+      "total_variation_per_slot": [
+        0.011800000000000001,
+        0.009339999999999987,
+        0.011960000000000002
+      ],
+      "obp_seconds": 1.920857375007472,
+      "ours_seconds": 0.4203756670030998
+    },
+    "estimates_with_obp_bts_dist": {
+      "ips": 0.00455288,
+      "snips": 0.0047758330812309535,
+      "dm": 0.004753976865200329,
+      "dr": 0.004854704623171478,
+      "switch_dr": 0.0046150236530393485
+    }
+  }
+}

@@ -1,0 +1,30 @@
+Mutation experiment: one planted bug at a time
+for each planted bug: differential program checks (275 total), 60-program fuzz
+(180 native runs), and unit tests. A hang counts as a failure (5 s timeout)
+and is also reported separately, because a heavily loaded machine can
+push an innocent program past the limit.
+
+fold >> as a logical shift
+    programs: passed 273, failed 2 (0 of them timeouts)
+    fuzz:     8 mismatches (0 of them timeouts)
+    unit:     Test Successful in 0.018s. 122 tests run.
+swap msub operands in remainder
+    programs: passed 250, failed 25 (6 of them timeouts)
+    fuzz:     140 mismatches (0 of them timeouts)
+    unit:     Test Successful in 0.018s. 122 tests run.
+linear scan frees a register one position early
+    programs: passed 275, failed 0 (0 of them timeouts)
+    fuzz:     0 mismatches (0 of them timeouts)
+    unit:     Test Successful in 0.021s. 122 tests run.
+live intervals ignore live-out (loop-carried values)
+    programs: passed 262, failed 13 (0 of them timeouts)
+    fuzz:     0 mismatches (0 of them timeouts)
+    unit:     Test Successful in 0.018s. 122 tests run.
+emit b.lt for <= comparisons
+    programs: passed 265, failed 10 (0 of them timeouts)
+    fuzz:     9 mismatches (0 of them timeouts)
+    unit:     Test Successful in 0.021s. 122 tests run.
+bounds check uses signed compare
+    programs: passed 272, failed 3 (0 of them timeouts)
+    fuzz:     0 mismatches (0 of them timeouts)
+    unit:     Test Successful in 0.020s. 122 tests run.

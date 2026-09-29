@@ -1,0 +1,5 @@
+ite
+true
+--- exit 101
+--- stderr
+runtime error: substr out of bounds: start 2, count 3, length 4

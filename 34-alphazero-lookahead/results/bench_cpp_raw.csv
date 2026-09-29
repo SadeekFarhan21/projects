@@ -1,0 +1,11 @@
+kind,stage,count,mean_ms,max_ms,mean_nodes
+solver_analyze,8,10,37078.227,155047.660,22893311
+solver_analyze,12,10,218.345,712.185,1394916
+solver_analyze,16,10,18.434,52.006,147646
+solver_analyze,20,10,0.269,2.131,2168
+solver_analyze,24,10,0.157,0.787,2616
+solver_analyze,28,10,0.002,0.008,26
+solver_analyze,32,10,0.001,0.004,8
+pure_mcts_move,100,20,1.360,1.360,0
+pure_mcts_move,1000,20,0.381,0.381,0
+pure_mcts_move,10000,20,5.229,5.229,0

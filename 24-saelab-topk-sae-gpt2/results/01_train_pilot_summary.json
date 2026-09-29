@@ -1,0 +1,73 @@
+{
+ "tokens": 1085440,
+ "steps": 265,
+ "wall_s": 370.77039885520935,
+ "end_to_end_tokens_per_s": 2927.5260467162548,
+ "gpt2_tokens_harvested": 1343488,
+ "n_saes": 4,
+ "train_cfg": {
+  "token_budget": 300000000,
+  "minutes": 6.0,
+  "batch_size": 4096,
+  "lr": 0.0004,
+  "warmup_steps": 50,
+  "decay_frac": 0.2,
+  "l1_warmup_frac": 0.05,
+  "buffer_tokens": 262144,
+  "log_every": 50
+ },
+ "saes": [
+  {
+   "d_in": 768,
+   "d_sae": 12288,
+   "arch": "topk",
+   "k": 32,
+   "l1_coeff": 1.0,
+   "k_aux": 256,
+   "aux_coeff": 0.03125,
+   "dead_tokens": 2000000,
+   "hook": "blocks.8.hook_resid_pre",
+   "seed": 0
+  },
+  {
+   "d_in": 768,
+   "d_sae": 12288,
+   "arch": "relu",
+   "k": 32,
+   "l1_coeff": 0.5,
+   "k_aux": 256,
+   "aux_coeff": 0.03125,
+   "dead_tokens": 2000000,
+   "hook": "blocks.8.hook_resid_pre",
+   "seed": 0
+  },
+  {
+   "d_in": 768,
+   "d_sae": 12288,
+   "arch": "relu",
+   "k": 32,
+   "l1_coeff": 2.0,
+   "k_aux": 256,
+   "aux_coeff": 0.03125,
+   "dead_tokens": 2000000,
+   "hook": "blocks.8.hook_resid_pre",
+   "seed": 0
+  },
+  {
+   "d_in": 768,
+   "d_sae": 12288,
+   "arch": "relu",
+   "k": 32,
+   "l1_coeff": 8.0,
+   "k_aux": 256,
+   "aux_coeff": 0.03125,
+   "dead_tokens": 2000000,
+   "hook": "blocks.8.hook_resid_pre",
+   "seed": 0
+  }
+ ],
+ "layers": [
+  8
+ ],
+ "ctx": 128
+}

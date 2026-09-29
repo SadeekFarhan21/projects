@@ -1,0 +1,5 @@
+// expect: 4:5: type error: cannot assign to `x`: it was declared with `let` (use `var`)
+fn main() {
+    let x = 1;
+    x = 2;
+}

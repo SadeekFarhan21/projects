@@ -1,0 +1,27 @@
+[project]
+name = "marketpred"
+version = "0.1.0"
+description = "Pre-registered cross-sectional alpha study on Binance daily data"
+readme = "README.md"
+authors = [
+    { name = "Farhan Sadeek", email = "farhan@farhansadeek.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "pyarrow>=25.0.1",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

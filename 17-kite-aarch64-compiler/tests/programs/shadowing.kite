@@ -1,0 +1,27 @@
+// Inner blocks may shadow outer names; the outer binding is unchanged.
+fn value() -> int {
+    return 1;
+}
+
+fn main() {
+    let x = 1;
+    {
+        let x = 2;
+        println(x);
+        {
+            let x = "three";
+            println(x);
+        }
+        println(x);
+    }
+    println(x);
+    let x = x + 10;
+    println(x);
+    // a local may shadow a top-level function
+    let value = 42;
+    println(value);
+    for x in 0..2 {
+        println(x);
+    }
+    println(x);
+}

@@ -1,0 +1,7 @@
+// Creating an array with a negative length is a runtime error.
+fn main() {
+    let n = 3 - 5;
+    println("making array");
+    let a = [0; n];
+    println(len(a));
+}

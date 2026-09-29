@@ -1,0 +1,15 @@
+# macOS-26.5-arm64-arm-64bit python 3.12.13 cpus=14
+# generators=2 concurrency=32 duration=3.0s read_frac=0.5 keyspace=2000
+nodes  size=3 R=2 W=2 trial=0 thr=    9661 ops/s  p50=5.88ms p99=19.72ms  cpu/op=275us net=274us idle=0.012 rpcs/op=3.01 wb/get=0.001 load=8 errors=0
+nodes  size=5 R=2 W=2 trial=0 thr=   11569 ops/s  p50=4.74ms p99=20.39ms  cpu/op=362us net=359us idle=0.034 rpcs/op=3.61 wb/get=0.001 load=9 errors=0
+nodes  size=7 R=2 W=2 trial=0 thr=    6840 ops/s  p50=6.70ms p99=49.27ms  cpu/op=472us net=459us idle=0.105 rpcs/op=3.86 wb/get=0.001 load=10 errors=0
+nodes  size=9 R=2 W=2 trial=0 thr=    9653 ops/s  p50=4.55ms p99=43.37ms  cpu/op=539us net=524us idle=0.151 rpcs/op=4.00 wb/get=0.001 load=11 errors=0
+quorum size=5 R=1 W=1 trial=0 thr=    8844 ops/s  p50=5.88ms p99=28.17ms  cpu/op=349us net=345us idle=0.040 rpcs/op=3.60 wb/get=0.000 load=11 errors=0
+quorum size=5 R=1 W=2 trial=0 thr=    9817 ops/s  p50=5.95ms p99=14.53ms  cpu/op=398us net=393us idle=0.046 rpcs/op=3.60 wb/get=0.000 load=12 errors=0
+quorum size=5 R=2 W=1 trial=0 thr=   10112 ops/s  p50=5.49ms p99=19.94ms  cpu/op=380us net=375us idle=0.046 rpcs/op=3.61 wb/get=0.000 load=12 errors=0
+quorum size=5 R=1 W=3 trial=0 thr=   13146 ops/s  p50=4.53ms p99=10.35ms  cpu/op=349us net=346us idle=0.036 rpcs/op=3.61 wb/get=0.000 load=12 errors=0
+quorum size=5 R=3 W=1 trial=0 thr=   10587 ops/s  p50=5.67ms p99=12.94ms  cpu/op=382us net=378us idle=0.036 rpcs/op=3.59 wb/get=0.000 load=12 errors=0
+quorum size=5 R=2 W=2 trial=0 thr=   11320 ops/s  p50=5.31ms p99=12.09ms  cpu/op=383us net=379us idle=0.046 rpcs/op=3.61 wb/get=0.001 load=12 errors=0
+quorum size=5 R=2 W=3 trial=0 thr=   10058 ops/s  p50=5.91ms p99=15.24ms  cpu/op=404us net=400us idle=0.042 rpcs/op=3.60 wb/get=0.002 load=13 errors=0
+/opt/homebrew/Cellar/python@3.12/3.12.13_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

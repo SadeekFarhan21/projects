@@ -1,0 +1,19 @@
+# virtualenv and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# downloaded data (repopulate with: uv run python scripts/fetch_obd.py)
+data/
+
+# large or scratch artifacts
+*.duckdb
+*.duckdb.wal
+*.parquet
+.DS_Store

@@ -1,0 +1,100 @@
+
+OpenSBI v1.8.1
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name               : riscv-virtio,qemu
+Platform Features           : medeleg
+Platform HART Count         : 2
+Platform HART Protection    : pmp
+Platform IPI Device         : aclint-mswi
+Platform Timer Device       : aclint-mtimer @ 10000000Hz
+Platform Console Device     : uart8250
+Platform HSM Device         : ---
+Platform PMU Device         : ---
+Platform Reboot Device      : syscon-reboot
+Platform Shutdown Device    : syscon-poweroff
+Platform Suspend Device     : ---
+Platform CPPC Device        : ---
+Firmware Base               : 0x80000000
+Firmware Size               : 333 KB
+Firmware RW Offset          : 0x40000
+Firmware RW Size            : 77 KB
+Firmware Heap Offset        : 0x49000
+Firmware Heap Size          : 41 KB (total), 0 KB (reserved), 12 KB (used), 27 KB (free)
+Firmware Scratch Size       : 4096 B (total), 1464 B (used), 2632 B (free)
+Runtime SBI Version         : 3.0
+Standard SBI Extensions     : time,rfnc,ipi,base,hsm,srst,pmu,dbcn,fwft,legacy,dbtr,sse
+Experimental SBI Extensions : none
+
+Domain0 Name                : root
+Domain0 Boot HART           : 0
+Domain0 HARTs               : 0*,1*
+Domain0 Region00            : 0x0000000080040000-0x000000008005ffff M: (F,R,W) S/U: ()
+Domain0 Region01            : 0x0000000080000000-0x000000008003ffff M: (F,R,X) S/U: ()
+Domain0 Region02            : 0x0000000000100000-0x0000000000100fff M: (I,R,W) S/U: (R,W)
+Domain0 Region03            : 0x0000000010000000-0x0000000010000fff M: (I,R,W) S/U: (R,W)
+Domain0 Region04            : 0x0000000002000000-0x000000000200ffff M: (I,R,W) S/U: ()
+Domain0 Region05            : 0x000000000c400000-0x000000000c5fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region06            : 0x000000000c000000-0x000000000c3fffff M: (I,R,W) S/U: (R,W)
+Domain0 Region07            : 0x0000000000000000-0xffffffffffffffff M: () S/U: (R,W,X)
+Domain0 Next Address        : 0x0000000080200000
+Domain0 Next Arg1           : 0x0000000087e00000
+Domain0 Next Mode           : S-mode
+Domain0 SysReset            : yes
+Domain0 SysSuspend          : yes
+
+Boot HART ID                : 0
+Boot HART Domain            : root
+Boot HART Priv Version      : v1.12
+Boot HART Base ISA          : rv64imafdch
+Boot HART ISA Extensions    : sstc,zicntr,zihpm,zicboz,zicbom,sdtrig,svadu
+Boot HART PMP Count         : 16
+Boot HART PMP Granularity   : 2 bits
+Boot HART PMP Address Bits  : 54
+Boot HART MHPM Info         : 16 (0x0007fff8)
+Boot HART Debug Triggers    : 2 triggers
+Boot HART MIDELEG           : 0x0000000000001666
+Boot HART MEDELEG           : 0x0000000000f4b509
+
+16-os v0: RISC-V 64 kernel, boot hart 0, dtb at 0x0000000087e00000
+sbi: spec v3.0, impl OpenSBI (id 1) version 0x10008
+sbi: extensions TIME=1 HSM=1 SRST=1 DBCN=1
+fdt: blob at 0x0000000087e00000, 10360 bytes, 2 cpu(s)
+fdt: memory   0x0000000080000000..0x0000000088000000 (128 MiB)
+fdt: reserved 0x0000000080000000..0x0000000080040000
+fdt: reserved 0x0000000080040000..0x0000000080060000
+fdt: uart ns16550a at 0x0000000010000000 irq 10, plic at 0x000000000c000000 (95 sources), test device at 0x0000000000100000
+fdt: timebase 10000000 Hz, bootargs "crash=stackoverflow"
+console: now on ns16550a at 0x0000000010000000 (was SBI debug console)
+pmm: RAM 0x0000000080000000..0x0000000088000000 (32768 pages), bitmap 4096 bytes at 0x000000008027d000, 32127 pages free
+kvm: text   0x0000000080200000..0x000000008020a000 R-X
+kvm: rodata 0x000000008020a000..0x000000008020f000 R--
+kvm: data   0x000000008020f000..0x0000000080255000 RW-
+kvm: stacks 0x0000000080255000..0x000000008027d000 RW- (8 boot stacks, guard page below each)
+kvm: RAM    0x000000008027d000..0x0000000088000000 RW-
+kvm: kernel page table uses 71 pages
+kvm: Sv39 paging enabled, satp=0x800000000008027e
+kmalloc: 7 size classes, 32..2048 bytes
+timer: timebase 10000000 Hz, tick every 100000 timebase units (100 Hz)
+smp: hart 1 is stopped (parked by SBI HSM; v0 runs on one hart)
+boot: 46319 us since reset (timebase clock), starting "crash"
+crash: triggering 'stackoverflow'
+
+================ KERNEL STACK OVERFLOW ================
+thread  : crasher (tid 2)
+stack   : 0x0000003f00006000..0x0000003f0000a000, guard page 0x0000003f00005000..0x0000003f00006000
+sp      : 0x0000003f00005ff0 (16 bytes below the stack bottom)
+trap    : store/AMO page fault at 0x000000008020622c <recurse+0xc>, stval=0x0000003f00005fff
+backtrace (innermost first):
+  #0  0x0000000080206240  recurse+0x20
+      ... same frame repeated 509 more times
+  #510 0x00000000802061fc  crash_thread+0x40
+  #511 0x0000000080200d94  thread_start+0x2c
+KERNEL PANIC: kernel stack overflow

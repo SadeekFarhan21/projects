@@ -1,0 +1,21 @@
+timer: back-to-back now() mean 20.1 ns, p50 0, p99 42; smallest nonzero step 41 ns
+path           book      mean      p50      p90      p99    p99.9        max
+add            1000     120.1      125      125      167      250    2161625
+cancel         1000     131.7      125      167      250      500     329083
+match          1000      57.9       42       83      125      208     909917
+add           10000     103.6      125      125      167      250       4583
+cancel        10000     232.0      125      250      625     1250    2956125
+match         10000      73.7       42       84      292      667     997083
+add          100000     102.3       84      125      167      375     749458
+cancel       100000     420.8      375      666     1208     2000     956833
+match        100000     126.2       42      250      541     1083    1754708
+add         1000000     111.0       83      125      250      709    1902000
+cancel      1000000     661.8      459      875     1708    11459    2579125
+match       1000000     467.8      125      458     8667    48208    2030416
+burst add    1000000 orders: 9.81 M/s wall, 12.92 M/s cpu
+burst cancel 1000000 orders: 0.73 M/s wall, 1.55 M/s cpu
+burst match  1000000 orders: 0.12 M/s wall, 0.27 M/s cpu
+burst add_strided_ids 20000 orders: 0.07 M/s wall, 0.07 M/s cpu
+flow rep 0: 3000000 events, 17.48 M events/s wall, 22.07 M events/s cpu (11.00 M new orders/s cpu), 1102936 trades
+flow rep 1: 3000000 events, 17.35 M events/s wall, 21.66 M events/s cpu (10.80 M new orders/s cpu), 1103177 trades
+flow rep 2: 3000000 events, 7.28 M events/s wall, 16.20 M events/s cpu (8.07 M new orders/s cpu), 1101982 trades

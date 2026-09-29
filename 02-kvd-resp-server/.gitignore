@@ -1,0 +1,27 @@
+# Build outputs (CMake presets put everything under build/)
+build/
+cmake-build-*/
+compile_commands.json
+*.o
+*.a
+*.dSYM/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Runtime data: AOF files written when running kvd locally
+*.aof
+
+# Large or downloaded artifacts. Nothing in v0 downloads data; keep it that way.
+data/
+third_party/
+*.tar.gz
+*.rdb
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/

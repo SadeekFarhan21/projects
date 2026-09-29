@@ -1,0 +1,29 @@
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# Node data directories (WAL files) if a cluster is pointed inside the repo
+data/
+*.jsonl.tmp
+wal.jsonl
+
+# Future C++ port
+cpp/build/
+cmake-build-*/
+
+# Large artifacts: this project downloads no datasets. Keep results/ small
+# (text, CSV, small PNGs); anything bigger than a few MB goes here.
+results/**/*.big
+results/histories/*.jsonl.gz
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

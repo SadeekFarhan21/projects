@@ -1,0 +1,4 @@
+first assert passed
+--- exit 101
+--- stderr
+runtime error: assertion failed

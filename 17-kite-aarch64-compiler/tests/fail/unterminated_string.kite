@@ -1,0 +1,4 @@
+// expect: 3:13: lex error: unterminated string literal
+fn main() {
+    println("oops);
+}

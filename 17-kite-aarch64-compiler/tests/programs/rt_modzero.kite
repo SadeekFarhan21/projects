@@ -1,0 +1,8 @@
+// Remainder by zero is also a runtime error.
+fn main() {
+    var x = 5;
+    var y = 5;
+    y = y - 5;
+    println(x % 3);
+    println(x % y);
+}

@@ -1,0 +1,89 @@
+id: bugfix-inflection-009
+family: bugfix
+prompt: |-
+  The Python package `inflection` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_inflection.py::test_uncountable_word_is_not_greedy, _hidden/test_inflection.py::test_singularize_plural[search-searches], _hidden/test_inflection.py::test_singularize_plural[switch-switches]
+  Failure message: Asse...
+  The bug is in the function `singularize` in inflection/__init__.py, near line 332.
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/inflection/inflection
+  to: inflection
+- patch: inflection/__init__.py
+  offset: 8906
+  old: |2
+            if re.search(rule, word):
+                return re.sub(rule, replacement, word)
+  new: |2
+            pass
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/inflection/test_inflection.py
+    to: _hidden/test_inflection.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: easy
+tags:
+- inflection
+- dropped_branch
+- __init__
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: inflection/__init__.py
+    from: data/packages/inflection/inflection/__init__.py
+metadata:
+  package: inflection
+  module: inflection/__init__.py
+  operator: dropped_branch
+  function: singularize
+  lineno: 332
+  mutation: dropped if at line 332
+  failing_tests:
+  - _hidden/test_inflection.py::test_uncountable_word_is_not_greedy
+  - _hidden/test_inflection.py::test_singularize_plural[search-searches]
+  - _hidden/test_inflection.py::test_singularize_plural[switch-switches]
+  - _hidden/test_inflection.py::test_singularize_plural[fix-fixes]
+  - _hidden/test_inflection.py::test_singularize_plural[box-boxes]
+  - _hidden/test_inflection.py::test_singularize_plural[process-processes]
+  - _hidden/test_inflection.py::test_singularize_plural[address-addresses]
+  - _hidden/test_inflection.py::test_singularize_plural[case-cases]
+  - _hidden/test_inflection.py::test_singularize_plural[stack-stacks]
+  - _hidden/test_inflection.py::test_singularize_plural[wish-wishes]
+  - _hidden/test_inflection.py::test_singularize_plural[category-categories]
+  - _hidden/test_inflection.py::test_singularize_plural[query-queries]
+  - _hidden/test_inflection.py::test_singularize_plural[ability-abilities]
+  - _hidden/test_inflection.py::test_singularize_plural[agency-agencies]
+  - _hidden/test_inflection.py::test_singularize_plural[movie-movies]
+  - _hidden/test_inflection.py::test_singularize_plural[archive-archives]
+  - _hidden/test_inflection.py::test_singularize_plural[index-indices]
+  - _hidden/test_inflection.py::test_singularize_plural[wife-wives]
+  - _hidden/test_inflection.py::test_singularize_plural[safe-saves]
+  - _hidden/test_inflection.py::test_singularize_plural[half-halves]
+  n_failing: 73

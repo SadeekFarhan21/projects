@@ -1,0 +1,23 @@
+// to_str and chr build strings from numbers and bytes.
+fn repeat(s: string, n: int) -> string {
+    var out = "";
+    for i in 0..n {
+        out = out + s;
+    }
+    return out;
+}
+
+fn main() {
+    println(to_str(42) + " is the answer");
+    println(to_str(-17));
+    println(to_str(true) + "/" + to_str(false));
+    println(len(to_str(-9223372036854775807 - 1)));
+    var alphabet = "";
+    for c in 97..123 {
+        alphabet = alphabet + chr(c);
+    }
+    println(alphabet);
+    println(repeat("-=", 10));
+    let digits = chr(48) + chr(49) + chr(50);
+    println(digits);
+}

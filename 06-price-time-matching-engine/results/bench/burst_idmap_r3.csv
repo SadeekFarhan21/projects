@@ -1,0 +1,5 @@
+variant,path,orders,wall_s,cpu_s,orders_per_wall_sec,orders_per_cpu_sec
+idmap_r3,add,1000000,0.329047,0.227281,3.03908e+06,4.39983e+06
+idmap_r3,cancel,1000000,0.556879,0.463435,1.79572e+06,2.1578e+06
+idmap_r3,match,1000000,0.415385,0.264289,2.40741e+06,3.78373e+06
+idmap_r3,add_strided_ids,20000,0.0137681,0.00457642,1.45263e+06,4.37023e+06

@@ -1,0 +1,4 @@
+making array
+--- exit 101
+--- stderr
+runtime error: negative array length: -2

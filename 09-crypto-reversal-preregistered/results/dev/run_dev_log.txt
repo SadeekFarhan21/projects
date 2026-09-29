@@ -1,0 +1,27 @@
+rev_1d      IC +0.0363 (t +6.98)  SR net rank -2.86  quintile -2.66
+rev_5d      IC +0.0331 (t +6.03)  SR net rank -2.34  quintile -1.99
+mom_20d     IC -0.0291 (t -5.18)  SR net rank +0.09  quintile +0.33
+mom_60d     IC -0.0486 (t -8.51)  SR net rank -0.42  quintile -0.60
+ridge_a1    IC +0.0963 (t +17.18)  SR net rank -0.91  quintile -0.72
+ridge_a10   IC +0.0965 (t +17.29)  SR net rank -0.92  quintile -0.75
+ridge_a100  IC +0.0967 (t +17.41)  SR net rank -0.90  quintile -0.84
+gbm_d3      IC +0.1083 (t +21.38)  SR net rank -0.17  quintile +0.06
+gbm_d6      IC +0.0988 (t +20.77)  SR net rank -0.24  quintile -0.08
+{
+  "run_id": "20260927T025636Z",
+  "selected_trial": "mom_20d|quintile",
+  "model": "mom_20d",
+  "construction": "quintile",
+  "dev_sharpe_net": 0.32512545798340164,
+  "dev_ic_mean": -0.029118093292904032,
+  "dev_psr": 0.7540160900099052,
+  "trials_logged_total": 32,
+  "trials_this_run": 18,
+  "deflated_sharpe": {
+    "dsr": 0.0001800060378817628,
+    "sr_star_ann": 2.0131455757872128,
+    "n_trials": 32,
+    "var_sr": 0.002518102609654262
+  },
+  "cost_bps": 15.0
+}

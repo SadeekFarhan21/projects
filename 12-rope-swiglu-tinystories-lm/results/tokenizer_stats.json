@@ -1,0 +1,59 @@
+{
+  "vocab_size": 4096,
+  "merges": 3839,
+  "tokenizer_train_chars": 20971520,
+  "tokenizer_train_seconds": 6.53,
+  "longest_tokens": [
+    " sunglasses",
+    " interesting",
+    " embarrassed",
+    " comfortable",
+    " independent",
+    " intelligent",
+    " caterpillar",
+    " adventurous",
+    " disappeared",
+    " cauliflower",
+    " competitive",
+    " disappointed",
+    " enthusiastic",
+    " uncomfortable",
+    " compassionate"
+  ],
+  "first_merges": [
+    " t",
+    "he",
+    " a",
+    " s",
+    " w",
+    "nd",
+    " the",
+    "ed",
+    " b",
+    " to",
+    " and",
+    " h",
+    " f",
+    "in",
+    " T",
+    " wa",
+    "re",
+    "it",
+    "ou",
+    " l"
+  ],
+  "train": {
+    "tokens": 52040220,
+    "bytes": 209714826,
+    "bytes_per_token": 4.03,
+    "encode_seconds": 46.7,
+    "encode_mb_per_s": 4.49
+  },
+  "valid": {
+    "tokens": 5581149,
+    "bytes": 22502601,
+    "bytes_per_token": 4.032,
+    "encode_seconds": 25.5,
+    "encode_mb_per_s": 0.88
+  }
+}

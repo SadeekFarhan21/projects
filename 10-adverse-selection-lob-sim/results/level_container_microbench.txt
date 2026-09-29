@@ -1,0 +1,4 @@
+dict 10000 drain head-first: 0.112s
+OrderedDict 10000 drain head-first: 0.002s
+dict 40000 drain head-first: 3.554s
+OrderedDict 40000 drain head-first: 0.006s

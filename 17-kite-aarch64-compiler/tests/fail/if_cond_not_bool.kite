@@ -1,0 +1,6 @@
+// expect: 3:8: type error: if condition: expected bool, found int
+fn main() {
+    if 1 {
+        println("x");
+    }
+}

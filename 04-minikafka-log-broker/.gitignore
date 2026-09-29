@@ -1,0 +1,25 @@
+# Build outputs
+build/
+cmake-build-*/
+compile_commands.json
+*.o
+*.a
+
+# Python virtualenv for plotting
+.venv/
+__pycache__/
+
+# Broker data directories and anything large produced by local runs
+data/
+*.log
+*.index
+results/tmp/
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Raw latency samples are ~5 MB each; regenerate with scripts/run_benchmarks.sh
+results/**/latency_raw.csv
+results/latency_raw.csv

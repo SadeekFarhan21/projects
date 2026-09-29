@@ -1,0 +1,6 @@
+date: 2026-09-27T03:34:51Z
+machine: Apple M4 Pro, 14 cores, 48 GiB
+os: macOS 26.5
+compiler: Apple clang version 17.0.0 (clang-1700.4.4.1)
+load average before run: { 204.79 214.15 252.94 }
+reps per point: 3

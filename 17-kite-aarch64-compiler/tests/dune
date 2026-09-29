@@ -1,0 +1,33 @@
+(executable
+ (name run_programs)
+ (modules run_programs)
+ (libraries kite unix))
+
+(executable
+ (name fuzz)
+ (modules fuzz)
+ (libraries kite unix))
+
+; a quick random differential test on every `dune test`
+(rule
+ (alias runtest)
+ (deps fuzz.exe)
+ (action
+  (run %{exe:fuzz.exe} 60 1)))
+
+(rule
+ (alias runtest)
+ (deps
+  run_programs.exe
+  (glob_files programs/*.kite)
+  (glob_files programs/*.out)
+  (glob_files fail/*.kite))
+ (action
+  (run %{exe:run_programs.exe} programs fail)))
+
+(test
+ (name test_unit)
+ (modules test_unit)
+ (libraries kite alcotest)
+ (deps
+  (glob_files programs/*.kite)))

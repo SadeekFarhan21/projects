@@ -1,0 +1,25 @@
+// Factorial, recursive and iterative, up to 20! which fits in 64 bits.
+fn fact_rec(n: int) -> int {
+    if n <= 1 {
+        return 1;
+    }
+    return n * fact_rec(n - 1);
+}
+
+fn fact_iter(n: int) -> int {
+    var acc = 1;
+    for i in 2..n + 1 {
+        acc = acc * i;
+    }
+    return acc;
+}
+
+fn main() {
+    for n in 0..21 {
+        assert(fact_rec(n) == fact_iter(n));
+    }
+    println(fact_rec(10));
+    println(fact_iter(20));
+    // 21! wraps around (two's complement)
+    println(fact_iter(21));
+}

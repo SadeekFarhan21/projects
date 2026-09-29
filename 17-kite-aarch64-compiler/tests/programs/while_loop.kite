@@ -1,0 +1,24 @@
+// while loops.
+fn main() {
+    var i = 0;
+    var sum = 0;
+    while i < 100 {
+        sum = sum + i;
+        i = i + 1;
+    }
+    println(sum);
+    var n = 27;
+    var steps = 0;
+    while n != 1 {
+        if n % 2 == 0 {
+            n = n / 2;
+        } else {
+            n = 3 * n + 1;
+        }
+        steps = steps + 1;
+    }
+    println(steps);
+    while false {
+        println("never");
+    }
+}

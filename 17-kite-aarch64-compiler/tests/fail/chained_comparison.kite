@@ -1,0 +1,4 @@
+// expect: 3:19: parse error: comparison operators cannot be chained; use && to combine them
+fn main() {
+    let b = 1 < 2 < 3;
+}

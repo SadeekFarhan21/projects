@@ -1,0 +1,20 @@
+{
+  "archive_symbols_usdt": 507,
+  "episodes_after_relisting_split": 522,
+  "dev_days_with_universe": 1643,
+  "universe_size_min_median_max": [
+    26,
+    50.0,
+    50
+  ],
+  "distinct_symbols_ever_in_dev_universe": 279,
+  "member_rows_dev": 79190,
+  "member_rows_missing_fwd_ret": 58,
+  "largest_abs_daily_returns_in_universe": {
+    "2021-01-28 DOGEUSDT": 3.9241136474016507,
+    "2022-09-09 LUNAUSDT#2": 1.6757704180400776,
+    "2021-03-12 CHZUSDT": 1.0344711901367103,
+    "2021-04-16 DOGEUSDT": 1.0039679776091126,
+    "2022-05-12 LUNAUSDT": -0.9997028507753738
+  }
+}

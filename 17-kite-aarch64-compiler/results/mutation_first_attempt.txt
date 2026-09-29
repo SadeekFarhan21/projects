@@ -1,0 +1,39 @@
+Earlier run of tools/mutation.sh (before timeouts were reported separately),
+copied from the terminal. Timeout was 3 s per executable. The "bounds check
+uses signed compare" row shows 2 fuzz mismatches although the fuzz programs
+contain no array accesses at all; re-running that mutant alone gave
+"0 mismatches". Those 2 were timeouts of innocent programs on a machine
+shared with other heavy jobs, which is why the next run uses 5 s and
+reports timeouts separately (results/mutation.txt).
+
+fold >> as a logical shift
+    programs: passed 273, failed 2
+    fuzz:     8 mismatches
+    unit:     Test Successful in 0.019s. 122 tests run.
+swap msub operands in remainder
+    programs: passed 250, failed 25
+    fuzz:     140 mismatches
+    unit:     Test Successful in 0.020s. 122 tests run.
+linear scan frees a register one position early
+    programs: passed 275, failed 0
+    fuzz:     0 mismatches
+    unit:     Test Successful in 0.020s. 122 tests run.
+live intervals ignore live-out (loop-carried values)
+    programs: passed 262, failed 13
+    fuzz:     0 mismatches
+    unit:     Test Successful in 0.025s. 122 tests run.
+emit b.lt for <= comparisons
+    programs: passed 265, failed 10
+    fuzz:     9 mismatches
+    unit:     Test Successful in 0.020s. 122 tests run.
+bounds check uses signed compare
+    programs: passed 272, failed 3
+    fuzz:     2 mismatches
+    unit:     Test Successful in 0.020s. 122 tests run.
+drop x+0 identity guard (x+c folds to x)
+    programs: passed 191, failed 84
+    fuzz:     114 mismatches
+    unit:     Test Successful in 0.023s. 122 tests run.
+
+Re-run of the "bounds check uses signed compare" mutant alone, fuzz only:
+fuzz: seed 1, 60 random programs x 3 optimisation levels, 0 mismatches

@@ -1,0 +1,25 @@
+// Binary search over a sorted array.
+fn search(a: [int], x: int) -> int {
+    var lo = 0;
+    var hi = len(a);
+    while lo < hi {
+        let mid = lo + (hi - lo) / 2;
+        if a[mid] == x {
+            return mid;
+        } else if a[mid] < x {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    return -1;
+}
+
+fn main() {
+    let a = [1, 3, 5, 7, 11, 13, 17, 19, 23];
+    println(search(a, 1));
+    println(search(a, 23));
+    println(search(a, 11));
+    println(search(a, 4));
+    println(search(a, 100));
+}

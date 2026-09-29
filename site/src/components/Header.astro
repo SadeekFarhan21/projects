@@ -1,0 +1,196 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import IconUnderline from "@/assets/icons/IconUnderline.svg";
+import IconArchive from "@/assets/icons/IconArchive.svg";
+import IconSearch from "@/assets/icons/IconSearch.svg";
+import IconCode from "@/assets/icons/IconCode.svg";
+import IconTrendingUp from "@/assets/icons/IconTrendingUp.svg";
+import IconHash from "@/assets/icons/IconHash.svg";
+import LinkButton from "./LinkButton.astro";
+import { stripBase, stripLocale } from "@/utils/withBase";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const { site, features } = config;
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+
+// Strip the base prefix so isActive comparisons work regardless of deploy subdirectory.
+// e.g. with base "/blog": "/blog/posts/slug" → "/posts/slug"
+const relativePath = stripBase(Astro.url.pathname);
+const pathWithoutTrailingSlash =
+  relativePath.endsWith("/") && relativePath !== "/"
+    ? relativePath.slice(0, -1)
+    : relativePath;
+
+const currentPath = stripLocale(pathWithoutTrailingSlash, locale);
+
+const isActive = (path: string) => {
+  const currentPathArray = currentPath.split("/").filter(p => p.trim());
+  const pathArray = path.split("/").filter(p => p.trim());
+  return currentPath === path || currentPathArray[0] === pathArray[0];
+};
+---
+
+<a
+  id="skip-to-content"
+  href="#main-content"
+  class="bg-background text-accent absolute inset-s-16 -top-full z-50 px-3 py-2 backdrop-blur-lg transition-all focus:top-4"
+>
+  {t.a11y.skipToContent}
+</a>
+
+<header
+  class="app-layout flex flex-col items-center justify-between sm:flex-row"
+>
+  <div
+    class="border-border bg-background flex w-full items-center justify-between gap-2 border-b py-4 sm:py-6"
+  >
+    <a
+      href={getRelativeLocaleUrl(locale, "")}
+      class="py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:text-2xl sm:leading-none"
+    >
+      {site.title}
+    </a>
+    <nav id="nav-menu" class="flex items-center sm:ms-2">
+      <ul
+        id="menu-items"
+        class="[&>li>a]:hover:text-accent flex items-center gap-x-1 sm:gap-x-5 [&>li]:h-8 [&>li>a]:relative [&>li>a]:flex [&>li>a]:h-8 [&>li>a]:items-center [&>li>a]:justify-center [&>li>a]:font-medium max-sm:[&>li>a]:w-8 max-sm:[&>li>a]:no-underline sm:[&>li>a]:px-2"
+      >
+        <li>
+          <a
+            href={getRelativeLocaleUrl(locale, "projects")}
+            class:list={{ "active-nav": isActive("/projects") }}
+            title={t.nav.projects}
+          >
+            <IconCode aria-hidden="true" class="size-6 sm:hidden" />
+            <span class="max-sm:sr-only">{t.nav.projects}</span>
+            {
+              isActive("/projects") && (
+                <IconUnderline
+                  aria-hidden="true"
+                  class="absolute bottom-0 w-6 scale-125 sm:hidden"
+                />
+              )
+            }
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://writing.farhansadeek.com/"
+            title={t.nav.ventures}
+          >
+            <IconTrendingUp aria-hidden="true" class="size-6 sm:hidden" />
+            <span class="max-sm:sr-only">{t.nav.ventures}</span>
+            {
+              isActive("/ventures") && (
+                <IconUnderline
+                  aria-hidden="true"
+                  class="absolute bottom-0 w-6 scale-125 sm:hidden"
+                />
+              )
+            }
+          </a>
+        </li>
+        <li>
+          <a
+            href={getRelativeLocaleUrl(locale, "tags")}
+            class:list={{ "active-nav": isActive("/tags") }}
+            title={t.nav.tags}
+          >
+            <IconHash aria-hidden="true" class="size-6 sm:hidden" />
+            <span class="max-sm:sr-only">{t.nav.tags}</span>
+            {
+              isActive("/tags") && (
+                <IconUnderline
+                  aria-hidden="true"
+                  class="absolute bottom-0 w-6 scale-125 sm:hidden"
+                />
+              )
+            }
+          </a>
+        </li>
+        {
+          features.showArchives && (
+            <li class="flex items-center justify-center">
+              <LinkButton
+                href={getRelativeLocaleUrl(locale, "archives")}
+                class:list={[
+                  "focus-outline relative size-8",
+                  { "active-nav": isActive("/archives") },
+                ]}
+                title={t.nav.archives}
+                aria-label={t.nav.archives}
+              >
+                <IconArchive class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
+                <span class="sr-only">{t.nav.archives}</span>
+                {isActive("/archives") && (
+                  <IconUnderline
+                    aria-hidden="true"
+                    class="absolute bottom-0 w-6 scale-125"
+                  />
+                )}
+              </LinkButton>
+            </li>
+          )
+        }
+        {
+          features.search !== false && (
+            <li class="flex items-center justify-center">
+              <LinkButton
+                href={getRelativeLocaleUrl(locale, "search")}
+                class:list={["focus-outline relative size-8"]}
+                title={t.nav.search}
+                aria-label={t.nav.search}
+              >
+                <IconSearch class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
+                <span class="sr-only">{t.nav.search}</span>
+                {isActive("/search") && (
+                  <IconUnderline
+                    aria-hidden="true"
+                    class="absolute bottom-0 w-6 scale-125 max-sm:inset-s-2"
+                  />
+                )}
+              </LinkButton>
+            </li>
+          )
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function handleSkipToContent() {
+    const skipLink = document.getElementById("skip-to-content");
+    if (!skipLink) return;
+    skipLink.addEventListener("click", e => {
+      if (
+        e.defaultPrevented ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.shiftKey ||
+        e.button !== 0
+      )
+        return;
+      e.preventDefault();
+      const target = document.getElementById("main-content");
+      if (target) {
+        target.setAttribute("tabindex", "-1");
+        target.addEventListener(
+          "blur",
+          () => target.removeAttribute("tabindex"),
+          {
+            once: true,
+          }
+        );
+        target.focus();
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  handleSkipToContent();
+  document.addEventListener("astro:after-swap", handleSkipToContent);
+</script>

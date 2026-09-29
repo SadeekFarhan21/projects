@@ -1,0 +1,4 @@
+# exit-code race experiment: crash=pagefault and crash=panic, 20 boots each, expected exit 3
+# date 2026-09-26 23:19:39, host load { 287.04 265.46 279.08 }
+before-fix: 10 of 40 boots exited with the wrong code
+after-fix: 0 of 40 boots exited with the wrong code

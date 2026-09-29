@@ -1,0 +1,54 @@
+id: sql-tpch-region_revenue_year-04
+family: sql
+prompt: |-
+  db.sqlite is a small TPC-H sample (region, nation, customer, supplier, part, partsupp, orders, lineitem). Dates are ISO strings like 1995-03-15.
+  Tables and columns
+  customer(c_custkey, c_name, c_address, c_nationkey, c_phone, c_acctbal, c_mktsegment, c_comment)
+  lineitem(l_orderkey, l_partkey, l_suppkey, l_linenumber, l_quantity, l_extendedprice, l_discount, l_tax, l_returnflag, l_linestatus, l_shipdate, l_commitdate, l_receiptdate, l_shipinstruct, l_shipmode, l_comment)
+  nation(n_nationkey, n_name, n_regionkey, n_comment)
+  orders(o_orderkey, o_custkey, o_orderstatus, o_totalprice, o_orderdate, o_orderpriority, o_clerk, o_shippriority, o_comment)
+  part(p_partkey, p_name, p_mfgr, p_brand, p_type, p_size, p_container, p_retailprice, p_comment)
+  partsupp(ps_partkey, ps_suppkey, ps_availqty, ps_supplycost, ps_comment)
+  region(r_regionkey, r_name, r_comment)
+  supplier(s_suppkey, s_name, s_address, s_nationkey, s_phone, s_acctbal, s_comment)
+
+  Question: What is the total revenue, sum of l_extendedprice * (1 - l_discount), of line items in orders placed in 1993 by customers whose nation is in the region 'ASIA'? Give at least 2 decimals.
+  Submit only the number.
+  Use run_sql to compute the answer, then call submit with the answer.
+fixtures:
+- copy: data/tpch.sqlite
+  to: db.sqlite
+allowed_tools:
+- run_sql
+- list_dir
+- submit
+verifier:
+  type: python
+  function: agentenv.verifiers:numeric_or_text_answer
+  args:
+    expected: 58959536.3398
+    kind: number
+    rel_tol: 0.0001
+    abs_tol: 0.01
+difficulty: hard
+tags:
+- tpch
+- sum
+- join4
+- date
+timeout_s: 300
+limits:
+  step_limit: 8
+  token_budget: 1500
+reference:
+  sql: SELECT SUM(l.l_extendedprice * (1 - l.l_discount)) FROM lineitem l JOIN orders o ON o.o_orderkey
+    = l.l_orderkey JOIN customer c ON c.c_custkey = o.o_custkey JOIN nation n ON n.n_nationkey = c.c_nationkey
+    JOIN region r ON r.r_regionkey = n.n_regionkey WHERE r.r_name = 'ASIA' AND substr(o.o_orderdate, 1,
+    4) = '1993'
+metadata:
+  template: region_revenue_year
+  params:
+  - ASIA
+  - '1993'
+  db: tpch
+  answer_kind: number

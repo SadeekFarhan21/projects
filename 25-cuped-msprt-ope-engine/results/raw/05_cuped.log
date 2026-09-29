@@ -1,0 +1,11 @@
+{'rho': 0.0, 'theory': np.float64(1.0), 'empirical_var_ratio': np.float64(1.002511840561037), 'mean_se2_ratio': 0.9994978170264821, 'mean_cuped_est': 0.04974927495507365, 'true_effect': 0.05}
+{'rho': 0.1, 'theory': np.float64(0.99), 'empirical_var_ratio': np.float64(0.9810551926119164), 'mean_se2_ratio': 0.9894316099158446, 'mean_cuped_est': 0.05081114284455371, 'true_effect': 0.05}
+{'rho': 0.2, 'theory': np.float64(0.96), 'empirical_var_ratio': np.float64(0.9537931194974125), 'mean_se2_ratio': 0.9592791458852121, 'mean_cuped_est': 0.04953641399268188, 'true_effect': 0.05}
+{'rho': 0.3, 'theory': np.float64(0.91), 'empirical_var_ratio': np.float64(0.9041397192735772), 'mean_se2_ratio': 0.9091706511038045, 'mean_cuped_est': 0.04945683042929005, 'true_effect': 0.05}
+{'rho': 0.4, 'theory': np.float64(0.84), 'empirical_var_ratio': np.float64(0.8312439349017408), 'mean_se2_ratio': 0.8404123231093311, 'mean_cuped_est': 0.048470695605719594, 'true_effect': 0.05}
+{'rho': 0.5, 'theory': np.float64(0.75), 'empirical_var_ratio': np.float64(0.7120509481678681), 'mean_se2_ratio': 0.7501337246435718, 'mean_cuped_est': 0.05029714370391497, 'true_effect': 0.05}
+{'rho': 0.6, 'theory': np.float64(0.64), 'empirical_var_ratio': np.float64(0.6788292788514176), 'mean_se2_ratio': 0.6405157784139783, 'mean_cuped_est': 0.04960149300359071, 'true_effect': 0.05}
+{'rho': 0.7, 'theory': np.float64(0.51), 'empirical_var_ratio': np.float64(0.4944424644520126), 'mean_se2_ratio': 0.5090106431228664, 'mean_cuped_est': 0.05142851240170882, 'true_effect': 0.05}
+{'rho': 0.8, 'theory': np.float64(0.3599999999999999), 'empirical_var_ratio': np.float64(0.3502723072900132), 'mean_se2_ratio': 0.3595988469168888, 'mean_cuped_est': 0.04955744188420353, 'true_effect': 0.05}
+{'rho': 0.9, 'theory': np.float64(0.18999999999999995), 'empirical_var_ratio': np.float64(0.18027813772769116), 'mean_se2_ratio': 0.19032338897635415, 'mean_cuped_est': 0.050451761700881746, 'true_effect': 0.05}
+[{'metric': 'revenue_per_user', 'pooled_rho': 0.03589633565406153, 'theory': 0.9987114530866109, 'mean_se2_ratio': 0.997871779607506}, {'metric': 'sessions_per_user', 'pooled_rho': 0.7226448088663604, 'theory': 0.4777844802185014, 'mean_se2_ratio': 0.47778237717661476}]

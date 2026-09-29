@@ -1,0 +1,10 @@
+// Out-of-bounds indexing is a runtime error (exit status 101).
+fn main() {
+    let a = [1, 2, 3];
+    println(a[2]);
+    var i = 0;
+    while true {
+        print(a[i]);
+        i = i + 1;
+    }
+}

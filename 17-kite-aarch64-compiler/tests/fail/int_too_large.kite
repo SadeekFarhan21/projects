@@ -1,0 +1,4 @@
+// expect: 3:13: lex error: integer literal 9223372036854775808 is too large (max 9223372036854775807)
+fn main() {
+    let x = 9223372036854775808;
+}

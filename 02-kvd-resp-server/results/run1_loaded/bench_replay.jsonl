@@ -1,0 +1,10 @@
+{"label": "env", "host": "Farhans-MacBook-Pro-4", "machine": "arm64", "cpus": 14, "started": "2026-09-26T23:12:02", "load1_at_start": 364.7}
+{"label": "replay", "commands": 100000, "aof_bytes": 5900000, "replay_wall_ms": 164, "replay_cpu_ms": 45, "startup_s": 0.1699, "rep": 0, "load1": 236.8}
+{"label": "replay", "commands": 100000, "aof_bytes": 5900000, "replay_wall_ms": 39, "replay_cpu_ms": 34, "startup_s": 0.0476, "rep": 1, "load1": 236.8}
+{"label": "replay", "commands": 100000, "aof_bytes": 5900000, "replay_wall_ms": 27, "replay_cpu_ms": 26, "startup_s": 0.0326, "rep": 2, "load1": 236.8}
+{"label": "replay", "commands": 400000, "aof_bytes": 23600000, "replay_wall_ms": 578, "replay_cpu_ms": 195, "startup_s": 0.5882, "rep": 0, "load1": 236.8}
+{"label": "replay", "commands": 400000, "aof_bytes": 23600000, "replay_wall_ms": 901, "replay_cpu_ms": 203, "startup_s": 0.9073, "rep": 1, "load1": 236.8}
+{"label": "replay", "commands": 400000, "aof_bytes": 23600000, "replay_wall_ms": 817, "replay_cpu_ms": 179, "startup_s": 0.8233, "rep": 2, "load1": 236.8}
+{"label": "replay", "commands": 1600000, "aof_bytes": 94400000, "replay_wall_ms": 1685, "replay_cpu_ms": 1248, "startup_s": 1.6911, "rep": 0, "load1": 250.9}
+{"label": "replay", "commands": 1600000, "aof_bytes": 94400000, "replay_wall_ms": 4785, "replay_cpu_ms": 1241, "startup_s": 4.792, "rep": 1, "load1": 253.8}
+{"label": "replay", "commands": 1600000, "aof_bytes": 94400000, "replay_wall_ms": 3601, "replay_cpu_ms": 1233, "startup_s": 3.6082, "rep": 2, "load1": 256.6}

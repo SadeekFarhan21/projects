@@ -1,0 +1,34 @@
+{'engine': 'reference', 'threads': 1, 'S': 1, 'T': 365, 'N': 100, 'seconds': 0.26333091700507794, 'strategy_days_per_s': 1386.0886680197964, 'asset_days_per_s': 138608.86680197963}
+numpy     S=   1 N=  100 0.0910s 20,057 strat-days/s
+numba_1t  S=   1 N=  100 0.0046s 397,838 strat-days/s
+numba_mt  S=   1 N=  100 0.0045s 405,233 strat-days/s
+numpy     S=  16 N=  100 0.3078s 94,862 strat-days/s
+numba_1t  S=  16 N=  100 0.0237s 1,232,026 strat-days/s
+numba_mt  S=  16 N=  100 0.0138s 2,118,411 strat-days/s
+numpy     S= 128 N=  100 0.8064s 289,693 strat-days/s
+numba_1t  S= 128 N=  100 0.2899s 805,764 strat-days/s
+numba_mt  S= 128 N=  100 0.1699s 1,374,593 strat-days/s
+numpy     S=   1 N=  300 0.0545s 33,460 strat-days/s
+numba_1t  S=   1 N=  300 0.0156s 116,701 strat-days/s
+numba_mt  S=   1 N=  300 0.0203s 89,775 strat-days/s
+numpy     S=  16 N=  300 0.5552s 52,595 strat-days/s
+numba_1t  S=  16 N=  300 0.1603s 182,203 strat-days/s
+numba_mt  S=  16 N=  300 0.1731s 168,672 strat-days/s
+numpy     S= 128 N=  300 2.9170s 80,082 strat-days/s
+numba_1t  S= 128 N=  300 1.0613s 220,107 strat-days/s
+numba_mt  S= 128 N=  300 0.8492s 275,085 strat-days/s
+numpy     S=   1 N= 1000 0.0844s 21,634 strat-days/s
+numba_1t  S=   1 N= 1000 0.0683s 26,706 strat-days/s
+numba_mt  S=   1 N= 1000 0.0601s 30,353 strat-days/s
+numpy     S=  16 N= 1000 2.2199s 13,154 strat-days/s
+numba_1t  S=  16 N= 1000 0.6575s 44,410 strat-days/s
+numba_mt  S=  16 N= 1000 0.4293s 68,023 strat-days/s
+numpy     S= 128 N= 1000 16.0717s 14,535 strat-days/s
+numba_1t  S= 128 N= 1000 5.4225s 43,080 strat-days/s
+numba_mt  S= 128 N= 1000 8.8084s 26,520 strat-days/s
+{'engine': 'numba_1t_cached_market', 'threads': 1, 'S': 1, 'T': 1825, 'N': 100, 'seconds': 0.0023625419999007136, 'strategy_days_per_s': 772473.039665198, 'asset_days_per_s': 77247303.96651979}
+{'engine': 'numba_1t_cached_market', 'threads': 1, 'S': 1, 'T': 1825, 'N': 300, 'seconds': 0.006751499997335486, 'strategy_days_per_s': 270310.30152117985, 'asset_days_per_s': 81093090.45635395}
+{'engine': 'numba_1t_cached_market', 'threads': 1, 'S': 1, 'T': 1825, 'N': 1000, 'seconds': 0.023022166002192535, 'strategy_days_per_s': 79271.4291012494, 'asset_days_per_s': 79271429.10124941}
+{'engine': 'numba_mt_real', 'threads': 14, 'S': 1, 'T': 1704, 'N': 300, 'seconds': 0.010815999994520098, 'strategy_days_per_s': 157544.37877804437, 'asset_days_per_s': 47263313.63341331}
+{'engine': 'numba_mt_real', 'threads': 14, 'S': 64, 'T': 1704, 'N': 300, 'seconds': 0.740640167001402, 'strategy_days_per_s': 147245.59220374224, 'asset_days_per_s': 44173677.66112268}
+wrote /Users/farhan/Documents/deep-dive/projects/08-quant-research-platform/results/bench_backtest.csv .json .png

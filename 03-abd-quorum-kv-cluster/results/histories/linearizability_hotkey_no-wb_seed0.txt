@@ -1,0 +1,3 @@
+events: ['85883.127 kill n1', '85884.680 restart n1']
+key: k0
+could linearize at most 70/1421 ok ops; first unplaceable: [Op(process=0, f='read', key='k0', value=5000004, call=85881.928469458, ret=85881.9431355, status='ok'), Op(process=4, f='read', key='k0', value=5000005, call=85881.94610125, ret=85881.955782708, status='ok'), Op(process=8, f='write', key='k0', value=8000004, call=85881.946223375, ret=85881.973606958, status='ok')]

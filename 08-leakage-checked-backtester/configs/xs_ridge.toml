@@ -1,0 +1,108 @@
+# Cross-sectional ridge on ranked price/volume features, Binance USDT spot, daily.
+# Every feature below is causal and passes the leakage audit.
+
+[run]
+name = "xs_ridge"
+
+[data]
+root = "data"
+start = "2022-01-01"
+end = "2026-08-31"
+# as_of = "2026-09-27T00:00:00"   # pin the data snapshot for exact reproducibility
+
+[universe]
+top_k = 100            # by trailing 30 day mean dollar volume, point in time
+min_history = 60
+liquidity_window = 30
+
+[[features]]
+name = "ret1"
+op = "returns"
+window = 1
+[[features]]
+name = "mom7"
+op = "momentum"
+window = 7
+[[features]]
+name = "mom30"
+op = "momentum"
+window = 30
+skip = 1
+[[features]]
+name = "mom90"
+op = "momentum"
+window = 90
+skip = 1
+[[features]]
+name = "vol30"
+op = "volatility"
+window = 30
+[[features]]
+name = "ma20"
+op = "ma_ratio"
+window = 20
+[[features]]
+name = "volz20"
+op = "volume_z"
+window = 20
+
+# cross-sectional ranks are what the model sees
+[[features]]
+name = "ret1_r"
+op = "xs_rank"
+inputs = ["ret1"]
+[[features]]
+name = "mom7_r"
+op = "xs_rank"
+inputs = ["mom7"]
+[[features]]
+name = "mom30_r"
+op = "xs_rank"
+inputs = ["mom30"]
+[[features]]
+name = "mom90_r"
+op = "xs_rank"
+inputs = ["mom90"]
+[[features]]
+name = "vol30_r"
+op = "xs_rank"
+inputs = ["vol30"]
+[[features]]
+name = "ma20_r"
+op = "xs_rank"
+inputs = ["ma20"]
+[[features]]
+name = "volz20_r"
+op = "xs_rank"
+inputs = ["volz20"]
+
+[model]
+kind = "ridge"
+alpha = 10.0
+horizon = 5
+features = ["ret1_r", "mom7_r", "mom30_r", "mom90_r", "vol30_r", "ma20_r", "volz20_r"]
+
+[cv]
+kind = "walk_forward"
+n_splits = 8
+min_train_days = 365
+embargo = 5
+purge = true
+
+[portfolio]
+gross = 1.0
+rebalance_every = 5
+
+[costs]
+fee_bps = 10.0
+slippage_bps = 5.0
+impact_coef = 0.0
+aum = 1000000.0
+
+[backtest]
+delay = 1
+engine = "numba"
+
+[checks]
+leakage_audit = true
+fail_on_leak = true

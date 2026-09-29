@@ -1,0 +1,32 @@
+# Two honest features and three that peek. `qrp audit configs/leaky_demo.toml` must
+# flag exactly the three leaky ones and exit non-zero.
+[run]
+name = "leaky_demo"
+
+[data]
+root = "data"
+
+[[features]]
+name = "mom30"
+op = "momentum"
+window = 30
+[[features]]
+name = "vol30"
+op = "volatility"
+window = 30
+[[features]]
+name = "fwd5"
+op = "leaky_forward_return"
+window = 5
+[[features]]
+name = "centered_ma11"
+op = "leaky_centered_mean"
+window = 11
+[[features]]
+name = "mom30_fullz"
+op = "leaky_zscore_full"
+inputs = ["mom30"]
+[[features]]
+name = "vol30_rank"
+op = "xs_rank"
+inputs = ["vol30"]

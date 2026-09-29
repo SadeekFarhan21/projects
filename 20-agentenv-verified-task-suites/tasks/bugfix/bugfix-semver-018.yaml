@@ -1,0 +1,120 @@
+id: bugfix-semver-018
+family: bugfix
+prompt: |-
+  The Python package `semver` in this workspace has a bug. A hidden test suite fails.
+  Failing tests: _hidden/test_bump.py::test_should_versioninfo_bump_major_and_minor, _hidden/test_bump.py::test_should_versioninfo_bump_minor_and_patch, _hidden/test_bump.py::test_should_versioninfo_bump_patch_and_prerelease
+  Failure message: U...
+  The bug is in the function `compare` in semver/version.py, near line 397.
+  Find and fix the bug with a minimal edit. The hidden tests are not in the workspace, but you can run your own checks with run_python. Call submit when you are done.
+fixtures:
+- copy: data/packages/semver/src/semver
+  to: semver
+- patch: semver/version.py
+  offset: 12218
+  old: other
+  new: rc2
+allowed_tools:
+- run_python
+- read_file
+- write_file
+- edit_file
+- list_dir
+- submit
+verifier:
+  type: command
+  command:
+  - python
+  - -m
+  - pytest
+  - -q
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - -rfE
+  - --tb=line
+  - -W
+  - ignore::DeprecationWarning
+  - _hidden
+  hidden:
+  - copy: data/packages/semver/tests/coerce.py
+    to: _hidden/coerce.py
+  - copy: data/packages/semver/tests/conftest.py
+    to: _hidden/conftest.py
+  - copy: data/packages/semver/tests/semverwithvprefix.py
+    to: _hidden/semverwithvprefix.py
+  - copy: data/packages/semver/tests/test_bump.py
+    to: _hidden/test_bump.py
+  - copy: data/packages/semver/tests/test_compare.py
+    to: _hidden/test_compare.py
+  - copy: data/packages/semver/tests/test_deprecated_functions.py
+    to: _hidden/test_deprecated_functions.py
+  - copy: data/packages/semver/tests/test_docstrings.py
+    to: _hidden/test_docstrings.py
+  - copy: data/packages/semver/tests/test_format.py
+    to: _hidden/test_format.py
+  - copy: data/packages/semver/tests/test_immutable.py
+    to: _hidden/test_immutable.py
+  - copy: data/packages/semver/tests/test_index.py
+    to: _hidden/test_index.py
+  - copy: data/packages/semver/tests/test_match.py
+    to: _hidden/test_match.py
+  - copy: data/packages/semver/tests/test_max-min.py
+    to: _hidden/test_max-min.py
+  - copy: data/packages/semver/tests/test_parsing.py
+    to: _hidden/test_parsing.py
+  - copy: data/packages/semver/tests/test_pysemver-cli.py
+    to: _hidden/test_pysemver-cli.py
+  - copy: data/packages/semver/tests/test_replace.py
+    to: _hidden/test_replace.py
+  - copy: data/packages/semver/tests/test_semver.py
+    to: _hidden/test_semver.py
+  - copy: data/packages/semver/tests/test_subclass.py
+    to: _hidden/test_subclass.py
+  - copy: data/packages/semver/tests/test_typeerror-274.py
+    to: _hidden/test_typeerror-274.py
+  timeout_s: 120
+  cpu_s: 60
+  mem_mb: 2048
+difficulty: easy
+tags:
+- semver
+- wrong_variable
+- version
+timeout_s: 600
+limits:
+  step_limit: 15
+  token_budget: 4000
+reference:
+  restore:
+    path: semver/version.py
+    from: data/packages/semver/src/semver/version.py
+metadata:
+  package: semver
+  module: semver/version.py
+  operator: wrong_variable
+  function: compare
+  lineno: 397
+  mutation: other -> rc2
+  failing_tests:
+  - _hidden/test_bump.py::test_should_versioninfo_bump_major_and_minor
+  - _hidden/test_bump.py::test_should_versioninfo_bump_minor_and_patch
+  - _hidden/test_bump.py::test_should_versioninfo_bump_patch_and_prerelease
+  - _hidden/test_bump.py::test_should_versioninfo_bump_patch_and_prerelease_with_token
+  - _hidden/test_bump.py::test_should_versioninfo_bump_prerelease_and_build
+  - _hidden/test_bump.py::test_should_versioninfo_bump_prerelease_and_build_with_token
+  - _hidden/test_bump.py::test_should_versioninfo_bump_multiple
+  - _hidden/test_bump.py::test_should_versioninfo_bump_prerelease_with_empty_str
+  - _hidden/test_bump.py::test_should_versioninfo_bump_prerelease_with_none
+  - _hidden/test_bump.py::test_should_versioninfo_bump_build_with_empty_str
+  - _hidden/test_bump.py::test_should_versioninfo_bump_build_with_none
+  - _hidden/test_compare.py::test_should_compare_prerelease_with_numbers_and_letters
+  - _hidden/test_compare.py::test_should_compare_version_info_objects
+  - _hidden/test_compare.py::test_should_compare_version_dictionaries
+  - _hidden/test_compare.py::test_should_compare_version_tuples[t0]
+  - _hidden/test_compare.py::test_should_compare_version_tuples[t1]
+  - _hidden/test_compare.py::test_should_compare_version_tuples[t2]
+  - _hidden/test_compare.py::test_should_compare_version_tuples[t3]
+  - _hidden/test_compare.py::test_should_compare_version_tuples[t4]
+  - _hidden/test_compare.py::test_should_compare_version_list[lst0]
+  n_failing: 52

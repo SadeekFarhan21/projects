@@ -1,0 +1,27 @@
+# per-operation cost. icount: guest instructions (1 instruction = 1 virtual ns).
+# tcg: wall-clock ns per op inside QEMU, min and max over bench-tcg-1..3.txt
+# host load averages during the TCG runs:
+#   # host load average before run: { 151.10 217.59 240.88 }
+#   # host load average before run: { 139.96 214.17 239.54 }
+#   # host load average before run: { 129.23 210.72 238.17 }
+benchmark                      icount_instr     tcg_min_ns     tcg_max_ns
+swtch (one direction)                    34             50             52
+yield thread->thread switch             190            570            601
+trap round trip (ebreak)                140           1158           1225
+SBI ecall round trip                    291           1520           1583
+pmm_alloc_nozero                        105            302            322
+pmm_free                                103            354            374
+pmm_alloc (zeroing 4 KiB)              2184           1622           1645
+pmm alloc+free pair                     204            820            868
+kmalloc(64)+kfree pair                  222            850            868
+kmalloc(64) batch                       119            432            454
+kfree(64) batch                         119            435            476
+# timer interrupt latency (deadline to C handler), ns
+icount: timer_latency_idle     n=200 min=0 p50=100 p99=100 max=100 mean=85 ns (resolution 100 ns)
+icount: timer_latency_busy     n=200 min=0 p50=100 p99=100 max=100 mean=84 ns (resolution 100 ns)
+tcg:    timer_latency_idle     n=200 min=305000 p50=2390000 p99=3506000 max=4190000 mean=2352560 ns (resolution 100 ns)
+tcg:    timer_latency_busy     n=200 min=188000 p50=2450000 p99=4025000 max=4326000 mean=2386325 ns (resolution 100 ns)
+tcg:    timer_latency_idle     n=200 min=164000 p50=2442000 p99=3487000 max=3524000 mean=2333915 ns (resolution 100 ns)
+tcg:    timer_latency_busy     n=200 min=66000 p50=2614000 p99=3248000 max=3357000 mean=2331735 ns (resolution 100 ns)
+tcg:    timer_latency_idle     n=200 min=378000 p50=2333000 p99=3273000 max=3334000 mean=2244910 ns (resolution 100 ns)
+tcg:    timer_latency_busy     n=200 min=405000 p50=2424000 p99=3399000 max=3501000 mean=2293285 ns (resolution 100 ns)

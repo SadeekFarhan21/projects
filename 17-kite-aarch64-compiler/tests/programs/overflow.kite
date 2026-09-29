@@ -1,0 +1,22 @@
+// Kite integers are 64-bit two's complement and wrap on overflow.
+fn main() {
+    let max = 9223372036854775807;
+    let min = -9223372036854775807 - 1;
+    println(max);
+    println(min);
+    println(max + 1);
+    println(min - 1);
+    println(max * 2);
+    println(-min);
+    println(min / -1);
+    println(min % -1);
+    println(max * max);
+    println(0x7fffffffffffffff == max);
+    println(0xffffffffffffffff);
+    println(0x8000000000000000 == min);
+    var x = 1;
+    for i in 0..64 {
+        x = x * 2;
+    }
+    println(x);
+}

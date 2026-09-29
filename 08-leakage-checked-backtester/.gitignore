@@ -1,0 +1,19 @@
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# Downloaded market data (recreate with `uv run qrp ingest`)
+data/
+
+# Experiment tracker output (large, machine specific). Summaries live in results/.
+runs/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

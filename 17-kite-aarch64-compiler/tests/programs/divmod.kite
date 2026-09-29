@@ -1,0 +1,20 @@
+// Division truncates toward zero; the remainder has the sign of the dividend.
+fn show(a: int, b: int) {
+    print(a);
+    print(" / ");
+    print(b);
+    print(" = ");
+    print(a / b);
+    print(", rem ");
+    println(a % b);
+}
+
+fn main() {
+    show(7, 2);
+    show(-7, 2);
+    show(7, -2);
+    show(-7, -2);
+    show(0, 5);
+    show(6, 3);
+    show(1, 1000);
+}

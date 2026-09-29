@@ -1,0 +1,28 @@
+device=mps amp=bf16 params=12,194,688 tokens/step=8,192 train_tokens=52,040,220
+step     0 | train nan | val 8.4355 | lr 1.00e-03 | nan tok/s | 0.0 min
+step   250 | train 4.2150 | val 2.8924 | lr 1.00e-03 | 16,890 tok/s | 2.2 min
+step   500 | train 2.6408 | val 2.4478 | lr 9.86e-04 | 15,703 tok/s | 4.4 min
+step   750 | train 2.3432 | val 2.2366 | lr 9.54e-04 | 19,258 tok/s | 6.3 min
+step  1000 | train 2.1796 | val 2.1137 | lr 9.05e-04 | 21,758 tok/s | 8.0 min
+step  1250 | train 2.0698 | val 2.0232 | lr 8.41e-04 | 21,734 tok/s | 9.7 min
+step  1500 | train 1.9901 | val 1.9572 | lr 7.65e-04 | 22,121 tok/s | 11.3 min
+step  1750 | train 1.9217 | val 1.9023 | lr 6.79e-04 | 22,008 tok/s | 12.9 min
+step  2000 | train 1.8770 | val 1.8512 | lr 5.88e-04 | 21,596 tok/s | 14.6 min
+step  2250 | train 1.8212 | val 1.8076 | lr 4.95e-04 | 20,983 tok/s | 16.3 min
+step  2500 | train 1.7774 | val 1.7652 | lr 4.04e-04 | 14,337 tok/s | 18.8 min
+step  2750 | train 1.7412 | val 1.7331 | lr 3.20e-04 | 16,887 tok/s | 21.0 min
+step  3000 | train 1.7084 | val 1.7037 | lr 2.45e-04 | 19,173 tok/s | 22.8 min
+step  3250 | train 1.6803 | val 1.6809 | lr 1.84e-04 | 19,753 tok/s | 24.7 min
+step  3500 | train 1.6574 | val 1.6619 | lr 1.38e-04 | 18,771 tok/s | 26.6 min
+step  3750 | train 1.6311 | val 1.6477 | lr 1.10e-04 | 16,290 tok/s | 28.8 min
+step  4000 | train 1.6250 | val 1.6392 | lr 1.00e-04 | 14,233 tok/s | 31.4 min
+{
+  "steps": 4000,
+  "stopped_early_by_time_budget": false,
+  "tokens_seen": 32768000,
+  "wall_seconds": 1888.9,
+  "final_val_loss": 1.6391603380441666,
+  "params": 12194688,
+  "device": "mps",
+  "amp": "bf16"
+}

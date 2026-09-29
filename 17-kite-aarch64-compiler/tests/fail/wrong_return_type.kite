@@ -1,0 +1,6 @@
+// expect: 3:12: type error: return type mismatch: expected string, found int
+fn name() -> string {
+    return 42;
+}
+
+fn main() {}

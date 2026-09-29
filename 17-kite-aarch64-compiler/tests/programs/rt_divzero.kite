@@ -1,0 +1,10 @@
+// Division by zero is a runtime error, detected before dividing.
+fn div(a: int, b: int) -> int {
+    return a / b;
+}
+
+fn main() {
+    println(div(10, 3));
+    println(div(10, 0));
+    println("unreachable");
+}

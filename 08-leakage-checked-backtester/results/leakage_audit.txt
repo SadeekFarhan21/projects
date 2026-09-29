@@ -1,0 +1,7 @@
+mom30                    ok
+vol30                    ok
+fwd5                     LEAK row 422 cut 426 (truncation)
+centered_ma11            LEAK row 422 cut 426 (truncation)
+mom30_fullz              LEAK row 30 cut 426 (truncation)
+vol30_rank               ok
+exit 1

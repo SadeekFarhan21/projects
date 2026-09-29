@@ -1,0 +1,5 @@
+unet/rf: 3.94M params on mps
+step 50 loss 1.1242 67 img/s t=47s
+step 100 loss 0.7397 57 img/s t=103s
+step 150 loss 0.3961 54 img/s t=162s
+step 200 loss 0.2961 44 img/s t=234s

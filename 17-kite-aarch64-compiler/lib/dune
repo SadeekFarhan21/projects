@@ -1,0 +1,14 @@
+(library
+ (name kite)
+ (libraries unix)
+ (flags (:standard -w +a-4-9-40-41-42-44-45-70-32-27-26-37-69-35 -warn-error -a)))
+
+(rule
+ (targets runtime_src.ml)
+ (deps ../runtime/kite_rt.c)
+ (action
+  (with-stdout-to runtime_src.ml
+   (progn
+    (echo "let source = {kite_rt|")
+    (cat ../runtime/kite_rt.c)
+    (echo "|kite_rt}\n")))))

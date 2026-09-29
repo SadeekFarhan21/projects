@@ -1,0 +1,4 @@
+before
+--- exit 101
+--- stderr
+runtime error: index out of bounds: index -1, length 2

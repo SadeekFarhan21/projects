@@ -1,0 +1,7 @@
+100% tests passed out of 31
+
+Total Test time (real) =   0.85 sec
+asan+ubsan: 100% tests passed out of 31
+asan+ubsan: 
+asan+ubsan: Total Test time (real) =   4.08 sec
+tsan: [  PASSED  ] 31 tests.

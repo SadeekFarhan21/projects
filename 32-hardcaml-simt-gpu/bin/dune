@@ -1,0 +1,5 @@
+(executable
+ (name main)
+ (public_name gpu)
+ (package simt_gpu)
+ (libraries gpu_lib hardcaml unix))
