@@ -36,6 +36,15 @@ window.onresize = function () {
             aboutContent.classList.remove('is-mobile-open')
             aboutContent.hidden = true
         }
+        // keep the hamburger in sync, or it stays in its "open" state (and
+        // aria-expanded=true) after the menu was closed by widening the window
+        var navToggleWrap = document.getElementById('site-nav-toggle')
+        var navToggleWrapButton = navToggleWrap ? navToggleWrap.querySelector('button') : null
+        if (navToggleWrap) navToggleWrap.classList.remove('is-open')
+        if (navToggleWrapButton) {
+            navToggleWrapButton.setAttribute('aria-expanded', 'false')
+            navToggleWrapButton.setAttribute('aria-label', 'Open site navigation')
+        }
     }
 
     reHeightToc()
@@ -65,13 +74,28 @@ if (navToggle) {
             setMobileNavOpen(!aboutContent.classList.contains('is-mobile-open'))
         })
 
+        // The search dialog is opened from inside the mobile menu; clicks and
+        // Escape inside it belong to the dialog, and closing the menu under it
+        // hid the search button that focus returns to.
+        var isSearchOpen = function () {
+            var field = document.getElementById('search-field')
+            return !!field && field.classList.contains('show-flex-fade')
+        }
+
         document.addEventListener('click', function (event) {
             if (window.innerWidth > 680 || !aboutContent.classList.contains('is-mobile-open')) return
+            // the dialog's own close button / backdrop have already hidden it by now
+            var field = document.getElementById('search-field')
+            if (isSearchOpen() || (field && field.contains(event.target))) return
             if (!aboutContent.contains(event.target)) setMobileNavOpen(false)
         })
 
         document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') setMobileNavOpen(false)
+            if (event.key !== 'Escape' || isSearchOpen() || !aboutContent.classList.contains('is-mobile-open')) return
+            // hiding the menu would drop focus to <body>; hand it back to the toggle
+            var hadFocus = aboutContent.contains(document.activeElement)
+            setMobileNavOpen(false)
+            if (hadFocus) navToggleButton.focus()
         })
     }
 
@@ -104,16 +128,30 @@ function syncSidebarState() {
     if (!navEl || !sidebarEl) return
 
     var collapsed = navEl.classList.contains('is-collapsed')
+    if (navToggleBtn) {
+        navToggleBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true')
+        navToggleBtn.setAttribute('aria-controls', 'nav-content')
+    }
     sidebarEl.classList.toggle('is-collapsed', collapsed)
     sidebarEl.classList.toggle('is-expanded', !collapsed)
 }
 
+// localStorage throws when site data is blocked; that must not stop the rest
+// of this file (search, sidebar toggle) from running.
+function readNavState() {
+    try { return localStorage.getItem('nav-collapsed') } catch (e) { return null }
+}
+function writeNavState(value) {
+    try { localStorage.setItem('nav-collapsed', value) } catch (e) {}
+}
+
 if (navToggleBtn && navEl) {
     // 从 localStorage 恢复状态
-    var savedNavState = localStorage.getItem('nav-collapsed')
+    var savedNavState = readNavState()
     if (savedNavState === 'false') {
         navEl.classList.remove('is-collapsed')
         navEl.classList.add('is-expanded')
+        navToggleBtn.title = 'Collapse navigation'
     }
     syncSidebarState()
 
@@ -123,12 +161,12 @@ if (navToggleBtn && navEl) {
             navEl.classList.remove('is-collapsed')
             navEl.classList.add('is-expanded')
             navToggleBtn.title = 'Collapse navigation'
-            localStorage.setItem('nav-collapsed', 'false')
+            writeNavState('false')
         } else {
             navEl.classList.remove('is-expanded')
             navEl.classList.add('is-collapsed')
             navToggleBtn.title = 'Expand navigation'
-            localStorage.setItem('nav-collapsed', 'true')
+            writeNavState('true')
         }
         syncSidebarState()
         // The sidebar TOC moves (or appears) when the nav opens or closes, so
@@ -148,6 +186,7 @@ var bgSearch = document.getElementById('search-bg')
 var beginSearch = document.getElementById('begin-search')
 
 var searchJson
+var searchPending = false
 var caseSensitive = false
 
 if (searchButton && searchField && searchInput && searchResultContainer && escSearch && bgSearch && beginSearch) {
@@ -211,7 +250,10 @@ function searchFromKeyWord(keyword) {
     var slideWindowSize = 100
     var handleKeyword = caseSensitive ? keyword : keyword.toLowerCase()
 
-    if (!searchJson) return -1
+    if (!searchJson) {
+        searchPending = true
+        return -1
+    }
 
     searchJson.forEach(function (item) {
         if (!item.title || !item.content) return
@@ -282,7 +324,25 @@ function search() {
     toggleSeachField()
 
     window.onkeydown = function (e) {
-        if (e.which === 27) {
+        if (e.which === 9 && searchField.classList.contains('show-flex-fade')) {
+            // keep Tab inside the (modal) search dialog
+            var focusable = Array.from(searchField.querySelectorAll('button, input, a[href]')).filter(function (el) {
+                return el.getClientRects().length > 0
+            })
+            if (!focusable.length) return
+            var first = focusable[0]
+            var last = focusable[focusable.length - 1]
+            if (!searchField.contains(document.activeElement)) {
+                e.preventDefault()
+                first.focus()
+            } else if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault()
+                last.focus()
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault()
+                first.focus()
+            }
+        } else if (e.which === 27) {
             toggleSeachField()
         } else if (e.which === 13) {
             var keyword = searchInput.value
@@ -316,6 +376,13 @@ function search() {
                     })
                 } else {
                     searchJson = res
+                }
+                // run a search submitted while the index was still loading
+                if (searchPending) {
+                    searchPending = false
+                    if (searchInput.value && searchField.classList.contains('show-flex-fade')) {
+                        searchFromKeyWord(searchInput.value)
+                    }
                 }
             })
             .catch(function (err) {
@@ -459,6 +526,67 @@ if (window.isPost && toc && toc.children && toc.children[0]) {
     })
     window.addEventListener('resize', remeasure)
 }
+
+// Wide code, tables and display math scroll sideways inside the post; a
+// region that scrolls must take focus, or keyboard users cannot reach the
+// clipped part. Only regions that actually overflow become tab stops, and
+// they stop being tab stops again once a resize ends the overflow. Every such
+// region is a labelled role=region while it is focusable (tables get their
+// label from scripts/table-wrap.js).
+/*****************************************************************************/
+function scrollRegionLabel(el) {
+    if (el.matches('section')) return 'Equation'
+    var fig = el.closest('figure.highlight')
+    var lang = fig && fig.querySelector('.code-lang')
+    lang = lang && lang.textContent.trim()
+    return lang ? 'Code: ' + lang : 'Code'
+}
+function focusScrollRegions() {
+    var post = document.querySelector('.post-content')
+    if (!post) return
+    post.querySelectorAll('pre, table, section, .highlight, .table-wrap, .table-container').forEach(function (el) {
+        var ours = el.hasAttribute('data-scroll-region')
+        if (el.hasAttribute('tabindex') && !ours) return
+        // a table's links do not reach every cell, so a wide table always
+        // takes focus; other regions with their own focus stops are left alone
+        if (!el.matches('.table-wrap') && el.querySelector('a[href], button, input, [tabindex]')) return
+        var cs = getComputedStyle(el)
+        var scrolls = /(auto|scroll)/.test(cs.overflowX + ' ' + cs.overflowY) &&
+            (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)
+        if (scrolls && !ours) {
+            el.setAttribute('data-scroll-region', '')
+            el.tabIndex = 0
+            if (!el.hasAttribute('role')) {
+                el.setAttribute('role', 'region')
+                el.setAttribute('data-scroll-role', '')
+            }
+            if (!el.hasAttribute('aria-label')) {
+                el.setAttribute('aria-label', scrollRegionLabel(el))
+                el.setAttribute('data-scroll-label', '')
+            }
+        } else if (!scrolls && ours && document.activeElement !== el) {
+            el.removeAttribute('data-scroll-region')
+            el.removeAttribute('tabindex')
+            if (el.hasAttribute('data-scroll-role')) el.removeAttribute('role')
+            if (el.hasAttribute('data-scroll-label')) el.removeAttribute('aria-label')
+            el.removeAttribute('data-scroll-role')
+            el.removeAttribute('data-scroll-label')
+        }
+    })
+}
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', focusScrollRegions)
+} else {
+    focusScrollRegions()
+}
+window.addEventListener('load', focusScrollRegions)
+// the post column settles after the resize event (sidebar layout), so
+// measure once resizing has stopped
+var focusScrollTimer
+window.addEventListener('resize', function () {
+    clearTimeout(focusScrollTimer)
+    focusScrollTimer = setTimeout(focusScrollRegions, 150)
+})
 
 // donate
 /*****************************************************************************/

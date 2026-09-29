@@ -2,16 +2,17 @@
 """Embed Excalidraw renders in the posts.
 
 For each diagram in ALT below:
-  source/img/diagrams/<name>.png  (4-5k px wide render from the excalidraw skill)
+  diagrams/png/<name>.png  (4-5k px wide render, kept out of source/ so it is not deployed)
   -> source/img/diagrams/<name>.webp  (2400 px wide, what the posts load)
 and every <figure data-figure="diagram:<name>"></figure> in source/_posts is
 replaced with an <img> figure that opens full size on click.
 
-Re-render a diagram after editing site/diagrams/<name>.excalidraw with
-  cd ~/.claude/skills/excalidraw-diagram/references && \
-    uv run python render_excalidraw.py <abs path>.excalidraw \
-      --output <abs path to>/site/source/img/diagrams/<name>.png --scale 2
-then run this script again.
+Re-render a diagram after editing site/diagrams/<name>.excalidraw with the
+site-local renderer, which swaps in the site's fonts (see its template):
+  <excalidraw skill venv>/bin/python tools/excalidraw/render_excalidraw.py \
+    diagrams/<name>.excalidraw --output diagrams/png/<name>.png --scale 2
+then run this script again. In the .excalidraw files, fontFamily 2 marks text
+(rendered in Quicksand) and fontFamily 3 marks code (rendered in Fragment Mono).
 """
 import pathlib
 import re
@@ -19,6 +20,7 @@ import subprocess
 import sys
 
 SITE = pathlib.Path(__file__).resolve().parent.parent
+PNG = SITE / "diagrams" / "png"
 IMG = SITE / "source" / "img" / "diagrams"
 POSTS = SITE / "source" / "_posts"
 WIDTH = 2400
@@ -45,13 +47,13 @@ ALT = {
 
 
 def main() -> int:
-    missing = [n for n in ALT if not (IMG / f"{n}.png").exists()]
+    missing = [n for n in ALT if not (PNG / f"{n}.png").exists()]
     if missing:
         print("renders missing:", ", ".join(missing))
         return 1
 
     for name in ALT:
-        png, webp = IMG / f"{name}.png", IMG / f"{name}.webp"
+        png, webp = PNG / f"{name}.png", IMG / f"{name}.webp"
         tmp = IMG / f".{name}.resized.png"
         subprocess.run(["sips", "--resampleWidth", str(WIDTH), str(png), "--out", str(tmp)], check=True, capture_output=True)
         subprocess.run(["cwebp", "-quiet", "-q", "88", "-m", "6", str(tmp), "-o", str(webp)], check=True)
@@ -68,7 +70,7 @@ def main() -> int:
 
         def repl(m: re.Match) -> str:
             nonlocal swapped
-            name = m.group(1)
+            name = m.group(1) or m.group(2)
             alt, w, h = ALT[name]
             swapped += 1
             return (
@@ -78,7 +80,11 @@ def main() -> int:
                 f"</a></figure>"
             )
 
-        new = re.sub(r'<figure data-figure="diagram:([a-z0-9-]+)"></figure>', repl, text)
+        # Old placeholders, and figures from an earlier run (their size may have changed).
+        new = re.sub(
+            r'<figure data-figure="diagram:([a-z0-9-]+)"></figure>'
+            r'|<figure class="excal" data-diagram="([a-z0-9-]+)">.*?</figure>',
+            repl, text)
         if new != text:
             post.write_text(new)
     print(f"swapped {swapped} figures")

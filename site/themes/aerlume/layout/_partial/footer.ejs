@@ -4,7 +4,7 @@
         <li>
             <a target="_blank" href="https://twitter.com/<%= config.twitter_username %>" aria-label="Twitter">
                 <span class="fa-stack fa-lg">
-                    <i class="iconfont icon-twitter"></i>
+                    <i class="iconfont icon-twitter" aria-hidden="true"></i>
                 </span>
             </a>
         </li>
@@ -14,7 +14,7 @@
         <li>
             <a target="_blank" href="https://www.zhihu.com/people/<%= config.zhihu_username %>" aria-label="Zhihu">
                 <span class="fa-stack fa-lg">
-                    <i class="iconfont icon-zhihu"></i>
+                    <i class="iconfont icon-zhihu" aria-hidden="true"></i>
                 </span>
             </a>
         </li>
@@ -24,7 +24,7 @@
         <li>
             <a target="_blank" href="https://weibo.com/<%= config.weibo_username %>" aria-label="Weibo">
                 <span class="fa-stack fa-lg">
-                    <i class="iconfont icon-weibo"></i>
+                    <i class="iconfont icon-weibo" aria-hidden="true"></i>
                 </span>
             </a>
         </li>
@@ -34,7 +34,7 @@
         <li>
             <a target="_blank" href="https://www.facebook.com/<%= config.facebook_username %>" aria-label="Facebook">
                 <span class="fa-stack fa-lg">
-                    <i class="iconfont icon-facebook"></i>
+                    <i class="iconfont icon-facebook" aria-hidden="true"></i>
                 </span>
             </a>
         </li>
@@ -44,7 +44,7 @@
         <li>
             <a target="_blank" href="https://www.linkedin.com/in/<%= config.linkedin_username %>" aria-label="LinkedIn">
                 <span class="fa-stack fa-lg">
-                    <i class="iconfont icon-linkedin"></i>
+                    <i class="iconfont icon-linkedin" aria-hidden="true"></i>
                 </span>
             </a>
         </li>
@@ -57,7 +57,7 @@
         <span class="footer-section-title">Friends</span>
         <span class="footer-friends-links">
             <% config.friends.forEach(function(friend, idx){ %>
-                <a href="<%= friend.href %>" target="_blank" rel="friend"><%= friend.title %></a><% if(idx < config.friends.length - 1){ %><span class="footer-friends-sep">·</span><% } %>
+                <a href="<%= friend.href %>" target="_blank" rel="friend"><%= friend.title %></a><% if(idx < config.friends.length - 1){ %><span class="footer-friends-sep" aria-hidden="true">·</span><% } %>
             <% }); %>
         </span>
     </div>

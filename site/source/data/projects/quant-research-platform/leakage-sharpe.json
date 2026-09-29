@@ -1,6 +1,6 @@
 {
  "type": "bars",
- "title": "One leaky feature buys a Sharpe of 19",
+ "title": "One Leaky Feature Buys a Sharpe of 19",
  "subtitle": "Out of sample Sharpe, 2023-01 to 2026-08, top 100 Binance USDT pairs, 15 bps one way",
  "legendLabels": {
   "emphasis": "Baseline ridge, honest features",
@@ -10,17 +10,17 @@
   {
    "label": "Forward return leak",
    "value": 19.4,
-   "detail": "adds a 5 day forward return feature with the audit fail switch off; IC 0.724, max drawdown 2.5%"
+   "detail": "Adds a 5 day forward return feature with the audit fail switch off; IC 0.724, max drawdown 2.5%"
   },
   {
    "label": "Centered average leak",
    "value": 13.33,
-   "detail": "adds an 11 day centered moving average ratio, which sees 5 bars ahead; IC 0.438, max drawdown 3.4%"
+   "detail": "Adds an 11 day centered moving average ratio, which sees 5 bars ahead; IC 0.438, max drawdown 3.4%"
   },
   {
    "label": "Delay 0",
    "value": 0.692,
-   "detail": "trades at the same close the signal observed; IC 0.133"
+   "detail": "Trades at the same close the signal observed; IC 0.133"
   },
   {
    "label": "Baseline ridge",
@@ -31,17 +31,17 @@
   {
    "label": "30 day momentum alone",
    "value": -0.324,
-   "detail": "no model, long the 30 day winners; IC -0.049"
+   "detail": "No model, long the 30 day winners; IC -0.049"
   },
   {
    "label": "1 day reversal alone",
    "value": -0.848,
-   "detail": "no model, short the 1 day winners; IC 0.000"
+   "detail": "No model, short the 1 day winners; IC 0.000"
   },
   {
    "label": "Random scores",
    "value": -1.339,
-   "detail": "negative control; IC 0.0005, so this is the cost of trading noise"
+   "detail": "Negative control; IC 0.0005, so this is the cost of trading noise"
   }
  ],
  "caption": "Every row passes through the same universe, CV, portfolio and cost model. The two leaky rows are what the pipeline produces when the leakage audit is told not to stop the run. Hover a bar for its IC and drawdown.",

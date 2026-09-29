@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <!-- The site's fonts: Quicksand for text, Fragment Mono for code. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Quicksand:wght@500;700&display=block">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #ffffff; overflow: hidden; }
+    #root { display: inline-block; }
+    #root svg { display: block; }
+    /* Diagrams show code and addresses, so render every character as typed. */
+    #root svg text { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="module">
+    import { exportToSvg } from "https://esm.sh/@excalidraw/excalidraw@0.18.0?bundle";
+
+    // Excalidraw has no Quicksand, so the source files use two stock families as
+    // roles and the render swaps in the site's fonts:
+    //   fontFamily 2 (Helvetica) -> Quicksand, 700 at title sizes, 500 otherwise
+    //   fontFamily 3 (Cascadia)  -> Fragment Mono, for code, paths and identifiers
+    const TITLE_SIZE = 28;
+
+    // Only the two site fonts are allowed; anything else fails the render.
+    function applySiteFonts(svg) {
+      for (const t of svg.querySelectorAll("text")) {
+        const family = t.getAttribute("font-family") || "";
+        if (/Cascadia/i.test(family)) {
+          t.setAttribute("font-family", "Fragment Mono");
+        } else if (/Helvetica/i.test(family)) {
+          const size = parseFloat(t.getAttribute("font-size")) || 16;
+          t.setAttribute("font-family", "Quicksand");
+          t.setAttribute("font-weight", size >= TITLE_SIZE ? "700" : "500");
+        } else {
+          throw new Error(`text "${t.textContent.slice(0, 40)}" uses ${family}; use fontFamily 2 (Quicksand) or 3 (Fragment Mono)`);
+        }
+      }
+    }
+
+    window.renderDiagram = async function(jsonData) {
+      try {
+        const data = typeof jsonData === "string" ? JSON.parse(jsonData) : jsonData;
+        const elements = data.elements || [];
+        const appState = data.appState || {};
+        const files = data.files || {};
+
+        appState.viewBackgroundColor = appState.viewBackgroundColor || "#ffffff";
+        appState.exportWithDarkMode = false;
+
+        const svg = await exportToSvg({
+          elements: elements,
+          appState: { ...appState, exportBackground: true },
+          files: files,
+        });
+        applySiteFonts(svg);
+
+        const root = document.getElementById("root");
+        root.innerHTML = "";
+        root.appendChild(svg);
+
+        await Promise.all([
+          document.fonts.load('500 16px "Quicksand"'),
+          document.fonts.load('700 16px "Quicksand"'),
+          document.fonts.load('16px "Fragment Mono"'),
+        ]);
+        await document.fonts.ready;
+        for (const f of ['500 16px "Quicksand"', '700 16px "Quicksand"', '16px "Fragment Mono"']) {
+          if (!document.fonts.check(f)) throw new Error(`${f} did not load`);
+        }
+
+        window.__renderComplete = true;
+        window.__renderError = null;
+        return { success: true, width: svg.getAttribute("width"), height: svg.getAttribute("height") };
+      } catch (err) {
+        window.__renderComplete = true;
+        window.__renderError = err.message;
+        return { success: false, error: err.message };
+      }
+    };
+
+    window.__moduleReady = true;
+  </script>
+</body>
+</html>

@@ -2,7 +2,9 @@
 layout: layout
 ---
 
-<section class="post-preview-container" aria-label="Posts" style="min-height: <%- config.per_page * 64 %>px">
+<h1 class="sr-only"><%= config.title %></h1>
+<section class="post-preview-container" aria-labelledby="posts-heading" style="min-height: <%- config.per_page * 64 %>px">
+    <h2 class="sr-only" id="posts-heading">Posts<% if (page.current > 1) { %>, Page <%= page.current %> of <%= page.total %><% } %></h2>
     <% page.posts.each(function(post){ %>
         <article class="post-preview">
             <div class="post-info">
@@ -21,61 +23,10 @@ layout: layout
                 </ul>
                 <% } %>
             </div>
-            <div class="post-time">
+            <time class="post-time" datetime="<%= post.date.toISOString() %>">
                 <%= post.date.format(config.date_format) %>
-            </div>
+            </time>
         </article>
         <% }); %>
 </section>
-<ul class="pager">
-    <% if (page.prev){ %>
-        <li class="previous">
-            <a href="<%- config.root %><%- page.prev_link %>" rel="prev">
-                <span class="pager-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-                </span>
-                <span class="pager-text">
-                    <span class="pager-label">Newer</span>
-                    <% if (page.current){ %>
-                    <span class="pager-sub">Page <%= page.current - 1 %> of <%= page.total || 1 %></span>
-                    <% } %>
-                </span>
-            </a>
-        </li>
-        <% } else if (page.total && page.total > 1) { %>
-        <li class="previous is-disabled">
-            <span class="pager-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            </span>
-            <span class="pager-text">
-                <span class="pager-label">Newer</span>
-                <span class="pager-sub">First page</span>
-            </span>
-        </li>
-        <% } %>
-            <% if (page.next){ %>
-                <li class="next">
-                    <a href="<%- config.root %><%- page.next_link %>" rel="next">
-                        <span class="pager-text">
-                            <span class="pager-label">Older</span>
-                            <% if (page.current){ %>
-                            <span class="pager-sub">Page <%= page.current + 1 %> of <%= page.total || 1 %></span>
-                            <% } %>
-                        </span>
-                        <span class="pager-arrow" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                        </span>
-                    </a>
-                </li>
-                <% } else if (page.total && page.total > 1) { %>
-                <li class="next is-disabled">
-                    <span class="pager-text">
-                        <span class="pager-label">Older</span>
-                        <span class="pager-sub">Last page</span>
-                    </span>
-                    <span class="pager-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                    </span>
-                </li>
-                <% } %>
-</ul>
+<%- partial('_partial/pager') %>

@@ -1,10 +1,10 @@
 {
   "type": "series",
   "format": "number",
-  "unit": "keys in the store",
+  "unit": "Keys in the store",
   "xFormat": "number",
   "xLabel": "ms after the shared deadline",
-  "title": "Reclaiming 200,000 keys that expire at once",
+  "title": "Reclaiming 200,000 Keys That Expire at Once",
   "subtitle": "DBSIZE sampled about every 50 ms, no client touching the keys. 200,000 persistent keys stay, and the quiet run stays flat after 171 ms",
   "entities": [
     {

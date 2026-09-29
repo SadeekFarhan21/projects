@@ -1,8 +1,8 @@
 {
   "type": "bars",
   "format": "time",
-  "unit": "median SET latency",
-  "title": "What an fsync costs one client",
+  "unit": "Median SET latency",
+  "title": "What an fsync Costs One Client",
   "subtitle": "Median SET latency, 1 connection, no pipelining, 100,000 requests per run, median of 3 runs",
   "legendLabels": {
     "emphasis": "fsync before every reply",

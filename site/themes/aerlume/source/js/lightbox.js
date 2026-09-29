@@ -9,6 +9,17 @@
         zoomOut: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>'
     };
 
+    // The dialog fades in with a visibility transition, so it can still be
+    // "hidden" (and unfocusable) for the first frame; retry for a few frames.
+    function focusWhenShown(el, box) {
+        var tries = 0;
+        (function attempt() {
+            if (!box.classList.contains('is-visible')) return;
+            el.focus();
+            if (document.activeElement !== el && tries++ < 30) requestAnimationFrame(attempt);
+        })();
+    }
+
     var overlay = null;
     var imgEl = null;
     var counterEl = null;
@@ -44,6 +55,9 @@
     function buildOverlay() {
         overlay = document.createElement('div');
         overlay.className = 'lb-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'Image viewer');
 
         spinnerEl = document.createElement('div');
         spinnerEl.className = 'lb-spinner';
@@ -57,6 +71,8 @@
         captionEl.className = 'lb-caption';
         var closeBtn = document.createElement('button');
         closeBtn.className = 'lb-close';
+        closeBtn.type = 'button';
+        closeBtn.setAttribute('aria-label', 'Close');
         closeBtn.innerHTML = ICONS.close;
         closeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
         topbar.appendChild(counterEl);
@@ -66,12 +82,16 @@
 
         prevBtn = document.createElement('button');
         prevBtn.className = 'lb-nav lb-prev';
+        prevBtn.type = 'button';
+        prevBtn.setAttribute('aria-label', 'Previous image');
         prevBtn.innerHTML = ICONS.prev;
         prevBtn.addEventListener('click', function (e) { e.stopPropagation(); prev(); });
         overlay.appendChild(prevBtn);
 
         nextBtn = document.createElement('button');
         nextBtn.className = 'lb-nav lb-next';
+        nextBtn.type = 'button';
+        nextBtn.setAttribute('aria-label', 'Next image');
         nextBtn.innerHTML = ICONS.next;
         nextBtn.addEventListener('click', function (e) { e.stopPropagation(); next(); });
         overlay.appendChild(nextBtn);
@@ -82,13 +102,15 @@
 
         zoomBtn = document.createElement('button');
         zoomBtn.className = 'lb-zoom';
+        zoomBtn.type = 'button';
+        zoomBtn.setAttribute('aria-label', 'Zoom in');
         zoomBtn.innerHTML = ICONS.zoomIn;
         zoomBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleZoom(); });
         overlay.appendChild(zoomBtn);
 
         hintEl = document.createElement('div');
         hintEl.className = 'lb-hint';
-        hintEl.textContent = 'Click to zoom · ← → to switch · Esc to close';
+        hintEl.textContent = 'Click or + − to zoom · ← → to switch · Esc to close';
         overlay.appendChild(hintEl);
 
         // 点击空白处（非图片、非按钮）关闭
@@ -102,6 +124,8 @@
         imgEl.addEventListener('click', onImageClick);
         imgEl.addEventListener('dblclick', onImageDblClick);
         imgEl.addEventListener('load', onImageLoad);
+        // 加载失败时不要让加载动画一直转
+        imgEl.addEventListener('error', function () { spinnerEl.style.display = 'none'; });
 
         // 鼠标拖拽平移（缩放态）
         imgEl.addEventListener('mousedown', onDragStart);
@@ -143,10 +167,13 @@
 
     function setZoom(s, x, y) {
         scale = s;
-        tx = x;
-        ty = y;
+        // 回到原始大小时同时复位平移，否则图片停在偏移位置且无法再拖回
+        tx = scale > 1 ? x : 0;
+        ty = scale > 1 ? y : 0;
         applyTransform();
+        if (scale > 1) clampPan();
         zoomBtn.innerHTML = scale > 1 ? ICONS.zoomOut : ICONS.zoomIn;
+        zoomBtn.setAttribute('aria-label', scale > 1 ? 'Zoom out' : 'Zoom in');
         if (scale > 1) {
             imgEl.classList.add('is-zoomed');
             overlay.classList.add('is-zoomed');
@@ -246,18 +273,22 @@
         var dy = (e.changedTouches[0] || {}).clientY - touchStartY;
         var dt = Date.now() - touchStartTime;
         // 缩放态：拖拽结束后夹紧；轻触则切换缩放
+        // 已在此处理的轻触/滑动要阻止随后的合成 click，否则 onImageClick 会再切换一次缩放
         if (scale > 1) {
             clampPan();
             if (!movedDuringDrag && dt < 250 && Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+                if (e.cancelable) e.preventDefault();
                 toggleZoom();
             }
             return;
         }
         // 非缩放态：水平滑动切换图片
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+            if (e.cancelable) e.preventDefault();
             if (dx < 0) next(); else prev();
         } else if (!movedDuringDrag && dt < 250 && Math.abs(dx) < 10 && Math.abs(dy) < 10) {
             // 轻触切换缩放
+            if (e.cancelable) e.preventDefault();
             toggleZoom();
         }
     }
@@ -283,24 +314,44 @@
     function prev() { goTo(current - 1); }
     function next() { goTo(current + 1); }
 
+    var returnFocus = null;
+
     function open(index) {
         if (!overlay) buildOverlay();
+        returnFocus = document.activeElement;
         goTo(index);
         overlay.classList.add('is-visible');
         document.body.style.overflow = 'hidden';
+        focusWhenShown(overlay.querySelector('.lb-close'), overlay);
     }
 
     function close() {
-        if (!overlay) return;
+        if (!overlay || !overlay.classList.contains('is-visible')) return;
         overlay.classList.remove('is-visible');
         document.body.style.overflow = '';
         setZoom(1, 0, 0);
+        if (returnFocus && document.contains(returnFocus)) returnFocus.focus();
+        returnFocus = null;
+    }
+
+    // 焦点限制在灯箱内的可见按钮之间
+    function trapTab(e) {
+        var buttons = Array.from(overlay.querySelectorAll('button')).filter(function (b) {
+            return b.getClientRects().length > 0;
+        });
+        if (!buttons.length) return;
+        var i = buttons.indexOf(document.activeElement);
+        e.preventDefault();
+        if (e.shiftKey) i = i <= 0 ? buttons.length - 1 : i - 1;
+        else i = i < 0 || i === buttons.length - 1 ? 0 : i + 1;
+        buttons[i].focus();
     }
 
     // 键盘
     document.addEventListener('keydown', function (e) {
         if (!overlay || !overlay.classList.contains('is-visible')) return;
         switch (e.key) {
+            case 'Tab': trapTab(e); break;
             case 'Escape': close(); break;
             case 'ArrowLeft': prev(); break;
             case 'ArrowRight': next(); break;
@@ -337,6 +388,11 @@
         imgs.forEach(function (img, i) {
             img.style.cursor = 'zoom-in';
             img.dataset.lbIndex = i;
+            // 键盘可达：不在链接里的图片可用 Tab 聚焦、Enter/空格打开
+            if (!img.closest('a, button') && !img.hasAttribute('tabindex')) {
+                img.tabIndex = 0;
+                img.setAttribute('role', 'button');
+            }
         });
 
         images = imgs.map(function (img) {
@@ -353,8 +409,24 @@
         if (!container) return;
 
         clickBound = true;
+        container.addEventListener('keydown', function (e) {
+            var target = e.target;
+            if (target.tagName !== 'IMG' || (e.key !== 'Enter' && e.key !== ' ')) return;
+            var idx = imgs.indexOf(target);
+            if (idx >= 0) {
+                e.preventDefault();
+                open(idx);
+            }
+        });
         container.addEventListener('click', function (e) {
             var target = e.target;
+            // Enter on a link that wraps a gallery image clicks the link, not
+            // the image; open the viewer for keyboard users too.
+            var link = target.tagName === 'A' ? target : null;
+            if (link && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                var inner = link.querySelector('img');
+                if (inner && imgs.indexOf(inner) >= 0 && link.textContent.trim() === '') target = inner;
+            }
             if (target.tagName === 'IMG' && !target.closest('.donate-container')) {
                 var idx = parseInt(target.dataset.lbIndex, 10);
                 if (isNaN(idx)) {

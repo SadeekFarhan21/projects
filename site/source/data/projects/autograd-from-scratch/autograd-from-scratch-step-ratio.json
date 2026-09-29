@@ -2,7 +2,7 @@
   "type": "bars",
   "format": "multiple",
   "unit": "smolgrad step time divided by PyTorch step time",
-  "title": "smolgrad is 1.2x to 2.5x slower than PyTorch per step",
+  "title": "smolgrad Is 1.2x to 2.5x Slower Than PyTorch per Step",
   "subtitle": "Single-threaded CPU, full training step with AdamW, minimum over 120 to 320 steps",
   "reference": {
     "value": 1,
@@ -17,31 +17,31 @@
       "label": "MLP, batch 1",
       "value": 2.48,
       "emphasis": true,
-      "detail": "smolgrad 3.21 ms, numpy by hand 2.32 ms, PyTorch 1.29 ms"
+      "detail": "smolgrad 3.21 ms, NumPy by hand 2.32 ms, PyTorch 1.29 ms"
     },
     {
       "label": "MLP, batch 32",
       "value": 1.85,
       "emphasis": true,
-      "detail": "smolgrad 2.43 ms, numpy by hand 1.62 ms, PyTorch 1.32 ms"
+      "detail": "smolgrad 2.43 ms, NumPy by hand 1.62 ms, PyTorch 1.32 ms"
     },
     {
       "label": "MLP, batch 128",
       "value": 1.77,
       "emphasis": true,
-      "detail": "smolgrad 2.94 ms, numpy by hand 2.09 ms, PyTorch 1.66 ms"
+      "detail": "smolgrad 2.94 ms, NumPy by hand 2.09 ms, PyTorch 1.66 ms"
     },
     {
       "label": "MLP, batch 512",
       "value": 1.67,
       "emphasis": true,
-      "detail": "smolgrad 5.01 ms, numpy by hand 4.97 ms, PyTorch 3.00 ms"
+      "detail": "smolgrad 5.01 ms, NumPy by hand 4.97 ms, PyTorch 3.00 ms"
     },
     {
       "label": "MLP, batch 2,048",
       "value": 1.83,
       "emphasis": true,
-      "detail": "smolgrad 21.16 ms, numpy by hand 38.09 ms, PyTorch 11.58 ms. The hand-written numpy row at this batch is slower than smolgrad, which is load noise"
+      "detail": "smolgrad 21.16 ms, NumPy by hand 38.09 ms, PyTorch 11.58 ms. The hand-written NumPy row at this batch is slower than smolgrad, which is load noise"
     },
     {
       "label": "Char model, batch 256",

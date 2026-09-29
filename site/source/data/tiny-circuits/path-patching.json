@@ -1,6 +1,6 @@
 {
  "type": "bars",
- "title": "One upstream head feeds the induction keys",
+ "title": "One Upstream Head Feeds the Induction Keys",
  "subtitle": "Share of clean performance lost when only a sender's direct path into the induction keys is corrupted",
  "legendLabels": {
   "emphasis": "L4H11",
@@ -11,37 +11,37 @@
    "label": "L4H11",
    "value": 0.2422,
    "emphasis": true,
-   "detail": "query path 0.0001, value path 0.0001; previous-token score 0.987"
+   "detail": "Query path 0.0001, value path 0.0001; previous-token score 0.987"
   },
   {
    "label": "L3H7",
    "value": 0.0127,
    "emphasis": false,
-   "detail": "query path 0.0002, value path -0.0004; previous-token score 0.544"
+   "detail": "Query path 0.0002, value path -0.0004; previous-token score 0.544"
   },
   {
    "label": "L2H2",
    "value": 0.0071,
    "emphasis": false,
-   "detail": "query path -0.0002, value path -0.0000; previous-token score 0.494"
+   "detail": "Query path -0.0002, value path -0.0000; previous-token score 0.494"
   },
   {
    "label": "L2H9",
    "value": 0.0041,
    "emphasis": false,
-   "detail": "query path 0.0004, value path -0.0002; previous-token score 0.370"
+   "detail": "Query path 0.0004, value path -0.0002; previous-token score 0.370"
   },
   {
    "label": "L1H0",
    "value": 0.0037,
    "emphasis": false,
-   "detail": "query path 0.0001, value path 0.0001; previous-token score 0.192"
+   "detail": "Query path 0.0001, value path 0.0001; previous-token score 0.192"
   },
   {
    "label": "L3H3",
    "value": 0.0029,
    "emphasis": false,
-   "detail": "query path 0.0000, value path 0.0000; previous-token score 0.293"
+   "detail": "Query path 0.0000, value path 0.0000; previous-token score 0.293"
   }
  ],
  "caption": "Of the 60 heads in layers 0 to 4, L4H11 carries 0.242 through the keys and the next carries 0.013. Every sender's query and value paths stay below 0.002. Hover for each head's query and value paths.",

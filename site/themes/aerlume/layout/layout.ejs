@@ -3,6 +3,9 @@
 <%- partial('_partial/head') %>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
 <div class="site-nav-toggle" id="site-nav-toggle">
     <button type="button" aria-controls="nav-content" aria-expanded="false" aria-label="Open site navigation">
         <span class="btn-bar"></span>
@@ -18,6 +21,7 @@
 <div class="index-about-mobile">
     <i><%= config.subtitle %></i>
 </div>
+</header>
 
 <div class="index-container">
     <% if(!is_current('/404')){%>
@@ -25,10 +29,10 @@
         <%- partial('_partial/nav', null, {cache: false}) %>
     </div>
     <% } %>
-    <div class="index-middle">
+    <main class="index-middle" id="main">
         <!-- Main Content -->
         <%- body %>
-    </div>
+    </main>
     <% if (is_post()) { %>
     <aside class="index-right" aria-label="Contents">
         <%- partial('_partial/toc', {item: page, index: false}) %>

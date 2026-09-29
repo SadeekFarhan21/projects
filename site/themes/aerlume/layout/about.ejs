@@ -1,4 +1,5 @@
 <div class="post-content <% if(config.post_style && !config.post_style.indent) {%>no-indent<% } %>">
+    <% if (!/<h1[\s>]/i.test(page.content || '')) { %><h1 class="sr-only"><%= page.title || config.title %></h1><% } %>
     <%-page.content%>
     <% if(config.donate){%>
         <%- partial('_partial/donate', null, {cache: false}) %>

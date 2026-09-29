@@ -3,7 +3,7 @@
   "format": "time",
   "scale": "log",
   "unit": "p99 end-to-end latency, log scale",
-  "title": "Tail latency from produce to consume",
+  "title": "Tail Latency from Produce to Consume",
   "subtitle": "p99 of send time to receive time for 100 B messages at a fixed send rate, log scale",
   "legendLabels": {
     "emphasis": "No flush",

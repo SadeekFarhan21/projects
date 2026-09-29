@@ -14,7 +14,13 @@ var pageDescription = (function(){
 var pageKeywords = (page.keywords ? page.keywords + ',' : '') + (config.keyword || config.keywords || '');
 var canonicalUrl = (page.permalink || full_url_for(page.path)).replace(/index\.html$/, '');
 var ogType = is_post() ? 'article' : 'website';
-var pageTitle = page.title ? page.title + ' | ' + config.title : config.SEOTitle;
+var pageTitle = page.title ? page.title + ' | ' + config.title
+    : page.tag ? 'Tag: ' + page.tag + ' | ' + config.title
+    : is_archive() ? 'Archive | ' + config.title
+    : config.SEOTitle;
+var ogLocale = ({en: 'en_US', zh: 'zh_CN', 'zh-CN': 'zh_CN', ko: 'ko_KR'})[config.language] || String(config.language || 'en').replace('-', '_');
+// Pagination pages only: on posts, page.prev/page.next are post objects with no *_link.
+var hasPager = page.prev_link !== undefined || page.next_link !== undefined;
 var publishedTime = page.date ? page.date.toISOString() : '';
 var hasExplicitUpdated = Boolean(page.updated && page.raw && /^\s*updated\s*:/m.test(page.raw));
 var updatedTime = hasExplicitUpdated ? page.updated.toISOString() : '';
@@ -32,7 +38,7 @@ var keywords = escapeAttribute(pageKeywords);
     <link rel="canonical" href="<%= canonical %>">
 
     <!-- SEO：聚合页 noindex,follow 避免稀释主文章权重 -->
-    <% if (is_archive() || is_tag() || is_category() || (page.path && page.path.indexOf('tags/') === 0 && page.path !== 'tags/index.html')) { %>
+    <% if (is_archive() || is_tag() || is_category() || is_current('/404') || (page.path && page.path.indexOf('tags/') === 0 && page.path !== 'tags/index.html')) { %>
     <meta name="robots" content="noindex,follow">
     <% } %>
 
@@ -46,7 +52,7 @@ var keywords = escapeAttribute(pageKeywords);
     <meta property="og:type" content="<%= ogType %>">
     <meta property="og:url" content="<%= canonical %>">
     <meta property="og:site_name" content="<%= config.title %>">
-    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale" content="<%= ogLocale %>">
     <% if (is_post() && publishedTime) { %>
     <meta property="article:author" content="<%= config.author %>">
     <meta property="article:published_time" content="<%= publishedTime %>">
@@ -61,13 +67,13 @@ var keywords = escapeAttribute(pageKeywords);
     <meta name="twitter:description" content="<%= description %>">
 
     <!-- RSS 订阅 -->
-    <link rel="alternate" type="application/rss+xml" title="<%= config.title %>" href="<%= url_for('atom.xml') %>">
+    <link rel="alternate" type="application/atom+xml" title="<%= config.title %>" href="<%= url_for('atom.xml') %>">
 
     <!-- 分页 prev/next 信号 -->
-    <% if (page.prev) { %>
+    <% if (hasPager && page.prev) { %>
     <link rel="prev" href="<%- full_url_for(page.prev_link) %>">
     <% } %>
-    <% if (page.next) { %>
+    <% if (hasPager && page.next) { %>
     <link rel="next" href="<%- full_url_for(page.next_link) %>">
     <% } %>
 
@@ -121,12 +127,18 @@ var keywords = escapeAttribute(pageKeywords);
     <%- css('css/site.css') %>
     <%- css('css/code.css') %>
     <% if (is_post()) { %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" crossorigin="anonymous">
+    <%- css('css/temml.css') %>
     <%- css('css/figures.css') %>
-    <%- css('css/diagrams.css') %>
     <% } %>
 
     <%- local_font() %>
+
+    <!-- a11y: visually hidden headings and a skip link that shows on focus -->
+    <style>
+    .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+    .skip-link{position:absolute;left:12px;top:-100px;z-index:10000;padding:8px 14px;border-radius:6px;background:#1A1A1A;color:#fff!important;font-size:14px;text-decoration:none}
+    .skip-link:focus{top:12px;outline:2px solid #4990E2;outline-offset:2px}
+    </style>
 
     <!-- iconfont 异步加载 -->
     <link rel="preload" href="https://at.alicdn.com/t/font_620856_28hi1hpxx24.css" as="style" onload="this.onload=null;this.rel='stylesheet'">

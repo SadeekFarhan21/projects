@@ -15,12 +15,13 @@
 html .post-content figure.highlight,
 html .post-content pre:not(figure.highlight pre) {
   position: relative;
-  margin: 1.6rem 0;
+  box-sizing: border-box;
+  width: 100%;
+  margin: var(--block-gap) 0;
   padding: 0;
   background: var(--code-bg);
-  border: 1px solid var(--code-border);
-  border-radius: 10px;
-  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+  border: 1px solid var(--block-border);
+  border-radius: var(--block-radius);
   overflow: hidden;
   font-size: 13.5px;
   line-height: 1.65;
@@ -58,7 +59,7 @@ html .post-content figure.highlight .gutter {
 html .post-content figure.highlight pre,
 html .post-content figure.highlight .code pre {
   margin: 0;
-  padding: 14px 20px 16px !important;
+  padding: 14px var(--block-pad) 16px !important;
   width: auto;
   background: transparent !important;
   border: 0;
@@ -70,7 +71,7 @@ html .post-content figure.highlight .line {
   display: inline;
 }
 html .post-content pre:not(figure.highlight pre) {
-  padding: 14px 20px 16px;
+  padding: 14px var(--block-pad) 16px;
   overflow-x: auto;
 }
 
@@ -104,7 +105,7 @@ html .post-content figure.highlight .code-actions {
   align-items: center;
   gap: 4px;
   height: 36px;
-  padding: 0 8px 0 14px;
+  padding: 0 8px 0 var(--block-pad);
   box-sizing: border-box;
   background: var(--code-head);
   border-bottom: 1px solid var(--code-border);
@@ -141,6 +142,11 @@ html .post-content figure.highlight :is(.btn-copy, .btn-view-raw):hover {
   background: #fff;
   border-color: var(--code-border);
   color: var(--code-ink);
+}
+/* the theme sets outline: none on these, leaving keyboard focus invisible */
+html .post-content figure.highlight :is(.btn-copy, .btn-view-raw):focus-visible {
+  outline: 2px solid #006cac;
+  outline-offset: 1px;
 }
 html .post-content figure.highlight .btn-copy.is-copied {
   color: #2f7a54;
@@ -194,13 +200,26 @@ html .post-content :is(h1, h2, h3, h4) code {
   html .post-content figure.highlight pre * {
     font-size: 12.5px;
   }
-  html .post-content figure.highlight,
-  html .post-content pre:not(figure.highlight pre) {
-    border-radius: 8px;
-    margin-left: -4px;
-    margin-right: -4px;
-  }
   html .post-content figure.highlight .btn-view-raw {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- print */
+
+/* paper cannot scroll: wrap long lines instead of cutting them off, and
+   drop the Copy / View buttons */
+@media print {
+  html .post-content figure.highlight pre,
+  html .post-content figure.highlight pre *,
+  html .post-content pre:not(figure.highlight pre) {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere !important;
+  }
+  html .post-content figure.highlight :is(tbody, tr) {
+    width: auto;
+  }
+  html .post-content figure.highlight :is(.btn-copy, .btn-view-raw) {
     display: none;
   }
 }

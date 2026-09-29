@@ -70,8 +70,15 @@ function prep(el: Element, origin: string) {
 
 const NUM = /-?\d[\d,]*(?:\.\d+)?/;
 
+/** Each label's final text, kept so a replay mid-count restarts from it. */
+const finalText = new WeakMap<SVGTextElement, string>();
+const counting = new WeakMap<SVGTextElement, number>();
+
 function countUp(text: SVGTextElement, delay: number, ms: number) {
-  const original = text.textContent ?? "";
+  if (!finalText.has(text)) finalText.set(text, text.textContent ?? "");
+  const original = finalText.get(text)!;
+  const run = (counting.get(text) ?? 0) + 1;
+  counting.set(text, run);
   const m = original.match(NUM);
   if (!m || m.index === undefined) return;
   const raw = m[0];
@@ -90,6 +97,7 @@ function countUp(text: SVGTextElement, delay: number, ms: number) {
   const start = performance.now() + delay;
   text.textContent = fmt(0);
   const tick = (now: number) => {
+    if (counting.get(text) !== run) return; // a replay took over this label
     const t = Math.min(1, Math.max(0, (now - start) / ms));
     const e = 1 - Math.pow(1 - t, 3);
     text.textContent = t >= 1 ? original : fmt(target * e);
@@ -99,6 +107,8 @@ function countUp(text: SVGTextElement, delay: number, ms: number) {
 }
 
 /* ------------------------------------------------------------- animate */
+
+const drawing = new WeakMap<SVGPathElement, Animation>();
 
 function play(svg: SVGSVGElement) {
   const all = <T extends Element>(sel: string) =>
@@ -189,7 +199,12 @@ function play(svg: SVGSVGElement) {
           easing: "cubic-bezier(0.45, 0, 0.2, 1)",
           fill: "backwards",
         });
-        a.onfinish = a.oncancel = () => (p.style.strokeDasharray = "");
+        // A replay cancels this run and its cancel event lands after the new
+        // run has set the dash; only the latest run may clear it.
+        drawing.set(p, a);
+        a.onfinish = a.oncancel = () => {
+          if (drawing.get(p) === a) p.style.strokeDasharray = "";
+        };
         if (b) lineSpan = lineSpan
           ? { x0: Math.min(lineSpan.x0, b.x), x1: Math.max(lineSpan.x1, b.x + b.w) }
           : { x0: b.x, x1: b.x + b.w };

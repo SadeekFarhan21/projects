@@ -2,8 +2,8 @@
   "type": "bars",
   "format": "number",
   "scale": "log",
-  "unit": "guest instructions per operation under icount, log scale",
-  "title": "What each kernel operation costs",
+  "unit": "Guest instructions per operation under icount, log scale",
+  "title": "What Each Kernel Operation Costs",
   "subtitle": "QEMU virt with -icount shift=0, where one virtual nanosecond is one guest instruction",
   "legendLabels": {
     "emphasis": "Switching and traps",

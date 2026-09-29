@@ -1,8 +1,8 @@
 {
   "type": "bars",
   "format": "number",
-  "unit": "failing boots",
-  "title": "Two races, reproduced before and after the fix",
+  "unit": "Failing boots",
+  "title": "Two Races, Reproduced Before and After the Fix",
   "subtitle": "The same boot repeated many times under plain TCG on a heavily loaded host",
   "legendLabels": {
     "emphasis": "Before the fix",

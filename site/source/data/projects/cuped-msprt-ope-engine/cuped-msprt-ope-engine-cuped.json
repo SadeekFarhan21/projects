@@ -1,10 +1,10 @@
 {
   "type": "series",
   "format": "number",
-  "unit": "variance of CUPED estimate over variance of plain difference",
+  "unit": "Variance of CUPED estimate over variance of plain difference",
   "xFormat": "number",
-  "xLabel": "correlation rho between pre-period covariate and outcome",
-  "title": "CUPED variance follows 1 minus rho squared",
+  "xLabel": "Correlation rho between pre-period covariate and outcome",
+  "title": "CUPED Variance Follows 1 Minus rho Squared",
   "subtitle": "1,000 simulated experiments per rho, 1,000 users per arm, true effect 0.05",
   "entities": [
     {

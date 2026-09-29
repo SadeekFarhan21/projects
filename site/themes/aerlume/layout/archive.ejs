@@ -4,7 +4,8 @@ layout: layout
 
 <%
 var years = {};
-site.posts.sort('date').reverse().forEach(function(post){
+// page.posts: this page's slice of the archive, year/month archive or tag page (already sorted newest first).
+page.posts.forEach(function(post){
     var year = post.date.year()
     if(years[year]===undefined){
         years[year] = [];
@@ -15,10 +16,18 @@ site.posts.sort('date').reverse().forEach(function(post){
 
 <!-- 归档列表 -->
 
+<%
+var archiveHeading = page.tag ? 'Posts Tagged ' + page.tag
+    : page.year ? 'Archive: ' + (page.month ? page.year + '-' + String(page.month).padStart(2, '0') : page.year)
+    : 'Archive';
+if (page.total > 1) archiveHeading += ', Page ' + page.current + ' of ' + page.total;
+%>
+<h1 class="sr-only"><%= archiveHeading %></h1>
+
 <div class="archives-container">
 <% Object.keys(years).reverse().forEach(function(year){  %>
 <div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="<%= year %>">
+                <span class="fa fa-calendar-times-o listing-seperator" id="<%= year %>" role="heading" aria-level="2">
                     <span class="tag-text"><%= year %></span>
                 </span>
     <ul>
@@ -45,3 +54,4 @@ site.posts.sort('date').reverse().forEach(function(post){
 </div>
 <% }) %>
 </div>
+<%- partial('_partial/pager') %>

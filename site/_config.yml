@@ -87,6 +87,9 @@ markdown:
 
 date_format: MMM D, YYYY
 time_format: HH:mm
+# Posts without an explicit `updated:` use their date, not the file mtime (a
+# fresh clone on Vercel would stamp every sitemap/feed entry with deploy time).
+updated_option: date
 
 index_generator:
   path: ""

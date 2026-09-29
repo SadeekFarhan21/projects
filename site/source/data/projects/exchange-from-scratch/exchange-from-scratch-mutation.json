@@ -1,8 +1,8 @@
 {
   "type": "bars",
   "scale": "log",
-  "unit": "input event at which the fuzzer stopped, log scale",
-  "title": "How fast the fuzzer caught each planted bug",
+  "unit": "Input event at which the fuzzer stopped, log scale",
+  "title": "How Fast the Fuzzer Caught Each Planted Bug",
   "subtitle": "Six mutants of the engine, each fuzzed against the reference matcher, first failure on seed 1",
   "legendLabels": {
     "emphasis": "Caught only by the periodic state comparison",
@@ -10,7 +10,7 @@
   },
   "rows": [
     {
-      "label": "trade at taker price",
+      "label": "Trade at taker price",
       "value": 9,
       "detail": "Trades print at the aggressor's limit instead of the resting order's price. First divergence on N 7 S LMT 9982 76"
     },
@@ -20,7 +20,7 @@
       "detail": "New orders join the front of their price level's queue. First divergence on N 57 B LMT 10000 75"
     },
     {
-      "label": "post-only may lock",
+      "label": "Post-only may lock",
       "value": 112,
       "detail": "A post-only order priced exactly at the opposite touch is allowed to rest. First divergence on N 73 B POST 10004 71"
     },
@@ -30,13 +30,13 @@
       "detail": "Fill or kill cancels when available quantity exactly equals the order size. First divergence on N 347 S FOK 9982 9"
     },
     {
-      "label": "modify up keeps priority",
+      "label": "Modify up keeps priority",
       "value": 3000,
       "emphasis": true,
       "detail": "A size increase at the same price keeps its queue position. The output events were identical, so it surfaced only when the priority ordered order lists were compared at event 3000"
     },
     {
-      "label": "no L2 on amend",
+      "label": "No L2 on amend",
       "value": 3487,
       "detail": "An in place size reduction publishes no book update. First divergence on M 1908 9989 9"
     }

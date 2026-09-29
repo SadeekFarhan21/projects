@@ -3,7 +3,7 @@
   "format": "number",
   "scale": "log",
   "unit": "MB/s of payload, log scale",
-  "title": "Producer throughput by batch size",
+  "title": "Producer Throughput by Batch Size",
   "subtitle": "MB/s of payload, log scale. One partition, no fsync, median of 3 runs",
   "legendLabels": {
     "emphasis": "1000 B messages",

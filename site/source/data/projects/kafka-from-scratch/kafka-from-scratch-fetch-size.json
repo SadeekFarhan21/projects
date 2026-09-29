@@ -2,7 +2,7 @@
   "type": "bars",
   "format": "number",
   "unit": "MB/s of payload",
-  "title": "Consumer throughput by fetch size",
+  "title": "Consumer Throughput by Fetch Size",
   "subtitle": "100 B messages read from offset 0 with every CRC checked. MB/s of payload, median of 3 runs",
   "legendLabels": {
     "emphasis": "Past the knee",

@@ -12,9 +12,15 @@ html .toc-article * {
 
 /* Fonts: Quicksand for text, Fragment Mono for code (loaded from Google Fonts
    in head.ejs). The theme's `*` rule reads --aerlume-local-font, so setting
-   it switches every element; KaTeX's own, more specific rules keep math fonts. */
+   it switches every element; the Math rules below keep math in its own font. */
 :root {
   --aerlume-local-font: "Quicksand";
+  /* Post blocks (code, tables, charts, diagrams, display math, details):
+     one frame and one vertical rhythm, see "Post blocks" below. */
+  --block-gap: 1.5rem;
+  --block-radius: 8px;
+  --block-border: #e2e8f0;
+  --block-pad: 16px;
 }
 .index-about i,
 .index-about-mobile i {
@@ -34,16 +40,173 @@ pre *,
   font-family: "Fragment Mono", ui-monospace, Menlo, Consolas, monospace;
 }
 
-/* The theme's `*` font rule also hits every span inside KaTeX output, which
-   pulls math glyphs out of KaTeX's fonts. Inherit instead; :where() keeps the
-   specificity at zero so KaTeX's own class rules (math italic, sizes) still win. */
-:where(.katex *) {
+/* Math: Temml renders LaTeX to MathML at build time (scripts/math.js), styled
+   by temml.css (Latin Modern Math). markdown-it-texmath wraps inline math in
+   <eq> and display math in <section><eqn>.
+   - The theme's `*` font rule also hits every <mi>/<mo> inside <math>, which
+     would set math in Quicksand. `math *` (0,0,1) outranks `*` and inherits
+     the math font; Temml's class rules (.mathscr, mo.tml-prime) still win.
+   - Math takes the text color (the site has no dark theme today, but nothing
+     here hard-codes a color). Temml marks unknown commands in red (#b22222).
+   - Inline math sits on the text baseline without stretching the line: the
+     1.1em size matches Latin Modern's x-height to Quicksand's, and the flex
+     row padding Temml adds for Chromium's line-breaking is dropped inline.
+   - Display math scrolls sideways on narrow screens instead of overflowing. */
+math {
+  color: inherit;
+}
+math * {
   font-family: inherit;
+}
+eq {
+  display: inline;
+  font-size: 1.1em;
+  line-height: 1;
+}
+eq > math > mrow {
+  padding: 0;
+}
+/* MathML cannot line-break inside brackets, so a long inline formula ran
+   past the column on 320px screens (400% zoom) and was cut off. On narrow
+   screens let it scroll sideways within the column instead. */
+@media screen and (max-width: 480px) {
+  eq > math {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    vertical-align: middle;
+  }
+  /* Temml positions accents (\hat, \widehat) with transforms whose boxes
+     reach past the base glyph, which made even a short formula like q-hat
+     "scrollable" by a few px: an unfocusable scroll region (axe
+     scrollable-region-focusable). Clip that box overflow sideways only;
+     the accent ink itself sits inside the base's width. */
+  eq > math mover {
+    overflow-x: clip;
+    overflow-clip-margin: 0.1em;
+  }
+}
+section:has(> eqn) {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: var(--block-gap) 0;
+  padding: calc(var(--block-pad) * 0.5) var(--block-pad);
+  border: 1px solid var(--block-border);
+  border-radius: var(--block-radius);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+eqn {
+  display: block;
+  font-size: 1.15em;
+  padding: 0.25rem 0;
+}
+/* Wide equations grow past the column (and scroll) from their left edge;
+   short ones stay centered in the full width. */
+eqn > math.tml-display {
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+/* Post blocks. Code (code.css), tables, charts and diagrams (figures.css),
+   display math and details all span exactly the text column, with the same
+   left and right edge as paragraphs at every width and no negative margins.
+   Content wider than the column scrolls inside its block, never the page.
+   They share one frame (--block-border, --block-radius), one inner inset
+   (--block-pad) and one gap above and below (--block-gap). Right under a
+   heading, blocks, paragraphs and lists all sit the same 1rem down (the
+   heading's own bottom margin is smaller and collapses into it), not a full
+   block gap lower. */
+html body .post-content :is(h2, h3, h4) + :is(figure, pre, .table-wrap, section, details, p, ul, ol, blockquote) {
+  margin-top: 1rem;
+}
+
+/* Tables: scripts/table-wrap.js wraps each markdown table in a focusable,
+   labelled .table-wrap that holds the frame and scrolls a wide table. The
+   table itself keeps display: table and fills the column. Header cells align
+   with their column (the theme centred them over left-aligned cells). */
+html .post-content .table-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  margin: var(--block-gap) 0;
+  overflow-x: auto;
+  border: 1px solid var(--block-border);
+  border-radius: var(--block-radius);
+  -webkit-overflow-scrolling: touch;
+}
+html .post-content .table-wrap:focus-visible {
+  outline: 2px solid #006cac;
+  outline-offset: 2px;
+}
+html .post-content .table-wrap > table {
+  display: table;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+}
+html .post-content .table-wrap :is(th, td) {
+  padding-left: var(--block-pad);
+  padding-right: var(--block-pad);
+  text-align: start;
+}
+
+/* Collapsible sections use the shared block frame, inset and gap like every
+   other block (consecutive ones are spaced like any two blocks). Their text is
+   inset by --block-pad, but the blocks inside (code, tables, charts, math)
+   still span the text column exactly: they reach out over the frame's padding
+   so their side borders sit on the frame's side borders, and drop their own
+   corner radius there (the frame supplies the rounded corners). */
+html .post-content details {
+  box-sizing: border-box;
+  width: 100%;
+  margin: var(--block-gap) 0;
+  padding: calc(var(--block-pad) * 0.75) var(--block-pad);
+  border: 1px solid var(--block-border);
+  border-radius: var(--block-radius);
+}
+html .post-content details > summary {
+  cursor: pointer;
+}
+html .post-content details[open] > summary {
+  margin-bottom: var(--block-pad);
+}
+html .post-content details[open] {
+  padding-bottom: var(--block-pad);
+}
+html .post-content details > :last-child {
+  margin-bottom: 0;
+}
+html body .post-content details > :is(figure, pre, .table-wrap, section, blockquote) {
+  width: calc(100% + 2 * (var(--block-pad) + 1px));
+  max-width: none;
+  margin-left: calc(-1 * (var(--block-pad) + 1px));
+  margin-right: calc(-1 * (var(--block-pad) + 1px));
+  border-radius: 0;
+}
+/* A block that ends an open section bleeds onto the frame's bottom border too,
+   so the two borders do not show as a double line with a gap between. */
+html body .post-content details[open] > :is(figure, pre, .table-wrap, section, blockquote):last-child {
+  margin-bottom: calc(-1 * (var(--block-pad) + 1px));
+  border-radius: 0 0 var(--block-radius) var(--block-radius);
+}
+
+/* The post template ends the body with a <br>, which only added blank space
+   below the last paragraph. */
+html .post-content > br:last-child {
+  display: none;
 }
 
 /* Contents sidebar on the right of posts (layout.ejs .index-right). It sticks
    below the top of the viewport while the post scrolls. Below 1180px the
-   right column is hidden and the collapsible in-post TOC is shown instead. */
+   right column is hidden and posts have no contents list. */
 .index-container .index-right {
   flex: 0 0 220px;
   min-width: 0;
@@ -77,15 +240,6 @@ html body .toc-article li a span {
   font-family: "Quicksand", Helvetica, Arial, sans-serif !important;
   font-style: normal;
   font-weight: 650;
-}
-
-/* Collapsible in-post TOC (shown below 1180px): keep the accent bar next to
-   the CONTENTS label and push only the Show button to the right. */
-.toc-mobile .toc-heading::before {
-  margin-right: 0 !important;
-}
-.toc-mobile .toc-heading > span {
-  margin-right: auto;
 }
 
 /* Inline SVG nav icons (WRITING, CODE) sized like the icon font. */
@@ -146,8 +300,23 @@ html .post-content pre * {
    active entry is marked in the accent color. */
 .post-content h2,
 .post-content h3,
-.post-content h4 {
+.post-content h4,
+.post-content [id] {
   scroll-margin-top: 24px;
+}
+/* below 680px a 48px bar is fixed to the top (.site-nav-toggle); every
+   in-page target (headings, references, footnotes, figures) clears it */
+@media screen and (max-width: 680px) {
+  .post-content h2,
+  .post-content h3,
+  .post-content h4,
+  .post-content [id] {
+    scroll-margin-top: 64px;
+  }
+  /* the skip link's target (#main) would otherwise start under the bar */
+  html #main {
+    scroll-margin-top: 56px;
+  }
 }
 .toc-article a.is-active {
   color: #4990E2 !important;
@@ -198,6 +367,20 @@ html .toc-article a.is-trail {
 html .index-about-mobile {
   width: 100%;
   box-sizing: border-box;
+}
+/* Below 680px the fixed 48px bar sits over the top of the page, and the
+   subtitle comes first in the DOM, so its first line was hidden under the
+   bar. The theme's 48px offset (and 50px padding) was on #nav instead, whose
+   children are all hidden or position: fixed there, leaving ~98px of blank
+   space below the subtitle. Move the offset onto the subtitle. */
+@media screen and (max-width: 680px) {
+  html .index-about-mobile {
+    padding-top: 72px;
+  }
+  html .nav {
+    margin-top: 0;
+    padding-top: 0;
+  }
 }
 /* Guard: nothing should make the page itself scroll horizontally. clip (not
    hidden) keeps position: sticky working for the contents sidebar. */
@@ -276,6 +459,13 @@ html a.tag-pill:focus-visible {
 html .post-preview .post-tags {
   margin-top: 0.45rem;
 }
+/* The theme cuts post titles to one line with an ellipsis, which on phones
+   hides half of every title; let them wrap instead. */
+html .post-preview .post-info a h3 {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
 html .post-preview a.tag-pill {
   font-size: 0.75rem;
   padding: 0.1rem 0.6rem;
@@ -329,6 +519,33 @@ html .post-content a:visited {
 html .post-content a:hover {
   color: #0b4f7c;
 }
+/* Links in running text were marked by color alone (2.3:1 against the body
+   text; WCAG 1.4.1 wants 3:1 or a non-color cue), so underline them. Classed
+   links (tag pills, diagram links, TOC) keep their own styling. The theme's
+   hover border-bottom would double the underline, so drop it. */
+html .post-content a:not([class]),
+html .about-content a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  border-bottom: 0;
+}
+html .post-content a:not([class]):hover,
+html .about-content a:not([class]):hover {
+  text-decoration-thickness: 2px;
+}
+/* Classed links in running text (footnote refs etc.) get the same single
+   text underline; the theme's border-bottom is dropped so no link is drawn
+   with two rules. Image links (.excal-link) and pills are left alone. */
+html .post-content :is(p, li, td, th, blockquote, dd, figcaption) a:not(.tag-pill):not(.excal-link) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  border-bottom: 0;
+}
+html .post-content :is(p, li, td, th, blockquote, dd, figcaption) a:not(.tag-pill):not(.excal-link):is(:hover, :focus-visible) {
+  text-decoration-thickness: 2px;
+}
 html .toc-article a,
 html .toc-article .toc-text {
   color: #5b6472;
@@ -345,12 +562,96 @@ html .toc-article a.is-trail .toc-text {
 html .footer-copyright,
 html .footer-copyright a,
 html .archive li span,
+html .archives-container .one-tag-list ul li span,
+html .notfound .notfound-desc,
 html .post-preview .post-time {
   color: #5b6472 !important;
+}
+/* 404 button: white on the theme's #4990E2 is 3.3:1; use the accent. */
+html .notfound .notfound-btn {
+  background-color: #006cac;
+  box-shadow: 0 4px 12px rgb(0 108 172 / 0.25);
+}
+html .notfound .notfound-btn:hover,
+html .notfound .notfound-btn:focus-visible {
+  background-color: #0b4f7c;
+}
+/* The disabled pager end ("Newer / First page") faded to 2.5:1 through
+   opacity: 0.45. Show it at full opacity in a muted gray (4.8:1) instead. */
+html .pager .is-disabled {
+  opacity: 1;
+}
+html .pager .is-disabled,
+html .pager .is-disabled .pager-label,
+html .pager .is-disabled .pager-sub {
+  color: #6b7280;
+}
+/* Hover text in the theme's #4990E2 is 3.0-3.3:1 on the white and tinted
+   backgrounds (post titles, tag cloud, archive links); use the accent. */
+html .post-preview .post-info a h3:hover,
+html .one-tag-list .post-preview a .post-title:hover,
+html .tag-i:hover,
+html .post-container .post-meta a:hover,
+html .archives-container .one-tag-list ul li a span:hover,
+html .pager a:hover .pager-arrow {
+  color: #006cac;
+}
+/* Search dialog: the "search" button (#4990E2, 3.3:1), close icon (#999,
+   2.8:1), empty-state and snippet text (#979797, 2.9:1) and the pure-red
+   keyword highlight (4.0:1) all fell short. */
+html .search-field .search-container .search-input #begin-search {
+  color: #006cac;
+}
+html .search-field .search-container .search-input button {
+  color: #5b6472;
+}
+html .search-field .search-container .search-input button:hover,
+html .search-field .search-container .search-input button:focus-visible {
+  color: #2f3339;
+}
+html .search-field .search-result-container .no-search-result,
+html .search-field .search-result-container ul li ul li {
+  color: #5b6472;
+}
+html .search-field .red {
+  color: #b91c1c;
 }
 html .tag-page-header .tag-page-description {
   color: #5b6472;
 }
 html .tag-page-header .tag-page-eyebrow {
   color: #006cac;
+}
+
+/* Reduced motion: the theme's fades, slides and hover transitions (the
+   subtitle's 1.6s slide-in, the mobile menu, pager and nav) ignore the
+   setting. Keep delays so staged reveals still end in the same state. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: drop the nav, the contents sidebar and the mobile bar so the post
+   gets the full page width instead of a narrow middle column. */
+@media print {
+  .site-nav-toggle,
+  .index-container .index-left,
+  .index-container .index-right,
+  .index-about,
+  .index-about-mobile {
+    display: none !important;
+  }
+  .index-container {
+    display: block;
+    padding: 0;
+  }
+  .index-container .index-middle {
+    max-width: none;
+  }
 }

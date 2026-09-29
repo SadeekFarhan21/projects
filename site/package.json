@@ -16,7 +16,6 @@
     "version": "8.1.2"
   },
   "dependencies": {
-    "@vscode/markdown-it-katex": "^1.1.2",
     "hexo": "^8.1.2",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-feed": "^4.0.0",
@@ -26,7 +25,9 @@
     "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-markdown-it": "^7.1.1",
-    "hexo-server": "^3.0.0"
+    "hexo-server": "^3.0.0",
+    "markdown-it-texmath": "^1.0.0",
+    "temml": "^0.13.5"
   },
   "devDependencies": {
     "d3-array": "^3.2.4",

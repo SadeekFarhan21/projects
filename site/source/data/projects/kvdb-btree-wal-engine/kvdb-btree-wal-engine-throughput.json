@@ -1,8 +1,8 @@
 {
   "type": "columns",
   "format": "number",
-  "unit": "ops per second",
-  "title": "Random puts and gets at 1M keys",
+  "unit": "Ops per second",
+  "title": "Random Puts and Gets at 1M Keys",
   "subtitle": "16 B keys, 100 B values, no sync on commit for either disk engine, median of 3 runs",
   "categories": ["Random put", "Random get"],
   "series": [

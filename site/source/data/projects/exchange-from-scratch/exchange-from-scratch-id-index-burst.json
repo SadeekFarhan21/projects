@@ -1,9 +1,9 @@
 {
   "type": "columns",
-  "title": "Three order id indexes under burst load",
+  "title": "Three Order ID Indexes Under Burst Load",
   "subtitle": "Million orders per CPU second, median of 3 runs, no per order timers",
-  "unit": "million orders per CPU second",
-  "categories": ["add 1M", "cancel 1M", "match 1M", "add 20k strided ids"],
+  "unit": "Million orders per CPU second",
+  "categories": ["Add 1M", "Cancel 1M", "Match 1M", "Add 20k strided IDs"],
   "series": [
     { "name": "IdMap, splitmix64 (default)", "values": [4.4, 2.2, 3.8, 6.5] },
     { "name": "std::unordered_map", "values": [9.8, 1.4, 2.2, 10.4] },

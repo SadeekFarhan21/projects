@@ -1,8 +1,8 @@
 {
  "type": "series",
- "title": "The answer changes address between layers 5 and 8",
+ "title": "The Answer Changes Address Between Layers 5 and 8",
  "subtitle": "Share of clean performance recovered by patching one half of the clean residual stream into the corrupted run",
- "xLabel": "layer whose resid_pre is patched",
+ "xLabel": "Layer whose resid_pre is patched",
  "entities": [
   {
    "name": "First half patched",

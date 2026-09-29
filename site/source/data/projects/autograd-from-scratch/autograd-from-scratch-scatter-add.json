@@ -2,8 +2,8 @@
   "type": "bars",
   "format": "time",
   "scale": "log",
-  "unit": "minimum time for one embedding backward, log scale",
-  "title": "Replacing np.add.at in the embedding backward",
+  "unit": "Minimum time for one embedding backward, log scale",
+  "title": "Replacing np.add.at in the Embedding Backward",
   "subtitle": "Scatter-add of N gradient rows into a V-row table. Reduceat means sort, then np.add.reduceat over runs",
   "legendLabels": {
     "emphasis": "Path smolgrad now takes",

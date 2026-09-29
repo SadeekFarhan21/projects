@@ -56,6 +56,13 @@ function targets(svg: SVGSVGElement): Target[] {
   hideTip(true);
   found.sort((a, b) => a.cx - b.cx || a.cy - b.cy);
   cache.set(svg, found);
+  // Marks still scaled to nothing by the entrance motion were skipped above:
+  // rediscover once the chart has settled.
+  const moving = svg.getAnimations?.({ subtree: true }).filter(a => a.playState === "running") ?? [];
+  if (moving.length)
+    Promise.allSettled(moving.map(a => a.finished)).then(() => {
+      if (cache.get(svg) === found) cache.delete(svg);
+    });
   return found;
 }
 
@@ -152,6 +159,7 @@ function wireLegend(node: HTMLElement) {
   items.forEach(item => {
     item.setAttribute("role", "button");
     item.tabIndex = 0;
+    item.style.minHeight = "24px"; // WCAG 2.5.8 minimum target size
     item.setAttribute("aria-pressed", "false");
     item.title = "Click to isolate this series";
     item.addEventListener("mouseenter", () => !locked && apply(item));
@@ -183,10 +191,15 @@ export function interactive(node: HTMLElement) {
 
   wireLegend(node);
 
-  // Keyboard: the figure is one tab stop; arrows move between marks.
+  // Keyboard: the figure is one tab stop; arrows move between marks. A chart
+  // with no hover marks (data-keys="off", driven by its own form control)
+  // would be an empty tab stop that promises arrow keys it cannot honour.
   const title = node.querySelector(".fig-title")?.textContent?.trim() ?? "Chart";
+  if (node.dataset.keys === "off") return;
   node.tabIndex = 0;
-  node.setAttribute("role", "group");
+  // A <figure> already has a role, and ARIA forbids overriding it once it has
+  // a caption; only generic containers need "group".
+  if (node.tagName !== "FIGURE") node.setAttribute("role", "group");
   node.setAttribute("aria-label", `${title}. Use the arrow keys to read each value.`);
   let cursor = -1;
   node.addEventListener("keydown", e => {

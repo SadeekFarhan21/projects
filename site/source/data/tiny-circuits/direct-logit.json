@@ -1,6 +1,6 @@
 {
  "type": "bars",
- "title": "The top induction score is the weakest direct writer",
+ "title": "The Top Induction Score Is the Weakest Direct Writer",
  "subtitle": "Mean direct contribution to the correct token's logit on second-half positions",
  "legendLabels": {
   "emphasis": "Top five by induction score",

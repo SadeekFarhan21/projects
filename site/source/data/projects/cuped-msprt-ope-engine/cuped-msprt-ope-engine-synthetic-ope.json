@@ -1,12 +1,12 @@
 {
   "type": "bars",
   "format": "percent",
-  "unit": "absolute mean relative bias, percent of true value",
-  "title": "DM is biased low and DR is not",
+  "unit": "Absolute mean relative bias, percent of true value",
+  "title": "DM Is Biased Low and DR Is Not",
   "subtitle": "Synthetic bandit, 10 actions, 5,000 logged rounds per replicate, 200 replicates, true value 0.50492",
   "legendLabels": {
-    "emphasis": "doubly robust",
-    "other": "other estimators"
+    "emphasis": "Doubly robust",
+    "other": "Other estimators"
   },
   "rows": [
     {

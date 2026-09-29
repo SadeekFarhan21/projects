@@ -2,8 +2,8 @@
   "type": "bars",
   "format": "number",
   "scale": "log",
-  "unit": "messages per second, log scale",
-  "title": "What durability costs",
+  "unit": "Messages per second, log scale",
+  "title": "What Durability Costs",
   "subtitle": "1000 B messages per second under three flush policies, log scale. Median of 3 runs",
   "legendLabels": {
     "emphasis": "F_FULLFSYNC, through the drive cache",

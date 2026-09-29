@@ -358,7 +358,7 @@ function bars(node: Element, d: BarsSpec) {
   // Value only at the bar end. A note that had no room on the left goes here
   // if it fits, otherwise it lives in the tooltip.
   const endText = (r: BarRow) =>
-    r.value === null ? "not disclosed" : format(r.value, f);
+    r.value === null ? "Not disclosed" : format(r.value, f);
   void CHAR;
   const below = (r: BarRow) => r.value !== null && r.value < 0;
   g.append("text")
@@ -895,6 +895,7 @@ function series(node: Element, d: SeriesSpec) {
       .attr("stroke-dasharray", "4 4");
   }
 
+  const labels: { el: SVGTextElement; x: number; y: number }[] = [];
   d.entities.forEach((e, i) => {
     const color = e.emphasis === false ? DEEMPHASIS : SERIES[i % SERIES.length];
     const pts = [...e.points].sort((a, b) => xv(a) - xv(b));
@@ -939,7 +940,20 @@ function series(node: Element, d: SeriesSpec) {
       .attr("x", p => x(xv(p)) + 8)
       .attr("y", p => y(p.value) - 9)
       .style("fill", color)
-      .text(p => format(p.value, f));
+      .text(p => format(p.value, f))
+      .each(function (p) {
+        labels.push({ el: this, x: x(xv(p)) + 8, y: y(p.value) - 9 });
+      });
+  });
+  // Nudge direct labels that would print over each other (same x, near-equal
+  // values) apart vertically; an 11px label box is about 14px tall.
+  labels.sort((a, b) => a.y - b.y);
+  labels.forEach((l, k) => {
+    for (let j = 0; j < k; j++) {
+      const o = labels[j];
+      if (Math.abs(o.x - l.x) < 36 && l.y - o.y < 14) l.y = o.y + 14;
+    }
+    l.el.setAttribute("y", String(l.y));
   });
   if (d.entities.length > 1)
     legend(
@@ -1197,7 +1211,7 @@ function matrix(node: Element, d: MatrixSpec) {
         .attr("text-anchor", "middle")
         .style("fill", c ? t.fg : t.muted)
         .attr("font-style", c ? "normal" : "italic")
-        .text(c ?? "not published");
+        .text(c ?? "Not published");
     });
   });
 }
@@ -1296,7 +1310,7 @@ function curve(node: Element, d: CurveSpec) {
     .attr("x", plotW / 2)
     .attr("y", plotH + 34)
     .attr("text-anchor", "middle")
-    .text("robots per operator");
+    .text("Robots per operator");
 
   const paths = d.scenarios.map((_s, i) =>
     plot

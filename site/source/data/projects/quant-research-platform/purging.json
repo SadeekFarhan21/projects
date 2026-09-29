@@ -1,6 +1,6 @@
 {
  "type": "columns",
- "title": "Purging changed nothing for this model",
+ "title": "Purging Changed Nothing for This Model",
  "subtitle": "Out of sample Sharpe with a 20 day label horizon, purge and 10 row embargo against neither",
  "categories": ["Walk-forward", "k-fold"],
  "series": [

@@ -1,9 +1,9 @@
 <div class="post-container">
-    <div class="post-title">
+    <h1 class="post-title">
         <%- page.title.replace(/[<>&"]/g,function(c){
             return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];
         }) %>
-    </div>
+    </h1>
 
 <%
   var plain = (page.content || '').replace(/<figure[\s\S]*?<\/figure>/g, ' ').replace(/<[^>]+>/g, ' ');
@@ -22,7 +22,6 @@
         </ul>
         <% } %>
     </div>
-    <%- partial('_partial/toc', {item: Object.assign({}, page, {toc_mobile: true}), index: false}) %>
     <div class="post-content <% if(config.post_style && !config.post_style.indent) {%>no-indent<% } %>">
         <%- page.content %>
         <% if(config.donate){%>

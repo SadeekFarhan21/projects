@@ -1,158 +1,158 @@
 {
  "type": "series",
- "title": "Market maker PnL per fill",
+ "title": "Market Maker PnL per Fill",
  "subtitle": "Ticks per unit filled, marked to the final mid, against the informed fraction",
- "xLabel": "informed fraction (alpha)",
+ "xLabel": "Informed fraction (alpha)",
  "unit": "ticks",
  "entities": [
   {
-   "name": "adaptive",
+   "name": "Adaptive",
    "points": [
     {
      "x": 0.0,
      "value": 2.803,
-     "note": "standard error 0.003 over 8 seeds"
+     "note": "Standard error 0.003 over 8 seeds"
     },
     {
      "x": 0.05,
      "value": 2.789,
-     "note": "standard error 0.005 over 8 seeds"
+     "note": "Standard error 0.005 over 8 seeds"
     },
     {
      "x": 0.1,
      "value": 2.769,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.15,
      "value": 2.723,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.2,
      "value": 2.676,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.3,
      "value": 2.579,
-     "note": "standard error 0.010 over 8 seeds"
+     "note": "Standard error 0.010 over 8 seeds"
     },
     {
      "x": 0.4,
      "value": 2.449,
-     "note": "standard error 0.014 over 8 seeds"
+     "note": "Standard error 0.014 over 8 seeds"
     },
     {
      "x": 0.5,
      "value": 2.259,
-     "note": "standard error 0.017 over 8 seeds"
+     "note": "Standard error 0.017 over 8 seeds"
     },
     {
      "x": 0.6,
      "value": 2.003,
-     "note": "standard error 0.025 over 8 seeds"
+     "note": "Standard error 0.025 over 8 seeds"
     }
    ]
   },
   {
-   "name": "fixed",
+   "name": "Fixed",
    "points": [
     {
      "x": 0.0,
      "value": 2.21,
-     "note": "standard error 0.003 over 8 seeds"
+     "note": "Standard error 0.003 over 8 seeds"
     },
     {
      "x": 0.05,
      "value": 2.121,
-     "note": "standard error 0.002 over 8 seeds"
+     "note": "Standard error 0.002 over 8 seeds"
     },
     {
      "x": 0.1,
      "value": 2.017,
-     "note": "standard error 0.004 over 8 seeds"
+     "note": "Standard error 0.004 over 8 seeds"
     },
     {
      "x": 0.15,
      "value": 1.912,
-     "note": "standard error 0.005 over 8 seeds"
+     "note": "Standard error 0.005 over 8 seeds"
     },
     {
      "x": 0.2,
      "value": 1.814,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.3,
      "value": 1.609,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.4,
      "value": 1.399,
-     "note": "standard error 0.013 over 8 seeds"
+     "note": "Standard error 0.013 over 8 seeds"
     },
     {
      "x": 0.5,
      "value": 1.154,
-     "note": "standard error 0.015 over 8 seeds"
+     "note": "Standard error 0.015 over 8 seeds"
     },
     {
      "x": 0.6,
      "value": 0.881,
-     "note": "standard error 0.024 over 8 seeds"
+     "note": "Standard error 0.024 over 8 seeds"
     }
    ]
   },
   {
-   "name": "naive, fixed learning rate 0.3",
+   "name": "Naive, fixed learning rate 0.3",
    "emphasis": false,
    "points": [
     {
      "x": 0.0,
      "value": 1.7,
-     "note": "standard error 0.002 over 8 seeds"
+     "note": "Standard error 0.002 over 8 seeds"
     },
     {
      "x": 0.05,
      "value": 1.701,
-     "note": "standard error 0.005 over 8 seeds"
+     "note": "Standard error 0.005 over 8 seeds"
     },
     {
      "x": 0.1,
      "value": 1.686,
-     "note": "standard error 0.004 over 8 seeds"
+     "note": "Standard error 0.004 over 8 seeds"
     },
     {
      "x": 0.15,
      "value": 1.672,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.2,
      "value": 1.655,
-     "note": "standard error 0.006 over 8 seeds"
+     "note": "Standard error 0.006 over 8 seeds"
     },
     {
      "x": 0.3,
      "value": 1.609,
-     "note": "standard error 0.007 over 8 seeds"
+     "note": "Standard error 0.007 over 8 seeds"
     },
     {
      "x": 0.4,
      "value": 1.554,
-     "note": "standard error 0.013 over 8 seeds"
+     "note": "Standard error 0.013 over 8 seeds"
     },
     {
      "x": 0.5,
      "value": 1.466,
-     "note": "standard error 0.014 over 8 seeds"
+     "note": "Standard error 0.014 over 8 seeds"
     },
     {
      "x": 0.6,
      "value": 1.353,
-     "note": "standard error 0.023 over 8 seeds"
+     "note": "Standard error 0.023 over 8 seeds"
     }
    ]
   }

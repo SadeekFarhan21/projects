@@ -3,7 +3,7 @@
   "format": "number",
   "scale": "log",
   "unit": "SET ops/s, log scale",
-  "title": "Throughput by pipeline depth",
+  "title": "Throughput by Pipeline Depth",
   "subtitle": "SET with 16 B values, 50 connections, AOF off. Median of 3 runs",
   "legendLabels": {
     "emphasis": "Median of 3 runs"

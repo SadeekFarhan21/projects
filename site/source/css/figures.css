@@ -9,10 +9,12 @@
 }
 
 .fig {
-  margin: 2rem 0;
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: var(--block-gap) 0;
+  padding: var(--block-pad);
+  border: 1px solid var(--block-border);
+  border-radius: var(--block-radius);
 }
 .fig svg {
   display: block;
@@ -112,13 +114,6 @@
   content: "Source: ";
 }
 
-/* KaTeX display math scrolls instead of overflowing on narrow screens. */
-.katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.25rem 0;
-}
-
 /* Hover focus (figure-kit.ts): the hovered mark stays solid, its siblings fade. */
 .fig svg {
   cursor: crosshair;
@@ -209,9 +204,13 @@
 .fig-legend-item:hover,
 .fig-legend-item[aria-pressed="true"] {
   background: rgb(0 108 172 / 0.08);
+  /* muted gray on the tint is 4.3:1; the full ink keeps it above 4.5:1 */
+  color: var(--foreground);
 }
-.fig-legend-item.is-muted {
-  opacity: 0.45;
+/* Fade the swatch, not the label: the whole item at 0.45 left its text at
+   about 2:1. */
+.fig-legend-item.is-muted .fig-swatch {
+  opacity: 0.3;
 }
 .fig-legend-item:focus-visible {
   outline: 2px solid var(--accent);
@@ -231,15 +230,27 @@
 
 /* Excalidraw architecture diagrams (tools/embed-diagrams.py). Click opens the
    theme lightbox, which can zoom and pan. */
+/* Same frame as every other post block (site.css, "Post blocks"). A tall
+   (portrait) diagram is capped at 85% of the viewport height and centred in
+   the full-width frame instead of growing past the screen. */
 .post-content figure.excal {
-  margin: 1.8rem 0;
-  padding: 0.6rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: var(--block-gap) 0;
+  padding: var(--block-pad);
+  border: 1px solid var(--block-border);
+  border-radius: var(--block-radius);
   background: #fff;
 }
+/* The link and image are as wide as the picture: the full frame, or less for
+   a portrait diagram capped at 85vh (--excal-ar is its width / height, from
+   scripts/excal-size.js). So the click area and the focus ring are exactly
+   the picture, with no letterboxing, and the box is sized before the lazy
+   image loads. */
 .post-content figure.excal a {
   display: block;
+  width: min(100%, calc(85vh * var(--excal-ar, 100)));
+  margin: 0 auto;
   border: 0;
   text-decoration: none;
 }
@@ -247,7 +258,8 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: 85vh;
+  object-fit: contain;
   margin: 0 auto;
-  border-radius: 6px;
   cursor: zoom-in;
 }

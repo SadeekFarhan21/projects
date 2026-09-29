@@ -3,7 +3,7 @@
   "format": "number",
   "scale": "log",
   "unit": "SET ops/s, log scale",
-  "title": "The same benchmark on a busy machine",
+  "title": "The Same Benchmark on a Busy Machine",
   "subtitle": "SET, 50 connections, AOF off, median of 3 runs, log scale",
   "legendLabels": {
     "emphasis": "Load average 7 to 9",

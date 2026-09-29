@@ -514,7 +514,17 @@ body {
     box-shadow: 0 14px 35px rgba(31, 41, 55, 0.14);
     z-index: 20;
   }
-  .nav .contents ul {
+  /* the desktop `.nav.is-collapsed .contents { width: 100% }` would make the
+     fixed panel viewport-wide plus its 12px left offset, cutting off its right edge */
+  .nav.is-collapsed .contents,
+  .nav.is-expanded .contents {
+    width: auto;
+  }
+  /* (the desktop `.nav.is-collapsed .contents ul { padding: 0 }` outranked
+     this, leaving the items flush against the panel border) */
+  .nav .contents ul,
+  .nav.is-collapsed .contents ul {
+    box-sizing: border-box;
     padding: 8px;
   }
   .nav .contents.is-mobile-open {
@@ -2052,11 +2062,13 @@ pre .javascript .function {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.4s;
+  transition: opacity 0.4s, visibility 0.4s;
 }
 .code-modal.is-visible {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 .code-modal .code-modal-overlay {
@@ -2110,6 +2122,11 @@ pre .javascript .function {
   font-size: 12px;
   transition: background-color 0.4s, color 0.4s;
   outline: none;
+}
+.code-modal .code-modal-copy:focus-visible,
+.code-modal .code-modal-close:focus-visible {
+  outline: 2px solid #CDD6F4;
+  outline-offset: 2px;
 }
 .code-modal .code-modal-copy svg,
 .code-modal .code-modal-close svg {
@@ -2461,9 +2478,6 @@ pre .javascript .function {
 .toc-article > ol > li {
   border-left: none !important;
 }
-.toc-mobile {
-  display: none;
-}
 .toc-fixed {
   position: fixed;
   top: 10px;
@@ -2480,55 +2494,5 @@ pre .javascript .function {
 @media screen and (max-width: 1180px) {
   .toc-article {
     display: none;
-  }
-}
-@media screen and (max-width: 1180px) {
-  .toc-mobile {
-    display: block;
-    width: 100%;
-    margin: 0 0 24px;
-    padding: 0;
-    border: 1px solid #E6EAF0;
-    border-radius: 12px;
-    background: #FBFCFE;
-    overflow: hidden;
-  }
-  .toc-mobile .toc-heading {
-    justify-content: space-between;
-    padding: 13px 14px;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-  }
-  .toc-mobile .toc-heading::before {
-    margin-right: auto;
-  }
-  .toc-mobile-toggle {
-    border: 1px solid #DCE4EE;
-    border-radius: 999px;
-    padding: 4px 10px;
-    background: #FFFFFF;
-    color: #4990E2;
-    font: inherit;
-    font-size: 12px;
-    cursor: pointer;
-  }
-  .toc-mobile-list {
-    display: none;
-    max-height: min(52vh, 420px);
-    overflow-y: auto;
-    padding: 0 8px 8px;
-    border-top: 1px solid #E6EAF0;
-  }
-  .toc-mobile.is-open .toc-mobile-list {
-    display: block;
-  }
-  .toc-mobile ol {
-    padding: 8px 0 0;
-  }
-  .toc-mobile li a {
-    line-height: 20px;
-    margin-bottom: 5px;
-    padding: 5px 8px;
-    font-size: 13px;
   }
 }

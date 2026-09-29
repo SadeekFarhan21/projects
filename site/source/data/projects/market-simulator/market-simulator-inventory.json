@@ -1,6 +1,6 @@
 {
  "type": "bars",
- "title": "Two fixes for inventory drift",
+ "title": "Two Fixes for Inventory Drift",
  "subtitle": "Mean absolute market maker inventory in units, by informed fraction α, one seed per cell",
  "unit": "units",
  "rows": [

@@ -2,8 +2,8 @@
   "type": "bars",
   "format": "number",
   "scale": "log",
-  "unit": "commits per second, log scale",
-  "title": "What one durable commit costs",
+  "unit": "Commits per second, log scale",
+  "title": "What One Durable Commit Costs",
   "subtitle": "2,000 random puts, one put per commit, 16 B keys and 100 B values, one run per row",
   "legendLabels": {
     "emphasis": "kvdb",

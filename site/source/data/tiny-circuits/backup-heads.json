@@ -1,8 +1,8 @@
 {
  "type": "series",
- "title": "Ablating more induction heads keeps eroding the copy",
+ "title": "Ablating More Induction Heads Keeps Eroding the Copy",
  "subtitle": "Per-token loss in nats with the top k heads by induction score mean-ablated",
- "xLabel": "heads mean-ablated, in order of induction score",
+ "xLabel": "Heads mean-ablated, in order of induction score",
  "entities": [
   {
    "name": "Second half, where copying is possible",
@@ -10,107 +10,107 @@
     {
      "x": 0,
      "value": 0.2356,
-     "note": "intact model"
+     "note": "Intact model"
     },
     {
      "x": 1,
      "value": 0.2289,
-     "note": "adds L5H5; ICL score -12.93"
+     "note": "Adds L5H5; ICL score -12.93"
     },
     {
      "x": 2,
      "value": 0.3044,
-     "note": "adds L6H9; ICL score -12.85"
+     "note": "Adds L6H9; ICL score -12.85"
     },
     {
      "x": 3,
      "value": 0.4176,
-     "note": "adds L7H10; ICL score -12.73"
+     "note": "Adds L7H10; ICL score -12.73"
     },
     {
      "x": 4,
      "value": 1.1174,
-     "note": "adds L5H1; ICL score -12.03"
+     "note": "Adds L5H1; ICL score -12.03"
     },
     {
      "x": 5,
      "value": 4.4557,
-     "note": "adds L7H2; ICL score -8.68"
+     "note": "Adds L7H2; ICL score -8.68"
     },
     {
      "x": 6,
      "value": 4.8113,
-     "note": "adds L10H1; ICL score -8.31"
+     "note": "Adds L10H1; ICL score -8.31"
     },
     {
      "x": 7,
      "value": 5.2438,
-     "note": "adds L9H6; ICL score -7.88"
+     "note": "Adds L9H6; ICL score -7.88"
     },
     {
      "x": 8,
      "value": 6.5956,
-     "note": "adds L9H9; ICL score -6.52"
+     "note": "Adds L9H9; ICL score -6.52"
     },
     {
      "x": 9,
      "value": 6.518,
-     "note": "adds L10H7; ICL score -6.60"
+     "note": "Adds L10H7; ICL score -6.60"
     },
     {
      "x": 10,
      "value": 7.7273,
-     "note": "adds L5H0; ICL score -5.34"
+     "note": "Adds L5H0; ICL score -5.34"
     },
     {
      "x": 11,
      "value": 7.634,
-     "note": "adds L11H10; ICL score -5.44"
+     "note": "Adds L11H10; ICL score -5.44"
     },
     {
      "x": 12,
      "value": 8.036,
-     "note": "adds L10H0; ICL score -5.01"
+     "note": "Adds L10H0; ICL score -5.01"
     },
     {
      "x": 13,
      "value": 9.7315,
-     "note": "adds L8H1; ICL score -3.30"
+     "note": "Adds L8H1; ICL score -3.30"
     },
     {
      "x": 14,
      "value": 10.1068,
-     "note": "adds L11H9; ICL score -2.91"
+     "note": "Adds L11H9; ICL score -2.91"
     },
     {
      "x": 15,
      "value": 10.5052,
-     "note": "adds L10H6; ICL score -2.50"
+     "note": "Adds L10H6; ICL score -2.50"
     },
     {
      "x": 16,
      "value": 10.7364,
-     "note": "adds L10H11; ICL score -2.24"
+     "note": "Adds L10H11; ICL score -2.24"
     },
     {
      "x": 17,
      "value": 10.8464,
-     "note": "adds L9H0; ICL score -2.12"
+     "note": "Adds L9H0; ICL score -2.12"
     },
     {
      "x": 18,
      "value": 11.252,
-     "note": "adds L7H1; ICL score -1.69"
+     "note": "Adds L7H1; ICL score -1.69"
     },
     {
      "x": 19,
      "value": 11.7589,
-     "note": "adds L10H10; ICL score -1.18"
+     "note": "Adds L10H10; ICL score -1.18"
     },
     {
      "x": 20,
      "value": 11.8036,
-     "note": "adds L9H1; ICL score -1.13"
+     "note": "Adds L9H1; ICL score -1.13"
     }
    ]
   },
@@ -120,107 +120,107 @@
     {
      "x": 0,
      "value": 13.1731,
-     "note": "intact model"
+     "note": "Intact model"
     },
     {
      "x": 1,
      "value": 13.1633,
-     "note": "adds L5H5; ICL score -12.93"
+     "note": "Adds L5H5; ICL score -12.93"
     },
     {
      "x": 2,
      "value": 13.1541,
-     "note": "adds L6H9; ICL score -12.85"
+     "note": "Adds L6H9; ICL score -12.85"
     },
     {
      "x": 3,
      "value": 13.1467,
-     "note": "adds L7H10; ICL score -12.73"
+     "note": "Adds L7H10; ICL score -12.73"
     },
     {
      "x": 4,
      "value": 13.1459,
-     "note": "adds L5H1; ICL score -12.03"
+     "note": "Adds L5H1; ICL score -12.03"
     },
     {
      "x": 5,
      "value": 13.1403,
-     "note": "adds L7H2; ICL score -8.68"
+     "note": "Adds L7H2; ICL score -8.68"
     },
     {
      "x": 6,
      "value": 13.1241,
-     "note": "adds L10H1; ICL score -8.31"
+     "note": "Adds L10H1; ICL score -8.31"
     },
     {
      "x": 7,
      "value": 13.1198,
-     "note": "adds L9H6; ICL score -7.88"
+     "note": "Adds L9H6; ICL score -7.88"
     },
     {
      "x": 8,
      "value": 13.1146,
-     "note": "adds L9H9; ICL score -6.52"
+     "note": "Adds L9H9; ICL score -6.52"
     },
     {
      "x": 9,
      "value": 13.1216,
-     "note": "adds L10H7; ICL score -6.60"
+     "note": "Adds L10H7; ICL score -6.60"
     },
     {
      "x": 10,
      "value": 13.0681,
-     "note": "adds L5H0; ICL score -5.34"
+     "note": "Adds L5H0; ICL score -5.34"
     },
     {
      "x": 11,
      "value": 13.0709,
-     "note": "adds L11H10; ICL score -5.44"
+     "note": "Adds L11H10; ICL score -5.44"
     },
     {
      "x": 12,
      "value": 13.043,
-     "note": "adds L10H0; ICL score -5.01"
+     "note": "Adds L10H0; ICL score -5.01"
     },
     {
      "x": 13,
      "value": 13.0312,
-     "note": "adds L8H1; ICL score -3.30"
+     "note": "Adds L8H1; ICL score -3.30"
     },
     {
      "x": 14,
      "value": 13.018,
-     "note": "adds L11H9; ICL score -2.91"
+     "note": "Adds L11H9; ICL score -2.91"
     },
     {
      "x": 15,
      "value": 13.0061,
-     "note": "adds L10H6; ICL score -2.50"
+     "note": "Adds L10H6; ICL score -2.50"
     },
     {
      "x": 16,
      "value": 12.9801,
-     "note": "adds L10H11; ICL score -2.24"
+     "note": "Adds L10H11; ICL score -2.24"
     },
     {
      "x": 17,
      "value": 12.9702,
-     "note": "adds L9H0; ICL score -2.12"
+     "note": "Adds L9H0; ICL score -2.12"
     },
     {
      "x": 18,
      "value": 12.9436,
-     "note": "adds L7H1; ICL score -1.69"
+     "note": "Adds L7H1; ICL score -1.69"
     },
     {
      "x": 19,
      "value": 12.9398,
-     "note": "adds L10H10; ICL score -1.18"
+     "note": "Adds L10H10; ICL score -1.18"
     },
     {
      "x": 20,
      "value": 12.9341,
-     "note": "adds L9H1; ICL score -1.13"
+     "note": "Adds L9H1; ICL score -1.13"
     }
    ]
   }

@@ -1,8 +1,8 @@
 {
   "type": "series",
-  "title": "Holdout Sharpe against trading cost",
+  "title": "Holdout Sharpe Against Trading Cost",
   "subtitle": "Annualized net Sharpe of the two confirmatory portfolios, 2024-07 to 2026-08",
-  "xLabel": "one way cost per unit of turnover, bps",
+  "xLabel": "One way cost per unit of turnover, bps",
   "entities": [
     {
       "name": "mom_20d quintile, the H2 portfolio",
@@ -10,7 +10,7 @@
         {
           "x": 0,
           "value": 0.77,
-          "note": "gross, turnover 0.37 per day"
+          "note": "Gross, turnover 0.37 per day"
         },
         {
           "x": 5,
@@ -23,7 +23,7 @@
         {
           "x": 15,
           "value": 0.08,
-          "note": "pre-registered cost, PSR 0.55"
+          "note": "Pre-registered cost, PSR 0.55"
         },
         {
           "x": 25,
@@ -37,7 +37,7 @@
         {
           "x": 0,
           "value": -0.78,
-          "note": "gross, turnover 1.31 per day"
+          "note": "Gross, turnover 1.31 per day"
         },
         {
           "x": 5,
@@ -50,7 +50,7 @@
         {
           "x": 15,
           "value": -4.06,
-          "note": "pre-registered cost, max drawdown -86%"
+          "note": "Pre-registered cost, max drawdown -86%"
         },
         {
           "x": 25,

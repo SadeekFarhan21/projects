@@ -1,10 +1,10 @@
 {
   "type": "series",
   "format": "percent",
-  "unit": "share of A/A tests stopped",
+  "unit": "Share of A/A tests stopped",
   "xFormat": "number",
-  "xLabel": "users per arm at the look",
-  "title": "Peeking turns 5 percent into 33",
+  "xLabel": "Users per arm at the look",
+  "title": "Peeking Turns 5 Percent into 33",
   "subtitle": "2,000 A/A experiments, a look every 200 users per arm, cumulative share stopped as significant",
   "entities": [
     {

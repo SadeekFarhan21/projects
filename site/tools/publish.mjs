@@ -22,8 +22,8 @@ const wanted = args.filter(a => !a.startsWith("--")).map(a => a.replace(/\.md$/,
 
 const run = (cmd, argv, opts = {}) =>
   execFileSync(cmd, argv, { cwd: site, stdio: "inherit", ...opts });
-const out = (cmd, argv) =>
-  execFileSync(cmd, argv, { cwd: site, encoding: "utf8" }).trim();
+const out = (cmd, argv, cwd = site) =>
+  execFileSync(cmd, argv, { cwd, encoding: "utf8" }).trim();
 
 const available = existsSync(drafts)
   ? readdirSync(drafts).filter(f => f.endsWith(".md")).map(f => f.slice(0, -3)).sort()
@@ -62,12 +62,25 @@ run("npm", ["run", "build"]);
 
 const repoRoot = out("git", ["rev-parse", "--show-toplevel"]);
 const rel = p => path.relative(repoRoot, path.join(site, p));
-run("git", ["add", "-A", "--", rel("source/_drafts"), rel("source/_posts")], { cwd: repoRoot });
+// Stage the new posts plus the removal of each published draft that git tracks.
+// Untracked drafts have nothing to stage (and naming a path git does not know
+// makes `git add` fail); other drafts stay out of the commit.
+const paths = [
+  rel("source/_posts"),
+  ...slugs.map(s => rel(`source/_drafts/${s}.md`)).filter(p => out("git", ["ls-files", "--", p], repoRoot)),
+];
+run("git", ["add", "-A", "--", ...paths], { cwd: repoRoot });
 const msg =
   slugs.length === 1
     ? `Publish ${slugs[0]}`
     : `Publish ${slugs.length} posts\n\n${slugs.map(s => `- ${s}`).join("\n")}`;
-run("git", ["commit", "-m", msg], { cwd: repoRoot });
+// Commit only these paths, so changes staged elsewhere in the repo stay out. A
+// draft that was staged but never committed is gone from the index now, and
+// naming it would make `git commit` fail, so only drafts in HEAD are named.
+const commitPaths = paths.filter(
+  (p, i) => i === 0 || out("git", ["ls-tree", "--name-only", "HEAD", "--", p], repoRoot),
+);
+run("git", ["commit", "-m", msg, "--", ...commitPaths], { cwd: repoRoot });
 
 if (noPush) {
   console.log("\nCommitted. Run `git push` to deploy.");

@@ -1,17 +1,16 @@
 /*
- * Table of contents behaviour for post pages: the right-hand #toc and the
- * collapsible #toc-mobile. Replaces the theme's scroll-spy, which looked for
+ * Table of contents behaviour for post pages: the right-hand #toc sidebar
+ * (shown above 1180px). Replaces the theme's scroll-spy, which looked for
  * the list as the TOC's first child (it is the "Contents" heading) and so
  * never highlighted anything.
  *
  * - highlights the section currently being read
  * - smooth-scrolls to a heading on click and updates the URL hash
  * - keeps the active entry visible inside the sidebar
- * - closes the mobile TOC after a pick
  * - keeps sub-lists collapsed except the branch holding the current entry
  */
 (function () {
-  var tocs = Array.prototype.slice.call(document.querySelectorAll('#toc, #toc-mobile'))
+  var tocs = Array.prototype.slice.call(document.querySelectorAll('#toc'))
   if (!tocs.length) return
 
   var links = []
@@ -37,7 +36,31 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   var activeId = null
 
+  // A TOC click pins the clicked heading as current. Otherwise a section whose
+  // first subsection sits within READ_LINE of it would light up that
+  // subsection instead of the entry that was clicked. The pin holds while the
+  // jump is in flight and, once the scroll settles, until the heading is more
+  // than PIN_SLACK px from where the jump puts it (so it also lets go when the
+  // reader scrolls before the jump has finished).
+  var PIN_SLACK = 16
+  var pin = null // { el, land: viewport top the jump puts el at, settled }
+  var settleTimer = 0
+  function settle() {
+    clearTimeout(settleTimer)
+    settleTimer = setTimeout(function () {
+      if (!pin || pin.settled) return
+      pin.settled = true
+      activeId = null
+      mark()
+    }, 150)
+  }
+
   function current() {
+    if (pin) {
+      if (!pin.settled) return pin.el.id
+      if (Math.abs(pin.el.getBoundingClientRect().top - pin.land) <= PIN_SLACK) return pin.el.id
+      pin = null
+    }
     var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4
     if (atBottom) return headings[headings.length - 1].id
     var id = headings[0].id
@@ -96,8 +119,23 @@
     links.forEach(function (a) { if (a.classList.contains('is-active')) keepVisible(a) })
   }
 
+  // Collapsed sub-lists are display:none, so keyboard users could never tab
+  // into another section's subsections. Open the branch of whichever entry
+  // has focus, alongside the reading branch.
+  tocs.forEach(function (t) {
+    t.addEventListener('focusin', function (e) {
+      var a = e.target.closest && e.target.closest('a')
+      if (!a) return
+      expandBranch()
+      for (var li = a.closest('li'); li && t.contains(li); li = li.parentElement.closest('li')) {
+        if (li.querySelector(':scope > ol, :scope > ul')) li.classList.add('is-open')
+      }
+    })
+  })
+
   var ticking = false
   function onScroll() {
+    if (pin && !pin.settled) settle()
     if (ticking) return
     ticking = true
     requestAnimationFrame(function () { ticking = false; mark() })
@@ -105,22 +143,21 @@
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onScroll)
 
-  function closeMobile() {
-    var m = document.getElementById('toc-mobile')
-    if (!m || !m.classList.contains('is-open')) return
-    m.classList.remove('is-open')
-    var btn = m.querySelector('.toc-mobile-toggle')
-    if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = 'Show' }
-  }
-
   links.forEach(function (a) {
     a.addEventListener('click', function (e) {
+      // leave modified clicks (new tab / window) to the browser
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
       var el = document.getElementById(idOf(a))
       if (!el) return
       e.preventDefault()
-      closeMobile()
       var y = el.getBoundingClientRect().top + window.scrollY - TOP
+      var maxY = document.documentElement.scrollHeight - window.innerHeight
+      pin = { el: el, land: el.getBoundingClientRect().top + window.scrollY - Math.max(0, Math.min(y, maxY)), settled: false }
+      settle() // in case the page is already there and no scroll event fires
       window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' })
+      // move keyboard focus to the section, as the default jump would have
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1')
+      el.focus({ preventScroll: true })
       if (history.replaceState) history.replaceState(null, '', '#' + encodeURIComponent(el.id))
       activeId = null
       // highlight the target now rather than waiting for the scroll to finish

@@ -17,7 +17,6 @@ import { max } from "d3-array";
 import { theme, fmt, showTip, hideTip, caption, json, hoverHint } from "./figure-kit";
 import { animateIn } from "./motion";
 import { interactive } from "./interact";
-import { diagramFigure } from "./diagrams";
 import { ventureFigure, specFigure } from "./venture-figures";
 
 /* ---------------------------------------------------------------- heatmap */
@@ -98,9 +97,9 @@ async function inductionHeatmap(node: Element) {
     .attr("stroke-width", 1.75)
     .on("mousemove", (event: MouseEvent, s: Cell) =>
       showTip(
-        `<strong>L${s.layer}H${s.head}</strong><br>induction score ${s.score.toFixed(3)}` +
+        `<strong>L${s.layer}H${s.head}</strong><br>Induction score ${s.score.toFixed(3)}` +
           (isCanonical.has(`${s.layer}-${s.head}`)
-            ? "<br><em>canonical induction head</em>"
+            ? "<br><em>Canonical induction head</em>"
             : ""),
         event
       )
@@ -190,7 +189,7 @@ async function inductionRanked(node: Element) {
     )
     .on("mousemove", (event: MouseEvent, s: Cell) =>
       showTip(
-        `<strong>L${s.layer}H${s.head}</strong><br>induction score ${s.score.toFixed(3)}`,
+        `<strong>L${s.layer}H${s.head}</strong><br>Induction score ${s.score.toFixed(3)}`,
         event
       )
     )
@@ -239,7 +238,7 @@ async function inductionRanked(node: Element) {
     .attr("y", gy + 16)
     .attr("text-anchor", "end")
     .attr("class", "fig-label")
-    .text(`gap of ${d.gap.toFixed(3)}`);
+    .text(`Gap of ${d.gap.toFixed(3)}`);
 
   caption(
     node,
@@ -346,6 +345,8 @@ function grpoAdvantage(node: Element) {
   const G = 8;
   const w = 660,
     h = 232;
+  // The slider is this chart's keyboard control; it has no marks to step through.
+  (node as HTMLElement).dataset.keys = "off";
   // The control row sits above the chart it drives.
   const controls = document.createElement("div");
   controls.className = "fig-controls";
@@ -368,10 +369,11 @@ function grpoAdvantage(node: Element) {
   input.step = "1";
   input.value = "3";
   input.setAttribute("aria-label", "Rollouts solved correctly, out of 8");
+  input.style.minHeight = "24px"; // WCAG 2.5.8 minimum target size
   const readout = document.createElement("span");
   controls.append(
     Object.assign(document.createElement("label"), {
-      textContent: "correct rollouts",
+      textContent: "Correct rollouts",
     }),
     input,
     readout
@@ -390,14 +392,14 @@ function grpoAdvantage(node: Element) {
     .attr("y", yReward + 4)
     .attr("text-anchor", "end")
     .attr("class", "fig-label")
-    .text("reward");
+    .text("Reward");
   svg
     .append("text")
     .attr("x", padL - 14)
     .attr("y", yAdv + 4)
     .attr("text-anchor", "end")
     .attr("class", "fig-label")
-    .text("advantage");
+    .text("Advantage");
   svg
     .append("line")
     .attr("x1", padL - 6)
@@ -418,7 +420,7 @@ function grpoAdvantage(node: Element) {
     .attr("x", padL + 12)
     .attr("y", 28)
     .attr("class", "fig-axis")
-    .text("solved (reward 1)");
+    .text("Solved (reward 1)");
   legend
     .append("circle")
     .attr("cx", padL + 138)
@@ -432,7 +434,7 @@ function grpoAdvantage(node: Element) {
     .attr("x", padL + 150)
     .attr("y", 28)
     .attr("class", "fig-axis")
-    .text("failed (reward 0)");
+    .text("Failed (reward 0)");
 
   const rewardG = svg.append("g");
   const advG = svg.append("g");
@@ -491,10 +493,15 @@ function grpoAdvantage(node: Element) {
         a === 0 ? "#c9d7e2" : a > 0 ? t.accent : "#e08a5a"
       );
 
-    note.text(`reward std ${std.toFixed(2)}`);
+    note.text(`Reward std ${std.toFixed(2)}`);
     const dead = std === 0;
-    note2.text(dead ? "every advantage is 0" : "gradient is non-zero");
-    note3.text(dead ? (k === 0 ? "too hard" : "too easy") : "");
+    note2.text(dead ? "Every advantage is 0" : "Gradient is non-zero");
+    note3.text(dead ? (k === 0 ? "Too hard" : "Too easy") : "");
+    // What the chart shows, spoken with the slider value.
+    const advText = dead
+      ? "every advantage is 0, no gradient"
+      : `solved rollouts get advantage ${adv[0].toFixed(2)}, failed ones ${adv[G - 1].toFixed(2)}`;
+    input.setAttribute("aria-valuetext", `${k} of ${G} correct: reward std ${std.toFixed(2)}, ${advText}`);
     note2.attr("fill", dead ? t.fg : t.muted);
   }
 
@@ -526,9 +533,7 @@ function render() {
       ? (n: Element) => ventureFigure(n, name.slice("venture:".length))
       : name.startsWith("chart:")
         ? (n: Element) => specFigure(n, name.slice("chart:".length))
-        : name.startsWith("diagram:")
-          ? (n: Element) => diagramFigure(n as HTMLElement, name.slice("diagram:".length))
-          : FIGURES[name];
+        : FIGURES[name];
     if (!fn) return;
     node.dataset.rendered = "1";
     node.classList.add("fig");

@@ -101,13 +101,23 @@ export function showTip(html: string, event: MouseEvent) {
   t.classList.toggle("is-pinned", tipState.pinned);
   t.innerHTML = html;
   t.style.opacity = "1";
-  const pad = 12;
+  const pad = 12,
+    edge = 8,
+    vw = document.documentElement.clientWidth;
+  // Measure at the page's left edge: an absolutely positioned box shrinks to
+  // the room left of its old position, so measuring in place gives a width
+  // that changes once the box moves. Never wider than the viewport.
+  t.style.maxWidth = `${Math.min(352, vw - 2 * edge)}px`;
+  t.style.left = "0px";
   const rect = t.getBoundingClientRect();
   let x = event.clientX + pad;
-  if (x + rect.width > window.innerWidth - 8)
-    x = event.clientX - rect.width - pad;
+  if (x + rect.width > vw - edge) x = event.clientX - rect.width - pad;
+  // On a narrow screen neither side of the finger may fit: keep it on screen.
+  x = Math.max(edge, Math.min(x, vw - edge - rect.width));
+  let y = event.clientY - rect.height - pad;
+  if (y < edge) y = event.clientY + pad;
   t.style.left = `${x + window.scrollX}px`;
-  t.style.top = `${event.clientY + window.scrollY - rect.height - pad}px`;
+  t.style.top = `${y + window.scrollY}px`;
 }
 
 export function hideTip(force: unknown = false) {

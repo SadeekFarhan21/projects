@@ -1,17 +1,17 @@
 nav:
-  home: HOME
-  tags: TAGS
-  archives: ARCHIVES
-  about: ABOUT
-  search: SEARCH
-  writing: WRITING
-  code: CODE
+  home: Home
+  tags: Tags
+  archives: Archives
+  about: About
+  search: Search
+  writing: Writing
+  code: Code
 
 post:
   postTime: Posted
   tags: Tags
   visit: Visit
-  donate: donate
+  donate: Donate
 
 search:
-  search: search
+  search: Search

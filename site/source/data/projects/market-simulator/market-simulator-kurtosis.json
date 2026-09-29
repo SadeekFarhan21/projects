@@ -1,31 +1,31 @@
 {
  "type": "bars",
- "title": "Where the long horizon tails come from",
+ "title": "Where the Long Horizon Tails Come From",
  "subtitle": "Excess kurtosis of 100 unit log returns, one 200,000 unit run each",
  "rows": [
   {
-   "label": "price learning bug",
+   "label": "Price learning bug",
    "value": 19.21,
    "emphasis": true,
-   "detail": "largest 100 unit mid move 98 ticks; kurtosis at 1 and 10 units 6.91 and 8.54"
+   "detail": "Largest 100 unit mid move 98 ticks; kurtosis at 1 and 10 units 6.91 and 8.54"
   },
   {
-   "label": "baseline with jumps",
+   "label": "Baseline with jumps",
    "value": 2.78,
    "emphasis": false,
-   "detail": "largest 100 unit mid move 37 ticks; kurtosis at 1 and 10 units 3.88 and 2.61"
+   "detail": "Largest 100 unit mid move 37 ticks; kurtosis at 1 and 10 units 3.88 and 2.61"
   },
   {
-   "label": "no jumps",
+   "label": "No jumps",
    "value": 0.39,
    "emphasis": false,
-   "detail": "largest 100 unit mid move 11.5 ticks; kurtosis at 1 and 10 units 3.51 and 1.09"
+   "detail": "Largest 100 unit mid move 11.5 ticks; kurtosis at 1 and 10 units 3.51 and 1.09"
   },
   {
-   "label": "no informed traders",
+   "label": "No informed traders",
    "value": 0.38,
    "emphasis": false,
-   "detail": "largest 100 unit mid move 11 ticks; kurtosis at 1 and 10 units 2.28 and 0.78"
+   "detail": "Largest 100 unit mid move 11 ticks; kurtosis at 1 and 10 units 2.28 and 0.78"
   }
  ],
  "legendLabels": {

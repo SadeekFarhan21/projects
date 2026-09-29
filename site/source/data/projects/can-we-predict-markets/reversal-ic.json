@@ -1,6 +1,6 @@
 {
   "type": "bars",
-  "title": "One day reversal kept its sign in every period",
+  "title": "One Day Reversal Kept Its Sign in Every Period",
   "subtitle": "Mean daily Spearman rank IC of rev_1d, nine walk-forward folds and the holdout",
   "format": "number",
   "legendLabels": { "emphasis": "Holdout, evaluated once", "other": "Development fold" },
