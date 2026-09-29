@@ -71,7 +71,8 @@ The writing standard below is adapted from Sean Goedecke, "Writing a tech blog p
   able to follow the rest.
 
 ## House format (see existing posts)
-Front matter (`layout: post`, Title Case title, 2–4 lowercase tags, one-sentence description with the
+Front matter (`layout: post`, Title Case title, 2–4 lowercase topic tags — what the project is
+about, never how it was made, so no `team-project`, one-sentence description with the
 headline number), then these `##` sections in order:
 
 1. **The introduction is the summary — no heading.** The post opens with one or two untitled

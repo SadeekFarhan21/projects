@@ -274,16 +274,16 @@
 
 /* Excalidraw architecture diagrams (tools/embed-diagrams.py). Click opens the
    theme lightbox, which can zoom and pan. */
-/* Same frame as every other post block (site.css, "Post blocks"). A tall
-   (portrait) diagram is capped at 85% of the viewport height and centred in
-   the full-width frame instead of growing past the screen. */
+/* Unframed: diagrams sit on the page with no border (charts and code keep
+   the block frame), spaced like every other post block. A tall (portrait)
+   diagram is capped at 85% of the viewport height and centred instead of
+   growing past the screen. */
 .post-content figure.excal {
   box-sizing: border-box;
   width: 100%;
   margin: var(--block-gap) 0;
-  padding: var(--block-pad);
-  border: 1px solid var(--block-border);
-  border-radius: var(--block-radius);
+  padding: 0;
+  border: 0;
   background: #fff;
 }
 /* The link and image are as wide as the picture: the full frame, or less for

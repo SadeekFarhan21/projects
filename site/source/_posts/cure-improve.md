@@ -7,7 +7,6 @@ tags:
   - diffusion
   - unlearning
   - linear-algebra
-  - team-project
 description: >-
   An orthogonal subspace bank on top of training-free CURE erasure cuts
   collateral drift in Stable Diffusion v1.4 from 5 to 50 sequential erasures

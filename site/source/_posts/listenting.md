@@ -4,7 +4,6 @@ title: "Learning Chinese by Ear From Sun Tzu"
 code: https://github.com/SadeekFarhan21/projects/tree/main/listenting
 date: 2026-05-23 09:30:30
 tags:
-  - team-project
   - llm
   - nextjs
   - audio

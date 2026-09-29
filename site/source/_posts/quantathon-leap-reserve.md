@@ -6,7 +6,6 @@ date: 2026-03-28 10:33:40
 tags:
   - monte-carlo
   - simulation
-  - team-project
   - public-policy
 description: "A two-person Quantathon 2026 entry sizes a $2.73M Columbus lead-pipe loan reserve (against $4.01M for grants) with a cohort Monte Carlo, and finds that one pilot-estimated uptake rate moves it by nearly $1M."
 ---
