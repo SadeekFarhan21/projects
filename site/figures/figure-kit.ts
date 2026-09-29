@@ -91,7 +91,6 @@ document.addEventListener("pointerdown", e => {
  * whether the reader pinned it with a click.
  */
 export const tipState = { seq: 0, target: null as Element | null, pinned: false };
-
 export function showTip(html: string, event: MouseEvent) {
   if (tipState.pinned && event.currentTarget !== tipState.target) return;
   tipState.seq++;
@@ -163,6 +162,189 @@ export function sourceLine(node: Element, text: string) {
   s.className = "fig-source";
   s.textContent = text;
   node.appendChild(s);
+}
+
+/* ------------------------------------------------------------ responsive */
+
+/**
+ * Charts are drawn in CSS pixels at the width their figure actually has, so a
+ * 10px label is 10px on a phone too, instead of a 680-wide drawing scaled down
+ * to 45% (4.5px text). Below COMPACT a chart switches to its narrow layout
+ * (labels above bars, fewer ticks) and to the larger compact text sizes set by
+ * `svg.fig-compact` in figures.css. Under MIN_W it scales down a little rather
+ * than squeezing further.
+ */
+export const MIN_W = 280;
+export const COMPACT = 520;
+
+export type Layout = {
+  /** Drawing width in CSS px; the viewBox is this wide. */
+  w: number;
+  /** Narrow layout: phones and other small containers. */
+  compact: boolean;
+  /** Font sizes of .fig-axis and .fig-label at this layout, for measuring. */
+  axisPx: number;
+  labelPx: number;
+};
+
+/** Content width of a figure: its box minus padding. 0 while not laid out. */
+export function contentWidth(node: Element): number {
+  const el = node as HTMLElement;
+  const cs = getComputedStyle(el);
+  const w =
+    el.clientWidth - parseFloat(cs.paddingLeft || "0") - parseFloat(cs.paddingRight || "0");
+  return w > 0 ? Math.floor(w) : 0;
+}
+
+let measureCtx: CanvasRenderingContext2D | null | undefined;
+let measureFamily = "";
+
+/** Rendered width of a label, measured with the page's font. */
+export function textWidth(s: string, px: number, weight: number | string = 400): number {
+  if (measureCtx === undefined) measureCtx = document.createElement("canvas").getContext("2d");
+  if (!measureCtx) return s.length * px * 0.6;
+  if (!measureFamily) measureFamily = getComputedStyle(document.body).fontFamily || "sans-serif";
+  measureCtx.font = `${weight} ${px}px ${measureFamily}`;
+  // A little slack: the webfont may still be loading when this runs.
+  return measureCtx.measureText(s).width * 1.04;
+}
+
+/** The label cut to fit maxW, ending in an ellipsis when it had to be cut. */
+export function fitText(s: string, maxW: number, px: number, weight: number | string = 400): string {
+  if (textWidth(s, px, weight) <= maxW) return s;
+  let lo = 0,
+    hi = s.length;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (textWidth(s.slice(0, mid).trimEnd() + "…", px, weight) <= maxW) lo = mid;
+    else hi = mid - 1;
+  }
+  return lo === 0 ? "…" : s.slice(0, lo).trimEnd() + "…";
+}
+
+/** Word-wrap a label into at most maxLines lines of maxW; the last is cut. */
+export function wrapText(
+  s: string,
+  maxW: number,
+  px: number,
+  maxLines = 2,
+  weight: number | string = 400
+): string[] {
+  const words = s.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let cur = "";
+  for (let i = 0; i < words.length; i++) {
+    const next = cur ? `${cur} ${words[i]}` : words[i];
+    if (!cur || textWidth(next, px, weight) <= maxW) {
+      cur = next;
+      continue;
+    }
+    lines.push(cur);
+    cur = words[i];
+    if (lines.length === maxLines - 1) {
+      cur = words.slice(i).join(" ");
+      break;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines.map(l => fitText(l, maxW, px, weight));
+}
+
+/** Write lines into an SVG <text> as tspans, lineH apart. */
+export function setLines(text: SVGTextElement, lines: string[], x: number, lineH: number) {
+  text.textContent = "";
+  lines.forEach((l, i) => {
+    const ts = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    ts.setAttribute("x", String(x));
+    if (i) ts.setAttribute("dy", String(lineH));
+    ts.textContent = l;
+    text.appendChild(ts);
+  });
+}
+
+/**
+ * Keep tick labels that do not collide: walk left to right and drop a tick
+ * whose label would touch the last one kept. The ends of the axis win over
+ * the middle when only two fit.
+ */
+export function spacedTicks<T>(
+  ticks: T[],
+  pos: (v: T) => number,
+  label: (v: T) => string,
+  px: number,
+  gap = 10
+): T[] {
+  const kept: T[] = [];
+  let lastRight = -Infinity;
+  for (const v of ticks) {
+    const half = textWidth(label(v), px) / 2;
+    const p = pos(v);
+    if (p - half >= lastRight + gap) {
+      kept.push(v);
+      lastRight = p + half;
+    }
+  }
+  return kept;
+}
+
+/** x and text-anchor for a label centred at px that must stay inside [lo, hi]. */
+export function clampAnchor(px: number, tw: number, lo: number, hi: number) {
+  if (px - tw / 2 < lo) return { x: lo, anchor: "start" };
+  if (px + tw / 2 > hi) return { x: hi, anchor: "end" };
+  return { x: px, anchor: "middle" };
+}
+
+/**
+ * Draw a chart at its figure's width and draw it again when that width
+ * changes (debounced, via ResizeObserver). `draw` gets a fresh, empty <svg>
+ * already in the chart's place in the figure; on a redraw it replaces the old
+ * one, so the HTML chrome around it (heading, controls, legend, caption) and
+ * the listeners on the figure stay as they are. The figure then receives a
+ * "fig:redraw" event, which interact.ts and motion.ts use to restore legend
+ * isolation and to finish an entrance animation the redraw cut short.
+ */
+export function responsive(node: Element, draw: (svg: SVGSVGElement, L: Layout) => void) {
+  const host = node as HTMLElement;
+  let svg: SVGSVGElement | null = null;
+  let drawnAt = -1;
+  const render = (force = false) => {
+    const avail = contentWidth(host);
+    // Not laid out (display: none): keep what is there, or draw at desktop size.
+    if (!avail && svg) return;
+    const w = Math.max(MIN_W, avail || 680);
+    if (w === drawnAt && !force) return;
+    drawnAt = w;
+    const compact = w < COMPACT;
+    const next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    next.setAttribute("width", "100%");
+    if (compact) next.classList.add("fig-compact");
+    const old = svg;
+    const animating =
+      !!old?.getAnimations?.({ subtree: true }).some(a => a.playState === "running");
+    if (old) {
+      // A pinned or open tooltip belongs to marks that are about to go.
+      if (tipState.target && old.contains(tipState.target)) hideTip(true);
+      old.replaceWith(next);
+    } else host.appendChild(next);
+    svg = next;
+    draw(next, { w, compact, axisPx: compact ? 11 : 10, labelPx: compact ? 12 : 11 });
+    if (old) host.dispatchEvent(new CustomEvent("fig:redraw", { detail: { animating } }));
+  };
+  render();
+  // Labels were measured with the fallback font if the webfont was still
+  // loading; lay out once more when it arrives.
+  if (document.fonts && document.fonts.status !== "loaded")
+    document.fonts.ready.then(() => {
+      measureFamily = "";
+      render(true);
+    });
+  if (typeof ResizeObserver !== "undefined") {
+    let timer = 0;
+    new ResizeObserver(() => {
+      clearTimeout(timer);
+      timer = window.setTimeout(() => render(), 120);
+    }).observe(host);
+  }
 }
 
 export async function json<T>(path: string): Promise<T> {

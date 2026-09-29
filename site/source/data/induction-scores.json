@@ -1,6 +1,6 @@
 {
  "model": "GPT-2 small",
- "source": "results/01_induction_scores.csv",
+ "source": "the project's induction score measurements",
  "measurement": "one cached forward pass over 8 sequences of 101 tokens",
  "n_layers": 12,
  "n_heads": 12,

@@ -37,5 +37,5 @@
     }
   ],
   "caption": "Neither race showed up reliably in a single boot, which is why each fix is backed by a repeated-boot count rather than one passing run.",
-  "source": "projects/riscv-sv39-kernel/results/bug-repro-tick-race.txt and results/exit-race.txt"
+  "source": "repeated boots on QEMU, 30 for the tick race and 40 for the exit race"
 }

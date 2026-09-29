@@ -45,5 +45,5 @@
   }
  ],
  "caption": "Of the 60 heads in layers 0 to 4, L4H11 carries 0.242 through the keys and the next carries 0.013. Every sender's query and value paths stay below 0.002. Hover for each head's query and value paths.",
- "source": "projects/tiny-circuits/results/03_path_patching.csv, column lost_via_k, top six of 60 senders"
+ "source": "the project's path patching runs, top six of 60 senders"
 }

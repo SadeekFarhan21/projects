@@ -12,5 +12,5 @@
     { "name": "SQLite 3.51", "values": [49851, 170354] }
   ],
   "caption": "The 256 MiB pool holds the whole database (hit rate 1.000), and the 16 MiB pool misses only into the OS page cache, so these numbers measure CPU and system call cost, not the SSD. Gets are random reads after a random fill. SQLite runs in WAL mode with synchronous off and a 256 MiB cache. Shared Apple M4 Pro at a 1 minute load average of 3.9 to 6.3, indicative only.",
-  "source": "projects/kvdb-btree-wal-engine/results/summary_main.csv"
+  "source": "the project's throughput benchmark against SQLite"
 }

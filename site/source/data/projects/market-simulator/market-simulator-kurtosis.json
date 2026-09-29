@@ -33,5 +33,5 @@
   "other": "Fixed market maker"
  },
  "caption": "With the fixed maker, long horizon tails survive only when the fundamental itself jumps. The buggy maker produces far fatter tails with no jumps at all, from crashes it causes itself. The bug run also has inelastic noise and no inventory learning, so it is not a one variable ablation.",
- "source": "projects/adverse-selection-lob-sim/results/stylized/summary.json"
+ "source": "the simulator's stylized facts runs"
 }

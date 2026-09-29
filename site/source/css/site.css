@@ -665,3 +665,154 @@ html .site-headline {
   line-height: 1.2;
   color: #0b4f7c;
 }
+
+/* Phones: the site menu is a row of icons in the fixed top bar, always shown,
+   in place of the hamburger and its drop-down list. The labels stay in the
+   markup for screen readers; index.js keeps the list unhidden at this width. */
+@media screen and (max-width: 680px) {
+  html .site-nav-toggle button {
+    display: none;
+  }
+  html .nav .contents,
+  html .nav .contents[hidden],
+  html .nav .contents.is-mobile-open {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 31;
+    width: auto;
+    height: 48px;
+    margin: 0;
+    padding: 0 8px;
+    box-sizing: border-box;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    animation: none;
+  }
+  /* !important: the theme's .nav.is-collapsed/.is-expanded list rules are
+     more specific and add a top margin and padding. */
+  html .nav .contents ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  html .nav .contents ul li {
+    margin: 0 !important;
+  }
+  html .nav .contents ul li a,
+  html .nav .contents ul li button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 !important;
+    margin: 0;
+    border-radius: 10px;
+    background: transparent;
+  }
+  html .nav .contents ul li .iconfont {
+    margin: 0 !important;
+    font-size: 20px;
+  }
+  html .nav .contents ul li.active a,
+  html .nav .contents ul li a[aria-current="page"] {
+    background: #e3eef8;
+    color: #006cac;
+  }
+  html .nav .contents ul li :is(a, button) > span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
+
+/* The search dialog is modal: the theme's z-index 3 put it under the phone
+   top bar (30) and its icon row (31), which covered the input and the back
+   button. Lift it over both, and keep the page behind it from scrolling. */
+html .search-field {
+  z-index: 100;
+}
+html:has(#search-field.show-flex-fade),
+html:has(#search-field.show-flex-fade) body {
+  overflow: hidden !important;
+}
+html .search-field .search-result-container {
+  overscroll-behavior: contain;
+}
+@media screen and (max-width: 680px) {
+  html .search-field {
+    height: 100dvh;
+  }
+  html .search-field .search-result-container {
+    height: calc(100dvh - 50px);
+  }
+}
+
+/* Phones show no dates: the home page list drops the date on the right of each
+   post (the title and tags get the full width), and a post's meta line keeps
+   only the reading time and tags. */
+@media screen and (max-width: 680px) {
+  html .index-middle .post-time,
+  html .post-meta .post-date,
+  html .post-meta .post-meta-sep {
+    display: none !important;
+  }
+}
+
+/* Home page list paged to the screen (source/js/post-list.js). The theme's
+   display rules would override the hidden attribute on the posts. */
+html .post-preview[hidden] {
+  display: none !important;
+}
+html .post-list-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 1.5rem 0 0;
+}
+html .post-list-pager[hidden] {
+  display: none;
+}
+html .post-list-pager button {
+  min-height: 44px;
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  color: #0b4f7c;
+  background: #e3eef8;
+  border: 1px solid #c9dcee;
+  border-radius: 999px;
+  cursor: pointer;
+}
+html .post-list-pager button:hover:not(:disabled) {
+  background: #d5e6f5;
+}
+html .post-list-pager button:disabled {
+  color: #6b7280;
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  cursor: default;
+}
+html .post-list-pager button:focus-visible {
+  outline: 2px solid #006cac;
+  outline-offset: 2px;
+}
+html .post-list-status {
+  color: #4b5563;
+  font-size: 0.9375rem;
+}

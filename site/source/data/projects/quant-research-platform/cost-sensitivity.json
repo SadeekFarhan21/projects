@@ -16,5 +16,5 @@
   }
  ],
  "caption": "Turnover is the same 15.9% a day in every run, so Sharpe falls almost linearly and crosses zero near 30 bps. Adding square root impact at a $50M book on top of the baseline costs gives a Sharpe of -1.078, and rebalancing daily at 15 bps gives 0.122.",
- "source": "projects/leakage-checked-backtester/results/experiments.csv, rows no_costs, fee_5, baseline, fee_20, fee_40"
+ "source": "the project's experiment runs, one per fee level"
 }

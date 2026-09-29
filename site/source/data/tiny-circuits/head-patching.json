@@ -69,5 +69,5 @@
   }
  ],
  "caption": "The best single head recovers 0.128 of clean performance. L9H6 and L9H9, ranked seventh and eighth by induction score, recover as much as the canonical five. The two negative heads are copy suppression heads, which push against the answer. Hover for the noising direction.",
- "source": "projects/tiny-circuits/results/03_head_patching.csv, column denoise_recovered"
+ "source": "the project's head patching runs"
 }

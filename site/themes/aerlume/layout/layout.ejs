@@ -42,7 +42,10 @@
     <% } %>
 </div>
 
+<%# No footer on the home page: the post list fills the screen there. %>
+<% if (!is_home()) { %>
 <%- partial('_partial/footer', null, {cache: false}) %>
+<% } %>
 
 <script>
     // We expose some of the variables needed by the front end

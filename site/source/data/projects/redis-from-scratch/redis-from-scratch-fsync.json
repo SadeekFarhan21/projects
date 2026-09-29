@@ -35,5 +35,5 @@
     }
   ],
   "caption": "With one client there is nothing to share the fsync with, so every write pays for it. macOS fsync does not flush the drive cache, so this is the cost of a plain fsync, not of durable storage. Shared Apple M4 Pro at a 1 minute load average of 10 to 13, indicative only.",
-  "source": "projects/kvd-resp-server/results/bench_fsync1.jsonl"
+  "source": "the project's fsync benchmark with one client"
 }

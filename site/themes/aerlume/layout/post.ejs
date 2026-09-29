@@ -14,9 +14,9 @@
         <time class="post-date" datetime="<%= page.date.toISOString() %>"><%- page.date.format(config.date_format) %></time>
         <span class="post-meta-sep" aria-hidden="true">·</span>
         <span class="post-read"><%= minutes %> min read</span>
-        <% if (page.tags.length){ %>
+        <% var shownTags = display_tags(page.tags); if (shownTags.length){ %>
         <ul class="post-tags" aria-label="Tags">
-            <% page.tags.forEach(function(tag){ %>
+            <% shownTags.forEach(function(tag){ %>
             <li><a class="tag-pill" href="<%= config.root %>tags/#<%= tag.name %>" title="All posts tagged <%= tag.name %>"><%= tag.name %></a></li>
             <% }) %>
         </ul>

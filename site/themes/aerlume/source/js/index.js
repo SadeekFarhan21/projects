@@ -28,7 +28,11 @@ function highlightKeyword(value, keyword) {
 
 // Global functions and listeners
 window.onresize = function () {
-    if (window.document.documentElement.clientWidth > 680) {
+    if (window.document.documentElement.clientWidth <= 680) {
+        // phones show the menu as a row of icons, always (site.css)
+        var phoneNav = document.getElementById('nav-content')
+        if (phoneNav) phoneNav.hidden = false
+    } else {
         var aboutContent = document.getElementById('nav-content')
         if (aboutContent) {
             aboutContent.classList.remove('hide-block')
@@ -59,6 +63,11 @@ if (navToggle) {
 
     function setMobileNavOpen(isOpen) {
         if (!aboutContent || !navToggleButton) return
+        // Phones show the menu as an always-visible row of icons (site.css).
+        if (window.innerWidth <= 680) {
+            aboutContent.hidden = false
+            return
+        }
         aboutContent.classList.toggle('is-mobile-open', isOpen)
         navToggle.classList.toggle('is-open', isOpen)
         aboutContent.hidden = !isOpen
@@ -67,7 +76,7 @@ if (navToggle) {
     }
 
     if (navToggleButton && aboutContent) {
-        aboutContent.hidden = true
+        aboutContent.hidden = window.innerWidth > 680
         navToggleButton.addEventListener('click', function (event) {
             event.preventDefault()
             event.stopPropagation()
@@ -259,7 +268,8 @@ function searchFromKeyWord(keyword) {
         if (!item.title || !item.content) return
 
         var title = String(item.title)
-        var content = String(item.content).trim().replace(/<[^>]+>/g, '').replace(/[`#\n]/g, '')
+        // search.json holds plain text (scripts/search-plain.js); highlightKeyword escapes it
+        var content = String(item.content).replace(/\s+/g, ' ').trim()
         var lowerTitle = caseSensitive ? title : title.toLowerCase()
         var lowerContent = caseSensitive ? content : content.toLowerCase()
 

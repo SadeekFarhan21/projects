@@ -1,5 +1,5 @@
 {
- "source": "checkpoints/gpt-tinystories.pt",
+ "source": "the trained TinyStories checkpoint",
  "config": {
   "vocab_size": 1000,
   "block_size": 64,

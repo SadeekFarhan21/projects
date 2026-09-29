@@ -54,5 +54,5 @@
     }
   ],
   "caption": "The kernel path from deadline to handler is within one 100 ns timebase tick. The steady offset of a few milliseconds under plain TCG is an emulator and host effect whose cause I have not pinned down.",
-  "source": "projects/riscv-sv39-kernel/results/bench-summary.txt, per-run loads from results/bench-tcg-1.txt to bench-tcg-3.txt"
+  "source": "the kernel's timer benchmark on QEMU, three plain TCG runs"
 }

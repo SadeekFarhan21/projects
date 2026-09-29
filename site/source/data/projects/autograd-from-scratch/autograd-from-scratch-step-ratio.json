@@ -50,5 +50,5 @@
     }
   ],
   "caption": "Measured on an M4 Pro whose one-minute load average was 338 to 358 from other jobs, so absolute times are upper bounds. The ratios are the more trustworthy part, because implementations were interleaved round-robin so the load hit them alike.",
-  "source": "Ratios of min_ms step rows in projects/smolgrad/results/bench_threads_1.csv"
+  "source": "the project's single-thread benchmark, ratios of minimum step times"
 }

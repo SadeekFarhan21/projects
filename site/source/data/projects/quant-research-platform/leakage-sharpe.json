@@ -45,5 +45,5 @@
   }
  ],
  "caption": "Every row passes through the same universe, CV, portfolio and cost model. The two leaky rows are what the pipeline produces when the leakage audit is told not to stop the run. Hover a bar for its IC and drawdown.",
- "source": "projects/leakage-checked-backtester/results/experiments.csv, column sharpe (3 decimals as in results/experiments_log.txt)"
+ "source": "the project's experiment runs, Sharpe to 3 decimals"
 }

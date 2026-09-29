@@ -48,5 +48,5 @@
     }
   ],
   "caption": "The loaded run used the same binary on the same 14 core machine while other jobs held the 1 minute load average between 196 and 380. Wall clock throughput fell 5.5 to 10 times and p99 rose 37 to 55 times, while throughput per server CPU second fell far less.",
-  "source": "projects/kvd-resp-server/results/run1_loaded/bench_pipeline.jsonl and results/bench_pipeline.jsonl"
+  "source": "the project's pipeline benchmark, idle and loaded runs"
 }

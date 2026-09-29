@@ -2,8 +2,7 @@
 layout: layout
 ---
 
-<h1 class="sr-only"><%= config.title %></h1>
-<section class="post-preview-container" aria-labelledby="posts-heading" style="min-height: <%- config.per_page * 64 %>px">
+<section class="post-preview-container" aria-labelledby="posts-heading" data-post-list>
     <h2 class="sr-only" id="posts-heading">Posts<% if (page.current > 1) { %>, Page <%= page.current %> of <%= page.total %><% } %></h2>
     <% page.posts.each(function(post){ %>
         <article class="post-preview">
@@ -15,9 +14,9 @@ layout: layout
                                 }) %>
                     </h3>
                 </a>
-                <% if (post.tags.length){ %>
+                <% var shownTags = display_tags(post.tags); if (shownTags.length){ %>
                 <ul class="post-tags" aria-label="Tags">
-                    <% post.tags.forEach(function(tag){ %>
+                    <% shownTags.forEach(function(tag){ %>
                     <li><a class="tag-pill" href="<%= config.root %>tags/#<%= tag.name %>" title="All posts tagged <%= tag.name %>"><%= tag.name %></a></li>
                     <% }) %>
                 </ul>
@@ -29,4 +28,10 @@ layout: layout
         </article>
         <% }); %>
 </section>
+<nav class="post-list-pager" aria-label="Post pages" hidden>
+    <button type="button" data-page="newer">&larr; Newer</button>
+    <span class="post-list-status" aria-live="polite"></span>
+    <button type="button" data-page="older">Older &rarr;</button>
+</nav>
 <%- partial('_partial/pager') %>
+<script src="<%- url_for('js/post-list.js') %>" defer></script>

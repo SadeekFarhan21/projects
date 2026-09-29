@@ -112,5 +112,5 @@
   }
  ],
  "caption": "Up to layer 5 everything the second half needs still sits at first-half positions. By layer 8 it has been moved to the second-half positions that predict. The curves cross between layers 6 and 7, directly after the induction heads in layers 5 to 7.",
- "source": "projects/tiny-circuits/results/03_resid_patching.csv, rows first_half and second_half"
+ "source": "the project's residual stream patching runs"
 }

@@ -56,5 +56,5 @@
     }
   ],
   "caption": "Instruction counts are deterministic and were identical across two icount runs. They are QEMU guest instructions, not cycles on real RISC-V hardware. TCG wall clock ranges in the tooltips were measured on a Mac with a load average of 129 to 151 from other jobs.",
-  "source": "projects/riscv-sv39-kernel/results/bench-summary.txt and results/icount-determinism.txt"
+  "source": "the kernel's benchmarks on QEMU, two icount runs"
 }

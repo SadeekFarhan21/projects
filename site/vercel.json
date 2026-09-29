@@ -67,6 +67,16 @@
       "source": "/rss.xml",
       "destination": "/atom.xml",
       "permanent": true
+    },
+    {
+      "source": "/page/:n(\\d+)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/page/:n(\\d+)/",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }

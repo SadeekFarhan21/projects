@@ -16,5 +16,5 @@
     { "label": "mom_60d quintile", "value": -0.60, "detail": "IC -0.049" }
   ],
   "caption": "The threshold is the expected best annualized Sharpe among 32 worthless strategies with the observed spread of trial Sharpes. The ten trials not shown, all ridge and reversal variants, were lower still.",
-  "source": "projects/crypto-reversal-preregistered/results/dev/summary.csv and results/dev/selection.json"
+  "source": "the study's development trials and selection"
 }

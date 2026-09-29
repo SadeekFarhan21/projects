@@ -94,7 +94,8 @@ updated_option: date
 
 index_generator:
   path: ""
-  per_page: 10
+  # 0: every post on the home page; source/js/post-list.js pages them to the screen
+  per_page: 0
   order_by: -date
 per_page: 10
 pagination_dir: page
@@ -109,3 +110,8 @@ feed:
   limit: 20
 
 theme: aerlume
+
+# Tags shown on posts and in the post list (themes/aerlume/scripts/display-tags.js):
+# languages are hidden and at most max_tags show. Hidden tags keep their tag pages.
+hidden_tags: [python, cpp, c, rust, go, javascript, typescript]
+max_tags: 3

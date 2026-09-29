@@ -41,5 +41,5 @@
     }
   ],
   "caption": "The median commit stays at about 4 ms whatever the batch size, so throughput grows almost exactly with the number of puts that share one flush. The 64 and 256 rows rest on 31 and 7 commits, so their tails are thin. Shared Apple M4 Pro at a 1 minute load average of 5.1, indicative only.",
-  "source": "projects/kvdb-btree-wal-engine/results/bench_sync.csv"
+  "source": "the project's commit durability benchmark"
 }

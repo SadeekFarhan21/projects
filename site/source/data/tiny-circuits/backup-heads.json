@@ -226,5 +226,5 @@
   }
  ],
  "caption": "Copying ends when the second-half loss reaches the first-half loss. Five heads close a third of that distance, and the curve keeps climbing through twenty heads. Hover a point for the head added at that step.",
- "source": "projects/tiny-circuits/results/06_ablation.csv, rows none and top1 to top20_by_induction_score"
+ "source": "the project's ablation runs, top 1 to top 20 heads by induction score"
 }

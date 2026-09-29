@@ -56,5 +56,5 @@
     }
   ],
   "caption": "At batch 1 every message size is capped near 25,000 to 33,000 msgs/s, the rate of one blocking request per connection. Measured over loopback TCP on a shared Apple M4 Pro with a 1 minute load average of 8 to 9 from other jobs, so read these as indicative.",
-  "source": "projects/minikafka-log-broker/results/produce_throughput.csv"
+  "source": "the project's producer throughput benchmark"
 }

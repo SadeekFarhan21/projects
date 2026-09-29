@@ -52,5 +52,5 @@
     }
   ],
   "caption": "All five estimates land inside the on-policy BTS interval of 3.0 to 5.5 clicks per 1,000. That is a sanity check, not a ranking. The random log holds 38 clicks, so IPS, SNIPS and DR have intervals roughly 1.5 to 9.9 per 1,000 wide. DM's narrow interval reflects only resampling of rounds, not reward-model error. Hover a bar for its interval.",
-  "source": "projects/cuped-msprt-ope-engine/results/obd_ope_summary.json"
+  "source": "the project's off-policy evaluation on the Open Bandit Dataset"
 }

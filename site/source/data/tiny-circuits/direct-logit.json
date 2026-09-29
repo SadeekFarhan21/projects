@@ -81,5 +81,5 @@
   }
  ],
  "caption": "L5H5 has the highest induction score and the smallest direct write of the five. L9H9, L9H6 and L10H0 write as much as the canonical heads, and the copy suppression heads L10H7 and L11H10 write against the answer. Hover for each head's OV copying rate.",
- "source": "projects/tiny-circuits/results/05_qk_ov_analysis.csv, columns dla_second_half, ov_top1 and ov_eig_share"
+ "source": "the project's QK and OV circuit analysis"
 }

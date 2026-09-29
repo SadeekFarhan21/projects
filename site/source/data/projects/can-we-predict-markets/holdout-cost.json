@@ -60,5 +60,5 @@
     }
   ],
   "caption": "The reversal portfolio loses money before any cost. The selected momentum portfolio crosses zero between 15 and 25 bps, and a one day execution delay takes it to -0.43 at 15 bps.",
-  "source": "projects/crypto-reversal-preregistered/results/holdout/holdout_report.json (sharpe_net_*bps fields)"
+  "source": "the study's holdout report"
 }

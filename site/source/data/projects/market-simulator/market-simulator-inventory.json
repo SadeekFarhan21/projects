@@ -58,5 +58,5 @@
   "other": "Ablations"
  },
  "caption": "Elastic noise alone fixes the market with no informed traders but not the one with them. Inventory learning alone keeps inventory small but, with inelastic noise, earns 1.45 ticks per fill at alpha 0 against 2.21 with both fixes. Hover a bar for its tail and PnL.",
- "source": "projects/adverse-selection-lob-sim/results/inventory_ablation.csv"
+ "source": "the simulator's inventory ablation runs"
 }

@@ -60,5 +60,5 @@
     }
   ],
   "caption": "The one-hot product is skipped at V 50,257 because its N by V matrix would be too large. At V 1,000 the size rule picks sort and reduceat although one-hot had the lower minimum, and the medians rank them the other way, so that row is within load noise.",
-  "source": "min_us column of projects/smolgrad/results/scatter_add.csv"
+  "source": "the project's scatter-add benchmark, minimum times"
 }
