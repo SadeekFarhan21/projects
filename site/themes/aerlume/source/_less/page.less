@@ -1,0 +1,76 @@
+@import "variables";
+
+// 404 页面
+.notfound{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px 80px;
+
+  .notfound-img{
+    width: 240px;
+    max-width: 60vw;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    margin-bottom: 28px;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .notfound-title{
+    font-size: 24px;
+    font-weight: 500;
+    color: #2F3339;
+    margin: 0 0 10px;
+  }
+
+  .notfound-desc{
+    font-size: 14px;
+    font-weight: 300;
+    color: #979797;
+    margin: 0 0 28px;
+    line-height: 1.6;
+  }
+
+  .notfound-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background-color: @link-color;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background-color @transitionTime, transform @transitionTime, box-shadow @transitionTime;
+    box-shadow: 0 4px 12px rgba(73, 144, 226, 0.25);
+    &:hover{
+      background-color: darken(@link-color, 6%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(73, 144, 226, 0.3);
+    }
+    &:active{
+      transform: translateY(0);
+    }
+  }
+}
+
+@media screen and (max-width: 680px){
+  .notfound{
+    padding: 40px 16px 60px;
+    .notfound-img{
+      width: 180px;
+      margin-bottom: 22px;
+    }
+    .notfound-title{
+      font-size: 20px;
+    }
+    .notfound-desc{
+      font-size: 13px;
+    }
+  }
+}

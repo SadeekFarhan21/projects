@@ -1,67 +1,37 @@
 {
   "name": "projects-site",
-  "type": "module",
-  "version": "6.1.0",
+  "version": "1.0.0",
+  "private": true,
   "engines": {
     "node": "22.x"
   },
-  "packageManager": "pnpm@10.28.0",
   "scripts": {
-    "dev": "astro dev",
-    "dev:published": "PUBLIC_HIDE_DRAFTS=1 astro dev",
-    "build": "node scripts/check-posts.mjs && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
-    "preview": "astro preview",
-    "sync": "astro sync",
-    "astro": "astro",
-    "format:check": "prettier --check .",
-    "format": "prettier --write .",
-    "lint": "eslint .",
-    "check:posts": "node scripts/check-posts.mjs",
-    "stamp:dates": "node scripts/stamp-dates.mjs"
+    "figures": "esbuild figures/entry.ts --define:import.meta.env.BASE_URL='\"/\"' --bundle --minify --format=iife --target=es2020 --outfile=source/js/figures.js",
+    "build": "npm run figures && hexo clean && hexo generate",
+    "dev": "npm run figures && hexo server --draft",
+    "new": "hexo new draft"
+  },
+  "hexo": {
+    "version": "8.1.2"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.2.0",
-    "@astrojs/mdx": "^7.0.0",
-    "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.3.2",
-    "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^2.0.0",
-    "astro": "^7.0.3",
+    "@vscode/markdown-it-katex": "^1.1.2",
+    "hexo": "^8.1.2",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-feed": "^4.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-search": "^2.4.3",
+    "hexo-generator-sitemap": "^3.0.1",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-markdown-it": "^7.1.1",
+    "hexo-server": "^3.0.0"
+  },
+  "devDependencies": {
     "d3-array": "^3.2.4",
     "d3-interpolate": "^3.0.1",
     "d3-scale": "^4.0.2",
     "d3-selection": "^3.0.0",
-    "dayjs": "^1.11.21",
-    "katex": "^0.18.7",
-    "lodash.kebabcase": "^4.1.1",
-    "rehype-callouts": "^2.2.0",
-    "rehype-katex": "^7.0.1",
-    "remark-collapse": "^0.1.2",
-    "remark-math": "^6.0.0",
-    "remark-toc": "^9.0.0",
-    "satori": "^0.26.0",
-    "sharp": "^0.35.2",
-    "slugify": "^1.6.9",
-    "tailwindcss": "^4.3.2"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@pagefind/default-ui": "^1.5.2",
-    "@shikijs/transformers": "^4.3.0",
-    "@tailwindcss/typography": "^0.5.20",
-    "@types/d3-array": "^3.2.2",
-    "@types/d3-interpolate": "^3.0.4",
-    "@types/d3-scale": "^4.0.9",
-    "@types/d3-selection": "^3.0.12",
-    "@types/lodash.kebabcase": "^4.1.9",
-    "@typescript-eslint/parser": "^8.62.0",
-    "eslint": "^10.6.0",
-    "eslint-plugin-astro": "^2.1.1",
-    "pagefind": "^1.5.2",
-    "prettier": "3.9.3",
-    "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "^0.8.0",
-    "typescript": "^6.0.3"
+    "esbuild": "^0.28.2"
   }
 }

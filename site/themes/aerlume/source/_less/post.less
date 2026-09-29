@@ -1,0 +1,405 @@
+@import "variables";
+
+// 图片图库灯箱
+.lb-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity @transitionTime, visibility @transitionTime;
+  cursor: zoom-out;
+  user-select: none;
+
+  &.is-visible{
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lb-img{
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 4px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+    cursor: zoom-in;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    transform-origin: center center;
+    will-change: transform;
+    &.is-loaded{
+      opacity: 1;
+    }
+    &.is-zoomed{
+      cursor: grab;
+    }
+  }
+
+  // 顶部栏：计数 / 标题 / 关闭
+  .lb-topbar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .lb-counter{
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 400;
+    font-family: consolas, Menlo, monospace;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 3px 10px;
+    border-radius: 999px;
+    pointer-events: auto;
+    flex-shrink: 0;
+  }
+  .lb-caption{
+    flex: 1;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 300;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .lb-close{
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: background-color @transitionTime, transform @transitionTime;
+    &:hover{
+      background: rgba(255, 255, 255, 0.22);
+      transform: rotate(90deg);
+    }
+  }
+
+  // 左右导航
+  .lb-nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color @transitionTime, opacity @transitionTime;
+    svg{
+      display: block;
+    }
+    &:hover{
+      background: rgba(255, 255, 255, 0.24);
+    }
+  }
+  .lb-prev{ left: 24px; }
+  .lb-next{ right: 24px; }
+
+  // 缩放按钮
+  .lb-zoom{
+    position: absolute;
+    right: 20px;
+    bottom: 56px;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    cursor: pointer;
+    z-index: 2;
+    transition: background-color @transitionTime;
+    &:hover{
+      background: rgba(255, 255, 255, 0.24);
+    }
+  }
+
+  // 加载指示器
+  .lb-spinner{
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: lbSpin 0.8s linear infinite;
+  }
+  @keyframes lbSpin{
+    to{ transform: rotate(360deg); }
+  }
+
+  // 底部提示
+  .lb-hint{
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  // 缩放态隐藏提示与导航，专注平移
+  &.is-zoomed{
+    .lb-hint, .lb-nav{
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  @media screen and (max-width: 680px){
+    .lb-prev{ left: 10px; }
+    .lb-next{ right: 10px; }
+    .lb-nav{
+      width: 40px;
+      height: 40px;
+    }
+    .lb-topbar{
+      padding: 12px 14px;
+      gap: 10px;
+    }
+    .lb-caption{
+      font-size: 12px;
+    }
+    .lb-hint{
+      font-size: 11px;
+      bottom: 12px;
+    }
+    .lb-zoom{
+      bottom: 44px;
+      right: 14px;
+    }
+  }
+}
+
+.post-container{
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  .post-title{
+    width: 100%;
+    text-align: center;
+    line-height: 1.4;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #1A1A1A;
+    font-size: 26px;
+    font-weight: 400;
+  }
+  .post-meta{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F0F0F0;
+    span,a{
+      font-weight: 300;
+      color: #979797;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    a:hover{
+      color: @link-color;
+    }
+    .attr{
+      margin-right: 8px;
+      margin-left: 8px;
+    }
+  }
+}
+
+.article-content {
+  color: @main-font-color;
+  font-size: 16px;
+  line-height: 170%;
+  letter-spacing: 1px;
+  word-break: break-all;
+}
+
+.post-content{
+  line-height: 20px;
+  font-size: 15px;
+  text-indent: 2em;
+  letter-spacing: 1px;
+  color: @main-font-color;
+  font-weight: 300;
+  >table, >table tr th, >table tr td { border:1px solid #e7e8e9; }
+  table { border-collapse: collapse;}
+  blockquote{
+    border-top: none;
+    border-bottom: none;
+    border-left: 3px solid @link-color;
+    margin: 20px 0;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 12px 16px;
+    background-color: #F8FAFE;
+    border-radius: 0 4px 4px 0;
+    p {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      color: #555555;
+      text-indent: 0;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: @link-color;
+    border-bottom: 1px solid transparent;
+    transition: border-color @transitionTime;
+    &:hover {
+      border-bottom-color: @link-color;
+    }
+  }
+  p {
+    color: @main-font-color;
+    text-indent: 2em;
+    .article-content();
+    img {
+      width: 80%;
+      display: block;
+      margin: 20px auto 10px;
+    }
+  }
+  ul,ol{
+    padding-left: 2em;
+    li {
+      list-style-position: inside;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      .article-content();
+    }
+  }
+  ul {
+    li{
+      list-style: none;
+      &:before{
+        content: '• '
+      }
+    }
+  }
+
+  pre{
+    text-indent: 0;
+    padding: 10px;
+    //overflow: scroll;
+    //background-color: @back-dark-grey;
+    code{
+      line-height: 175%;
+    }
+  }
+
+  h1{
+    color:@main-font-color;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    line-height: 1.35;
+    word-break: break-all;
+    font-size: 24px;
+    font-weight: 500;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #EFEFEF;
+  }
+
+  h2{
+    color:@main-font-color;
+    margin-top: 28px;
+    margin-bottom: 14px;
+    line-height: 1.35;
+    word-break: break-all;
+    font-size: 22px;
+    font-weight: 500;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #F2F2F2;
+  }
+
+  h3{
+    color:@main-font-color;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    line-height: 1.35;
+    word-break: break-all;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  h4{
+    color:@main-font-color;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-break: break-all;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  h5{
+    color:@main-font-color;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-break: break-all;
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  h6{
+    color:@main-font-color;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    word-break: break-all;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  figcaption{
+    text-align: center;
+  }
+}
+
+#comment-container{
+  text-indent:0
+}
+#lv-container {
+  text-indent: 0;
+}
+
+.post-content li p {
+  display: inline;
+}

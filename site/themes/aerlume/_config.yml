@@ -1,0 +1,23 @@
+# Aerlume theme defaults.
+#
+# Keep site-specific identity and service accounts (author, email, domain,
+# social handles, comment repositories, analytics IDs, and donation details)
+# in the Hexo blog's root _config.yml. This file is shared by the theme and
+# must remain safe to publish as an open-source package.
+
+__: aerlume
+
+# 离线字体
+# @目录: source/fonts/
+# @file: auto 会自动加载该目录的第一个字体文件
+# @family: 文件名
+# @weight: 字体粗细
+# @style: 字体样式
+# @display: 字体显示模式
+
+font:
+  family: Aerlume Local
+  file: TsangerYuYangT_W03_W03.ttf
+  weight: 400
+  style: normal
+  display: swap

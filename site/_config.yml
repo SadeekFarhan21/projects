@@ -1,0 +1,107 @@
+# Hexo config for projects.farhansadeek.com. Theme: themes/aerlume (vendored,
+# see themes/aerlume/UPSTREAM_COMMIT); theme-level settings live in _config.aerlume.yml.
+
+# Site
+title: Farhan Sadeek · Projects
+subtitle: Systems, trading and ML projects, built from scratch and measured
+description: "Projects by Farhan Sadeek: storage engines, exchanges, trading research, compilers, kernels and ML systems, each built from scratch and written up with its measurements."
+keyword: "Farhan Sadeek,projects,systems,trading,machine learning"
+SEOTitle: Farhan Sadeek · Projects
+author: Farhan Sadeek
+email: farhan@farhansadeek.com
+language: en
+timezone: America/New_York
+
+# URL (posts keep the Astro-era /posts/<slug>/ URLs)
+url: https://projects.farhansadeek.com
+root: /
+permalink: posts/:title/
+pretty_urls:
+  trailing_index: false
+  trailing_html: false
+
+# Links out
+writing_url: https://writing.farhansadeek.com/
+code_url: https://github.com/SadeekFarhan21/projects
+
+# Social (empty hides the link)
+github_username: SadeekFarhan21
+twitter_username:
+zhihu_username:
+weibo_username:
+facebook_username:
+linkedin_username: farhansadeek
+
+sidebar-avatar: img/avatar.jpg
+avatar_style:
+  radius: true
+
+search:
+  path: search.json
+  field: post
+
+comment:
+  type:
+
+analytics: {}
+
+post_style:
+  indent: 0
+
+# Directories
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archive
+skip_render:
+  - data/**
+
+# Writing
+new_post_name: :title.md
+default_layout: draft
+titlecase: false
+external_link:
+  enable: true
+  field: site
+render_drafts: false
+post_asset_folder: false
+future: true
+syntax_highlighter: highlight.js
+highlight:
+  line_number: false
+  auto_detect: false
+  wrap: true
+
+markdown:
+  preset: default
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: false
+    linkify: false
+    typographer: false
+  anchors:
+    level: 2
+    permalink: false
+    case: 1
+
+date_format: MMM D, YYYY
+time_format: HH:mm
+
+index_generator:
+  path: ""
+  per_page: 10
+  order_by: -date
+per_page: 10
+pagination_dir: page
+
+sitemap:
+  path: sitemap.xml
+  tags: false
+  categories: false
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
+theme: aerlume

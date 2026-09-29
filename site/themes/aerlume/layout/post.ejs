@@ -1,0 +1,32 @@
+<div class="post-container">
+    <div class="post-title">
+        <%- page.title.replace(/[<>&"]/g,function(c){
+            return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];
+        }) %>
+    </div>
+
+<div class="post-meta">
+        <!-- <span class="attr"><%= __('post.postTime') %>：<span><%- page.date.format(config.date_format) +" "+ page.date.format(config.time_format)%></span></span> -->
+        <span class="attr"><%= __('post.postTime') %>：<span><%- page.date.format(config.date_format)%></span></span>
+        <% if (page.tags.length){ %>
+        <span class="attr"><%= __('post.tags') %>：/
+        <% page.tags.forEach(function(tag){ %>
+        <a class="tag" href="<%= config.root %>tags/#<%= tag.name %>" title="<%= tag.name %>"><%= tag.name %></a>
+        <span>/</span>
+        <% }) %>
+        <% } %>
+        </span>
+</span>
+    </div>
+    <%- partial('_partial/toc', {item: Object.assign({}, page, {toc_mobile: true}), index: false}) %>
+    <div class="post-content <% if(config.post_style && !config.post_style.indent) {%>no-indent<% } %>">
+        <%- page.content %>
+        <% if(config.donate){%>
+            <%- partial('_partial/donate', null, {cache: false}) %>
+        <% } %>
+        <br />
+        <% if(page.comments && config.comment && config.comment.type === 'giscus'){ %>
+            <div class="giscus"></div>
+        <% } %>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+
+@import "variables";
+@import "common";
+
+.index-about{
+  i {
+    font-size: 15px;
+    font-family: "italic" !important;
+    font-weight: 300;
+    color: #444444;
+  }
+  text-align: center;
+  width: 100%;
+  margin-top: 45px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: showBlock @transitionTime * 4 forwards;
+}
+
+.index-about-mobile{
+  display: none;
+}
+
+.index-container{
+  height: max-content;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 clamp(24px, 6vw, 120px) 0 clamp(60px, 10vw, 200px);
+  display: flex;
+  flex-direction: row;
+  column-gap: 24px;
+  background-color: white;
+  align-items: flex-start;
+  .index-left{
+    flex: 0 0 240px;
+    transition: flex-basis 240ms cubic-bezier(.2, .8, .2, 1);
+    will-change: flex-basis;
+    overflow: visible;
+  }
+  .index-middle{
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 900px;
+  }
+}
+
+// 导航栏收起时左侧变窄
+.index-left.is-collapsed{
+  flex-basis: 72px;
+}
+.index-left.is-expanded{
+  flex-basis: 240px;
+}
+
+@media screen and (max-width: 1180px){
+  .index-container {
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 clamp(20px, 4vw, 40px) 0 clamp(32px, 6vw, 80px);
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+    align-items: flex-start;
+    .index-left {
+      flex-basis: 180px;
+    }
+    .index-middle {
+      flex: 1;
+      max-width: none;
+    }
+  }
+  .index-left.is-collapsed{
+    flex-basis: 68px;
+  }
+  .index-left.is-expanded{
+    flex-basis: 180px;
+  }
+}
+
+@media screen and (max-width: 680px){
+  .index-container {
+    width: 100%;
+    box-sizing: border-box;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    min-height: 0;
+    .index-left {
+      flex-basis: 100%;
+      transition: none;
+    }
+    .index-middle {
+      max-width: 100%;
+      flex: 1;
+    }
+  }
+  // 移动端不受收起影响
+  .index-left.is-collapsed{
+    flex-basis: 100%;
+  }
+  .index-left.is-expanded{
+    flex-basis: 100%;
+  }
+
+  .index-about{
+    display: none;
+  }
+
+  .index-about-mobile{
+    display: block;
+    i {
+      display: block;
+      font-size: 16px;
+      font-family: "italic" !important;
+      font-weight: 300;
+      color: #444444;
+      letter-spacing: 0.02em;
+    }
+    text-align: center;
+    width: 100vw;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 24px 16px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-container .index-left{
+    transition: none;
+  }
+}

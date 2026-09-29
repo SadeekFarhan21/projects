@@ -1,0 +1,101 @@
+<div class="nav is-collapsed" id="nav">
+    <button class="nav-toggle-btn" id="nav-toggle-btn" title="Expand navigation">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg class="nav-toggle-icon-collapse" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="8" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+    </button>
+    <div class="avatar-name">
+        <% if (config.github_username) { %>
+        <a class="avatar <% if(config.avatar_style && config.avatar_style.radius) {%>radius<% } %>" href="https://github.com/<%= config.github_username %>" target="_blank" aria-label="GitHub">
+            <img src="<%= config['root'] %><%= config['sidebar-avatar'] %>" />
+        </a>
+        <% } else { %>
+        <div class="avatar <% if(config.avatar_style && config.avatar_style.radius) {%>radius<% } %>">
+            <img src="<%= config['root'] %><%= config['sidebar-avatar'] %>" />
+        </div>
+        <% } %>
+        <div class="name">
+            <i><%= config.author %></i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content" aria-label="Site navigation">
+        <ul>
+            <li <% if(is_home()){ %> <%- "class=active" %> <% } %>>
+                <a href="<%= url_for(config.home_dir || '/') %>">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span><%= __('nav.home') %></span>
+                </a>
+            </li>
+            <li <% if(is_current('tags')){ %> <%- "class=active" %> <% } %>>
+                <a href="<%= url_for(config.tag_dir) %>">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span><%= __('nav.tags') %></span>
+                </a>
+            </li>
+            <li <% if(is_current('archive')){ %> <%- "class=active" %> <% } %>>
+                <a href="<%= url_for(config.archive_dir) %>">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span><%= __('nav.archives') %></span>
+                </a>
+            </li>
+            <li <% if(is_current('about')){ %> <%- "class=active" %> <% } %>>
+                <a href="<%= config.root %><%- 'about/' %>">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span><%= __('nav.about') %></span>
+                </a>
+            </li>
+            <% if (config.writing_url) { %>
+            <li>
+                <a href="<%= config.writing_url %>">
+                    <i class="iconfont icon-guanyu2" aria-hidden="true"></i>
+                    <span><%= __('nav.writing') %></span>
+                </a>
+            </li>
+            <% } %>
+            <% if (config.code_url) { %>
+            <li>
+                <a href="<%= config.code_url %>">
+                    <i class="iconfont icon-guidang2" aria-hidden="true"></i>
+                    <span><%= __('nav.code') %></span>
+                </a>
+            </li>
+            <% } %>
+            <%if(config.search && config.search.path){%>
+            <li>
+                <button id="search" type="button" aria-label="Search posts" aria-haspopup="dialog">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span><%= __('nav.search') %></span>
+                </button>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+    <%
+        if(is_post()){
+        // if(/[0-9]*\/[0-9]*\/[0-9]*\//.test(path)){
+    %>
+        <%- partial('./toc', {item: page, index: false}) %>
+    <% } %>
+</div>
+
+
+<div class="search-field" id="search-field" role="dialog" aria-modal="true" aria-label="Search posts">
+    <div class="search-bg" id="search-bg"></div>
+    <div class="search-container">
+        <div class="search-input">
+            <button id="esc-search" type="button" aria-label="Close search"><i class="icon-fanhui iconfont"></i></button>
+            <input id="search-input" type="search" placeholder="Type a keyword and press Enter" autocomplete="off"/>
+            <button id="begin-search" type="button"><%= __('search.search') %></button>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>

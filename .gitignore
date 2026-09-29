@@ -29,3 +29,8 @@ wandb/
 .env.*
 .vercel
 .env*
+
+# Hexo site build output and generated files
+site/public/
+site/db.json
+site/source/js/figures.js

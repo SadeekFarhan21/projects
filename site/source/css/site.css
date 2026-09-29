@@ -1,0 +1,11 @@
+/* Site overrides on top of the Aerlume theme. The theme breaks words anywhere
+   (word-break: break-all), which suits CJK text but splits English words
+   mid-word, so wrap at word boundaries and only break very long tokens.
+   The html-prefixed selectors outrank the theme's `.post-content p` rules. */
+html body,
+html .index-middle *,
+html .article-content,
+html .toc-article * {
+  word-break: normal;
+  overflow-wrap: break-word;
+}

@@ -1,0 +1,132 @@
+<%
+function escapeAttribute(value) {
+    return String(value || '').replace(/[&<>"']/g, function(c) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+}
+// 自动生成文章 description：优先 page.description → page.excerpt → 正文前 160 字
+var pageDescription = (function(){
+    if (page.description) return page.description;
+    if (page.excerpt) return String(page.excerpt).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160);
+    if (page.content) return String(page.content).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160);
+    return config.description;
+})();
+var pageKeywords = (page.keywords ? page.keywords + ',' : '') + (config.keyword || config.keywords || '');
+var canonicalUrl = (page.permalink || full_url_for(page.path)).replace(/index\.html$/, '');
+var ogType = is_post() ? 'article' : 'website';
+var pageTitle = page.title ? page.title + ' | ' + config.title : config.SEOTitle;
+var publishedTime = page.date ? page.date.toISOString() : '';
+var hasExplicitUpdated = Boolean(page.updated && page.raw && /^\s*updated\s*:/m.test(page.raw));
+var updatedTime = hasExplicitUpdated ? page.updated.toISOString() : '';
+var description = escapeAttribute(pageDescription);
+var title = escapeAttribute(pageTitle);
+var canonical = escapeAttribute(canonicalUrl);
+var keywords = escapeAttribute(pageKeywords);
+%>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SEO：canonical 防重复内容 -->
+    <link rel="canonical" href="<%= canonical %>">
+
+    <!-- SEO：聚合页 noindex,follow 避免稀释主文章权重 -->
+    <% if (is_archive() || is_tag() || is_category() || (page.path && page.path.indexOf('tags/') === 0 && page.path !== 'tags/index.html')) { %>
+    <meta name="robots" content="noindex,follow">
+    <% } %>
+
+    <!-- SEO：description / keywords -->
+    <meta name="description" content="<%= description %>">
+    <meta name="keywords" content="<%= keywords %>">
+
+    <!-- SEO：Open Graph -->
+    <meta property="og:title" content="<%= title %>">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:type" content="<%= ogType %>">
+    <meta property="og:url" content="<%= canonical %>">
+    <meta property="og:site_name" content="<%= config.title %>">
+    <meta property="og:locale" content="zh_CN">
+    <% if (is_post() && publishedTime) { %>
+    <meta property="article:author" content="<%= config.author %>">
+    <meta property="article:published_time" content="<%= publishedTime %>">
+    <% if (updatedTime) { %>
+    <meta property="article:modified_time" content="<%= updatedTime %>">
+    <% } %>
+    <% } %>
+
+    <!-- SEO：Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= title %>">
+    <meta name="twitter:description" content="<%= description %>">
+
+    <!-- RSS 订阅 -->
+    <link rel="alternate" type="application/rss+xml" title="<%= config.title %>" href="<%= url_for('atom.xml') %>">
+
+    <!-- 分页 prev/next 信号 -->
+    <% if (page.prev) { %>
+    <link rel="prev" href="<%- full_url_for(page.prev_link) %>">
+    <% } %>
+    <% if (page.next) { %>
+    <link rel="next" href="<%- full_url_for(page.next_link) %>">
+    <% } %>
+
+    <link rel="shortcut icon" href="<%= config.root %>img/favicon.ico">
+
+    <title><%= pageTitle %></title>
+
+    <!-- JSON-LD 结构化数据 -->
+    <% if (is_post()) { %>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "<%= canonicalUrl %>"
+      },
+      "headline": "<%- JSON.stringify(page.title || '').slice(1, -1) %>",
+      "description": "<%- JSON.stringify(pageDescription || '').slice(1, -1) %>",
+      "author": {
+        "@type": "Person",
+        "name": "<%= config.author %>"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "<%= config.title %>"
+      },
+      "datePublished": "<%= publishedTime %>"<% if (updatedTime) { %>,
+      "dateModified": "<%= updatedTime %>"<% } %>
+    }
+    </script>
+    <% } else { %>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<%= config.title %>",
+      "url": "<%= config.url %>"
+    }
+    </script>
+    <% } %>
+
+    <!-- 资源提示：提前建立连接 -->
+    <link rel="preconnect" href="https://at.alicdn.com" crossorigin>
+
+    <!-- 关键 CSS：主样式同步加载 -->
+    <%- css('css/aerlume.css') %>
+    <%- css('css/site.css') %>
+    <% if (is_post()) { %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" crossorigin="anonymous">
+    <%- css('css/figures.css') %>
+    <% } %>
+
+    <%- local_font() %>
+
+    <!-- iconfont 异步加载 -->
+    <link rel="preload" href="https://at.alicdn.com/t/font_620856_28hi1hpxx24.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://at.alicdn.com/t/font_620856_28hi1hpxx24.css"></noscript>
+
+    <%- partial('_partial/analytics', null, {cache: false}) %>
+
+</head>

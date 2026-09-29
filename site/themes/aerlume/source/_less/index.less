@@ -1,0 +1,307 @@
+
+@import "variables";
+
+//主页的文章展示部分
+.post-preview{
+  width: 100%;
+  height: max-content;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 4px;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #ECECEC;
+  border-radius: 0;
+  transition: background-color @transitionTime, padding @transitionTime;
+  &:hover{
+    background-color: #FAFBFC;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .post-info{
+    flex: 1 1 auto;
+    min-width: 0;
+    order: 1;
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      h3 {
+        line-height: 24px;
+        cursor: pointer;
+        margin-top: 0;
+        margin-bottom: 4px;
+        color: #1A1A1A;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color @transitionTime;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      h3:hover{
+        color: @link-color;
+      }
+    }
+    p{
+      margin-top: 0;
+      margin-bottom: 0;
+      span,a{
+        font-weight: 300;
+        color: #979797;
+        font-size: 13px;
+        text-decoration: none;
+      }
+      a.tag{
+        display: inline-block;
+        padding: 1px 8px;
+        border-radius: 999px;
+        background-color: #F5F5F5;
+        color: #777777;
+        font-size: 12px;
+        margin-right: 4px;
+        transition: background-color @transitionTime, color @transitionTime;
+        &:hover{
+          background-color: #E8E8E8;
+          color: #333333;
+        }
+      }
+    }
+  }
+  .post-time{
+    font-size: 14px;
+    color: #AAAAAA;
+    min-width: 92px;
+    font-weight: 300;
+    line-height: 24px;
+    flex: 0 0 auto;
+    order: 2;
+    text-align: right;
+    margin-left: 14px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+}
+
+.post-preview-container{
+  min-height: 360px;
+  border-top: 1px solid #ECECEC;
+}
+
+// 分页部分 - 现代胶囊卡片
+.pager{
+  width: auto;
+  max-width: none;
+  margin: 30px 0 20px;
+  padding-left: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  list-style: none;
+  li{
+    list-style: none;
+    display: flex;
+    align-items: stretch;
+  }
+  .previous{
+    justify-content: flex-start;
+  }
+  .next{
+    justify-content: flex-end;
+  }
+  a{
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 11px;
+    width: auto;
+    max-width: none;
+    min-height: 36px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: #4A4A4A;
+    text-decoration: none;
+    transition: color @transitionTime, background-color @transitionTime, border-color @transitionTime;
+  }
+  .previous a{
+    flex-direction: row;
+    text-align: left;
+  }
+  .next a{
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+  a:hover{
+    color: #2F3339;
+    background-color: #F3F5F7;
+    border-color: #E5E7EB;
+  }
+  a:active{
+    background-color: #EDEFF2;
+  }
+  .is-disabled{
+    opacity: 0.45;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 11px;
+    width: auto;
+    max-width: none;
+    min-height: 36px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: #979797;
+    box-sizing: border-box;
+    &.next{
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+  }
+  .pager-arrow{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #666666;
+    transition: background-color @transitionTime, color @transitionTime;
+    svg{
+      display: block;
+    }
+  }
+  a:hover .pager-arrow{
+    background-color: transparent;
+    color: @link-color;
+  }
+  .pager-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+    min-width: 0;
+  }
+  .pager-label{
+    font-size: 13px;
+    font-weight: 500;
+    color: #2F3339;
+    letter-spacing: 0.2px;
+  }
+  .pager-sub{
+    display: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .post-preview-container{
+    min-height: 0 !important;
+  }
+  .post-preview{
+    width: 100%;
+    height: max-content;
+    margin-bottom: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 2px;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #ECECEC;
+    border-radius: 0;
+    .post-info{
+      flex: 1 1 auto;
+      min-width: 0;
+      order: 1;
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        h3 {
+          line-height: 20px;
+          cursor: pointer;
+          margin-top: 0;
+          margin-bottom: 4px;
+          color: #101010;
+          font-size: 15px;
+          font-weight: 400;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      p{
+        margin-top: 0;
+        margin-bottom: 0;
+        span,a{
+          font-weight: 300;
+          color: #999999;
+          font-size: 12px;
+          text-decoration: none;
+        }
+      }
+    }
+    .post-time{
+      font-size: 11px;
+      color: #AAAAAA;
+      min-width: auto;
+      font-weight: 300;
+      line-height: 20px;
+      flex: 0 0 auto;
+      order: 2;
+      text-align: right;
+      margin-left: 12px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .pager{
+    margin: 32px 0 20px;
+    gap: 10px;
+    a{
+      max-width: none;
+      min-height: 36px;
+      padding: 8px 10px;
+      gap: 10px;
+    }
+    a:hover{
+      transform: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .is-disabled{
+      max-width: none;
+      min-height: 36px;
+      padding: 8px 10px;
+      gap: 10px;
+    }
+    .pager-arrow{
+      width: 28px;
+      height: 28px;
+      svg{
+        width: 16px;
+        height: 16px;
+      }
+    }
+    .pager-label{
+      font-size: 14px;
+    }
+    .pager-sub{
+      font-size: 11px;
+      margin-top: 2px;
+    }
+  }
+}

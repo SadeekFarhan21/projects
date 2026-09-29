@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang=<%= config.language === 'zh' ? 'zh-CN' : config.language %>>
+<%- partial('_partial/head') %>
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button type="button" aria-controls="nav-content" aria-expanded="false" aria-label="Open site navigation">
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> <%= config.subtitle %> </i>
+</div>
+
+<div class="index-about-mobile">
+    <i><%= config.subtitle %></i>
+</div>
+
+<div class="index-container">
+    <% if(!is_current('/404')){%>
+    <div class="index-left is-collapsed">
+        <%- partial('_partial/nav', null, {cache: false}) %>
+    </div>
+    <% } %>
+    <div class="index-middle">
+        <!-- Main Content -->
+        <%- body %>
+    </div>
+</div>
+
+<%- partial('_partial/footer', null, {cache: false}) %>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "<%- config.search ? config.search.path : '' %>"
+    window.hexo_root = "<%- config.root %>"
+    window.isPost = <%- is_post() %>
+</script>
+<%- js('js/index.js') %>
+
+<% if (is_post() && page.content && page.content.includes('data-figure')) { %>
+<script defer src="<%= url_for('js/figures.js') %>"></script>
+<% } %>
+
+<!-- 代码复制 / 查看源码 - 按需延迟加载（自包含，无外部依赖） -->
+<script>
+(function() {
+    function loadClipboard() {
+        if (document.querySelector('.highlight')) {
+            var s = document.createElement('script');
+            s.src = '<%= url_for("js/clipboard.js") %>';
+            document.body.appendChild(s);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadClipboard);
+    } else {
+        loadClipboard();
+    }
+})();
+</script>
+
+<!-- 图片灯箱 - 按需加载 -->
+<% if(theme.fancybox !== false && page.fancybox !== false) { %>
+<script>
+(function() {
+    function loadLightbox() {
+        var container = document.querySelector('.post-content') || document.querySelector('.index-middle');
+        if (container && container.querySelector('img')) {
+            var s = document.createElement('script');
+            s.src = '<%= url_for("js/lightbox.js") %>';
+            document.body.appendChild(s);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadLightbox);
+    } else {
+        loadLightbox();
+    }
+})();
+</script>
+<% } %>
+
+<!-- 评论系统 - giscus -->
+<% if (page.comments && config.comment && config.comment.type === 'giscus') { %>
+    <%- config.comment.script %>
+<% } %>
+
+</body>
+</html>

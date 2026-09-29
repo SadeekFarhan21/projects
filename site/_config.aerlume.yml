@@ -1,0 +1,5 @@
+# Overrides for themes/aerlume/_config.yml. An empty font file turns off the
+# theme's bundled Chinese handwriting font, so the Latin system stack is used.
+font:
+  family: Aerlume Local
+  file: ""

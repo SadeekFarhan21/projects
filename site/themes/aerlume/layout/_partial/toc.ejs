@@ -1,0 +1,11 @@
+<div id="<%= item && item.toc_mobile ? 'toc-mobile' : 'toc' %>" class="toc-article<%= item && item.toc_mobile ? ' toc-mobile' : '' %><%= item && item.encrypt ? ' toc-encrypted' : '' %>"<%= item && item.encrypt ? ' hidden' : '' %>>
+    <div class="toc-heading">
+        <span>Contents</span>
+        <% if (item && item.toc_mobile) { %>
+        <button type="button" class="toc-mobile-toggle" aria-expanded="false" aria-controls="toc-mobile-list">Show</button>
+        <% } %>
+    </div>
+    <div id="<%= item && item.toc_mobile ? 'toc-mobile-list' : '' %>" class="<%= item && item.toc_mobile ? 'toc-mobile-list' : '' %>">
+    <%- toc(item.encrypt ? item.origin : item.content, {list_number: false}) %>
+    </div>
+</div>

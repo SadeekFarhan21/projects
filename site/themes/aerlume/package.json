@@ -1,0 +1,37 @@
+{
+  "name": "hexo-theme-aerlume",
+  "version": "1.0.0",
+  "description": "A lightweight Hexo theme focused on calm reading and clear typography.",
+  "keywords": [
+    "hexo",
+    "hexo-theme",
+    "theme",
+    "aerlume"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wu3227834/hexo-theme-aerlume.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wu3227834/hexo-theme-aerlume/issues"
+  },
+  "homepage": "https://github.com/wu3227834/hexo-theme-aerlume#readme",
+  "author": "wu3227834",
+  "license": "MIT",
+  "files": [
+    "_config.yml",
+    "languages",
+    "layout",
+    "scripts",
+    "source",
+    "LICENSE",
+    "README.md",
+    "README.zh-CN.md"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
