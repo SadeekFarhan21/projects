@@ -1,11 +1,16 @@
 ---
-title: "a Kafka-style log broker and the cost of durability"
-description: "A single-broker event log in C++ with segmented partitions, crash recovery and consumer groups, and a measured look at what each flush policy costs."
+layout: post
+title: a Kafka-style log broker and the cost of durability
 tags:
   - distributed-systems
   - storage
   - cpp
+description: >-
+  A single-broker event log in C++ with segmented partitions, crash recovery and
+  consumer groups, and a measured look at what each flush policy costs.
+date: 2026-09-29 02:17:11
 ---
+
 
 I wrote minikafka, a single-broker event log in C++20 that follows Kafka's storage design closely. Topics are split into partitions, and each partition is an append-only log of segment files with a sparse offset index. Producers send batches over a small binary TCP protocol, consumers fetch from an offset with long polling, and consumer groups get partitions assigned by the broker and commit their positions into an internal log, so a group resumes where it left off after a restart. Recovery after a crash truncates a torn tail, and size-based retention deletes old segments.
 

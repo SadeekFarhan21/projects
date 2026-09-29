@@ -1,11 +1,17 @@
 ---
-title: "smolgrad, autograd in NumPy checked against PyTorch"
-description: "smolgrad is a small reverse-mode autodiff engine and neural network library. In float64 it tracks PyTorch to 13 decimal places across three epochs of MNIST."
+layout: post
+title: smolgrad, autograd in NumPy checked against PyTorch
 tags:
   - autograd
   - numpy
   - pytorch
+description: >-
+  smolgrad is a small reverse-mode autodiff engine and neural network library.
+  In float64 it tracks PyTorch to 13 decimal places across three epochs of
+  MNIST.
+date: 2026-09-29 02:17:10
 ---
+
 
 I wrote smolgrad, a reverse-mode automatic differentiation engine with a small PyTorch-shaped neural network library on top, in 891 lines of Python over numpy. It builds a dynamic graph on every forward pass, walks it in reverse topological order, and ships the pieces needed to train real models, which are broadcasting-aware ops, a module system, SGD with momentum and AdamW.
 

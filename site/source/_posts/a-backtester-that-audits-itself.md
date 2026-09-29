@@ -1,11 +1,16 @@
 ---
-title: "a backtester that checks itself for look-ahead bias"
-description: "A crypto research platform with a point-in-time store, purged cross-validation and a look-ahead audit that flags leaky features before they reach a backtest."
+layout: post
+title: a backtester that checks itself for look-ahead bias
 tags:
   - quant
   - backtesting
   - research
+description: >-
+  A crypto research platform with a point-in-time store, purged cross-validation
+  and a look-ahead audit that flags leaky features before they reach a backtest.
+date: 2026-09-29 02:17:07
 ---
+
 
 I built qrp, a small research platform for daily crypto bars whose job is to produce numbers I would actually believe. It ingests 300 Binance USDT spot pairs from 2022-01-01 to 2026-08-31, stores them in an append-only parquet store with a point-in-time read path, computes features from a declarative spec, audits those features for look-ahead before every run, fits a model with purged walk-forward cross-validation, and backtests the resulting target weights with drift, fees, slippage and optional square-root impact. Every run lands in a local tracker you can diff from the command line.
 

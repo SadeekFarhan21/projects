@@ -1,12 +1,17 @@
 ---
-title: "peeking, sequential tests and off-policy evaluation"
-description: "An A/B testing and off-policy evaluation engine built from scratch, where checking a test fifty times turns a 5 percent false positive rate into 33."
+layout: post
+title: peeking, sequential tests and off-policy evaluation
 tags:
   - statistics
   - experimentation
   - causal-inference
   - python
+description: >-
+  An A/B testing and off-policy evaluation engine built from scratch, where
+  checking a test fifty times turns a 5 percent false positive rate into 33.
+date: 2026-09-29 02:17:12
 ---
+
 
 I wrote expope, a small engine for the two questions a product data science team answers every week. The first is whether an A/B test moved a metric, and whether the p-value can be trusted. The second is what a new recommendation policy would have scored on traffic the old policy served, using only the old policy's logs. The first half is a DuckDB metrics layer over a raw event log plus from-scratch Welch, delta method, CUPED, sample ratio mismatch, Holm, Benjamini-Hochberg and a mixture sequential probability ratio test (mSPRT). The second half is from-scratch off-policy estimators (IPS, SNIPS, direct method, doubly robust and switch-DR) with bootstrap intervals, run on a synthetic bandit with known truth and on the Open Bandit Dataset from ZOZOTOWN.
 

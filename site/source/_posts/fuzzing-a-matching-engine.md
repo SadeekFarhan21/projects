@@ -1,12 +1,17 @@
 ---
-title: "fuzzing a price-time matching engine"
-description: "A price-time priority matching engine in C++, checked event by event against a deliberately simple reference on 8.3 million random events."
+layout: post
+title: fuzzing a price-time matching engine
 tags:
   - trading
   - market-microstructure
   - testing
   - cpp
+description: >-
+  A price-time priority matching engine in C++, checked event by event against a
+  deliberately simple reference on 8.3 million random events.
+date: 2026-09-29 02:17:09
 ---
+
 
 I wrote the core of a small exchange in C++20, a limit order book and matching engine for one symbol on one thread, with price-time priority, five order types, cancel, and modify with the usual queue position rules. Every input and output is a plain event, so the engine is a deterministic state machine that can be replayed from its log.
 

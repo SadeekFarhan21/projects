@@ -1,12 +1,17 @@
 ---
-title: "adverse selection in a simulated order book"
-description: "An agent-based market where a market maker quotes against noise and informed traders, and informed flow eats more than half of its edge per fill."
+layout: post
+title: adverse selection in a simulated order book
 tags:
   - market-microstructure
   - simulation
   - trading
   - python
+description: >-
+  An agent-based market where a market maker quotes against noise and informed
+  traders, and informed flow eats more than half of its edge per fill.
+date: 2026-09-29 02:17:10
 ---
+
 
 I built a small agent-based market to watch one textbook claim happen in a real order book. A dealer earns the spread from uninformed traders and pays some of it back to informed ones, and as the informed share of order flow grows, a dealer who does not widen should make less money. In the simulator it does. As the informed fraction of taker arrivals goes from 0 to 0.6, adverse selection per fill for a fixed-formula market maker rises from **0.605 to 1.266 ticks**, and its PnL per fill falls from **2.210 to 0.881 ticks**, a drop of 60%. A second market maker that adds its own measured markout loss to its half-spread widens from **6.85 to 8.16 ticks** and keeps PnL per fill at 2.0 or above everywhere.
 

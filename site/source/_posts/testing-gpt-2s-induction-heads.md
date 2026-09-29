@@ -1,11 +1,17 @@
 ---
-title: "testing GPT-2's induction heads and their backups"
-description: "Activation patching, path patching, weight analysis and ablation on GPT-2 small's five induction heads. They carry the copy together, one layer 4 head feeds their keys, and removing them costs only a third of in-context learning."
+layout: post
+title: testing GPT-2's induction heads and their backups
 tags:
   - interpretability
   - transformers
   - research
+description: >-
+  Activation patching, path patching, weight analysis and ablation on GPT-2
+  small's five induction heads. They carry the copy together, one layer 4 head
+  feeds their keys, and removing them costs only a third of in-context learning.
+date: 2026-09-29 02:17:11
 ---
+
 
 The [first post](/posts/reverse-engineering-gpt-2s-induction-circuit/) scored every attention head in GPT-2 small and found five induction heads, **L5H5, L6H9, L7H10, L5H1 and L7H2**, with a gap of 0.290 to the sixth. It closed by saying an induction score is a correlation, not a cause, and that four experiments would decide whether the five heads do the copying or only look in the right place. This post reports those experiments, numbered 02 to 06 in the project.
 

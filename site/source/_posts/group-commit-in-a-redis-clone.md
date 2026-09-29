@@ -1,11 +1,17 @@
 ---
-title: "a single-threaded Redis server and group commit"
-description: "A single-threaded Redis-compatible server in C++ with TTLs, pipelining and an append-only file. One fsync per event-loop pass makes durability nearly free with many clients."
+layout: post
+title: a single-threaded Redis server and group commit
 tags:
   - databases
   - storage
   - cpp
+description: >-
+  A single-threaded Redis-compatible server in C++ with TTLs, pipelining and an
+  append-only file. One fsync per event-loop pass makes durability nearly free
+  with many clients.
+date: 2026-09-29 02:17:09
 ---
+
 
 I wrote kvd, a single-threaded TCP server that speaks a subset of RESP2, the Redis wire protocol. It stores strings with optional TTLs, executes pipelined requests, expires keys lazily and actively the way Redis does, and logs every write to an append-only file (AOF) that it replays on startup, including after a `kill -9` or a torn final record. A pipelined C++ load generator, `kvbench`, ships with it.
 

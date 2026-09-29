@@ -1,11 +1,17 @@
 ---
-title: "a crash-safe B+ tree storage engine"
-description: "A B+ tree key-value store in C++ with a write-ahead log and journaled checkpoints. It survived kills aimed at every checkpoint step without losing an acknowledged write."
+layout: post
+title: a crash-safe B+ tree storage engine
 tags:
   - databases
   - storage
   - cpp
+description: >-
+  A B+ tree key-value store in C++ with a write-ahead log and journaled
+  checkpoints. It survived kills aimed at every checkpoint step without losing
+  an acknowledged write.
+date: 2026-09-29 02:17:08
 ---
+
 
 I wrote kvdb, a persistent single-node key-value store in C++20 with no runtime dependencies. It keeps a B+ tree in 4 KiB pages in one file, caches pages in a buffer pool with LRU eviction and pin counts, logs every commit to a write-ahead log (WAL) with a configurable sync policy, makes checkpoints crash-atomic with a page journal, and recovers after a crash by replaying the log. A small REPL sits on top.
 

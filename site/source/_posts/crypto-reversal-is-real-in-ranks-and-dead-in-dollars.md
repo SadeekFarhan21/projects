@@ -1,11 +1,18 @@
 ---
-title: "a pre-registered test of crypto reversal"
-description: "A pre-registered study of the 50 most liquid Binance pairs finds that one day reversal predicts next day ranks in a two year holdout, while the portfolio chosen in development earns a net Sharpe of 0.08 after 15 bps costs and fails its test."
+layout: post
+title: a pre-registered test of crypto reversal
 tags:
   - quant
   - crypto
   - research
+description: >-
+  A pre-registered study of the 50 most liquid Binance pairs finds that one day
+  reversal predicts next day ranks in a two year holdout, while the portfolio
+  chosen in development earns a net Sharpe of 0.08 after 15 bps costs and fails
+  its test.
+date: 2026-09-29 02:17:08
 ---
+
 
 I wrote down one hypothesis, a universe, a period split, a list of 18 trials, a cost model and a decision rule, and froze that file before downloading a single price. Then I did all model selection on 2020 to mid 2024 data, and opened a two year holdout (July 2024 to August 2026) exactly once.
 

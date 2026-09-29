@@ -1,11 +1,16 @@
 ---
-title: "a RISC-V kernel that tests itself on every boot"
-description: "A small RISC-V kernel with Sv39 paging, traps and preemptive threads, plus a self-test suite that runs every time it boots."
+layout: post
+title: a RISC-V kernel that tests itself on every boot
 tags:
   - operating-systems
   - risc-v
   - c
+description: >-
+  A small RISC-V kernel with Sv39 paging, traps and preemptive threads, plus a
+  self-test suite that runs every time it boots.
+date: 2026-09-29 02:17:07
 ---
+
 
 I wrote 16-os, a small kernel for 64-bit RISC-V, in freestanding C and assembly. It boots on QEMU's `virt` board under OpenSBI, runs in supervisor mode the way Linux does, reads the machine's layout from the device tree, turns on Sv39 paging with per-section permissions and guard pages under every stack, handles traps and interrupts, and schedules preemptive kernel threads. The whole thing is **3,521 lines** of C, assembly, headers and linker script, and **0x96ce bytes** (38,606) of machine code in `.text`.
 
