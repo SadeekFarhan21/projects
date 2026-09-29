@@ -1,0 +1,58 @@
+{
+  "type": "bars",
+  "format": "time",
+  "scale": "log",
+  "unit": "median delay from timer deadline to C handler, log scale",
+  "title": "Timer interrupt latency under icount and plain TCG",
+  "subtitle": "Median of 200 ticks per run. Idle means the hart waits in wfi, busy means a thread is spinning",
+  "legendLabels": {
+    "emphasis": "icount, deterministic virtual time",
+    "other": "Plain TCG, host clock"
+  },
+  "rows": [
+    {
+      "label": "icount, idle",
+      "value": 1e-7,
+      "emphasis": true,
+      "detail": "min 0, p99 100 ns, max 100 ns, mean 85 ns. The timebase resolution is 100 ns, so this is within one tick. Identical in both icount runs"
+    },
+    {
+      "label": "icount, busy",
+      "value": 1e-7,
+      "emphasis": true,
+      "detail": "min 0, p99 100 ns, max 100 ns, mean 84 ns. Identical in both icount runs"
+    },
+    {
+      "label": "TCG run 1, idle",
+      "value": 0.00239,
+      "detail": "min 305 µs, p99 3.506 ms, max 4.19 ms, mean 2.353 ms. Load average 151.10 before the run"
+    },
+    {
+      "label": "TCG run 1, busy",
+      "value": 0.00245,
+      "detail": "min 188 µs, p99 4.025 ms, max 4.326 ms, mean 2.386 ms. Load average 151.10 before the run"
+    },
+    {
+      "label": "TCG run 2, idle",
+      "value": 0.002442,
+      "detail": "min 164 µs, p99 3.487 ms, max 3.524 ms, mean 2.334 ms. Load average 139.96 before the run"
+    },
+    {
+      "label": "TCG run 2, busy",
+      "value": 0.002614,
+      "detail": "min 66 µs, p99 3.248 ms, max 3.357 ms, mean 2.332 ms. Load average 139.96 before the run"
+    },
+    {
+      "label": "TCG run 3, idle",
+      "value": 0.002333,
+      "detail": "min 378 µs, p99 3.273 ms, max 3.334 ms, mean 2.245 ms. Load average 129.23 before the run"
+    },
+    {
+      "label": "TCG run 3, busy",
+      "value": 0.002424,
+      "detail": "min 405 µs, p99 3.399 ms, max 3.501 ms, mean 2.293 ms. Load average 129.23 before the run"
+    }
+  ],
+  "caption": "The kernel path from deadline to handler is within one 100 ns timebase tick. The steady offset of a few milliseconds under plain TCG is an emulator and host effect whose cause I have not pinned down.",
+  "source": "projects/16-os-from-scratch/results/bench-summary.txt, per-run loads from results/bench-tcg-1.txt to bench-tcg-3.txt"
+}

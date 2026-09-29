@@ -1,0 +1,13 @@
+{
+  "type": "columns",
+  "format": "time",
+  "title": "Cancel p50 as the book grows",
+  "subtitle": "Median across 3 runs, resting orders spread over 100 price levels per side",
+  "categories": ["1k orders", "10k orders", "100k orders", "1M orders"],
+  "series": [
+    { "name": "open addressing IdMap", "values": [1.67e-7, 2.09e-7, 4.58e-7, 4.59e-7] },
+    { "name": "std::unordered_map", "values": [1.66e-7, 1.67e-7, 6.67e-7, 7.5e-7] }
+  ],
+  "caption": "Indicative upper bounds from a heavily loaded machine, quantized to 41.7 ns ticks. The two indexes are indistinguishable while the book fits in cache. At 1M orders all three IdMap runs had a cancel p50 of 416 to 500 ns and all three std::unordered_map runs 750 to 792 ns.",
+  "source": "projects/06-exchange-from-scratch/results/bench/summary_latency.csv"
+}

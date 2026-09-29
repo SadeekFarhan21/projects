@@ -1,0 +1,64 @@
+{
+  "type": "bars",
+  "format": "time",
+  "scale": "log",
+  "unit": "minimum time for one embedding backward, log scale",
+  "title": "Replacing np.add.at in the embedding backward",
+  "subtitle": "Scatter-add of N gradient rows into a V-row table. Reduceat means sort, then np.add.reduceat over runs",
+  "legendLabels": {
+    "emphasis": "Path smolgrad now takes",
+    "other": "Alternative"
+  },
+  "rows": [
+    {
+      "label": "V 65, add.at",
+      "value": 0.001271875,
+      "emphasis": false,
+      "detail": "V=65, N=4,096, D=32. Median 1,382 µs, max abs error vs np.add.at 0.0e+00, load average 194"
+    },
+    {
+      "label": "V 65, one-hot",
+      "value": 7.2416e-05,
+      "emphasis": true,
+      "detail": "V=65, N=4,096, D=32. Median 77 µs, max abs error vs np.add.at 0.0e+00, load average 194"
+    },
+    {
+      "label": "V 65, reduceat",
+      "value": 0.000484333,
+      "emphasis": false,
+      "detail": "V=65, N=4,096, D=32. Median 490 µs, max abs error vs np.add.at 7.6e-06, load average 194"
+    },
+    {
+      "label": "V 1,000, add.at",
+      "value": 0.005674458,
+      "emphasis": false,
+      "detail": "V=1,000, N=8,192, D=64. Median 14,516 µs, max abs error vs np.add.at 0.0e+00, load average 194"
+    },
+    {
+      "label": "V 1,000, one-hot",
+      "value": 0.001793667,
+      "emphasis": false,
+      "detail": "V=1,000, N=8,192, D=64. Median 4,461 µs, max abs error vs np.add.at 0.0e+00, load average 194"
+    },
+    {
+      "label": "V 1,000, reduceat",
+      "value": 0.001981292,
+      "emphasis": true,
+      "detail": "V=1,000, N=8,192, D=64. Median 3,226 µs, max abs error vs np.add.at 1.9e-06, load average 201"
+    },
+    {
+      "label": "V 50,257, add.at",
+      "value": 0.012530292,
+      "emphasis": false,
+      "detail": "V=50,257, N=8,192, D=128. Median 88,386 µs, max abs error vs np.add.at 0.0e+00, load average 202"
+    },
+    {
+      "label": "V 50,257, reduceat",
+      "value": 0.009398625,
+      "emphasis": true,
+      "detail": "V=50,257, N=8,192, D=128. Median 10,873 µs, max abs error vs np.add.at 4.8e-07, load average 202"
+    }
+  ],
+  "caption": "The one-hot product is skipped at V 50,257 because its N by V matrix would be too large. At V 1,000 the size rule picks sort and reduceat although one-hot had the lower minimum, and the medians rank them the other way, so that row is within load noise.",
+  "source": "min_us column of projects/11-autograd-from-scratch/results/scatter_add.csv"
+}

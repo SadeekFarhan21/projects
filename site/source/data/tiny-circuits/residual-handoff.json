@@ -1,0 +1,116 @@
+{
+ "type": "series",
+ "title": "The answer changes address between layers 5 and 8",
+ "subtitle": "Share of clean performance recovered by patching one half of the clean residual stream into the corrupted run",
+ "xLabel": "layer whose resid_pre is patched",
+ "entities": [
+  {
+   "name": "First half patched",
+   "points": [
+    {
+     "x": 0,
+     "value": 1.0
+    },
+    {
+     "x": 1,
+     "value": 0.9839
+    },
+    {
+     "x": 2,
+     "value": 0.9811
+    },
+    {
+     "x": 3,
+     "value": 0.9825
+    },
+    {
+     "x": 4,
+     "value": 0.9205
+    },
+    {
+     "x": 5,
+     "value": 0.9234
+    },
+    {
+     "x": 6,
+     "value": 0.3506
+    },
+    {
+     "x": 7,
+     "value": 0.184
+    },
+    {
+     "x": 8,
+     "value": 0.0567
+    },
+    {
+     "x": 9,
+     "value": 0.0458
+    },
+    {
+     "x": 10,
+     "value": 0.0325
+    },
+    {
+     "x": 11,
+     "value": 0.0167
+    }
+   ]
+  },
+  {
+   "name": "Second half patched",
+   "points": [
+    {
+     "x": 0,
+     "value": 0.0
+    },
+    {
+     "x": 1,
+     "value": -0.0089
+    },
+    {
+     "x": 2,
+     "value": -0.0081
+    },
+    {
+     "x": 3,
+     "value": -0.0063
+    },
+    {
+     "x": 4,
+     "value": -0.0157
+    },
+    {
+     "x": 5,
+     "value": -0.0165
+    },
+    {
+     "x": 6,
+     "value": 0.1538
+    },
+    {
+     "x": 7,
+     "value": 0.4556
+    },
+    {
+     "x": 8,
+     "value": 0.8726
+    },
+    {
+     "x": 9,
+     "value": 0.8944
+    },
+    {
+     "x": 10,
+     "value": 0.9819
+    },
+    {
+     "x": 11,
+     "value": 0.9981
+    }
+   ]
+  }
+ ],
+ "caption": "Up to layer 5 everything the second half needs still sits at first-half positions. By layer 8 it has been moved to the second-half positions that predict. The curves cross between layers 6 and 7, directly after the induction heads in layers 5 to 7.",
+ "source": "projects/tiny-circuits/results/03_resid_patching.csv, rows first_half and second_half"
+}

@@ -1,0 +1,62 @@
+{
+ "type": "bars",
+ "title": "Two fixes for inventory drift",
+ "subtitle": "Mean absolute market maker inventory in units, by informed fraction α, one seed per cell",
+ "unit": "units",
+ "rows": [
+  {
+   "label": "α 0, neither",
+   "value": 29.42,
+   "emphasis": false,
+   "detail": "p95 abs inventory 49; time at the 50 unit limit 2.91 percent; PnL per fill 2.46 ticks"
+  },
+  {
+   "label": "α 0, elastic noise",
+   "value": 7.92,
+   "emphasis": false,
+   "detail": "p95 abs inventory 20; time at the 50 unit limit 0.00 percent; PnL per fill 2.50 ticks"
+  },
+  {
+   "label": "α 0, inv. learning",
+   "value": 4.17,
+   "emphasis": false,
+   "detail": "p95 abs inventory 11; time at the 50 unit limit 0.00 percent; PnL per fill 1.45 ticks"
+  },
+  {
+   "label": "α 0, both fixes",
+   "value": 1.16,
+   "emphasis": true,
+   "detail": "p95 abs inventory 3; time at the 50 unit limit 0.00 percent; PnL per fill 2.21 ticks"
+  },
+  {
+   "label": "α 0.2, neither",
+   "value": 23.57,
+   "emphasis": false,
+   "detail": "p95 abs inventory 48; time at the 50 unit limit 1.64 percent; PnL per fill 1.84 ticks"
+  },
+  {
+   "label": "α 0.2, elastic noise",
+   "value": 25.51,
+   "emphasis": false,
+   "detail": "p95 abs inventory 44; time at the 50 unit limit 0.32 percent; PnL per fill 1.74 ticks"
+  },
+  {
+   "label": "α 0.2, inv. learning",
+   "value": 2.56,
+   "emphasis": false,
+   "detail": "p95 abs inventory 7; time at the 50 unit limit 0.00 percent; PnL per fill 1.55 ticks"
+  },
+  {
+   "label": "α 0.2, both fixes",
+   "value": 1.44,
+   "emphasis": true,
+   "detail": "p95 abs inventory 4; time at the 50 unit limit 0.00 percent; PnL per fill 1.81 ticks"
+  }
+ ],
+ "legendLabels": {
+  "emphasis": "Both fixes, the shipped default",
+  "other": "Ablations"
+ },
+ "caption": "Elastic noise alone fixes the market with no informed traders but not the one with them. Inventory learning alone keeps inventory small but, with inelastic noise, earns 1.45 ticks per fill at alpha 0 against 2.21 with both fixes. Hover a bar for its tail and PnL.",
+ "source": "projects/10-market-simulator/results/inventory_ablation.csv"
+}

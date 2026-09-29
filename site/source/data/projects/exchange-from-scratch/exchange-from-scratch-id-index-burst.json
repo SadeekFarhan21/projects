@@ -1,0 +1,14 @@
+{
+  "type": "columns",
+  "title": "Three order id indexes under burst load",
+  "subtitle": "Million orders per CPU second, median of 3 runs, no per order timers",
+  "unit": "million orders per CPU second",
+  "categories": ["add 1M", "cancel 1M", "match 1M", "add 20k strided ids"],
+  "series": [
+    { "name": "IdMap, splitmix64 (default)", "values": [4.4, 2.2, 3.8, 6.5] },
+    { "name": "std::unordered_map", "values": [9.8, 1.4, 2.2, 10.4] },
+    { "name": "IdMap, identity hash", "values": [9.8, 1.5, 0.27, 0.06] }
+  ],
+  "caption": "The identity hash makes sequential inserts fast and then collapses on FIFO deletion, where backward shift deletion walks one long probe run, and on ids that share their low bits. Strided ids are 20,000 multiples of 2 to the 16th. Throughput in thread CPU time on a shared machine at load averages of 172 to 352, indicative only.",
+  "source": "projects/06-exchange-from-scratch/results/bench/summary_burst.csv"
+}

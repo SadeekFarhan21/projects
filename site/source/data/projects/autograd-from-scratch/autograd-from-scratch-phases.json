@@ -1,0 +1,41 @@
+{
+  "type": "columns",
+  "mode": "grouped",
+  "format": "time",
+  "unit": "minimum time per phase",
+  "categories": [
+    "forward",
+    "backward",
+    "AdamW step"
+  ],
+  "series": [
+    {
+      "name": "smolgrad",
+      "values": [
+        0.0004178,
+        0.0011517,
+        0.0013312
+      ]
+    },
+    {
+      "name": "numpy by hand",
+      "values": [
+        0.0003586,
+        0.0003766,
+        0.0013224
+      ]
+    },
+    {
+      "name": "PyTorch",
+      "values": [
+        0.0003143,
+        0.0003467,
+        0.0009957
+      ]
+    }
+  ],
+  "title": "The autograd overhead lives in backward",
+  "subtitle": "MNIST MLP at batch 128, single-threaded, minimum over 320 steps",
+  "caption": "The hand-written numpy network does the same math with no graph and reuses smolgrad's AdamW. smolgrad minus numpy is the cost of the autograd machinery, and numpy minus PyTorch is the cost of the kernels. Taken under a load average near 340, so these are upper bounds.",
+  "source": "min_ms rows for mlp at batch 128 in projects/11-autograd-from-scratch/results/bench_threads_1.csv"
+}

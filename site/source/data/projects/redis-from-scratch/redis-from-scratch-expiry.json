@@ -1,0 +1,132 @@
+{
+  "type": "series",
+  "format": "number",
+  "unit": "keys in the store",
+  "xFormat": "number",
+  "xLabel": "ms after the shared deadline",
+  "title": "Reclaiming 200,000 keys that expire at once",
+  "subtitle": "DBSIZE sampled about every 50 ms, no client touching the keys. 200,000 persistent keys stay, and the quiet run stays flat after 171 ms",
+  "entities": [
+    {
+      "name": "Load average 8",
+      "points": [
+        {
+          "x": -43,
+          "value": 400000
+        },
+        {
+          "x": 8,
+          "value": 400000
+        },
+        {
+          "x": 63,
+          "value": 400000
+        },
+        {
+          "x": 116,
+          "value": 294740
+        },
+        {
+          "x": 171,
+          "value": 200000
+        },
+        {
+          "x": 243,
+          "value": 200000
+        },
+        {
+          "x": 296,
+          "value": 200000
+        },
+        {
+          "x": 351,
+          "value": 200000
+        },
+        {
+          "x": 406,
+          "value": 200000
+        },
+        {
+          "x": 457,
+          "value": 200000
+        }
+      ]
+    },
+    {
+      "name": "Load average 222",
+      "points": [
+        {
+          "x": -31,
+          "value": 400000
+        },
+        {
+          "x": 23,
+          "value": 400000
+        },
+        {
+          "x": 77,
+          "value": 377820
+        },
+        {
+          "x": 128,
+          "value": 377820
+        },
+        {
+          "x": 183,
+          "value": 321440
+        },
+        {
+          "x": 239,
+          "value": 321440
+        },
+        {
+          "x": 300,
+          "value": 321420
+        },
+        {
+          "x": 353,
+          "value": 317560
+        },
+        {
+          "x": 430,
+          "value": 317560
+        },
+        {
+          "x": 481,
+          "value": 256440
+        },
+        {
+          "x": 534,
+          "value": 256440
+        },
+        {
+          "x": 594,
+          "value": 213320
+        },
+        {
+          "x": 673,
+          "value": 210880
+        },
+        {
+          "x": 736,
+          "value": 210880
+        },
+        {
+          "x": 791,
+          "value": 200000
+        },
+        {
+          "x": 846,
+          "value": 200000
+        },
+        {
+          "x": 898,
+          "value": 200000
+        }
+      ],
+      "emphasis": false
+    }
+  ],
+  "caption": "Only active expiry can remove these keys, since nothing reads them. At load 8 two cron cycles did it within 171 ms. At load 222 the same code needed until 791 ms, in eight uneven steps, because each cycle's 25 ms budget is wall clock time.",
+  "source": "projects/02-redis-from-scratch/results/bench_expiry.jsonl and results/run1_loaded/bench_expiry.jsonl"
+}

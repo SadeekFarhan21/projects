@@ -1,0 +1,56 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "clicks per 1,000 impressions",
+  "title": "Open Bandit sample, BTS value from random logs",
+  "subtitle": "ZOZOTOWN all-campaign sample shipped with obp, 10,000 rounds per policy, 2,000 bootstrap replicates",
+  "reference": {
+    "value": 4.2,
+    "label": "on-policy BTS 4.2",
+    "band": true
+  },
+  "legendLabels": {
+    "emphasis": "off-policy estimate",
+    "other": "logging policy"
+  },
+  "rows": [
+    {
+      "label": "IPS",
+      "value": 4.55,
+      "emphasis": true,
+      "detail": "Bootstrap 95 percent CI 1.49 to 9.50 per 1,000. Relative error against the on-policy rate 8.4 percent"
+    },
+    {
+      "label": "SNIPS",
+      "value": 4.78,
+      "emphasis": true,
+      "detail": "Bootstrap 95 percent CI 1.57 to 9.87 per 1,000. Relative error against the on-policy rate 13.7 percent"
+    },
+    {
+      "label": "DM, LightGBM",
+      "value": 4.75,
+      "emphasis": true,
+      "detail": "Bootstrap 95 percent CI 4.70 to 4.79 per 1,000. Relative error against the on-policy rate 13.0 percent"
+    },
+    {
+      "label": "DR, LightGBM",
+      "value": 4.86,
+      "emphasis": true,
+      "detail": "Bootstrap 95 percent CI 1.68 to 9.84 per 1,000. Relative error against the on-policy rate 15.7 percent"
+    },
+    {
+      "label": "Switch-DR, tau 10",
+      "value": 4.61,
+      "emphasis": true,
+      "detail": "Bootstrap 95 percent CI 3.30 to 6.21 per 1,000. Relative error against the on-policy rate 9.8 percent"
+    },
+    {
+      "label": "Random policy, own rate",
+      "value": 3.8,
+      "emphasis": false,
+      "detail": "38 clicks in 10,000 random-policy impressions, the data every estimate above is built from"
+    }
+  ],
+  "caption": "All five estimates land inside the on-policy BTS interval of 3.0 to 5.5 clicks per 1,000. That is a sanity check, not a ranking. The random log holds 38 clicks, so IPS, SNIPS and DR have intervals roughly 1.5 to 9.9 per 1,000 wide. DM's narrow interval reflects only resampling of rounds, not reward-model error. Hover a bar for its interval.",
+  "source": "projects/25-cuped-msprt-ope-engine/results/obd_ope_summary.json"
+}

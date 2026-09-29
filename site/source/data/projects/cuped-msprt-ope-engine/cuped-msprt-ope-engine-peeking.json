@@ -1,0 +1,113 @@
+{
+  "type": "series",
+  "format": "percent",
+  "unit": "share of A/A tests stopped",
+  "xFormat": "number",
+  "xLabel": "users per arm at the look",
+  "title": "Peeking turns 5 percent into 33",
+  "subtitle": "2,000 A/A experiments, a look every 200 users per arm, cumulative share stopped as significant",
+  "entities": [
+    {
+      "name": "Naive Welch, stop at first p below 0.05",
+      "emphasis": false,
+      "points": [
+        {
+          "x": 200,
+          "value": 5.0
+        },
+        {
+          "x": 1000,
+          "value": 15.0
+        },
+        {
+          "x": 2000,
+          "value": 20.15
+        },
+        {
+          "x": 3000,
+          "value": 22.85
+        },
+        {
+          "x": 4000,
+          "value": 25.35
+        },
+        {
+          "x": 5000,
+          "value": 27.15
+        },
+        {
+          "x": 6000,
+          "value": 29.1
+        },
+        {
+          "x": 7000,
+          "value": 30.2
+        },
+        {
+          "x": 8000,
+          "value": 31.45
+        },
+        {
+          "x": 9000,
+          "value": 32.0
+        },
+        {
+          "x": 10000,
+          "value": 32.8
+        }
+      ]
+    },
+    {
+      "name": "Mixture SPRT, tau 0.1",
+      "emphasis": true,
+      "points": [
+        {
+          "x": 200,
+          "value": 0.0
+        },
+        {
+          "x": 1000,
+          "value": 0.4
+        },
+        {
+          "x": 2000,
+          "value": 1.1
+        },
+        {
+          "x": 3000,
+          "value": 1.35
+        },
+        {
+          "x": 4000,
+          "value": 1.45
+        },
+        {
+          "x": 5000,
+          "value": 1.7
+        },
+        {
+          "x": 6000,
+          "value": 1.8
+        },
+        {
+          "x": 7000,
+          "value": 1.8
+        },
+        {
+          "x": 8000,
+          "value": 1.9
+        },
+        {
+          "x": 9000,
+          "value": 1.95
+        },
+        {
+          "x": 10000,
+          "value": 1.95
+        }
+      ]
+    }
+  ],
+  "caption": "Every experiment here has no true effect, so every stop is a false positive. The naive analyst who stops at the first significant look ends at 32.8 percent after 50 looks (Wilson 30.8 to 34.9), while a single test at the final look alone rejects 5.25 percent. The mixture SPRT ends at 1.95 percent. Points shown every 1,000 users per arm, the CSV has all 50 looks.",
+  "source": "projects/25-cuped-msprt-ope-engine/results/peeking.csv"
+}

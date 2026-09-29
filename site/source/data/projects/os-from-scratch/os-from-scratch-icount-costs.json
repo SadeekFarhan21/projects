@@ -1,0 +1,60 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "guest instructions per operation under icount, log scale",
+  "title": "What each kernel operation costs",
+  "subtitle": "QEMU virt with -icount shift=0, where one virtual nanosecond is one guest instruction",
+  "legendLabels": {
+    "emphasis": "Switching and traps",
+    "other": "Memory allocation"
+  },
+  "rows": [
+    {
+      "label": "swtch, one direction",
+      "value": 34,
+      "emphasis": true,
+      "detail": "Raw context switch, 14 registers saved and 14 loaded. TCG wall clock 50 to 52 ns over three runs"
+    },
+    {
+      "label": "Trap round trip, ebreak",
+      "value": 140,
+      "emphasis": true,
+      "detail": "Into kernelvec, full 304-byte frame, kernel_trap and sret. TCG wall clock 1158 to 1225 ns"
+    },
+    {
+      "label": "yield, scheduler switch",
+      "value": 190,
+      "emphasis": true,
+      "detail": "Thread to thread, including sched_lock, the run queue and bookkeeping. TCG wall clock 570 to 601 ns"
+    },
+    {
+      "label": "SBI ecall round trip",
+      "value": 291,
+      "emphasis": true,
+      "detail": "S-mode to OpenSBI in M-mode and back. TCG wall clock 1520 to 1583 ns"
+    },
+    {
+      "label": "pmm_free",
+      "value": 103,
+      "detail": "Bitmap free with alignment, range and double-free checks. TCG wall clock 354 to 374 ns"
+    },
+    {
+      "label": "pmm_alloc, no zeroing",
+      "value": 105,
+      "detail": "TCG wall clock 302 to 322 ns"
+    },
+    {
+      "label": "kmalloc(64) plus kfree",
+      "value": 222,
+      "detail": "One pair. TCG wall clock 850 to 868 ns"
+    },
+    {
+      "label": "pmm_alloc, zeroing 4 KiB",
+      "value": 2184,
+      "detail": "TCG wall clock 1622 to 1645 ns, less than the instruction count because QEMU runs the store loop faster than one instruction per nanosecond"
+    }
+  ],
+  "caption": "Instruction counts are deterministic and were identical across two icount runs. They are QEMU guest instructions, not cycles on real RISC-V hardware. TCG wall clock ranges in the tooltips were measured on a Mac with a load average of 129 to 151 from other jobs.",
+  "source": "projects/16-os-from-scratch/results/bench-summary.txt and results/icount-determinism.txt"
+}

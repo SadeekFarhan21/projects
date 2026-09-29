@@ -1,0 +1,41 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "failing boots",
+  "title": "Two races, reproduced before and after the fix",
+  "subtitle": "The same boot repeated many times under plain TCG on a heavily loaded host",
+  "legendLabels": {
+    "emphasis": "Before the fix",
+    "other": "After the fix"
+  },
+  "rows": [
+    {
+      "label": "Tick race, before",
+      "value": 4,
+      "emphasis": true,
+      "note": "of 30 boots",
+      "detail": "The timer ticks self-test read ticks and the interrupt count as two loads with interrupts on. Load average 299.31 at the start"
+    },
+    {
+      "label": "Tick race, after",
+      "value": 0,
+      "note": "of 30 boots",
+      "detail": "Both values read in one snapshot with interrupts off"
+    },
+    {
+      "label": "Exit race, before",
+      "value": 10,
+      "emphasis": true,
+      "note": "of 40 boots",
+      "detail": "crash=pagefault and crash=panic, 20 boots each, expected exit code 3. Load average 287.04 at the start"
+    },
+    {
+      "label": "Exit race, after",
+      "value": 0,
+      "note": "of 40 boots",
+      "detail": "The hart parks in wfi after writing the failure code to the sifive,test0 device"
+    }
+  ],
+  "caption": "Neither race showed up reliably in a single boot, which is why each fix is backed by a repeated-boot count rather than one passing run.",
+  "source": "projects/16-os-from-scratch/results/bug-repro-tick-race.txt and results/exit-race.txt"
+}

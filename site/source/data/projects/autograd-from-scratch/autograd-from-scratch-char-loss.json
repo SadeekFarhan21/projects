@@ -1,0 +1,33 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "validation loss, nats per character",
+  "title": "Tiny Shakespeare validation loss against count baselines",
+  "subtitle": "Same validation split for all four rows, lower is better",
+  "legendLabels": {
+    "emphasis": "Trained with smolgrad",
+    "other": "Count baseline"
+  },
+  "rows": [
+    {
+      "label": "Uniform over 65 chars",
+      "value": 4.174
+    },
+    {
+      "label": "Unigram",
+      "value": 3.347
+    },
+    {
+      "label": "Bigram",
+      "value": 2.482
+    },
+    {
+      "label": "smolgrad char MLP",
+      "value": 1.794,
+      "emphasis": true,
+      "detail": "Step 6,000. 299,105 parameters, 16-character context. Final train loss 1.576"
+    }
+  ],
+  "caption": "The character MLP is an Embedding, a 512-unit hidden layer with LayerNorm and tanh, and a 65-way output, trained for 6,000 AdamW steps at batch 256.",
+  "source": "projects/11-autograd-from-scratch/results/char_summary.json"
+}

@@ -1,0 +1,12 @@
+{
+ "type": "columns",
+ "title": "Purging changed nothing for this model",
+ "subtitle": "Out of sample Sharpe with a 20 day label horizon, purge and 10 row embargo against neither",
+ "categories": ["Walk-forward", "k-fold"],
+ "series": [
+  { "name": "Purged, embargo 10", "values": [0.842, 0.85] },
+  { "name": "Unpurged, no embargo", "values": [0.847, 0.844] }
+ ],
+ "caption": "The differences are in the third decimal and change sign between the two split kinds. ICs move by less than 0.002. A 7 coefficient ridge on tens of thousands of pooled rows cannot memorize the 21 rows at each boundary whose labels overlap the test block.",
+ "source": "projects/08-quant-research-platform/results/experiments.csv, rows wf_h20_purged, wf_h20_unpurged, kfold_h20_purged, kfold_h20_unpurged"
+}

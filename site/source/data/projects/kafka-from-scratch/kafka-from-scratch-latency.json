@@ -1,0 +1,44 @@
+{
+  "type": "bars",
+  "format": "time",
+  "scale": "log",
+  "unit": "p99 end-to-end latency, log scale",
+  "title": "Tail latency from produce to consume",
+  "subtitle": "p99 of send time to receive time for 100 B messages at a fixed send rate, log scale",
+  "legendLabels": {
+    "emphasis": "No flush",
+    "other": "fsync or F_FULLFSYNC"
+  },
+  "rows": [
+    {
+      "label": "No flush, 1,000/s",
+      "value": 0.0030182,
+      "emphasis": true,
+      "detail": "p50 89.8 µs, p90 223.3 µs, p99.9 22.1 ms, max 46.7 ms. 10,000 messages, batch 1. Load average 11"
+    },
+    {
+      "label": "No flush, 10,000/s",
+      "value": 0.0001424,
+      "emphasis": true,
+      "detail": "p50 41.5 µs, p90 70.0 µs, p99.9 1.21 ms, max 6.41 ms. 50,000 messages, batch 1. Load average 11"
+    },
+    {
+      "label": "No flush, 50,000/s",
+      "value": 0.0001845,
+      "emphasis": true,
+      "detail": "p50 45.5 µs, p90 65.9 µs, p99.9 1.89 ms, max 4.32 ms. 200,000 messages in batches of 10. Load average 11"
+    },
+    {
+      "label": "fsync, 1,000/s",
+      "value": 0.0005857,
+      "detail": "p50 115.0 µs, p90 145.2 µs, p99.9 4.04 ms, max 7.96 ms. 10,000 messages, batch 1. Load average 10"
+    },
+    {
+      "label": "F_FULLFSYNC, 200/s",
+      "value": 0.0077937,
+      "detail": "p50 4.03 ms, p90 5.12 ms, p99.9 11.9 ms, max 12.7 ms. 2,000 messages, batch 1. Load average 10"
+    }
+  ],
+  "caption": "The slowest send rate without a flush has a worse tail than rates ten and fifty times higher. My unprofiled guess is thread wakeup cost when producer, broker and consumer park between messages. Shared Apple M4 Pro at a load average of 10 to 11, indicative only.",
+  "source": "projects/04-kafka-from-scratch/results/latency.csv"
+}

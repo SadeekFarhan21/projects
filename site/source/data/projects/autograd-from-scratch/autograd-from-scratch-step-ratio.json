@@ -1,0 +1,54 @@
+{
+  "type": "bars",
+  "format": "multiple",
+  "unit": "smolgrad step time divided by PyTorch step time",
+  "title": "smolgrad is 1.2x to 2.5x slower than PyTorch per step",
+  "subtitle": "Single-threaded CPU, full training step with AdamW, minimum over 120 to 320 steps",
+  "reference": {
+    "value": 1,
+    "label": "PyTorch"
+  },
+  "legendLabels": {
+    "emphasis": "784-512-256-10 MNIST MLP",
+    "other": "Character model"
+  },
+  "rows": [
+    {
+      "label": "MLP, batch 1",
+      "value": 2.48,
+      "emphasis": true,
+      "detail": "smolgrad 3.21 ms, numpy by hand 2.32 ms, PyTorch 1.29 ms"
+    },
+    {
+      "label": "MLP, batch 32",
+      "value": 1.85,
+      "emphasis": true,
+      "detail": "smolgrad 2.43 ms, numpy by hand 1.62 ms, PyTorch 1.32 ms"
+    },
+    {
+      "label": "MLP, batch 128",
+      "value": 1.77,
+      "emphasis": true,
+      "detail": "smolgrad 2.94 ms, numpy by hand 2.09 ms, PyTorch 1.66 ms"
+    },
+    {
+      "label": "MLP, batch 512",
+      "value": 1.67,
+      "emphasis": true,
+      "detail": "smolgrad 5.01 ms, numpy by hand 4.97 ms, PyTorch 3.00 ms"
+    },
+    {
+      "label": "MLP, batch 2,048",
+      "value": 1.83,
+      "emphasis": true,
+      "detail": "smolgrad 21.16 ms, numpy by hand 38.09 ms, PyTorch 11.58 ms. The hand-written numpy row at this batch is slower than smolgrad, which is load noise"
+    },
+    {
+      "label": "Char model, batch 256",
+      "value": 1.23,
+      "detail": "smolgrad 3.40 ms, PyTorch 2.77 ms. Embedding, LayerNorm and tanh in the graph"
+    }
+  ],
+  "caption": "Measured on an M4 Pro whose one-minute load average was 338 to 358 from other jobs, so absolute times are upper bounds. The ratios are the more trustworthy part, because implementations were interleaved round-robin so the load hit them alike.",
+  "source": "Ratios of min_ms step rows in projects/11-autograd-from-scratch/results/bench_threads_1.csv"
+}

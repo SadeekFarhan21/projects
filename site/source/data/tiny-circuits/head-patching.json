@@ -1,0 +1,73 @@
+{
+ "type": "bars",
+ "title": "No single head carries the copy",
+ "subtitle": "Share of clean performance recovered when one head's clean output is patched into the corrupted run",
+ "legendLabels": {
+  "emphasis": "Top five by induction score",
+  "other": "Other heads"
+ },
+ "rows": [
+  {
+   "label": "L7H2",
+   "value": 0.1281,
+   "emphasis": true,
+   "detail": "noising this head alone loses 0.003; induction score 0.820"
+  },
+  {
+   "label": "L6H9",
+   "value": 0.1201,
+   "emphasis": true,
+   "detail": "noising this head alone loses 0.002; induction score 0.915"
+  },
+  {
+   "label": "L9H6",
+   "value": 0.1038,
+   "emphasis": false,
+   "detail": "noising this head alone loses 0.000; induction score 0.509"
+  },
+  {
+   "label": "L9H9",
+   "value": 0.1029,
+   "emphasis": false,
+   "detail": "noising this head alone loses 0.001; induction score 0.500"
+  },
+  {
+   "label": "L7H10",
+   "value": 0.0942,
+   "emphasis": true,
+   "detail": "noising this head alone loses -0.001; induction score 0.905"
+  },
+  {
+   "label": "L5H1",
+   "value": 0.0897,
+   "emphasis": true,
+   "detail": "noising this head alone loses 0.160; induction score 0.902"
+  },
+  {
+   "label": "L10H0",
+   "value": 0.0816,
+   "emphasis": false,
+   "detail": "noising this head alone loses 0.004; induction score 0.412"
+  },
+  {
+   "label": "L5H5",
+   "value": 0.031,
+   "emphasis": true,
+   "detail": "noising this head alone loses 0.000; induction score 0.925"
+  },
+  {
+   "label": "L11H10",
+   "value": -0.0554,
+   "emphasis": false,
+   "detail": "noising this head alone loses -0.005; induction score 0.412"
+  },
+  {
+   "label": "L10H7",
+   "value": -0.092,
+   "emphasis": false,
+   "detail": "noising this head alone loses -0.006; induction score 0.459"
+  }
+ ],
+ "caption": "The best single head recovers 0.128 of clean performance. L9H6 and L9H9, ranked seventh and eighth by induction score, recover as much as the canonical five. The two negative heads are copy suppression heads, which push against the answer. Hover for the noising direction.",
+ "source": "projects/tiny-circuits/results/03_head_patching.csv, column denoise_recovered"
+}

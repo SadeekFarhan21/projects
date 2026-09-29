@@ -1,0 +1,64 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "messages per second, log scale",
+  "title": "What durability costs",
+  "subtitle": "1000 B messages per second under three flush policies, log scale. Median of 3 runs",
+  "legendLabels": {
+    "emphasis": "F_FULLFSYNC, through the drive cache",
+    "other": "No flush or plain fsync"
+  },
+  "rows": [
+    {
+      "label": "Batch 1, no flush",
+      "value": 32317,
+      "detail": "32.3 MB/s. Acknowledged after pwrite, data in the page cache. Load average 9"
+    },
+    {
+      "label": "Batch 1, fsync",
+      "value": 14639,
+      "detail": "14.6 MB/s. fsync on macOS reaches the drive but not through its write cache. Load average 9"
+    },
+    {
+      "label": "Batch 1, F_FULLFSYNC",
+      "value": 231,
+      "emphasis": true,
+      "detail": "0.2 MB/s, about 4.3 ms per message. Load average 9"
+    },
+    {
+      "label": "Batch 100, no flush",
+      "value": 1187678,
+      "detail": "1187.7 MB/s. Load average 9"
+    },
+    {
+      "label": "Batch 100, fsync",
+      "value": 594856,
+      "detail": "594.9 MB/s. Load average 9"
+    },
+    {
+      "label": "Batch 100, F_FULLFSYNC",
+      "value": 23185,
+      "emphasis": true,
+      "detail": "23.2 MB/s. Load average 8"
+    },
+    {
+      "label": "Batch 1000, no flush",
+      "value": 1519509,
+      "detail": "1519.5 MB/s. Load average 9"
+    },
+    {
+      "label": "Batch 1000, fsync",
+      "value": 1324056,
+      "detail": "1324.1 MB/s. Load average 9"
+    },
+    {
+      "label": "Batch 1000, F_FULLFSYNC",
+      "value": 197572,
+      "emphasis": true,
+      "detail": "197.6 MB/s, each flush amortised over about 1 MB. Load average 8"
+    }
+  ],
+  "caption": "Every flush is paid per append while the partition lock is held, so batching is the only thing that amortises it. Shared Apple M4 Pro at a 1 minute load average of 8 to 9, internal SSD, indicative only.",
+  "source": "projects/04-kafka-from-scratch/results/flush_policy.csv"
+}

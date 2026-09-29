@@ -1,0 +1,47 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "MB/s of payload",
+  "title": "Consumer throughput by fetch size",
+  "subtitle": "100 B messages read from offset 0 with every CRC checked. MB/s of payload, median of 3 runs",
+  "legendLabels": {
+    "emphasis": "Past the knee",
+    "other": "Below 1 MiB"
+  },
+  "rows": [
+    {
+      "label": "4 KiB fetches",
+      "value": 92.8,
+      "detail": "927,653 msgs/s, min 90.9 and max 94.9 MB/s. Load average 9"
+    },
+    {
+      "label": "16 KiB fetches",
+      "value": 316.9,
+      "detail": "3,168,958 msgs/s, min 303.1 and max 317.2 MB/s. Load average 9"
+    },
+    {
+      "label": "64 KiB fetches",
+      "value": 872.3,
+      "detail": "8,723,422 msgs/s, min 858.0 and max 903.7 MB/s. Load average 9"
+    },
+    {
+      "label": "256 KiB fetches",
+      "value": 1588.9,
+      "detail": "15,888,779 msgs/s, min 1566.0 and max 1589.3 MB/s. Load average 9"
+    },
+    {
+      "label": "1 MiB fetches",
+      "value": 2150.1,
+      "emphasis": true,
+      "detail": "21,501,080 msgs/s, min 2019.9 and max 2151.0 MB/s. Load average 9"
+    },
+    {
+      "label": "4 MiB fetches",
+      "value": 2134.9,
+      "emphasis": true,
+      "detail": "21,349,369 msgs/s, min 1990.7 and max 2172.5 MB/s. No gain over 1 MiB. Load average 9"
+    }
+  ],
+  "caption": "Fetch size plays the role for consumers that batch size plays for producers, and the curve flattens after 1 MiB. Shared Apple M4 Pro at a 1 minute load average of 9, so indicative only.",
+  "source": "projects/04-kafka-from-scratch/results/consume_throughput.csv"
+}

@@ -1,0 +1,13 @@
+{
+  "type": "columns",
+  "format": "time",
+  "title": "Latency per path with 10,000 resting orders",
+  "subtitle": "Median across 3 runs of each percentile, 300,000 timed operations per path per run",
+  "categories": ["add", "cancel", "match one fill"],
+  "series": [
+    { "name": "p50", "values": [1.67e-7, 2.09e-7, 8.4e-8] },
+    { "name": "p99", "values": [5.41e-7, 9.16e-7, 5.42e-7] }
+  ],
+  "caption": "Indicative upper bounds. Measured on a shared Apple M4 Pro at 1 minute load averages of 172 to 352, and every value is a multiple of the 41.7 ns timer tick, so the match p50 of 84 ns means two ticks. The p99.9 values of 3,208, 7,333 and 1,583 ns are left out because they varied up to tenfold between runs.",
+  "source": "projects/06-exchange-from-scratch/results/bench/summary_latency.csv"
+}

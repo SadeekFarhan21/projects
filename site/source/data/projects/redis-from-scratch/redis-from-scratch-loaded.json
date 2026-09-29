@@ -1,0 +1,52 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "SET ops/s, log scale",
+  "title": "The same benchmark on a busy machine",
+  "subtitle": "SET, 50 connections, AOF off, median of 3 runs, log scale",
+  "legendLabels": {
+    "emphasis": "Load average 7 to 9",
+    "other": "Load average 196 to 380"
+  },
+  "rows": [
+    {
+      "label": "Depth 1, quiet",
+      "value": 107160,
+      "emphasis": true,
+      "detail": "p99 935.5 µs. 112,360 ops per server CPU second. Load average 7 to 8"
+    },
+    {
+      "label": "Depth 1, loaded",
+      "value": 17325,
+      "emphasis": false,
+      "detail": "p99 51.89 ms. 92,593 ops per server CPU second. Load average 233 to 380"
+    },
+    {
+      "label": "Depth 16, quiet",
+      "value": 999599,
+      "emphasis": true,
+      "detail": "p99 1.74 ms. 1,030,928 ops per server CPU second. Load average 7 to 9"
+    },
+    {
+      "label": "Depth 16, loaded",
+      "value": 181965,
+      "emphasis": false,
+      "detail": "p99 80.10 ms. 793,651 ops per server CPU second. Load average 204 to 343"
+    },
+    {
+      "label": "Depth 128, quiet",
+      "value": 2942811,
+      "emphasis": true,
+      "detail": "p99 4.39 ms. 2,941,176 ops per server CPU second. Load average 8 to 9"
+    },
+    {
+      "label": "Depth 128, loaded",
+      "value": 295883,
+      "emphasis": false,
+      "detail": "p99 162.87 ms. 1,818,182 ops per server CPU second. Load average 196 to 294"
+    }
+  ],
+  "caption": "The loaded run used the same binary on the same 14 core machine while other jobs held the 1 minute load average between 196 and 380. Wall clock throughput fell 5.5 to 10 times and p99 rose 37 to 55 times, while throughput per server CPU second fell far less.",
+  "source": "projects/02-redis-from-scratch/results/run1_loaded/bench_pipeline.jsonl and results/bench_pipeline.jsonl"
+}

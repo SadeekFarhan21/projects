@@ -1,0 +1,67 @@
+{
+ "type": "bars",
+ "scale": "log",
+ "title": "The compiled kernel runs about 80M asset-days a second",
+ "subtitle": "Backtest throughput in millions of asset-days per second, log scale, S strategies by N assets, 1t and 14t are numba threads, measured under heavy shared load",
+ "legendLabels": {
+  "emphasis": "numba, 1 thread, market precomputed",
+  "other": "Other engines and sizes"
+ },
+ "rows": [
+  {
+   "label": "Reference, N 100",
+   "value": 0.139,
+   "detail": "pure Python share and cash ledger, 1 strategy, T 365; 1,386 strategy-days per second"
+  },
+  {
+   "label": "numpy, N 100",
+   "value": 2.006,
+   "detail": "1 strategy, T 1,825; 20,057 strategy-days per second"
+  },
+  {
+   "label": "numba 1t, N 100",
+   "value": 39.78,
+   "detail": "1 strategy, forward fill included in the call; 397,838 strategy-days per second"
+  },
+  {
+   "label": "Precomputed, N 100",
+   "value": 77.25,
+   "emphasis": true,
+   "detail": "1 strategy, T 1,825; 772,473 strategy-days per second"
+  },
+  {
+   "label": "Precomputed, N 300",
+   "value": 81.09,
+   "emphasis": true,
+   "detail": "1 strategy, T 1,825; 270,310 strategy-days per second"
+  },
+  {
+   "label": "Precomputed, N 1000",
+   "value": 79.27,
+   "emphasis": true,
+   "detail": "1 strategy, T 1,825; 79,271 strategy-days per second"
+  },
+  {
+   "label": "14t, S 16, N 100",
+   "value": 211.84,
+   "detail": "best batched run; 2,118,411 strategy-days per second"
+  },
+  {
+   "label": "Real panel, S 64, N 300",
+   "value": 44.17,
+   "detail": "14 threads, 1,704 real days; 0.74 s for all 64 strategies"
+  },
+  {
+   "label": "1t, S 128, N 1000",
+   "value": 43.08,
+   "detail": "two copies of the 1.9 GB target array before the kernel dominate"
+  },
+  {
+   "label": "14t, S 128, N 1000",
+   "value": 26.52,
+   "detail": "slower than 1 thread at this size; load average 230 to 360 during the run"
+  }
+ ],
+ "caption": "Asset-days per second normalizes away the number of assets, so a flat line across N means the kernel is doing constant work per cell. Everything was measured while other jobs held the load average between 230 and 360 on 14 cores, so these are lower bounds and the multithreaded rows are noisy.",
+ "source": "projects/08-quant-research-platform/results/bench_backtest.csv, column asset_days_per_s divided by one million"
+}

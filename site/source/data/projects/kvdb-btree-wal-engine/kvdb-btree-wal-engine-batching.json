@@ -1,0 +1,45 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "puts per second, log scale",
+  "title": "Batching pays for the flush once",
+  "subtitle": "kvdb with F_FULLFSYNC on every commit, N random puts per WriteBatch, one run per row",
+  "legendLabels": {
+    "emphasis": "F_FULLFSYNC per batch"
+  },
+  "rows": [
+    {
+      "label": "1 put per batch",
+      "value": 243,
+      "emphasis": true,
+      "detail": "2,000 puts. Median commit 4.01 ms, p99 6.10 ms. Load average 5.1"
+    },
+    {
+      "label": "4 puts per batch",
+      "value": 980,
+      "emphasis": true,
+      "detail": "2,000 puts. Median commit 4.00 ms, p99 6.06 ms. Load average 5.1"
+    },
+    {
+      "label": "16 puts per batch",
+      "value": 3960,
+      "emphasis": true,
+      "detail": "2,000 puts. Median commit 4.01 ms, p99 4.98 ms. Load average 5.1"
+    },
+    {
+      "label": "64 puts per batch",
+      "value": 15485,
+      "emphasis": true,
+      "detail": "1,984 puts (31 batches). Median commit 4.00 ms, max 7.02 ms. Load average 5.1"
+    },
+    {
+      "label": "256 puts per batch",
+      "value": 59450,
+      "emphasis": true,
+      "detail": "1,792 puts (7 batches). Median commit 4.05 ms, max 6.03 ms. Load average 5.1"
+    }
+  ],
+  "caption": "The median commit stays at about 4 ms whatever the batch size, so throughput grows almost exactly with the number of puts that share one flush. The 64 and 256 rows rest on 31 and 7 commits, so their tails are thin. Shared Apple M4 Pro at a 1 minute load average of 5.1, indicative only.",
+  "source": "projects/01-kvdb-btree-wal-engine/results/bench_sync.csv"
+}

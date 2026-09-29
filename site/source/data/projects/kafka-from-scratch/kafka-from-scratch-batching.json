@@ -1,0 +1,60 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "MB/s of payload, log scale",
+  "title": "Producer throughput by batch size",
+  "subtitle": "MB/s of payload, log scale. One partition, no fsync, median of 3 runs",
+  "legendLabels": {
+    "emphasis": "1000 B messages",
+    "other": "100 B messages"
+  },
+  "rows": [
+    {
+      "label": "100 B, batch 1",
+      "value": 3.3,
+      "detail": "32,886 msgs/s, min 3.2 and max 3.4 MB/s. One blocking round trip per message. Load average 8"
+    },
+    {
+      "label": "100 B, batch 10",
+      "value": 27.2,
+      "detail": "272,106 msgs/s, min 26.0 and max 29.6 MB/s. Load average 8"
+    },
+    {
+      "label": "100 B, batch 100",
+      "value": 233.4,
+      "detail": "2,333,579 msgs/s, min 229.6 and max 240.2 MB/s. An earlier run of this point measured 14.6 MB/s under interference and was discarded, see problems. Load average 8"
+    },
+    {
+      "label": "100 B, batch 1000",
+      "value": 1274.4,
+      "detail": "12,744,103 msgs/s, min 1138.9 and max 1281.5 MB/s. Load average 8"
+    },
+    {
+      "label": "1000 B, batch 1",
+      "value": 27.5,
+      "emphasis": true,
+      "detail": "27,534 msgs/s, min 21.3 and max 29.6 MB/s. Load average 8"
+    },
+    {
+      "label": "1000 B, batch 10",
+      "value": 222.9,
+      "emphasis": true,
+      "detail": "222,887 msgs/s, min 217.2 and max 225.6 MB/s. Load average 8"
+    },
+    {
+      "label": "1000 B, batch 100",
+      "value": 1001.6,
+      "emphasis": true,
+      "detail": "1,001,623 msgs/s, min 948.6 and max 1132.2 MB/s. Load average 8"
+    },
+    {
+      "label": "1000 B, batch 1000",
+      "value": 2528.0,
+      "emphasis": true,
+      "detail": "2,528,003 msgs/s, min 2279.9 and max 2724.8 MB/s. The best point in the run. Load average 9"
+    }
+  ],
+  "caption": "At batch 1 every message size is capped near 25,000 to 33,000 msgs/s, the rate of one blocking request per connection. Measured over loopback TCP on a shared Apple M4 Pro with a 1 minute load average of 8 to 9 from other jobs, so read these as indicative.",
+  "source": "projects/04-kafka-from-scratch/results/produce_throughput.csv"
+}

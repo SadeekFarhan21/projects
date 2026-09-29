@@ -1,0 +1,20 @@
+{
+  "type": "bars",
+  "title": "Post hoc, the holdout favored the models selection passed over",
+  "subtitle": "Holdout net Sharpe at 15 bps, quintile construction, one row per model",
+  "format": "number",
+  "legendLabels": { "emphasis": "Dev-selected, confirmatory", "other": "Not selected, post hoc context" },
+  "rows": [
+    { "label": "gbm_d3", "value": 0.71, "detail": "dev net Sharpe 0.06, holdout IC 0.100" },
+    { "label": "ridge alpha 100", "value": 0.56, "detail": "dev net Sharpe -0.84, holdout IC 0.100" },
+    { "label": "ridge alpha 1", "value": 0.55, "detail": "dev net Sharpe -0.72, holdout IC 0.099" },
+    { "label": "ridge alpha 10", "value": 0.55, "detail": "dev net Sharpe -0.75, holdout IC 0.099" },
+    { "label": "gbm_d6", "value": 0.48, "detail": "dev net Sharpe -0.08, holdout IC 0.093" },
+    { "label": "mom_20d", "value": 0.08, "emphasis": true, "detail": "dev net Sharpe 0.33, holdout IC -0.004" },
+    { "label": "mom_60d", "value": -1.28, "detail": "dev net Sharpe -0.60, holdout IC -0.020" },
+    { "label": "rev_5d", "value": -2.05, "detail": "dev net Sharpe -1.99, holdout IC 0.017" },
+    { "label": "rev_1d", "value": -3.68, "detail": "dev net Sharpe -2.66, holdout IC 0.019" }
+  ],
+  "caption": "Only mom_20d was a pre-registered test. The other rows were computed for context after selection was frozen and cannot be claimed without a fresh holdout. Hover a bar for its development Sharpe and holdout IC.",
+  "source": "projects/09-can-we-predict-markets/results/holdout/all_trials_posthoc.csv and results/holdout/dev_vs_holdout_sharpe.csv"
+}

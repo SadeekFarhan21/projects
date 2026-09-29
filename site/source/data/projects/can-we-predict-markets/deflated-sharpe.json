@@ -1,0 +1,20 @@
+{
+  "type": "bars",
+  "title": "The best development Sharpe was far below the multiple testing bar",
+  "subtitle": "Development net Sharpe at 15 bps, the eight best of 18 trials, against the deflated Sharpe threshold",
+  "format": "number",
+  "reference": { "value": 2.01, "label": "Luck bar 2.01", "band": true },
+  "legendLabels": { "emphasis": "Selected for the holdout", "other": "Other trials" },
+  "rows": [
+    { "label": "mom_20d quintile", "value": 0.33, "emphasis": true, "detail": "IC -0.029, PSR 0.75, deflated Sharpe ratio 0.00018" },
+    { "label": "mom_20d rank", "value": 0.09, "detail": "IC -0.029" },
+    { "label": "gbm_d3 quintile", "value": 0.06, "detail": "IC 0.108, gross Sharpe 1.64" },
+    { "label": "gbm_d6 quintile", "value": -0.08, "detail": "IC 0.099, gross Sharpe 1.77" },
+    { "label": "gbm_d3 rank", "value": -0.17, "detail": "IC 0.108, gross Sharpe 1.49" },
+    { "label": "gbm_d6 rank", "value": -0.24, "detail": "IC 0.099, gross Sharpe 1.77" },
+    { "label": "mom_60d rank", "value": -0.42, "detail": "IC -0.049" },
+    { "label": "mom_60d quintile", "value": -0.60, "detail": "IC -0.049" }
+  ],
+  "caption": "The threshold is the expected best annualized Sharpe among 32 worthless strategies with the observed spread of trial Sharpes. The ten trials not shown, all ridge and reversal variants, were lower still.",
+  "source": "projects/09-can-we-predict-markets/results/dev/summary.csv and results/dev/selection.json"
+}

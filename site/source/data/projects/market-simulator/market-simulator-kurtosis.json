@@ -1,0 +1,37 @@
+{
+ "type": "bars",
+ "title": "Where the long horizon tails come from",
+ "subtitle": "Excess kurtosis of 100 unit log returns, one 200,000 unit run each",
+ "rows": [
+  {
+   "label": "price learning bug",
+   "value": 19.21,
+   "emphasis": true,
+   "detail": "largest 100 unit mid move 98 ticks; kurtosis at 1 and 10 units 6.91 and 8.54"
+  },
+  {
+   "label": "baseline with jumps",
+   "value": 2.78,
+   "emphasis": false,
+   "detail": "largest 100 unit mid move 37 ticks; kurtosis at 1 and 10 units 3.88 and 2.61"
+  },
+  {
+   "label": "no jumps",
+   "value": 0.39,
+   "emphasis": false,
+   "detail": "largest 100 unit mid move 11.5 ticks; kurtosis at 1 and 10 units 3.51 and 1.09"
+  },
+  {
+   "label": "no informed traders",
+   "value": 0.38,
+   "emphasis": false,
+   "detail": "largest 100 unit mid move 11 ticks; kurtosis at 1 and 10 units 2.28 and 0.78"
+  }
+ ],
+ "legendLabels": {
+  "emphasis": "Buggy market maker",
+  "other": "Fixed market maker"
+ },
+ "caption": "With the fixed maker, long horizon tails survive only when the fundamental itself jumps. The buggy maker produces far fatter tails with no jumps at all, from crashes it causes itself. The bug run also has inelastic noise and no inventory learning, so it is not a one variable ablation.",
+ "source": "projects/10-market-simulator/results/stylized/summary.json"
+}

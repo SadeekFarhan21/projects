@@ -1,0 +1,52 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "commits per second, log scale",
+  "title": "What one durable commit costs",
+  "subtitle": "2,000 random puts, one put per commit, 16 B keys and 100 B values, one run per row",
+  "legendLabels": {
+    "emphasis": "kvdb",
+    "other": "SQLite 3.51, WAL mode"
+  },
+  "rows": [
+    {
+      "label": "kvdb, no sync",
+      "value": 693922,
+      "emphasis": true,
+      "detail": "p50 1.2 µs, p99 4.5 µs. Survives a process crash only. Load average 4.6"
+    },
+    {
+      "label": "kvdb, fsync",
+      "value": 38162,
+      "emphasis": true,
+      "detail": "p50 24.0 µs, p99 37.3 µs. On macOS fsync does not flush the drive cache. Load average 4.6"
+    },
+    {
+      "label": "kvdb, F_FULLFSYNC",
+      "value": 247,
+      "emphasis": true,
+      "detail": "p50 4.01 ms, p99 5.00 ms. The only real barrier on macOS. Load average 4.3"
+    },
+    {
+      "label": "SQLite, synchronous off",
+      "value": 70517,
+      "emphasis": false,
+      "detail": "p50 10.3 µs, p99 41.9 µs. Load average 4.3"
+    },
+    {
+      "label": "SQLite, synchronous full",
+      "value": 4900,
+      "emphasis": false,
+      "detail": "p50 67.5 µs, p99 1.74 ms, fullfsync off. Load average 4.3"
+    },
+    {
+      "label": "SQLite, full plus fullfsync",
+      "value": 1006,
+      "emphasis": false,
+      "detail": "p50 0.69 ms, p99 3.71 ms. Faster than one F_FULLFSYNC, so this is not a like for like comparison. Load average 4.3"
+    }
+  ],
+  "caption": "Each step down the durability ladder costs one to two orders of magnitude. The F_FULLFSYNC row is the drive flushing its own cache, about 4 ms per commit. SQLite's fullfsync commits finish faster than a single F_FULLFSYNC takes on this machine, so Apple's SQLite is probably issuing a lighter barrier, which I have not verified. Shared Apple M4 Pro at a 1 minute load average of 4.3 to 4.6, single runs, indicative only.",
+  "source": "projects/01-kvdb-btree-wal-engine/results/bench_sync.csv"
+}

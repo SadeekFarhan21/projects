@@ -1,0 +1,39 @@
+{
+  "type": "bars",
+  "format": "time",
+  "unit": "median SET latency",
+  "title": "What an fsync costs one client",
+  "subtitle": "Median SET latency, 1 connection, no pipelining, 100,000 requests per run, median of 3 runs",
+  "legendLabels": {
+    "emphasis": "fsync before every reply",
+    "other": "No fsync on the reply path"
+  },
+  "rows": [
+    {
+      "label": "AOF off",
+      "value": 2.22e-05,
+      "emphasis": false,
+      "detail": "40,120 ops/s, p99 64.5 µs. Run medians ranged 21.5 µs to 28.0 µs. Load average 10 to 12"
+    },
+    {
+      "label": "appendfsync no",
+      "value": 3.25e-05,
+      "emphasis": false,
+      "detail": "23,573 ops/s, p99 128.0 µs. Run medians ranged 29.5 µs to 37.5 µs. Load average 10 to 13"
+    },
+    {
+      "label": "appendfsync everysec",
+      "value": 3.07e-05,
+      "emphasis": false,
+      "detail": "28,251 ops/s, p99 99.9 µs. Run medians ranged 29.4 µs to 31.1 µs. Load average 10 to 13"
+    },
+    {
+      "label": "appendfsync always",
+      "value": 5.9e-05,
+      "emphasis": true,
+      "detail": "14,165 ops/s, p99 197.5 µs. Run medians ranged 56.5 µs to 60.0 µs. Load average 10 to 12"
+    }
+  ],
+  "caption": "With one client there is nothing to share the fsync with, so every write pays for it. macOS fsync does not flush the drive cache, so this is the cost of a plain fsync, not of durable storage. Shared Apple M4 Pro at a 1 minute load average of 10 to 13, indicative only.",
+  "source": "projects/02-redis-from-scratch/results/bench_fsync1.jsonl"
+}

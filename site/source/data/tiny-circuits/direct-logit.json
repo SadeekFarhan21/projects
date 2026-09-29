@@ -1,0 +1,85 @@
+{
+ "type": "bars",
+ "title": "The top induction score is the weakest direct writer",
+ "subtitle": "Mean direct contribution to the correct token's logit on second-half positions",
+ "legendLabels": {
+  "emphasis": "Top five by induction score",
+  "other": "Other heads"
+ },
+ "rows": [
+  {
+   "label": "L7H2",
+   "value": 1.5055,
+   "emphasis": true,
+   "detail": "OV top-1 copying 0.924, eigenvalue share 0.996; first half -0.0001"
+  },
+  {
+   "label": "L9H9",
+   "value": 1.4234,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.903, eigenvalue share 0.994; first half -0.0019"
+  },
+  {
+   "label": "L9H6",
+   "value": 1.4059,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.778, eigenvalue share 0.997; first half -0.0004"
+  },
+  {
+   "label": "L10H0",
+   "value": 1.1657,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.627, eigenvalue share 0.998; first half -0.0010"
+  },
+  {
+   "label": "L7H10",
+   "value": 1.1639,
+   "emphasis": true,
+   "detail": "OV top-1 copying 0.892, eigenvalue share 0.995; first half 0.0017"
+  },
+  {
+   "label": "L6H9",
+   "value": 1.076,
+   "emphasis": true,
+   "detail": "OV top-1 copying 0.872, eigenvalue share 0.997; first half -0.0004"
+  },
+  {
+   "label": "L11H9",
+   "value": 1.002,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.597, eigenvalue share 0.995; first half -0.0096"
+  },
+  {
+   "label": "L10H1",
+   "value": 0.9492,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.593, eigenvalue share 0.996; first half -0.0042"
+  },
+  {
+   "label": "L5H1",
+   "value": 0.691,
+   "emphasis": true,
+   "detail": "OV top-1 copying 0.558, eigenvalue share 0.987; first half 0.0028"
+  },
+  {
+   "label": "L5H5",
+   "value": 0.302,
+   "emphasis": true,
+   "detail": "OV top-1 copying 0.155, eigenvalue share 0.953; first half -0.0006"
+  },
+  {
+   "label": "L11H10",
+   "value": -0.7705,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.000, eigenvalue share -0.996; first half 0.0030"
+  },
+  {
+   "label": "L10H7",
+   "value": -1.2086,
+   "emphasis": false,
+   "detail": "OV top-1 copying 0.000, eigenvalue share -0.999; first half 0.0004"
+  }
+ ],
+ "caption": "L5H5 has the highest induction score and the smallest direct write of the five. L9H9, L9H6 and L10H0 write as much as the canonical heads, and the copy suppression heads L10H7 and L11H10 write against the answer. Hover for each head's OV copying rate.",
+ "source": "projects/tiny-circuits/results/05_qk_ov_analysis.csv, columns dla_second_half, ov_top1 and ov_eig_share"
+}

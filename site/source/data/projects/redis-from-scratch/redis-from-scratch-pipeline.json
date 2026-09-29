@@ -1,0 +1,63 @@
+{
+  "type": "bars",
+  "format": "number",
+  "scale": "log",
+  "unit": "SET ops/s, log scale",
+  "title": "Throughput by pipeline depth",
+  "subtitle": "SET with 16 B values, 50 connections, AOF off. Median of 3 runs",
+  "legendLabels": {
+    "emphasis": "Median of 3 runs"
+  },
+  "rows": [
+    {
+      "label": "Depth 1",
+      "value": 107160,
+      "emphasis": true,
+      "detail": "p50 438.0 µs, p99 935.5 µs. 112,360 ops per server CPU second. Runs ranged 102,255 to 116,846 ops/s. Load average 7 to 8"
+    },
+    {
+      "label": "Depth 2",
+      "value": 193852,
+      "emphasis": true,
+      "detail": "p50 489.8 µs, p99 835.5 µs. 204,082 ops per server CPU second. Runs ranged 188,582 to 225,454 ops/s. Load average 7 to 9"
+    },
+    {
+      "label": "Depth 4",
+      "value": 366294,
+      "emphasis": true,
+      "detail": "p50 512.4 µs, p99 962.1 µs. 380,952 ops per server CPU second. Runs ranged 362,522 to 409,807 ops/s. Load average 7 to 9"
+    },
+    {
+      "label": "Depth 8",
+      "value": 653925,
+      "emphasis": true,
+      "detail": "p50 558.7 µs, p99 1.03 ms. 677,966 ops per server CPU second. Runs ranged 644,386 to 785,890 ops/s. Load average 7 to 9"
+    },
+    {
+      "label": "Depth 16",
+      "value": 999599,
+      "emphasis": true,
+      "detail": "p50 724.1 µs, p99 1.74 ms. 1,030,928 ops per server CPU second. Runs ranged 947,077 to 1,265,202 ops/s. Load average 7 to 9"
+    },
+    {
+      "label": "Depth 32",
+      "value": 1856726,
+      "emphasis": true,
+      "detail": "p50 804.5 µs, p99 1.48 ms. 1,886,792 ops per server CPU second. Runs ranged 1,193,699 to 1,956,560 ops/s. Load average 8 to 9"
+    },
+    {
+      "label": "Depth 64",
+      "value": 2276344,
+      "emphasis": true,
+      "detail": "p50 1.32 ms, p99 2.46 ms. 2,325,581 ops per server CPU second. Runs ranged 1,187,745 to 2,631,208 ops/s. Load average 8 to 9"
+    },
+    {
+      "label": "Depth 128",
+      "value": 2942811,
+      "emphasis": true,
+      "detail": "p50 2.05 ms, p99 4.39 ms. 2,941,176 ops per server CPU second. Runs ranged 2,113,952 to 2,961,389 ops/s. Load average 8 to 9"
+    }
+  ],
+  "caption": "Same binary, same 50 connections, only the number of requests each connection keeps in flight changes. Throughput per server CPU second tracks wall clock throughput at every depth, so the single server thread was the bottleneck. Loopback TCP on a shared Apple M4 Pro at a 1 minute load average of 7 to 9 from other jobs, so indicative only.",
+  "source": "projects/02-redis-from-scratch/results/bench_pipeline.jsonl"
+}

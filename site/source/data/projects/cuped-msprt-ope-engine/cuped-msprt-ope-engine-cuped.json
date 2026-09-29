@@ -1,0 +1,105 @@
+{
+  "type": "series",
+  "format": "number",
+  "unit": "variance of CUPED estimate over variance of plain difference",
+  "xFormat": "number",
+  "xLabel": "correlation rho between pre-period covariate and outcome",
+  "title": "CUPED variance follows 1 minus rho squared",
+  "subtitle": "1,000 simulated experiments per rho, 1,000 users per arm, true effect 0.05",
+  "entities": [
+    {
+      "name": "Theory, 1 minus rho squared",
+      "emphasis": false,
+      "points": [
+        {
+          "x": 0.0,
+          "value": 1.0
+        },
+        {
+          "x": 0.1,
+          "value": 0.99
+        },
+        {
+          "x": 0.2,
+          "value": 0.96
+        },
+        {
+          "x": 0.3,
+          "value": 0.91
+        },
+        {
+          "x": 0.4,
+          "value": 0.84
+        },
+        {
+          "x": 0.5,
+          "value": 0.75
+        },
+        {
+          "x": 0.6,
+          "value": 0.64
+        },
+        {
+          "x": 0.7,
+          "value": 0.51
+        },
+        {
+          "x": 0.8,
+          "value": 0.36
+        },
+        {
+          "x": 0.9,
+          "value": 0.19
+        }
+      ]
+    },
+    {
+      "name": "Simulated variance ratio",
+      "emphasis": true,
+      "points": [
+        {
+          "x": 0.0,
+          "value": 1.003
+        },
+        {
+          "x": 0.1,
+          "value": 0.981
+        },
+        {
+          "x": 0.2,
+          "value": 0.954
+        },
+        {
+          "x": 0.3,
+          "value": 0.904
+        },
+        {
+          "x": 0.4,
+          "value": 0.831
+        },
+        {
+          "x": 0.5,
+          "value": 0.712
+        },
+        {
+          "x": 0.6,
+          "value": 0.679
+        },
+        {
+          "x": 0.7,
+          "value": 0.494
+        },
+        {
+          "x": 0.8,
+          "value": 0.35
+        },
+        {
+          "x": 0.9,
+          "value": 0.18
+        }
+      ]
+    }
+  ],
+  "caption": "The simulated ratio is the variance of 1,000 CUPED estimates over the variance of 1,000 plain differences on the same data, so it carries its own sampling noise. The largest gap is 0.039, at rho 0.6. On the event-log generator, sessions per user has pooled rho 0.723 and the observed ratio of squared standard errors is 0.4778 against a theory of 0.4778.",
+  "source": "projects/25-cuped-msprt-ope-engine/results/cuped_variance.csv"
+}
