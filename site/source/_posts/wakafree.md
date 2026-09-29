@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A WakaTime-Compatible Coding Tracker That Has to Decide What a Day Is"
+title: "Keeping My Own Copy of WakaTime"
 tab_title: WakaFree
 code: https://github.com/SadeekFarhan21/projects/tree/main/wakafree
 date: 2026-06-28 22:49:28
