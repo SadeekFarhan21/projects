@@ -788,24 +788,26 @@ html .post-list-pager {
 html .post-list-pager[hidden] {
   display: none;
 }
+/* Newer / Older: bold accent text without a bubble (no background or
+   border); underlined on hover, grey when there is no page that way. */
 html .post-list-pager button {
   min-height: 44px;
-  padding: 10px 18px;
+  padding: 10px 4px;
   font: inherit;
   font-weight: 600;
   color: #0b4f7c;
-  background: #e3eef8;
-  border: 1px solid #c9dcee;
-  border-radius: 999px;
+  background: none;
+  border: 0;
+  border-radius: 4px;
   cursor: pointer;
 }
 html .post-list-pager button:hover:not(:disabled) {
-  background: #d5e6f5;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
 }
 html .post-list-pager button:disabled {
   color: #6b7280;
-  background: #f3f4f6;
-  border-color: #e5e7eb;
   cursor: default;
 }
 html .post-list-pager button:focus-visible {
