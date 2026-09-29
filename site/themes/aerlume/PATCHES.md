@@ -15,3 +15,4 @@ UPSTREAM_COMMIT (the theme is not published on npm). MIT license kept in LICENSE
 - index.js re-measures the TOC when the nav opens or closes and never pins a hidden TOC (it used to stick over the nav).
 - The sidebar TOC skips the posts' own "table of contents" heading.
 - WRITING and CODE use inline SVG pen and code icons instead of duplicating other nav icons.
+- Post list links on index pages use url_for (relative) instead of full_url_for, so local previews stay on localhost.
