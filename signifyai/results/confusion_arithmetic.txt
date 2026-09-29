@@ -1,0 +1,4 @@
+gesture diag 2795 of 2800 = 99.82
+emotion rows 3589 diag 2448 = 68.21
+
+asl (old 36-class matrix, approximate hand count) diag 493 of about 503 = about 98.0

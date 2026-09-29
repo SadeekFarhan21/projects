@@ -1,0 +1,38 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Lines of code",
+  "title": "Where the Lines Went",
+  "subtitle": "wc -l over git-tracked .ts, .tsx, .js, .py and .ino files, excluding lockfiles, assets, snapshots and JSON data",
+  "legendLabels": {
+    "emphasis": "Lines of code"
+  },
+  "rows": [
+    {
+      "label": "Mobile app",
+      "value": 5954,
+      "emphasis": true,
+      "detail": "pillifyai/, Expo and React Native, TypeScript and JavaScript"
+    },
+    {
+      "label": "Server",
+      "value": 3364,
+      "emphasis": true,
+      "detail": "pillifyai-server/, Express, Sequelize and Postgres, JavaScript"
+    },
+    {
+      "label": "Pi scripts",
+      "value": 383,
+      "emphasis": true,
+      "detail": "hardware/, Python: servo control, examples, slow-move script and buzzer"
+    },
+    {
+      "label": "ESP32 sketch",
+      "value": 307,
+      "emphasis": true,
+      "detail": "pillifyai-hardware/, one Arduino sketch"
+    }
+  ],
+  "caption": "The hardware is small next to the software around it. Line counts say nothing about effort or quality, and they are the only size measurement the project has.",
+  "source": "wc -l over the tracked files of the private repo, run once"
+}

@@ -1,0 +1,15 @@
+{
+  "type": "columns",
+  "mode": "grouped",
+  "format": "time",
+  "unit": "Chapter duration",
+  "categories": ["Chapter 1", "Chapter 2", "Chapter 3", "Chapter 4"],
+  "series": [
+    { "name": "Synthetic timeline in the JSON", "values": [88.08, 85.83, 107.57, 77.94] },
+    { "name": "Real MP3 (ffprobe)", "values": [230.43, 213.84, 278.18, 221.88] }
+  ],
+  "title": "The Committed Timelines Are 2.5x to 2.9x Too Short",
+  "subtitle": "Chapters 1 to 4, duration in the chapter JSON versus the MP3 the app ships",
+  "caption": "The JSON durations come from a 4.5 characters per second constant plus fixed gaps in prepare-chapters.ts. The MP3 durations were read with ffprobe. generate-audio.ts, which would rewrite the timestamps from real durations, was never run on the committed data. I did not run the app to see the drift.",
+  "source": "chapter JSON durations and ffprobe on the committed MP3s"
+}

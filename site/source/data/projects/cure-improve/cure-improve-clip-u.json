@@ -1,0 +1,83 @@
+{
+ "type": "series",
+ "format": "number",
+ "unit": "CLIP_u (higher is better)",
+ "xFormat": "number",
+ "xLabel": "Artists erased so far (k)",
+ "title": "Prompt Alignment on Unerased Artists",
+ "subtitle": "CLIP_u on the unerased prompts after k erasures, higher is better",
+ "entities": [
+  {
+   "name": "CURE",
+   "points": [
+    {
+     "x": 1,
+     "value": 25.214,
+     "note": "Std 2.8964 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 5,
+     "value": 21.2898,
+     "note": "Std 3.3565 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 10,
+     "value": 20.2503,
+     "note": "Std 3.3343 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 25,
+     "value": 21.6202,
+     "note": "Std 2.8289 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 50,
+     "value": 21.5163,
+     "note": "Std 3.0602 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 100,
+     "value": 21.6893,
+     "note": "Std 3.0000 over 3 seeds and the unerased prompts"
+    }
+   ]
+  },
+  {
+   "name": "CURE-Sequential",
+   "points": [
+    {
+     "x": 1,
+     "value": 25.214,
+     "note": "Std 2.8964 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 5,
+     "value": 22.6821,
+     "note": "Std 3.0945 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 10,
+     "value": 22.4827,
+     "note": "Std 2.9464 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 25,
+     "value": 22.6564,
+     "note": "Std 2.8884 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 50,
+     "value": 22.1578,
+     "note": "Std 3.0063 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 100,
+     "value": 21.2503,
+     "note": "Std 3.1704 over 3 seeds and the unerased prompts"
+    }
+   ]
+  }
+ ],
+ "caption": "CURE-Sequential is 0.64 to 2.23 CLIP points higher from k=5 to k=50, then 0.44 lower at k=100 (21.25 against 21.69). Standard deviations are about 3 points, so these are small effects on a proxy metric.",
+ "source": "Jeffrey Xie's committed 100-artist Figure-6-style sweep (evaluation/figure6_results_100/results.json), SD v1.4, seeds 11/22/33, 20 steps, 384x384"
+}

@@ -1,0 +1,8 @@
+# lines of code (wc -l on git ls-files, excluding lockfiles, assets, snapshots, json data)
+pillifyai     5954
+pillifyai-server     3364
+pillifyai-hardware      307
+hardware      383
+server route handlers (excluding devices.js): pillifyai-server/routes/patients.js:4 pillifyai-server/routes/medications.js:6 pillifyai-server/routes/auth.js:10 
+commits:       34; dates: 2025-03-28 2025-03-29 
+ESP32 sketch lines:      307

@@ -97,6 +97,12 @@ index_generator:
   # 0: every post on the home page; source/js/post-list.js pages them to the screen
   per_page: 0
   order_by: -date
+# 0: archive and tag pages hold every post; source/js/post-list.js pages
+# them to the screen, like the home page
+archive_generator:
+  per_page: 0
+tag_generator:
+  per_page: 0
 per_page: 10
 pagination_dir: page
 

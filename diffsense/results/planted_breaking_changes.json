@@ -1,0 +1,181 @@
+{
+ "summary": {
+  "n_cases": 14,
+  "TP": 8,
+  "FN": 0,
+  "FP": 3,
+  "TN": 3
+ },
+ "cases": [
+  {
+   "case": "py remove function",
+   "expected_breaking": true,
+   "n_flagged": 2,
+   "flagged": true,
+   "types": [
+    "function_removal"
+   ],
+   "components": [
+    "Client",
+    "load"
+   ]
+  },
+  {
+   "case": "py rename function",
+   "expected_breaking": true,
+   "n_flagged": 1,
+   "flagged": true,
+   "types": [
+    "function_removal"
+   ],
+   "components": [
+    "load"
+   ]
+  },
+  {
+   "case": "py add required param",
+   "expected_breaking": true,
+   "n_flagged": 3,
+   "flagged": true,
+   "types": [
+    "behavioral_change",
+    "function_removal",
+    "parameter_change"
+   ],
+   "components": [
+    "add"
+   ]
+  },
+  {
+   "case": "py remove param",
+   "expected_breaking": true,
+   "n_flagged": 3,
+   "flagged": true,
+   "types": [
+    "behavioral_change",
+    "function_removal",
+    "parameter_change"
+   ],
+   "components": [
+    "add"
+   ]
+  },
+  {
+   "case": "py remove method",
+   "expected_breaking": true,
+   "n_flagged": 3,
+   "flagged": true,
+   "types": [
+    "behavioral_change",
+    "function_removal"
+   ],
+   "components": [
+    "Client",
+    "Client.close",
+    "close"
+   ]
+  },
+  {
+   "case": "py remove class",
+   "expected_breaking": true,
+   "n_flagged": 5,
+   "flagged": true,
+   "types": [
+    "function_removal"
+   ],
+   "components": [
+    "Client",
+    "Client.close",
+    "Client.send",
+    "close",
+    "send"
+   ]
+  },
+  {
+   "case": "py add function",
+   "expected_breaking": false,
+   "n_flagged": 0,
+   "flagged": false,
+   "types": [],
+   "components": []
+  },
+  {
+   "case": "py add optional param",
+   "expected_breaking": false,
+   "n_flagged": 3,
+   "flagged": true,
+   "types": [
+    "behavioral_change",
+    "function_removal",
+    "parameter_change"
+   ],
+   "components": [
+    "add"
+   ]
+  },
+  {
+   "case": "py docstring only",
+   "expected_breaking": false,
+   "n_flagged": 1,
+   "flagged": true,
+   "types": [
+    "behavioral_change"
+   ],
+   "components": [
+    "add"
+   ]
+  },
+  {
+   "case": "py body change same signature",
+   "expected_breaking": false,
+   "n_flagged": 1,
+   "flagged": true,
+   "types": [
+    "behavioral_change"
+   ],
+   "components": [
+    "add"
+   ]
+  },
+  {
+   "case": "py comment only",
+   "expected_breaking": false,
+   "n_flagged": 0,
+   "flagged": false,
+   "types": [],
+   "components": []
+  },
+  {
+   "case": "js remove export function",
+   "expected_breaking": true,
+   "n_flagged": 1,
+   "flagged": true,
+   "types": [
+    "function_removal"
+   ],
+   "components": [
+    "greet"
+   ]
+  },
+  {
+   "case": "js change param count",
+   "expected_breaking": true,
+   "n_flagged": 1,
+   "flagged": true,
+   "types": [
+    "parameter_change"
+   ],
+   "components": [
+    "add"
+   ]
+  },
+  {
+   "case": "js add function",
+   "expected_breaking": false,
+   "n_flagged": 0,
+   "flagged": false,
+   "types": [],
+   "components": []
+  }
+ ]
+}

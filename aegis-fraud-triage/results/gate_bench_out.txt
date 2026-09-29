@@ -1,0 +1,12 @@
+done 2026-02-07 12:00:00 0
+done 2026-02-07 12:00:00 1
+done 2026-02-07 12:00:00 2
+done 2026-02-07 03:00:00 0
+done 2026-02-07 03:00:00 1
+done 2026-02-07 03:00:00 2
+2026-02-07 12:00:00 0 {'precision': 1.0, 'recall': 0.368, 'flagged_frac': 0.03} IFonly {'precision': 0.0, 'recall': 0.0, 'flagged_frac': 0.0} 153
+2026-02-07 12:00:00 1 {'precision': 1.0, 'recall': 0.375, 'flagged_frac': 0.029} IFonly {'precision': 0.0, 'recall': 0.0, 'flagged_frac': 0.0} 153
+2026-02-07 12:00:00 2 {'precision': 1.0, 'recall': 0.398, 'flagged_frac': 0.032} IFonly {'precision': 0.0, 'recall': 0.0, 'flagged_frac': 0.0} 153
+2026-02-07 03:00:00 0 {'precision': 1.0, 'recall': 0.373, 'flagged_frac': 0.03} IFonly {'precision': 0.0, 'recall': 0.0, 'flagged_frac': 0.0} 149
+2026-02-07 03:00:00 1 {'precision': 1.0, 'recall': 0.378, 'flagged_frac': 0.029} IFonly {'precision': 0.0, 'recall': 0.0, 'flagged_frac': 0.0} 150
+2026-02-07 03:00:00 2 {'precision': 1.0, 'recall': 0.403, 'flagged_frac': 0.032} IFonly {'precision': 0.0, 'recall': 0.0, 'flagged_frac': 0.0} 152

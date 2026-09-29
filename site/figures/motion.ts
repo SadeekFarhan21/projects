@@ -244,10 +244,11 @@ function play(svg: SVGSVGElement) {
       animated.add(c);
     });
 
-  // Value labels count up with their bars; everything else fades in.
-  const values = all<SVGTextElement>("text").filter(
-    t => !t.classList.contains("fig-axis") && NUM.test(t.textContent ?? "") && /^\s*[-$+~≈]?\s*\d/.test(t.textContent ?? "")
-  );
+  // Value labels count up with their bars; everything else fades in. The
+  // renderers mark value labels .fig-num: guessing from the text also counted
+  // category names that start with a digit ("256 puts per batch" read
+  // "57 puts per batch" mid-animation, next to a real value).
+  const values = all<SVGTextElement>("text.fig-num").filter(t => NUM.test(t.textContent ?? ""));
   const valueDelay = (i: number) => Math.min(i * 55, 700);
   values.forEach((t, i) => countUp(t, valueDelay(i), GROW_MS));
   all<SVGElement>("text, line, polyline, polygon, ellipse").forEach(el => {
@@ -271,6 +272,12 @@ export function animateIn(node: HTMLElement) {
   if (!svg || reduced()) return;
 
   replayButton(node);
+  // A responsive chart redrawn mid-entrance (a resize, the webfont arriving)
+  // has a fresh, still SVG; run the entrance again on it.
+  node.addEventListener("fig:redraw", e => {
+    const s = node.querySelector<SVGSVGElement>("svg");
+    if (s && (e as CustomEvent<{ animating: boolean }>).detail?.animating && !reduced()) play(s);
+  });
 
   if (!("IntersectionObserver" in window)) return play(svg);
   io ??= new IntersectionObserver(

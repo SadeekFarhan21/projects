@@ -1,0 +1,13 @@
+tensorflow
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+Pillow
+opencv-python
+PyQt5
+mss
+mediapipe
+rembg
+onnxruntime

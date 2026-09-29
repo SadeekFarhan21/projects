@@ -1,0 +1,16 @@
+{
+ "codebert": {
+  "pairs": 10,
+  "min_cosine": 0.935,
+  "max_cosine": 0.9633
+ },
+ "minilm_as_code": {
+  "pairs": 10,
+  "min_cosine": -0.0776,
+  "max_cosine": 0.2843
+ },
+ "diff_direction": {
+  "added_lines": [],
+  "removed_lines": []
+ }
+}

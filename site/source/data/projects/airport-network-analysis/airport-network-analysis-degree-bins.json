@@ -1,0 +1,47 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Airports",
+  "title": "Most Airports Touch One Route",
+  "subtitle": "Undirected degree of the 1,909 airports in the sampled network, binned",
+  "legendLabels": {
+    "emphasis": "Degree 1",
+    "other": "Other degree bins"
+  },
+  "rows": [
+    {
+      "label": "0",
+      "value": 148,
+      "detail": "Isolates: airports whose only sampled flights start and end at the same airport, so simplify() leaves them with no routes"
+    },
+    {
+      "label": "1",
+      "value": 1114,
+      "emphasis": true,
+      "detail": "58.4% of all airports"
+    },
+    {
+      "label": "2",
+      "value": 261
+    },
+    {
+      "label": "3-5",
+      "value": 217
+    },
+    {
+      "label": "6-10",
+      "value": 91
+    },
+    {
+      "label": "11-20",
+      "value": 49
+    },
+    {
+      "label": "21+",
+      "value": 29,
+      "detail": "The busiest is KORD with degree 74"
+    }
+  ],
+  "caption": "1,523 of 1,909 airports (79.8%) have degree 2 or less. 526 of the 3,297 usable rows are same-airport flights (origin equals destination), and the 148 degree-0 airports are exactly the airports that only appear in such rows.",
+  "source": "results/degree_bins.R and results/isolates.R (igraph 2.2.1) on the 5,065-row sample, and results/run.out"
+}

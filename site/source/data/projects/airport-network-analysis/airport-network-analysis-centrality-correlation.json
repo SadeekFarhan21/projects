@@ -1,0 +1,42 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Spearman rank correlation",
+  "title": "How Strongly the Centralities Agree",
+  "subtitle": "Spearman correlation across all 1,909 airports, undirected graph",
+  "legendLabels": {
+    "emphasis": "Strength against betweenness and eigenvector",
+    "other": "Other pairs"
+  },
+  "rows": [
+    {
+      "label": "Degree vs strength",
+      "value": 0.984
+    },
+    {
+      "label": "Degree vs betweenness",
+      "value": 0.917
+    },
+    {
+      "label": "Strength vs betweenness",
+      "value": 0.898,
+      "emphasis": true,
+      "detail": "Strength tracks betweenness more closely than it tracks eigenvector centrality"
+    },
+    {
+      "label": "Strength vs eigenvector",
+      "value": 0.672,
+      "emphasis": true
+    },
+    {
+      "label": "Degree vs eigenvector",
+      "value": 0.67
+    },
+    {
+      "label": "Betweenness vs eigenvector",
+      "value": 0.565
+    }
+  ],
+  "caption": "All six pairs are positive, so the major hubs tend to score high on every measure. Eigenvector centrality agrees least with the others.",
+  "source": "results/run.out, the Spearman matrix printed by results/run.R"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Sharpe ratio, no risk-free rate subtracted",
+  "title": "Sharpe Ratio by Strategy, 2019-2022",
+  "subtitle": "My rerun of the default pipeline, one row per strategy",
+  "legendLabels": { "emphasis": "Headline strategy", "other": "Other strategies and buy-and-hold" },
+  "rows": [
+    { "label": "Combined anomaly-regime", "value": 1.10, "emphasis": true, "detail": "Total return 56.68%, max drawdown -10.68%" },
+    { "label": "Combined", "value": 1.01, "detail": "Total return 41.91%, max drawdown -11.70%" },
+    { "label": "Dynamic allocation", "value": 0.91, "detail": "Total return 51.65%, max drawdown -13.81%" },
+    { "label": "Volatility targeting", "value": 0.87, "detail": "Total return 24.81%, max drawdown -7.59%" },
+    { "label": "Prediction", "value": 0.86, "detail": "Total return 42.77%, max drawdown -13.89%" },
+    { "label": "Tactical risk managed", "value": 0.81, "detail": "Total return 21.26%, max drawdown -8.30%" },
+    { "label": "Market beating", "value": 0.76, "detail": "Total return 49.91%, max drawdown -22.27%" },
+    { "label": "Buy and hold", "value": 0.58, "detail": "Total return 52.97%, max drawdown -33.92%" },
+    { "label": "Regime adaptive", "value": 0.43, "detail": "Total return 26.63%, max drawdown -27.01%" }
+  ],
+  "caption": "One path, 1,008 trading days, containing the 2020 crash. Most strategies give up total return to cut drawdown. Sharpe here is mean over standard deviation times the square root of 252.",
+  "source": "results/enhanced_performance_metrics.csv from python main.py --enhanced"
+}

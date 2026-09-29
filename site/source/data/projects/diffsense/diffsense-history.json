@@ -1,0 +1,81 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Findings per commit, unlabeled",
+  "title": "Breaking-Change Findings per Commit in DiffSense's History",
+  "subtitle": "The detector run over the 17 commits the script analysed (root omitted, it has none), oldest first",
+  "legendLabels": {
+    "emphasis": "Farhan's commits",
+    "other": "Other authors"
+  },
+  "rows": [
+    {
+      "label": "da590d2 Jayson: New frontend",
+      "value": 23
+    },
+    {
+      "label": "0019d66 Farhan: added mobile responsive",
+      "value": 3,
+      "emphasis": true
+    },
+    {
+      "label": "1245771 Jayson: Setup VSCode extension",
+      "value": 0
+    },
+    {
+      "label": "f6a88b5 Jalen: updated architecture",
+      "value": 21
+    },
+    {
+      "label": "bb3bc4a Jayson: Integrated API into web app",
+      "value": 3
+    },
+    {
+      "label": "eb75bb4 Jayson: Frontend updates",
+      "value": 3
+    },
+    {
+      "label": "ce28f3a Farhan: Markdown on chat implementat",
+      "value": 0,
+      "emphasis": true
+    },
+    {
+      "label": "d60f7c6 Jalen: major updates to architectur",
+      "value": 72
+    },
+    {
+      "label": "a58992e Jayson: Fixed bugs",
+      "value": 3
+    },
+    {
+      "label": "dd934c5 Jalen: integrated github oauth  and",
+      "value": 95
+    },
+    {
+      "label": "fac5584 Jayson: Integrated api 2.0",
+      "value": 11
+    },
+    {
+      "label": "d473a23 Jalen: updates to database to suppo",
+      "value": 30
+    },
+    {
+      "label": "8fd4b85 Jalen: greatly improved rag model.",
+      "value": 7
+    },
+    {
+      "label": "2bdd3f8 Jalen: added advanced breaking_chan",
+      "value": 2
+    },
+    {
+      "label": "d395719 Jalen: integrated change deteciton ",
+      "value": 440
+    },
+    {
+      "label": "011a1b8 Jayson: More complete frontend",
+      "value": 4
+    }
+  ],
+  "caption": "717 findings across 16 commits, 440 of them in one commit. With no ground truth for these commits I cannot say how many are real, and the planted run shows it over-flags some harmless edits.",
+  "source": "scripts/measure.py history, results/history_breaking_changes.json"
+}

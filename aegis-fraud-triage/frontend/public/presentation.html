@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis — TartanHacks 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --primary-light: rgba(255,255,255,0.06);
+            --primary-mid: rgba(255,255,255,0.4);
+            --accent: #ffffff;
+            --text: #e5e7eb;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --border: #262626;
+            --green: #22c55e;
+            --red: #ef4444;
+            --amber: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg); color: var(--text);
+            overflow: hidden; height: 100vh; width: 100vw;
+        }
+
+        .deck { width: 100vw; height: 100vh; position: relative; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 64px 80px;
+            opacity: 0; transform: translateX(40px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+        .slide.exit-left { opacity: 0; transform: translateX(-40px); }
+
+        /* Nav */
+        .nav {
+            position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 14px; z-index: 100;
+            background: rgba(5,5,5,0.9); backdrop-filter: blur(12px);
+            border: 1px solid var(--border); border-radius: 999px;
+            padding: 6px 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .nav button {
+            width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%;
+            background: transparent; color: var(--text); font-size: 0.9rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .nav button:hover { background: #ffffff; color: #050505; border-color: #ffffff; }
+        .nav .counter { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); min-width: 40px; text-align: center; }
+
+        .dots { display: flex; gap: 5px; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: all 0.3s; cursor: pointer; }
+        .dot.active { background: #ffffff; width: 20px; border-radius: 4px; }
+
+        .progress { position: fixed; top: 0; left: 0; height: 3px; background: #ffffff; transition: width 0.4s ease; z-index: 100; box-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1); }
+
+        /* Typography */
+        .slide-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+        .slide h1 { font-family: 'Rajdhani', sans-serif; font-size: 4.2rem; font-weight: 900; letter-spacing: -0.03em; color: #ffffff; line-height: 1.1; margin-bottom: 14px; text-shadow: 0 0 30px rgba(255,255,255,0.15); }
+        .slide h2 { font-family: 'Rajdhani', sans-serif; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; color: #ffffff; line-height: 1.2; margin-bottom: 12px; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        .slide p { font-size: 1.2rem; color: #a1a1aa; line-height: 1.6; }
+
+        /* Layout */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+        /* Tags */
+        .tag { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 6px; letter-spacing: 0.04em; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12); }
+        .tag.red { background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.25); box-shadow: 0 0 8px rgba(239,68,68,0.12); }
+        .tag.green { background: rgba(34,197,94,0.1); color: #22c55e; border-color: rgba(34,197,94,0.25); box-shadow: 0 0 8px rgba(34,197,94,0.12); }
+        .tag.amber { background: rgba(245,158,11,0.1); color: #f59e0b; border-color: rgba(245,158,11,0.25); box-shadow: 0 0 8px rgba(245,158,11,0.12); }
+
+        /* Flow */
+        .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .flow-step { background: #0a0a0a; border: 1px solid #262626; border-radius: 8px; padding: 14px 22px; font-size: 1.0rem; font-weight: 600; color: #e5e7eb; text-align: center; box-shadow: 0 0 12px rgba(255,255,255,0.03); }
+        .flow-step.accent { background: #ffffff; color: #050505; border-color: #ffffff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+        /* Animated flow arrows — pulse travels along the arrow */
+        .flow-arrow-svg { width: 36px; height: 20px; flex-shrink: 0; overflow: visible; }
+        .flow-arrow-line { stroke: #3f3f46; stroke-width: 2; stroke-dasharray: 4 3; }
+        .flow-arrow-head { fill: #ffffff; filter: drop-shadow(0 0 4px rgba(255,255,255,0.4)); }
+        .flow-arrow-pulse {
+            fill: #ffffff;
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+        }
+
+        /* Code block */
+        .code-block { background: #0a0a0a; color: #e5e7eb; border-radius: 10px; padding: 22px 26px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.92rem; line-height: 1.6; overflow: hidden; border: 1px solid #262626; box-shadow: 0 0 20px rgba(255,255,255,0.04), 0 4px 16px rgba(0,0,0,0.3); }
+        .code-block .comment { color: #71717a; }
+        .code-block .keyword { color: #818cf8; }
+        .code-block .string { color: #34d399; }
+        .code-block .fn { color: #f472b6; }
+
+        /* Title slide */
+        .title-slide { background: #050505; color: #fff; }
+        .title-slide h1 { color: #fff; font-size: 5.0rem; animation: titleBreathe 4s ease-in-out infinite; }
+        .title-slide .subtitle { color: rgba(255,255,255,0.55); font-size: 1.25rem; line-height: 1.5; }
+        .title-slide .slide-label { color: rgba(255,255,255,0.4); }
+        .title-slide .tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.5); }
+
+        .hook-numbers { display: flex; gap: 40px; margin-top: 32px; }
+        .hook-stat {
+            position: relative;
+            text-align: center;
+        }
+        .hook-stat .num {
+            font-size: 3.2rem; font-weight: 900; color: #fff; line-height: 1;
+            text-shadow: 0 0 20px rgba(255,255,255,0.25);
+            position: relative;
+            display: inline-block;
+        }
+        /* Rotating gradient ring around each number */
+        .hook-stat .num::before {
+            content: '';
+            position: absolute;
+            inset: -12px -16px;
+            border-radius: 16px;
+            background: conic-gradient(
+                from 0deg,
+                rgba(255,255,255,0.35),
+                transparent 25%,
+                transparent 50%,
+                rgba(255,255,255,0.2) 75%,
+                rgba(255,255,255,0.35)
+            );
+            animation: numRingRotate 4s linear infinite;
+            z-index: -1;
+            opacity: 0.6;
+            filter: blur(1px);
+        }
+        .hook-stat .num::after {
+            content: '';
+            position: absolute;
+            inset: -10px -14px;
+            border-radius: 14px;
+            background: #050505;
+            z-index: -1;
+        }
+        .hook-stat:nth-child(1) .num::before { animation-delay: 0s; }
+        .hook-stat:nth-child(2) .num::before { animation-delay: -1s; }
+        .hook-stat:nth-child(3) .num::before { animation-delay: -2s; }
+        .hook-stat:nth-child(4) .num::before { animation-delay: -3s; }
+        @keyframes numRingRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Subtle glow pulse on the number text (no scale/bounce) */
+        .hook-stat .num {
+            animation: numGlow 3s ease-in-out infinite;
+        }
+        @keyframes numGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.15), 0 0 30px rgba(255,255,255,0.05); }
+            50% { text-shadow: 0 0 25px rgba(255,255,255,0.4), 0 0 50px rgba(255,255,255,0.12); }
+        }
+        .hook-stat .lbl { font-size: 0.85rem; color: rgba(255,255,255,0.4); font-weight: 600; margin-top: 10px; }
+
+        /* Title breathing glow */
+        @keyframes titleBreathe {
+            0%, 100% { text-shadow: 0 0 30px rgba(255,255,255,0.15), 0 0 60px rgba(255,255,255,0.05); }
+            50% { text-shadow: 0 0 50px rgba(255,255,255,0.35), 0 0 100px rgba(255,255,255,0.12), 0 0 150px rgba(255,255,255,0.05); }
+        }
+
+        /* End slide */
+        .end-slide { background: #050505; color: #fff; text-align: center; align-items: center; }
+        .end-slide h1 { color: #fff; font-size: 4.0rem; animation: titleBreathe 4s ease-in-out infinite; }
+        .end-slide h2 { color: rgba(255,255,255,0.7); font-weight: 400; font-size: 1.5rem; }
+        .end-slide p { color: rgba(255,255,255,0.45); }
+        .end-slide .slide-label { color: rgba(255,255,255,0.4); }
+        .end-slide .tag { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.5); }
+
+        /* Architecture iframe — scale to fit, no scrollbar, no clipping */
+        .arch-container {
+            width: 100%; flex: 1; min-height: 0; position: relative; overflow: hidden;
+            border-radius: 12px; background: #0a0a0a; border: 1px solid #262626;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 30px rgba(255,255,255,0.04), 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .arch-wrapper {
+            position: relative; overflow: hidden;
+            flex-shrink: 0;
+        }
+        .arch-wrapper iframe {
+            display: block; border: none;
+            width: 1800px; height: 1100px;
+            transform-origin: top left;
+        }
+
+        .kbd-hint { position: fixed; bottom: 28px; right: 28px; font-size: 0.6rem; color: #71717a; z-index: 100; }
+        .kbd-hint kbd { display: inline-block; padding: 2px 5px; border-radius: 4px; background: #0a0a0a; border: 1px solid #262626; font-family: inherit; font-size: 0.55rem; color: #71717a; }
+
+        /* Fullscreen button */
+        .fs-btn {
+            position: fixed; top: 16px; right: 16px; z-index: 200;
+            width: 36px; height: 36px; border-radius: 8px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #71717a; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; backdrop-filter: blur(8px);
+        }
+        .fs-btn:hover { background: rgba(255,255,255,0.1); color: #ffffff; border-color: rgba(255,255,255,0.2); box-shadow: 0 0 12px rgba(255,255,255,0.08); }
+        .fs-btn svg { width: 16px; height: 16px; }
+
+        /* Ambient glow orbs — floating background accents */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0;
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+        @keyframes orbFloat {
+            0%, 100% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            50% { opacity: 1; transform: scale(1.2) translateY(-20px); }
+        }
+        .orb-1 {
+            width: 300px; height: 300px;
+            background: rgba(255,255,255,0.025);
+            top: 15%; left: 10%;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 200px; height: 200px;
+            background: rgba(255,255,255,0.02);
+            top: 60%; right: 15%;
+            animation-delay: 3s;
+        }
+        .orb-3 {
+            width: 250px; height: 250px;
+            background: rgba(255,255,255,0.015);
+            bottom: 10%; left: 40%;
+            animation-delay: 5s;
+        }
+
+        /* Slide label glow line — animated underline */
+        .slide-label-line {
+            display: block; width: 40px; height: 1px; margin-top: 6px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.4), transparent);
+            animation: labelLineGrow 1s ease-out forwards;
+        }
+        @keyframes labelLineGrow {
+            from { width: 0; opacity: 0; }
+            to { width: 40px; opacity: 1; }
+        }
+
+        /* Tag shimmer on hover */
+        .tag { transition: all 0.2s ease; position: relative; overflow: hidden; }
+        .tag:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 12px rgba(255,255,255,0.08);
+        }
+
+        /* Code block typing cursor */
+        .code-cursor {
+            display: inline-block; width: 2px; height: 1em; background: #ffffff;
+            margin-left: 2px; vertical-align: text-bottom;
+            animation: codeBlink 1s step-end infinite;
+        }
+        @keyframes codeBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Progress bar glow pulse */
+        @keyframes progressPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1); }
+            50% { box-shadow: 0 0 15px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.2); }
+        }
+        .progress { animation: progressPulse 2s ease-in-out infinite; }
+
+        /* Active dot glow */
+        .dot.active { box-shadow: 0 0 8px rgba(255,255,255,0.4); }
+    </style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="deck" id="deck">
+
+    <!-- SLIDE 1: TITLE + HOOK -->
+    <div class="slide title-slide active" data-slide="0">
+        <!-- Ambient orbs -->
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+        <div class="slide-label">TartanHacks 2026<span class="slide-label-line"></span></div>
+        <h1>Aegis</h1>
+        <div class="subtitle">
+            Autonomous Financial Fraud Detection with AI Agents,<br>
+            Human-in-the-Loop Review, and Adaptive Learning
+        </div>
+        <div class="hook-numbers">
+            <div class="hook-stat">
+                <div class="num">3</div>
+                <div class="lbl">Parallel AI Workers</div>
+            </div>
+            <div class="hook-stat">
+                <div class="num">0</div>
+                <div class="lbl">Cloud API Keys</div>
+            </div>
+            <div class="hook-stat">
+                <div class="num">9</div>
+                <div class="lbl">Agent Tools</div>
+            </div>
+            <div class="hook-stat">
+                <div class="num" style="font-size:2.4rem;">&#8734;</div>
+                <div class="lbl">Adaptive Learning</div>
+            </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:28px;flex-wrap:wrap;">
+            <span class="tag">Redpanda</span>
+            <span class="tag">IsolationForest</span>
+            <span class="tag">FAISS</span>
+            <span class="tag">LangChain + Ollama</span>
+            <span class="tag">Neo4j</span>
+            <span class="tag">Redis</span>
+            <span class="tag">React 19</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: HOW IT WORKS -->
+    <div class="slide" data-slide="1">
+        <div class="slide-label">How It Works<span class="slide-label-line"></span></div>
+        <h2>Detect, Investigate, Learn — in Real Time</h2>
+        <div class="two-col" style="margin-top:8px;">
+            <div>
+                <div class="flow">
+                    <div class="flow-step">Transaction</div>
+                    <svg class="flow-arrow-svg" viewBox="0 0 36 20"><line class="flow-arrow-line" x1="2" y1="10" x2="28" y2="10"/><path class="flow-arrow-head" d="M26,5 Q29,10 26,15 L34,10 Z"/><circle class="flow-arrow-pulse" cx="2" cy="10" r="2.5"><animate attributeName="cx" values="2;28" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.8s" repeatCount="indefinite"/></circle></svg>
+                    <div class="flow-step">ML + FAISS Novelty</div>
+                    <svg class="flow-arrow-svg" viewBox="0 0 36 20"><line class="flow-arrow-line" x1="2" y1="10" x2="28" y2="10"/><path class="flow-arrow-head" d="M26,5 Q29,10 26,15 L34,10 Z"/><circle class="flow-arrow-pulse" cx="2" cy="10" r="2.5"><animate attributeName="cx" values="2;28" dur="1.8s" begin="0.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.8s" begin="0.4s" repeatCount="indefinite"/></circle></svg>
+                    <div class="flow-step accent">AI Agent</div>
+                </div>
+                <div class="flow" style="margin-top:6px;">
+                    <svg class="flow-arrow-svg" viewBox="0 0 36 20"><line class="flow-arrow-line" x1="2" y1="10" x2="28" y2="10"/><path class="flow-arrow-head" d="M26,5 Q29,10 26,15 L34,10 Z"/><circle class="flow-arrow-pulse" cx="2" cy="10" r="2.5"><animate attributeName="cx" values="2;28" dur="1.8s" begin="0.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.8s" begin="0.8s" repeatCount="indefinite"/></circle></svg>
+                    <div class="flow-step">BLOCK / CLEAR / FLAG</div>
+                    <svg class="flow-arrow-svg" viewBox="0 0 36 20"><line class="flow-arrow-line" x1="2" y1="10" x2="28" y2="10"/><path class="flow-arrow-head" d="M26,5 Q29,10 26,15 L34,10 Z"/><circle class="flow-arrow-pulse" cx="2" cy="10" r="2.5"><animate attributeName="cx" values="2;28" dur="1.8s" begin="1.2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.8s" begin="1.2s" repeatCount="indefinite"/></circle></svg>
+                    <div class="flow-step">Human Review</div>
+                    <svg class="flow-arrow-svg" viewBox="0 0 36 20"><line class="flow-arrow-line" x1="2" y1="10" x2="28" y2="10"/><path class="flow-arrow-head" d="M26,5 Q29,10 26,15 L34,10 Z"/><circle class="flow-arrow-pulse" cx="2" cy="10" r="2.5"><animate attributeName="cx" values="2;28" dur="1.8s" begin="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="1.8s" begin="1.6s" repeatCount="indefinite"/></circle></svg>
+                    <div class="flow-step">FAISS</div>
+                </div>
+                <p style="margin-top:14px;">
+                    Each flagged transaction is investigated by a <strong>Llama 3.2 agent</strong> running locally with 9 tools.
+                    When uncertain, it defers to <strong>human analysts via Slack</strong>.
+                    Every verdict — AI or human — is embedded in FAISS so future investigations learn from past decisions.
+                </p>
+                <div style="display:flex;gap:6px;margin-top:10px;">
+                    <span class="tag red">BLOCK</span>
+                    <span class="tag green">CLEAR</span>
+                    <span class="tag amber">FLAG FOR REVIEW</span>
+                </div>
+            </div>
+            <div>
+                <div class="code-block">
+<span class="comment"># ReAct Agent (Llama 3.2, 9 tools)</span>
+
+<span class="keyword">Thought:</span> $4,200 luxury watch in
+Bucharest. Account based in Ohio.
+
+<span class="keyword">Action:</span> <span class="fn">check_travel_feasibility</span>
+  Columbus, OH &rarr; Bucharest
+
+<span class="keyword">Obs:</span> 5,247 mi. Last txn 2hrs
+ago in Ohio. <span class="string">IMPOSSIBLE.</span>
+
+<span class="keyword">Action:</span> <span class="fn">find_similar_investigations</span>
+
+<span class="keyword">Obs:</span> 3 similar cases — all
+<span class="string">BLOCKED by human analysts.</span>
+
+<span class="keyword">Verdict:</span> <span style="color:#f87171;font-weight:700;">BLOCK</span> (confidence: 94%)
+<span class="comment"># Stored in FAISS for future use</span><span class="code-cursor"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: ARCHITECTURE — scaled iframe, full width, centered -->
+    <div class="slide" data-slide="2" style="padding:32px 48px;">
+        <div class="slide-label">Architecture<span class="slide-label-line"></span></div>
+        <div class="arch-container" id="archContainer">
+            <div class="arch-wrapper" id="archWrapper">
+                <iframe src="stack.html" id="archFrame" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: DEMO TRANSITION -->
+    <div class="slide end-slide" data-slide="3">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="slide-label">Live Demo<span class="slide-label-line"></span></div>
+        <h1>Aegis</h1>
+        <h2>Let's see it in action.</h2>
+        <p style="font-size:0.95rem;margin-top:28px;">TartanHacks 2026</p>
+        <div style="display:flex;gap:10px;margin-top:20px;justify-content:center;">
+            <span class="tag">github.com/jalenfran/cmu-hackathon</span>
+        </div>
+        <a href="/" style="display:inline-flex;align-items:center;gap:8px;margin-top:32px;padding:12px 28px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;text-decoration:none;font-size:1rem;font-weight:600;letter-spacing:0.5px;transition:all 0.25s ease;background:rgba(255,255,255,0.04);" onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.borderColor='rgba(255,255,255,0.2)'">
+            Visit Aegis &rarr;
+        </a>
+    </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+    <button onclick="navigate(-1)">&#8249;</button>
+    <div class="dots" id="dots"></div>
+    <button onclick="navigate(1)">&#8250;</button>
+    <div class="counter" id="counter"></div>
+</div>
+
+<div class="kbd-hint"><kbd>&#8592;</kbd> <kbd>&#8594;</kbd> navigate &nbsp; <kbd>F</kbd> fullscreen</div>
+
+<!-- Fullscreen toggle button -->
+<button class="fs-btn" id="fsBtn" title="Toggle Fullscreen (F)">
+    <svg id="fsIconExpand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+    </svg>
+    <svg id="fsIconShrink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+        <polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/>
+    </svg>
+</button>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    const progress = document.getElementById('progress');
+    let current = 0;
+    const total = slides.length;
+
+    for (let i = 0; i < total; i++) {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === 0 ? ' active' : '');
+        d.onclick = () => goTo(i);
+        dots.appendChild(d);
+    }
+    counter.textContent = `1 / ${total}`;
+    progress.style.width = `${(1 / total) * 100}%`;
+
+    function goTo(n) {
+        if (n < 0 || n >= total || n === current) return;
+        slides[current].classList.remove('active');
+        slides[current].classList.add('exit-left');
+        const prev = current;
+        current = n;
+        slides[current].classList.add('active');
+        document.querySelectorAll('.dot').forEach((d, i) => {
+            d.className = 'dot' + (i === current ? ' active' : '');
+        });
+        counter.textContent = `${current + 1} / ${total}`;
+        progress.style.width = `${((current + 1) / total) * 100}%`;
+        setTimeout(() => slides[prev].classList.remove('exit-left'), 400);
+    }
+
+    function navigate(dir) { goTo(current + dir); }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+        if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+        if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+        if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+    });
+
+    // Fullscreen
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+            document.exitFullscreen().catch(() => {});
+        }
+    }
+    document.getElementById('fsBtn').addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', () => {
+        const isFS = !!document.fullscreenElement;
+        document.getElementById('fsIconExpand').style.display = isFS ? 'none' : 'block';
+        document.getElementById('fsIconShrink').style.display = isFS ? 'block' : 'none';
+        // Re-scale architecture iframe when fullscreen changes
+        setTimeout(scaleArch, 200);
+        setTimeout(scaleArch, 600);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 60) navigate(diff > 0 ? 1 : -1);
+    });
+
+    // Scale the architecture iframe to fit; wrapper clips to avoid bottom cutoff
+    function scaleArch() {
+        const container = document.getElementById('archContainer');
+        const wrapper = document.getElementById('archWrapper');
+        const frame = document.getElementById('archFrame');
+        if (!container || !wrapper || !frame) return;
+        const cw = container.clientWidth;
+        const ch = container.clientHeight;
+        const h = 1100;
+        const scale = Math.min(cw / 1800, ch / h, 1);
+        wrapper.style.width = `${1800 * scale}px`;
+        wrapper.style.height = `${h * scale}px`;
+        frame.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', scaleArch);
+    // Run after a short delay so layout is settled
+    setTimeout(scaleArch, 100);
+    setTimeout(scaleArch, 500);
+</script>
+
+</body>
+</html>

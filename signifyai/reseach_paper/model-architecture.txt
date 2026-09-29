@@ -1,0 +1,141 @@
+Here is a quick explanation of the architecture of each model
+
+Facial Expression Model
+
+Input Layer
+- Input Shape: (48, 48, 1) for grayscale images
+
+Convolutional Blocks
+Block 1:
+- Conv2D (32 filters, 3x3 kernel)
+- BatchNorm + ReLU
+- Conv2D (32 filters, 3x3 kernel)
+- BatchNorm + ReLU
+- MaxPool (2x2)
+- Dropout (0.25)
+
+Block 2:
+- Conv2D (64 filters, 3x3 kernel)
+- BatchNorm + ReLU
+- Conv2D (64 filters, 3x3 kernel)
+- BatchNorm + ReLU
+- MaxPool (2x2)
+- Dropout (0.35)
+
+Block 3:
+- Conv2D (128 filters, 3x3 kernel)
+- BatchNorm + ReLU
+- Conv2D (128 filters, 3x3 kernel)
+- BatchNorm + ReLU
+- MaxPool (2x2)
+- Dropout (0.5)
+
+Dense Layers:
+- GlobalAveragePooling2D
+- Dense (64 units, ReLU)
+- BatchNorm
+- Dropout (0.5)
+- Dense (7 units, softmax)
+
+Compilation
+- Loss Function: categorical_crossentropy.
+- Optimizer: Adam with a learning rate of 0.001.
+- Metrics: accuracy.
+
+Data Augmentation
+- ImageDataGenerator: Applies random transformations to improve generalization.
+- Callbacks
+- EarlyStopping: Stops training if validation loss does not improve.
+- ReduceLROnPlateau: Reduces learning rate if validation loss plateaus.
+
+Gesture Classifier Model (LeapGestRecog)
+
+Input Layer
+- Input Shape: (128, 128, 1) for grayscale hand images.
+
+Simple Sequential Architecture
+
+Layer 1:
+- Conv2D (16 filters, 3x3 kernel, ReLU activation)
+- Input expects 128x128 grayscale images
+- Same padding maintains spatial dimensions
+
+Layer 2:
+- MaxPooling2D (2x2 pool size)
+- Reduces spatial dimensions by half
+- Output: 64x64x16
+
+Layer 3:
+- Flatten layer
+- Converts 3D feature maps to 1D vector
+- Preserves all feature information
+
+Layer 4:
+- Dense layer (32 units, ReLU activation)
+- Learns high-level feature combinations
+- Reduces dimensionality while maintaining key information
+
+Output Layer:
+- Dense layer (10 units, softmax activation)
+- One unit per gesture class
+- Outputs probability distribution across classes
+
+Training Configuration:
+- Loss Function: sparse_categorical_crossentropy
+- Optimizer: Adam
+- Learning Rate: 0.0005
+- Batch Size: 32
+- Epochs: 10
+
+Dataset Handling:
+- Images loaded in grayscale
+- Resized to 128x128
+- Normalized to [0,1] range
+- Train/Val/Test Split: 70/15/15
+
+Key Features:
+- Simpler architecture compared to WLASL/Emotion models
+- No dropout or batch normalization
+- Focused on real-time performance
+- Smaller parameter count for faster inference
+
+WLASL Model (ASL Recognition)
+
+Input Layer
+- Input Shape: (128, 128, 1) for grayscale images
+- Data normalized to [0,1] range
+
+Convolutional Architecture:
+Block 1:
+- Conv2D (32 filters, 3x3 kernel, ReLU)
+- MaxPool (2x2)
+- Output: 64x64x32
+
+Block 2:
+- Conv2D (64 filters, 3x3 kernel, ReLU)
+- MaxPool (2x2)
+- Output: 32x32x64
+
+Block 3:
+- Conv2D (128 filters, 3x3 kernel, ReLU)
+- MaxPool (2x2)
+- Output: 16x16x128
+
+Classification Head:
+- Flatten
+- Dense (128 units, ReLU)
+- Dropout (0.5)
+- Dense (36 units, softmax) for ASL classes
+
+Training Configuration:
+- Loss: sparse_categorical_crossentropy
+- Optimizer: Adam
+- Batch Size: 32
+- Epochs: 30
+- Train/Val Split: 80/20
+
+Dataset Processing:
+- Images loaded in grayscale
+- Resized to 128x128
+- No data augmentation
+- Simple normalization to [0,1]

@@ -1,0 +1,33 @@
+{
+  "type": "columns",
+  "mode": "grouped",
+  "format": "number",
+  "unit": "Edges before GraphBuilder drops any",
+  "categories": [
+    "JNK and cisplatin review (PMC13028654)",
+    "MK2/p38/p53 and IL-1b (PMC13072840)",
+    "SNORA64 and apoptosis (PMC13090758)"
+  ],
+  "series": [
+    {
+      "name": "Co-occurrence edges",
+      "values": [
+        190,
+        143,
+        44
+      ]
+    },
+    {
+      "name": "Verb-pattern edges",
+      "values": [
+        14,
+        10,
+        1
+      ]
+    }
+  ],
+  "title": "Regex Patterns Add Few Edges Next to Co-occurrence",
+  "subtitle": "Edges from each extractor on three open-access papers, before merging and before GraphBuilder drops edges",
+  "caption": "Pattern edges are 1 to 14 per paper against 44 to 190 co-occurrence edges. Each pattern needs a single word on either side of the verb, so multi-word or hyphenated entities such as NF-kB or A549 cells cannot match whole. Pattern edges that hit an existing co-occurrence pair replace its edge type.",
+  "source": "results/pipeline_measurements.json, from scripts/measure_pipeline.py, single run per paper"
+}

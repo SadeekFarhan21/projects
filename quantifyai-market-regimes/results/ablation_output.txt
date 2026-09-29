@@ -1,0 +1,14 @@
+baseline (as published) TR=56.68% Ann=11.88% Sharpe=1.10 MDD=-10.68%
+A no anomalies TR=50.01% Ann=10.67% Sharpe=0.96 MDD=-12.31%
+B causal rolling-z anomalies n= 30 TR=58.63% Ann=12.23% Sharpe=1.16 MDD=-10.58%
+C placebo random 31 anomaly days x200: TR mean 43.01 [p5 28.36, p95 58.69] Sharpe mean 0.93 [p5 0.65, p95 1.22] MDD mean -11.77 [worst -14.69, best -8.21]
+   share of placebo runs with Sharpe >= published: 0.145  TR >= published: 0.07
+D always-Bull + real anomalies TR=56.02% Ann=11.76% Sharpe=0.79 MDD=-22.56%
+E always-Bull + no anomalies (regime overlay only) TR=47.27% Ann=10.16% Sharpe=0.60 MDD=-29.01%
+F predicted=current Market_State TR=50.35% Ann=10.73% Sharpe=0.88 MDD=-19.55%
+test-period acc vs same-day state 0.6061507936507936  vs state 63d ahead 0.5682539682539682
+test-period pred dist {'Static': 664, 'Bull': 264, 'Bear': 80} state dist {'Bull': 599, 'Static': 337, 'Bear': 72}
+persistence acc (state_t == state_t+63) test 0.7343915343915344
+buy&hold: TR=52.97% Sharpe=0.58 MDD=-33.92%
+constant 50/50: TR=29.79% Sharpe=0.63 MDD=-18.03%
+constant 60/40: TR=34.70% Sharpe=0.61 MDD=-21.38%

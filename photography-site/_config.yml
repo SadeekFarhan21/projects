@@ -1,0 +1,26 @@
+# Base configs
+#baseurl: "https://farhan-photography.vercel.app/"
+baseurl: "" # Comment the above line and uncomment this to test the website locally
+image_fulls_loc: "/images/fulls"
+image_thumbs_loc: "/images/thumbs"
+google_analytics: "UA-46465113-2"
+
+# UI configs
+title: "Farhan's Photography"
+subtitle: "See the world through my eyes!"
+author: "Farhan Sadeek"
+header:
+ title: "Photography"
+ subtitle: "by Farhan Sadeek"
+footer:
+ name: "Hey there, my name is Farhan"
+ bio: "I am a high school senior who loves taking picture, and create websites."
+web_design: "AJ"
+# Configure which exif data to display
+# Tag is the actual exif tag, icon is a fontawesome icon. Use JSON notation without line breaks
+exif: '[{"tag": "Model", "icon": "camera-retro"}, {"tag": "FNumber", "icon": "dot-circle-o"}, {"tag": "ExposureTime", "icon": "clock-o"}, {"tag": "ISOSpeedRatings", "icon": "info-circle"}]'
+social_urls:
+  twitter: "https://twitter.com/FarhanSadeek21"
+  instagram: "https://www.instagram.com/farhan110.de"
+  linkedin: "https://www.linkedin.com/in/farhansadeekde110/"
+  github: "https://github.com/SadeekFarhan21"

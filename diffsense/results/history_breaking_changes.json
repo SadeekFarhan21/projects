@@ -1,0 +1,324 @@
+{
+ "summary": {
+  "n_commits": 17,
+  "commits_with_findings": 14,
+  "total_findings": 717
+ },
+ "rows": [
+  {
+   "commit": "380aa8d",
+   "author": "Jalen Francis",
+   "msg": "Initial commit",
+   "n_breaking": 0,
+   "types": [],
+   "severities": [],
+   "components": []
+  },
+  {
+   "commit": "da590d2",
+   "author": "Jayson Clark",
+   "msg": "New frontend",
+   "n_breaking": 23,
+   "types": [
+    "function_removal"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "handleRepositoryCloned",
+    "handleReset",
+    "if",
+    "catch",
+    "DriftAnalyzer"
+   ]
+  },
+  {
+   "commit": "0019d66",
+   "author": "Farhan Sadeek",
+   "msg": "added mobile responsive",
+   "n_breaking": 3,
+   "types": [
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "MainContent",
+    "MainContent",
+    "Sidebar"
+   ]
+  },
+  {
+   "commit": "1245771",
+   "author": "Jayson Clark",
+   "msg": "Setup VSCode extension",
+   "n_breaking": 0,
+   "types": [],
+   "severities": [],
+   "components": []
+  },
+  {
+   "commit": "f6a88b5",
+   "author": "Jalen Francis",
+   "msg": "updated architecture",
+   "n_breaking": 21,
+   "types": [
+    "behavioral_change",
+    "dependency_change",
+    "function_removal"
+   ],
+   "severities": [
+    "medium"
+   ],
+   "components": [
+    "root",
+    "clone_repository",
+    "analyze_file_drift",
+    "analyze_function_drift",
+    "health_check"
+   ]
+  },
+  {
+   "commit": "bb3bc4a",
+   "author": "Jayson Clark",
+   "msg": "Integrated API into web app",
+   "n_breaking": 3,
+   "types": [
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "MainContent",
+    "catch",
+    "MainContent"
+   ]
+  },
+  {
+   "commit": "eb75bb4",
+   "author": "Jayson Clark",
+   "msg": "Frontend updates",
+   "n_breaking": 3,
+   "types": [
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "ChatInterface",
+    "ChatInterface",
+    "Sidebar"
+   ]
+  },
+  {
+   "commit": "ce28f3a",
+   "author": "Farhan Sadeek",
+   "msg": "Markdown on chat implementation",
+   "n_breaking": 0,
+   "types": [],
+   "severities": [],
+   "components": []
+  },
+  {
+   "commit": "d60f7c6",
+   "author": "Jalen Francis",
+   "msg": "major updates to architecture",
+   "n_breaking": 72,
+   "types": [
+    "behavioral_change",
+    "dependency_change",
+    "function_removal",
+    "parameter_change",
+    "return_type_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "AnalyzeCommitRangeRequest",
+    "QueryRepositoryRequest",
+    "clone_repository",
+    "cleanup_old_repos",
+    "analyze_commit_breaking_changes"
+   ]
+  },
+  {
+   "commit": "a58992e",
+   "author": "Jayson Clark",
+   "msg": "Fixed bugs",
+   "n_breaking": 3,
+   "types": [
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "Sidebar",
+    "if",
+    "catch"
+   ]
+  },
+  {
+   "commit": "dd934c5",
+   "author": "Jalen Francis",
+   "msg": "integrated github oauth  and chat/analysis persistence",
+   "n_breaking": 95,
+   "types": [
+    "api_signature_change",
+    "behavioral_change",
+    "dependency_change",
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "test_clone_repository",
+    "test_analyze_commit",
+    "main",
+    "requests",
+    "json"
+   ]
+  },
+  {
+   "commit": "fac5584",
+   "author": "Jayson Clark",
+   "msg": "Integrated api 2.0",
+   "n_breaking": 11,
+   "types": [
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "ChatInterface",
+    "ChatInterface",
+    "handleRemoveRepository",
+    "handleLogout",
+    "handleGitHubLogin"
+   ]
+  },
+  {
+   "commit": "d473a23",
+   "author": "Jalen Francis",
+   "msg": "updates to database to support caching and accessing specific files an",
+   "n_breaking": 30,
+   "types": [
+    "behavioral_change",
+    "function_removal",
+    "parameter_change"
+   ],
+   "severities": [
+    "high",
+    "medium"
+   ],
+   "components": [
+    "list_repository_files",
+    "list_repository_files",
+    "get_repository_stats",
+    "get_repository_stats",
+    "cleanup_repository"
+   ]
+  },
+  {
+   "commit": "8fd4b85",
+   "author": "Jalen Francis",
+   "msg": "greatly improved rag model.",
+   "n_breaking": 7,
+   "types": [
+    "behavioral_change",
+    "function_removal"
+   ],
+   "severities": [
+    "medium"
+   ],
+   "components": [
+    "query_repository",
+    "RepositoryKnowledgeBase",
+    "RepositoryKnowledgeBase._analyze_query",
+    "RepositoryKnowledgeBase._gather_commit_context",
+    "setup.sh"
+   ]
+  },
+  {
+   "commit": "2bdd3f8",
+   "author": "Jalen Francis",
+   "msg": "added advanced breaking_change_detection",
+   "n_breaking": 2,
+   "types": [
+    "behavioral_change"
+   ],
+   "severities": [
+    "medium"
+   ],
+   "components": [
+    "get_file_content",
+    "compare_commits"
+   ]
+  },
+  {
+   "commit": "d395719",
+   "author": "Jalen Francis",
+   "msg": "integrated change deteciton in further models.",
+   "n_breaking": 440,
+   "types": [
+    "api_signature_change",
+    "behavioral_change",
+    "dependency_change",
+    "function_removal",
+    "parameter_change",
+    "return_type_change"
+   ],
+   "severities": [
+    "high",
+    "low",
+    "medium"
+   ],
+   "components": [
+    "AnalyzeFileRequest",
+    "AnalyzeFunctionRequest",
+    "analyze_file_drift",
+    "analyze_function_drift",
+    "send_chat_message"
+   ]
+  },
+  {
+   "commit": "011a1b8",
+   "author": "Jayson Clark",
+   "msg": "More complete frontend",
+   "n_breaking": 4,
+   "types": [
+    "parameter_change"
+   ],
+   "severities": [
+    "medium"
+   ],
+   "components": [
+    "ChatInterface",
+    "ChatMessage",
+    "MarkdownRenderer",
+    "getRepositoryFiles"
+   ]
+  }
+ ]
+}

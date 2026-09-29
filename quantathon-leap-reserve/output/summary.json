@@ -1,0 +1,1296 @@
+{
+  "inputs": {
+    "eligible_lines": 34269,
+    "lead_share": 0.7003705973328664,
+    "galvanized_share": 0.29962940266713356,
+    "mean_loan_amount": 7386.469375,
+    "mean_chosen_amount": 7582.02671875,
+    "active_loans_observed": 62.0,
+    "application_count_observed": 90.0,
+    "interest_count_observed": 127.0
+  },
+  "base": {
+    "loan_summary": {
+      "mean": 2489536.59,
+      "median": 2488412.51,
+      "p025": 2201800.65,
+      "p05": 2248153.39,
+      "p25": 2391683.79,
+      "p75": 2585366.81,
+      "p95": 2731561.3,
+      "p975": 2771970.36,
+      "minimum": 2019658.85,
+      "maximum": 3086064.81
+    },
+    "grant_summary": {
+      "mean": 3708632.58,
+      "median": 3703820.06,
+      "p025": 3359344.86,
+      "p05": 3420757.68,
+      "p25": 3586714.68,
+      "p75": 3831396.47,
+      "p95": 4005262.08,
+      "p975": 4063997.1,
+      "minimum": 3106821.22,
+      "maximum": 4470400.75
+    }
+  },
+  "optimistic": {
+    "loan_summary": {
+      "mean": 1823648.6,
+      "median": 1824631.15,
+      "p025": 1596022.16,
+      "p05": 1632103.97,
+      "p25": 1746629.53,
+      "p75": 1900826.23,
+      "p95": 2014587.75,
+      "p975": 2053680.78,
+      "minimum": 1397842.69,
+      "maximum": 2242176.36
+    },
+    "grant_summary": {
+      "mean": 2911694.11,
+      "median": 2910126.0,
+      "p025": 2609061.52,
+      "p05": 2661323.12,
+      "p25": 2804944.24,
+      "p75": 3011730.7,
+      "p95": 3163505.5,
+      "p975": 3207586.26,
+      "minimum": 2332806.15,
+      "maximum": 3459525.57
+    }
+  },
+  "conservative": {
+    "loan_summary": {
+      "mean": 3208309.76,
+      "median": 3203108.94,
+      "p025": 2887929.11,
+      "p05": 2939758.29,
+      "p25": 3096554.08,
+      "p75": 3320370.26,
+      "p95": 3487022.02,
+      "p975": 3546339.41,
+      "minimum": 2544469.63,
+      "maximum": 3867491.41
+    },
+    "grant_summary": {
+      "mean": 4445797.74,
+      "median": 4442092.48,
+      "p025": 4058600.91,
+      "p05": 4133100.56,
+      "p25": 4311000.12,
+      "p75": 4580218.79,
+      "p95": 4770919.69,
+      "p975": 4845400.15,
+      "minimum": 3754960.02,
+      "maximum": 5120620.04
+    }
+  },
+  "ml_enhanced": {
+    "loan_summary": {
+      "mean": 3170426.76,
+      "median": 3157975.93,
+      "p025": 2706680.1,
+      "p05": 2778588.16,
+      "p25": 2989701.59,
+      "p75": 3344174.19,
+      "p95": 3599806.25,
+      "p975": 3687877.27,
+      "minimum": 2451353.81,
+      "maximum": 3950562.84
+    },
+    "grant_summary": {
+      "mean": 5956772.16,
+      "median": 5960348.66,
+      "p025": 5487158.05,
+      "p05": 5555628.21,
+      "p25": 5782956.91,
+      "p75": 6124799.01,
+      "p95": 6337810.54,
+      "p975": 6422652.2,
+      "minimum": 5220746.24,
+      "maximum": 6904266.33
+    },
+    "eligible_parcels": 34269,
+    "simulation_count": 1000,
+    "model_metrics": {
+      "uptake": {
+        "val_loss": 0.00046557263704016805,
+        "correlation": 0.99691497709093,
+        "avg_predicted": 0.0023619632702320814,
+        "avg_target": 0.002398998010903597
+      },
+      "sale_hazard": {
+        "val_loss": 1.3408936865744181e-05,
+        "correlation": 0.9726026967986755,
+        "avg_predicted": 0.04336150363087654,
+        "avg_target": 0.04390449449419975
+      },
+      "cost": {
+        "val_loss": 2.007514238357544,
+        "r_squared": -8.545783996582031,
+        "avg_predicted": 9031.11328125,
+        "avg_target": 12728.9765625
+      }
+    },
+    "enhancements": [
+      "housing_market_regime_switching",
+      "weibull_survival_hazard",
+      "deadline_urgency_ramp",
+      "home_price_appreciation_equity",
+      "contractor_capacity_constraints",
+      "fund_investment_returns",
+      "loss_given_default"
+    ],
+    "regime_distribution": {
+      "Boom": 0.261,
+      "Normal": 0.488,
+      "Recession": 0.251
+    },
+    "avg_home_values": {
+      "2026": 69014.88,
+      "2027": 70606.2,
+      "2028": 72334.0,
+      "2029": 74183.88,
+      "2030": 76231.09,
+      "2031": 78128.88,
+      "2032": 80099.49,
+      "2033": 82208.55,
+      "2034": 84428.42,
+      "2035": 86597.31,
+      "2036": 89003.27,
+      "2037": 91604.9
+    },
+    "total_fund_income": 987854.95,
+    "total_recovery_losses": 7.17,
+    "avg_capacity_used": {
+      "2026": 76.9,
+      "2027": 71.4,
+      "2028": 65.8,
+      "2029": 62.6,
+      "2030": 60.5,
+      "2031": 61.6,
+      "2032": 64.9,
+      "2033": 55.8,
+      "2034": 43.0,
+      "2035": 28.7,
+      "2036": 14.4,
+      "2037": 0.0
+    },
+    "average_outflows": {
+      "2026": 718794.7,
+      "2027": 684890.42,
+      "2028": 643772.71,
+      "2029": 620292.69,
+      "2030": 604103.98,
+      "2031": 616185.58,
+      "2032": 649452.53,
+      "2033": 558189.56,
+      "2034": 429650.0,
+      "2035": 286980.0,
+      "2036": 144460.0,
+      "2037": 0.0
+    },
+    "average_inflows": {
+      "2026": 0.0,
+      "2027": 40513.12,
+      "2028": 82153.29,
+      "2029": 126710.82,
+      "2030": 167366.33,
+      "2031": 197783.74,
+      "2032": 232077.58,
+      "2033": 271031.09,
+      "2034": 301570.43,
+      "2035": 314366.52,
+      "2036": 329882.72,
+      "2037": 321836.49
+    },
+    "average_originations": {
+      "2026": 76.86,
+      "2027": 71.45,
+      "2028": 65.81,
+      "2029": 62.55,
+      "2030": 60.53,
+      "2031": 61.63,
+      "2032": 64.95,
+      "2033": 55.82,
+      "2034": 42.97,
+      "2035": 28.7,
+      "2036": 14.45,
+      "2037": 0.0
+    },
+    "average_repayments": {
+      "2026": 0.0,
+      "2027": 4.33,
+      "2028": 8.68,
+      "2029": 13.25,
+      "2030": 17.35,
+      "2031": 20.37,
+      "2032": 23.78,
+      "2033": 27.67,
+      "2034": 30.7,
+      "2035": 31.92,
+      "2036": 33.46,
+      "2037": 32.62
+    }
+  },
+  "markov": {
+    "expected_absorption_time": {
+      "from_active": 12.96,
+      "from_inherited": 11.11
+    },
+    "absorption_std_dev": {
+      "from_active": 12.29,
+      "from_inherited": 10.6
+    },
+    "half_life_years": 8.7,
+    "cohort_recovery_by_2037": {
+      "2026": 0.5836,
+      "2027": 0.5489,
+      "2028": 0.5112,
+      "2029": 0.4705,
+      "2030": 0.4265,
+      "2031": 0.3788,
+      "2032": 0.3273,
+      "2033": 0.2716,
+      "2034": 0.2114,
+      "2035": 0.1463,
+      "2036": 0.076,
+      "2037": 0.0
+    }
+  },
+  "deterministic": {
+    "funding_requirement": 2471551.13,
+    "mc_mean": 2489536.59,
+    "gap_pct": -0.72
+  },
+  "bootstrap": {
+    "loan": {
+      "mean": {
+        "point_estimate": 2489536.59,
+        "ci_lower": 2484206.71,
+        "ci_upper": 2494820.7,
+        "ci_width": 10613.99,
+        "standard_error": 2700.12
+      },
+      "median": {
+        "point_estimate": 2488412.51,
+        "ci_lower": 2481571.61,
+        "ci_upper": 2495563.9,
+        "ci_width": 13992.29,
+        "standard_error": 3486.22
+      },
+      "p95": {
+        "point_estimate": 2731561.3,
+        "ci_lower": 2716604.36,
+        "ci_upper": 2741432.72,
+        "ci_width": 24828.36,
+        "standard_error": 6193.89
+      }
+    },
+    "grant": {
+      "mean": {
+        "point_estimate": 3708632.58,
+        "ci_lower": 3702635.13,
+        "ci_upper": 3715578.45,
+        "ci_width": 12943.32,
+        "standard_error": 3285.48
+      },
+      "median": {
+        "point_estimate": 3703820.06,
+        "ci_lower": 3694089.35,
+        "ci_upper": 3713161.59,
+        "ci_width": 19072.24,
+        "standard_error": 4738.28
+      },
+      "p95": {
+        "point_estimate": 4005262.08,
+        "ci_lower": 3993646.42,
+        "ci_upper": 4021960.53,
+        "ci_width": 28314.11,
+        "standard_error": 6823.53
+      }
+    }
+  },
+  "tornado": {
+    "parameters": [
+      {
+        "parameter": "LEAP uptake start rate",
+        "field": "annual_trigger_start",
+        "optimistic_p95": 2209493.15,
+        "conservative_p95": 3196789.64,
+        "swing": 987296.49,
+        "abs_swing": 987296.49,
+        "optimistic_value": 0.0016,
+        "conservative_value": 0.0025,
+        "rank": 1
+      },
+      {
+        "parameter": "Schedule weighting",
+        "field": "schedule_weights",
+        "optimistic_p95": 2883516.21,
+        "conservative_p95": 2507511.73,
+        "swing": -376004.48,
+        "abs_swing": 376004.48,
+        "optimistic_value": "back-loaded",
+        "conservative_value": "front-loaded",
+        "rank": 2
+      },
+      {
+        "parameter": "Sale probability",
+        "field": "annual_sale_probability",
+        "optimistic_p95": 2641837.73,
+        "conservative_p95": 2856568.91,
+        "swing": 214731.18,
+        "abs_swing": 214731.18,
+        "optimistic_value": 0.065,
+        "conservative_value": 0.045,
+        "rank": 3
+      },
+      {
+        "parameter": "Cost inflation",
+        "field": "annual_cost_inflation",
+        "optimistic_p95": 2636274.69,
+        "conservative_p95": 2850350.0,
+        "swing": 214075.31,
+        "abs_swing": 214075.31,
+        "optimistic_value": 0.02,
+        "conservative_value": 0.04,
+        "rank": 4
+      },
+      {
+        "parameter": "LEAP uptake cap",
+        "field": "annual_trigger_cap",
+        "optimistic_p95": 2602266.53,
+        "conservative_p95": 2745925.74,
+        "swing": 143659.21,
+        "abs_swing": 143659.21,
+        "optimistic_value": 0.0024,
+        "conservative_value": 0.0035,
+        "rank": 5
+      },
+      {
+        "parameter": "Equity extraction prob.",
+        "field": "annual_equity_probability",
+        "optimistic_p95": 2651396.95,
+        "conservative_p95": 2790081.62,
+        "swing": 138684.67,
+        "abs_swing": 138684.67,
+        "optimistic_value": 0.028,
+        "conservative_value": 0.015,
+        "rank": 6
+      },
+      {
+        "parameter": "Inherited sale prob.",
+        "field": "inherited_sale_probability",
+        "optimistic_p95": 2734112.49,
+        "conservative_p95": 2744707.03,
+        "swing": 10594.54,
+        "abs_swing": 10594.54,
+        "optimistic_value": 0.1,
+        "conservative_value": 0.06,
+        "rank": 7
+      },
+      {
+        "parameter": "Inheritance probability",
+        "field": "annual_inheritance_probability",
+        "optimistic_p95": 2739564.31,
+        "conservative_p95": 2733047.04,
+        "swing": -6517.27,
+        "abs_swing": 6517.27,
+        "optimistic_value": 0.006,
+        "conservative_value": 0.012,
+        "rank": 8
+      }
+    ]
+  },
+  "npv": {
+    "discount_rates": {
+      "1%": {
+        "pv_outflows": 3570681.68,
+        "pv_inflows": 1451811.56,
+        "npv_net_cost": 2118870.12,
+        "pv_recovery_ratio": 0.4066,
+        "grant_npv_net_cost": 3570681.68,
+        "loan_savings_pv": 1451811.56
+      },
+      "2%": {
+        "pv_outflows": 3441706.03,
+        "pv_inflows": 1356139.69,
+        "npv_net_cost": 2085566.34,
+        "pv_recovery_ratio": 0.394,
+        "grant_npv_net_cost": 3441706.03,
+        "loan_savings_pv": 1356139.69
+      },
+      "3%": {
+        "pv_outflows": 3320975.78,
+        "pv_inflows": 1268560.09,
+        "npv_net_cost": 2052415.69,
+        "pv_recovery_ratio": 0.382,
+        "grant_npv_net_cost": 3320975.78,
+        "loan_savings_pv": 1268560.09
+      },
+      "4%": {
+        "pv_outflows": 3207830.19,
+        "pv_inflows": 1188275.86,
+        "npv_net_cost": 2019554.33,
+        "pv_recovery_ratio": 0.3704,
+        "grant_npv_net_cost": 3207830.19,
+        "loan_savings_pv": 1188275.86
+      },
+      "5%": {
+        "pv_outflows": 3101670.26,
+        "pv_inflows": 1114577.93,
+        "npv_net_cost": 1987092.32,
+        "pv_recovery_ratio": 0.3593,
+        "grant_npv_net_cost": 3101670.26,
+        "loan_savings_pv": 1114577.94
+      }
+    },
+    "recovery_milestones": {
+      "80%": {
+        "year": 2051,
+        "years_after_2037": 14
+      },
+      "90%": {
+        "year": 2059,
+        "years_after_2037": 22
+      }
+    },
+    "terminal_outstanding": 2152159.95,
+    "recovery_at_2037": 0.4197,
+    "extended_projection": [
+      {
+        "years_after_2037": 1,
+        "calendar_year": 2038,
+        "cumulative_recovery_fraction": 0.076,
+        "cumulative_recovery_dollars": 163564.16,
+        "still_outstanding": 1988595.8
+      },
+      {
+        "years_after_2037": 2,
+        "calendar_year": 2039,
+        "cumulative_recovery_fraction": 0.1463,
+        "cumulative_recovery_dollars": 314938.48,
+        "still_outstanding": 1837221.47
+      },
+      {
+        "years_after_2037": 3,
+        "calendar_year": 2040,
+        "cumulative_recovery_fraction": 0.2114,
+        "cumulative_recovery_dollars": 455007.45,
+        "still_outstanding": 1697152.5
+      },
+      {
+        "years_after_2037": 4,
+        "calendar_year": 2041,
+        "cumulative_recovery_fraction": 0.2716,
+        "cumulative_recovery_dollars": 584593.82,
+        "still_outstanding": 1567566.13
+      },
+      {
+        "years_after_2037": 5,
+        "calendar_year": 2042,
+        "cumulative_recovery_fraction": 0.3273,
+        "cumulative_recovery_dollars": 704462.63,
+        "still_outstanding": 1447697.32
+      },
+      {
+        "years_after_2037": 6,
+        "calendar_year": 2043,
+        "cumulative_recovery_fraction": 0.3788,
+        "cumulative_recovery_dollars": 815325.07,
+        "still_outstanding": 1336834.88
+      },
+      {
+        "years_after_2037": 7,
+        "calendar_year": 2044,
+        "cumulative_recovery_fraction": 0.4265,
+        "cumulative_recovery_dollars": 917842.04,
+        "still_outstanding": 1234317.91
+      },
+      {
+        "years_after_2037": 8,
+        "calendar_year": 2045,
+        "cumulative_recovery_fraction": 0.4705,
+        "cumulative_recovery_dollars": 1012627.52,
+        "still_outstanding": 1139532.43
+      },
+      {
+        "years_after_2037": 9,
+        "calendar_year": 2046,
+        "cumulative_recovery_fraction": 0.5112,
+        "cumulative_recovery_dollars": 1100251.78,
+        "still_outstanding": 1051908.17
+      },
+      {
+        "years_after_2037": 10,
+        "calendar_year": 2047,
+        "cumulative_recovery_fraction": 0.5489,
+        "cumulative_recovery_dollars": 1181244.28,
+        "still_outstanding": 970915.67
+      },
+      {
+        "years_after_2037": 11,
+        "calendar_year": 2048,
+        "cumulative_recovery_fraction": 0.5836,
+        "cumulative_recovery_dollars": 1256096.51,
+        "still_outstanding": 896063.44
+      },
+      {
+        "years_after_2037": 12,
+        "calendar_year": 2049,
+        "cumulative_recovery_fraction": 0.6158,
+        "cumulative_recovery_dollars": 1325264.57,
+        "still_outstanding": 826895.38
+      },
+      {
+        "years_after_2037": 13,
+        "calendar_year": 2050,
+        "cumulative_recovery_fraction": 0.6455,
+        "cumulative_recovery_dollars": 1389171.63,
+        "still_outstanding": 762988.32
+      },
+      {
+        "years_after_2037": 14,
+        "calendar_year": 2051,
+        "cumulative_recovery_fraction": 0.6729,
+        "cumulative_recovery_dollars": 1448210.2,
+        "still_outstanding": 703949.76
+      },
+      {
+        "years_after_2037": 15,
+        "calendar_year": 2052,
+        "cumulative_recovery_fraction": 0.6982,
+        "cumulative_recovery_dollars": 1502744.24,
+        "still_outstanding": 649415.71
+      },
+      {
+        "years_after_2037": 16,
+        "calendar_year": 2053,
+        "cumulative_recovery_fraction": 0.7217,
+        "cumulative_recovery_dollars": 1553111.22,
+        "still_outstanding": 599048.73
+      },
+      {
+        "years_after_2037": 17,
+        "calendar_year": 2054,
+        "cumulative_recovery_fraction": 0.7433,
+        "cumulative_recovery_dollars": 1599623.93,
+        "still_outstanding": 552536.02
+      },
+      {
+        "years_after_2037": 18,
+        "calendar_year": 2055,
+        "cumulative_recovery_fraction": 0.7632,
+        "cumulative_recovery_dollars": 1642572.23,
+        "still_outstanding": 509587.72
+      },
+      {
+        "years_after_2037": 19,
+        "calendar_year": 2056,
+        "cumulative_recovery_fraction": 0.7816,
+        "cumulative_recovery_dollars": 1682224.71,
+        "still_outstanding": 469935.25
+      },
+      {
+        "years_after_2037": 20,
+        "calendar_year": 2057,
+        "cumulative_recovery_fraction": 0.7987,
+        "cumulative_recovery_dollars": 1718830.13,
+        "still_outstanding": 433329.82
+      },
+      {
+        "years_after_2037": 21,
+        "calendar_year": 2058,
+        "cumulative_recovery_fraction": 0.8144,
+        "cumulative_recovery_dollars": 1752618.92,
+        "still_outstanding": 399541.03
+      },
+      {
+        "years_after_2037": 22,
+        "calendar_year": 2059,
+        "cumulative_recovery_fraction": 0.8288,
+        "cumulative_recovery_dollars": 1783804.44,
+        "still_outstanding": 368355.51
+      },
+      {
+        "years_after_2037": 23,
+        "calendar_year": 2060,
+        "cumulative_recovery_fraction": 0.8422,
+        "cumulative_recovery_dollars": 1812584.21,
+        "still_outstanding": 339575.75
+      },
+      {
+        "years_after_2037": 24,
+        "calendar_year": 2061,
+        "cumulative_recovery_fraction": 0.8546,
+        "cumulative_recovery_dollars": 1839141.06,
+        "still_outstanding": 313018.89
+      },
+      {
+        "years_after_2037": 25,
+        "calendar_year": 2062,
+        "cumulative_recovery_fraction": 0.8659,
+        "cumulative_recovery_dollars": 1863644.21,
+        "still_outstanding": 288515.74
+      },
+      {
+        "years_after_2037": 26,
+        "calendar_year": 2063,
+        "cumulative_recovery_fraction": 0.8764,
+        "cumulative_recovery_dollars": 1886250.24,
+        "still_outstanding": 265909.71
+      },
+      {
+        "years_after_2037": 27,
+        "calendar_year": 2064,
+        "cumulative_recovery_fraction": 0.8861,
+        "cumulative_recovery_dollars": 1907104.0,
+        "still_outstanding": 245055.95
+      },
+      {
+        "years_after_2037": 28,
+        "calendar_year": 2065,
+        "cumulative_recovery_fraction": 0.8951,
+        "cumulative_recovery_dollars": 1926339.48,
+        "still_outstanding": 225820.47
+      },
+      {
+        "years_after_2037": 29,
+        "calendar_year": 2066,
+        "cumulative_recovery_fraction": 0.9033,
+        "cumulative_recovery_dollars": 1944080.61,
+        "still_outstanding": 208079.34
+      },
+      {
+        "years_after_2037": 30,
+        "calendar_year": 2067,
+        "cumulative_recovery_fraction": 0.9109,
+        "cumulative_recovery_dollars": 1960441.99,
+        "still_outstanding": 191717.96
+      }
+    ]
+  },
+  "adaptive_funding": {
+    "base_p95": 2731561.3,
+    "paths_evaluated": 500,
+    "grid_size": 560,
+    "optimal_strategy": {
+      "solvency_rate": 0.95,
+      "topup_probability": 1.0,
+      "expected_total_capital": 2731561.3,
+      "initial_reserve": 1638936.78,
+      "topup_amount": 1092624.52,
+      "topup_threshold": 3
+    },
+    "savings_vs_base": 0.0,
+    "savings_pct": 0.0
+  },
+  "stress_tests": {
+    "base_p95": 2731561.3,
+    "simulation_count": 1000,
+    "scenarios": [
+      {
+        "scenario_name": "2029 Housing Crash",
+        "p95": 3139292.74,
+        "mean": 2879937.83,
+        "p95_increase_pct": 14.9,
+        "mean_increase_pct": 5.4,
+        "loan_summary": {
+          "mean": 2879937.83,
+          "median": 2880265.19,
+          "p025": 2589258.43,
+          "p05": 2640460.7,
+          "p25": 2773978.04,
+          "p75": 2976437.94,
+          "p95": 3139292.74,
+          "p975": 3178005.05,
+          "minimum": 2398192.23,
+          "maximum": 3356890.18
+        }
+      },
+      {
+        "scenario_name": "Surge Uptake",
+        "p95": 4975190.5,
+        "mean": 4664323.42,
+        "p95_increase_pct": 82.1,
+        "mean_increase_pct": 70.8,
+        "loan_summary": {
+          "mean": 4664323.42,
+          "median": 4665024.15,
+          "p025": 4281864.24,
+          "p05": 4352541.51,
+          "p25": 4527446.09,
+          "p75": 4798293.5,
+          "p95": 4975190.5,
+          "p975": 5033920.4,
+          "minimum": 3984438.17,
+          "maximum": 5275636.19
+        }
+      },
+      {
+        "scenario_name": "Perfect Storm",
+        "p95": 5754568.49,
+        "mean": 5401501.25,
+        "p95_increase_pct": 110.7,
+        "mean_increase_pct": 97.7,
+        "loan_summary": {
+          "mean": 5401501.25,
+          "median": 5391976.86,
+          "p025": 4982732.02,
+          "p05": 5044553.75,
+          "p25": 5259398.01,
+          "p75": 5550381.35,
+          "p95": 5754568.49,
+          "p975": 5808494.04,
+          "minimum": 4839501.72,
+          "maximum": 6132039.83
+        }
+      }
+    ]
+  },
+  "breakeven": {
+    "sweep_data": [
+      {
+        "trigger_rate": 0.0005,
+        "trigger_cap": 0.00075,
+        "p95": 767277.22,
+        "mean": 642677.64
+      },
+      {
+        "trigger_rate": 0.00074,
+        "trigger_cap": 0.00111,
+        "p95": 1066605.92,
+        "mean": 923291.71
+      },
+      {
+        "trigger_rate": 0.00097,
+        "trigger_cap": 0.00146,
+        "p95": 1398341.25,
+        "mean": 1226229.7
+      },
+      {
+        "trigger_rate": 0.00121,
+        "trigger_cap": 0.00182,
+        "p95": 1678741.83,
+        "mean": 1514567.98
+      },
+      {
+        "trigger_rate": 0.00145,
+        "trigger_cap": 0.00217,
+        "p95": 1993842.73,
+        "mean": 1808700.96
+      },
+      {
+        "trigger_rate": 0.00168,
+        "trigger_cap": 0.00253,
+        "p95": 2329454.98,
+        "mean": 2104193.08
+      },
+      {
+        "trigger_rate": 0.00192,
+        "trigger_cap": 0.00288,
+        "p95": 2595893.38,
+        "mean": 2388710.43
+      },
+      {
+        "trigger_rate": 0.00216,
+        "trigger_cap": 0.00324,
+        "p95": 2913683.13,
+        "mean": 2676824.61
+      },
+      {
+        "trigger_rate": 0.00239,
+        "trigger_cap": 0.00359,
+        "p95": 3216764.8,
+        "mean": 2965548.06
+      },
+      {
+        "trigger_rate": 0.00263,
+        "trigger_cap": 0.00395,
+        "p95": 3529356.79,
+        "mean": 3261933.39
+      },
+      {
+        "trigger_rate": 0.00287,
+        "trigger_cap": 0.0043,
+        "p95": 3846392.97,
+        "mean": 3548545.61
+      },
+      {
+        "trigger_rate": 0.00311,
+        "trigger_cap": 0.00466,
+        "p95": 4121817.61,
+        "mean": 3836020.19
+      },
+      {
+        "trigger_rate": 0.00334,
+        "trigger_cap": 0.00501,
+        "p95": 4422665.09,
+        "mean": 4127816.17
+      },
+      {
+        "trigger_rate": 0.00358,
+        "trigger_cap": 0.00537,
+        "p95": 4732973.25,
+        "mean": 4412667.93
+      },
+      {
+        "trigger_rate": 0.00382,
+        "trigger_cap": 0.00572,
+        "p95": 5042727.76,
+        "mean": 4699526.16
+      },
+      {
+        "trigger_rate": 0.00405,
+        "trigger_cap": 0.00608,
+        "p95": 5329515.76,
+        "mean": 4986454.99
+      },
+      {
+        "trigger_rate": 0.00429,
+        "trigger_cap": 0.00643,
+        "p95": 5630178.34,
+        "mean": 5266154.36
+      },
+      {
+        "trigger_rate": 0.00453,
+        "trigger_cap": 0.00679,
+        "p95": 5892337.75,
+        "mean": 5551930.53
+      },
+      {
+        "trigger_rate": 0.00476,
+        "trigger_cap": 0.00714,
+        "p95": 6211144.93,
+        "mean": 5833622.4
+      },
+      {
+        "trigger_rate": 0.005,
+        "trigger_cap": 0.0075,
+        "p95": 6494067.03,
+        "mean": 6106331.53
+      }
+    ],
+    "funding_level": 2731561.3,
+    "breakeven_rate": 0.00202,
+    "simulation_count_per_step": 500,
+    "steps": 20
+  },
+  "geographic": {
+    "zip_metrics": [
+      {
+        "zip_code": 43201,
+        "parcel_count": 1251,
+        "eligible_count": 1223,
+        "eligible_pct": 0.9776,
+        "avg_lead_risk": 0.8164,
+        "avg_assessed_value": 24015.72,
+        "avg_replacement_cost": 12993.82,
+        "owner_occupied_rate": 0.8074,
+        "renter_rate": 0.1926,
+        "material_breakdown": {
+          "lead": 849,
+          "galvanized": 374,
+          "copper": 28
+        },
+        "composite_risk_score": 0.9189
+      },
+      {
+        "zip_code": 43206,
+        "parcel_count": 1259,
+        "eligible_count": 1243,
+        "eligible_pct": 0.9873,
+        "avg_lead_risk": 0.8507,
+        "avg_assessed_value": 43645.89,
+        "avg_replacement_cost": 12859.84,
+        "owner_occupied_rate": 0.8237,
+        "renter_rate": 0.1763,
+        "material_breakdown": {
+          "galvanized": 293,
+          "lead": 950,
+          "copper": 16
+        },
+        "composite_risk_score": 0.8435
+      },
+      {
+        "zip_code": 43202,
+        "parcel_count": 1225,
+        "eligible_count": 1152,
+        "eligible_pct": 0.9404,
+        "avg_lead_risk": 0.736,
+        "avg_assessed_value": 32295.21,
+        "avg_replacement_cost": 12475.42,
+        "owner_occupied_rate": 0.8131,
+        "renter_rate": 0.1869,
+        "material_breakdown": {
+          "lead": 592,
+          "galvanized": 560,
+          "copper": 73
+        },
+        "composite_risk_score": 0.7859
+      },
+      {
+        "zip_code": 43210,
+        "parcel_count": 1298,
+        "eligible_count": 839,
+        "eligible_pct": 0.6464,
+        "avg_lead_risk": 0.5219,
+        "avg_assessed_value": 65343.94,
+        "avg_replacement_cost": 11937.32,
+        "owner_occupied_rate": 0.7982,
+        "renter_rate": 0.2018,
+        "material_breakdown": {
+          "copper": 459,
+          "lead": 151,
+          "galvanized": 688
+        },
+        "composite_risk_score": 0.5486
+      },
+      {
+        "zip_code": 43230,
+        "parcel_count": 1235,
+        "eligible_count": 428,
+        "eligible_pct": 0.3466,
+        "avg_lead_risk": 0.3824,
+        "avg_assessed_value": 87059.28,
+        "avg_replacement_cost": 13269.35,
+        "owner_occupied_rate": 0.804,
+        "renter_rate": 0.196,
+        "material_breakdown": {
+          "copper": 807,
+          "galvanized": 395,
+          "lead": 33
+        },
+        "composite_risk_score": 0.4316
+      },
+      {
+        "zip_code": 43220,
+        "parcel_count": 1214,
+        "eligible_count": 566,
+        "eligible_pct": 0.4662,
+        "avg_lead_risk": 0.4306,
+        "avg_assessed_value": 159056.22,
+        "avg_replacement_cost": 13069.65,
+        "owner_occupied_rate": 0.8064,
+        "renter_rate": 0.1936,
+        "material_breakdown": {
+          "galvanized": 518,
+          "copper": 648,
+          "lead": 48
+        },
+        "composite_risk_score": 0.3742
+      },
+      {
+        "zip_code": 43215,
+        "parcel_count": 1212,
+        "eligible_count": 250,
+        "eligible_pct": 0.2063,
+        "avg_lead_risk": 0.3023,
+        "avg_assessed_value": 106656.88,
+        "avg_replacement_cost": 12925.92,
+        "owner_occupied_rate": 0.8218,
+        "renter_rate": 0.1782,
+        "material_breakdown": {
+          "copper": 962,
+          "galvanized": 239,
+          "lead": 11
+        },
+        "composite_risk_score": 0.2233
+      },
+      {
+        "zip_code": 43221,
+        "parcel_count": 1306,
+        "eligible_count": 356,
+        "eligible_pct": 0.2726,
+        "avg_lead_risk": 0.3433,
+        "avg_assessed_value": 214623.21,
+        "avg_replacement_cost": 12363.33,
+        "owner_occupied_rate": 0.8055,
+        "renter_rate": 0.1945,
+        "material_breakdown": {
+          "galvanized": 339,
+          "copper": 950,
+          "lead": 17
+        },
+        "composite_risk_score": 0.1465
+      }
+    ],
+    "total_parcels": 10000,
+    "zip_count": 8
+  },
+  "voi": {
+    "parameters": [
+      {
+        "parameter": "LEAP uptake start rate",
+        "field": "annual_trigger_start",
+        "swing": 987296.49,
+        "variance_share": 0.781,
+        "dollar_voi": 19390.75,
+        "rank": 1
+      },
+      {
+        "parameter": "Schedule weighting",
+        "field": "schedule_weights",
+        "swing": -376004.48,
+        "variance_share": 0.1133,
+        "dollar_voi": 2812.45,
+        "rank": 2
+      },
+      {
+        "parameter": "Sale probability",
+        "field": "annual_sale_probability",
+        "swing": 214731.18,
+        "variance_share": 0.0369,
+        "dollar_voi": 917.25,
+        "rank": 3
+      },
+      {
+        "parameter": "Cost inflation",
+        "field": "annual_cost_inflation",
+        "swing": 214075.31,
+        "variance_share": 0.0367,
+        "dollar_voi": 911.66,
+        "rank": 4
+      },
+      {
+        "parameter": "LEAP uptake cap",
+        "field": "annual_trigger_cap",
+        "swing": 143659.21,
+        "variance_share": 0.0165,
+        "dollar_voi": 410.55,
+        "rank": 5
+      },
+      {
+        "parameter": "Equity extraction prob.",
+        "field": "annual_equity_probability",
+        "swing": 138684.67,
+        "variance_share": 0.0154,
+        "dollar_voi": 382.61,
+        "rank": 6
+      },
+      {
+        "parameter": "Inherited sale prob.",
+        "field": "inherited_sale_probability",
+        "swing": 10594.54,
+        "variance_share": 0.0001,
+        "dollar_voi": 2.23,
+        "rank": 7
+      },
+      {
+        "parameter": "Inheritance probability",
+        "field": "annual_inheritance_probability",
+        "swing": -6517.27,
+        "variance_share": 0.0,
+        "dollar_voi": 0.84,
+        "rank": 8
+      }
+    ],
+    "total_ci_width_p95": 24828.36,
+    "total_voi_dollars": 24828.36,
+    "base_p95": 2731561.3
+  },
+  "monitoring": {
+    "cumulative_originations_2028_p75": 193,
+    "cumulative_originations_2028_median": 183,
+    "avg_loan_size_p75": 8311.82,
+    "avg_loan_size_median": 8251.96,
+    "cumulative_repayments_2029_p25": 23,
+    "cumulative_repayments_2029_median": 27,
+    "trigger_descriptions": {
+      "originations_2028": "If cumulative originations by end of 2028 exceed p75, consider accelerating reserve top-up.",
+      "avg_loan_size": "If average funded amount exceeds p75, cost inflation is running hotter than modeled.",
+      "repayments_2029": "If cumulative repayments by end of 2029 fall below p25, repayment assumptions may be optimistic."
+    }
+  },
+  "robustness": {
+    "1%": {
+      "npv_net_cost": 2118870.12,
+      "pct_change_from_base": 3.24
+    },
+    "2%": {
+      "npv_net_cost": 2085566.34,
+      "pct_change_from_base": 1.62
+    },
+    "3%": {
+      "npv_net_cost": 2052415.69,
+      "pct_change_from_base": 0.0
+    },
+    "4%": {
+      "npv_net_cost": 2019554.33,
+      "pct_change_from_base": -1.6
+    },
+    "5%": {
+      "npv_net_cost": 1987092.32,
+      "pct_change_from_base": -3.18
+    }
+  },
+  "validation": {
+    "mc_mean": 2489536.59,
+    "mc_p95": 2731561.3,
+    "deterministic_funding": 2471551.13,
+    "det_mc_gap_pct": -0.72,
+    "det_within_bootstrap_ci": false,
+    "bootstrap_ci_mean": {
+      "point_estimate": 2489536.59,
+      "ci_lower": 2484206.71,
+      "ci_upper": 2494820.7,
+      "ci_width": 10613.99,
+      "standard_error": 2700.12
+    },
+    "bootstrap_ci_p95": {
+      "point_estimate": 2731561.3,
+      "ci_lower": 2716604.36,
+      "ci_upper": 2741432.72,
+      "ci_width": 24828.36,
+      "standard_error": 6193.89
+    },
+    "coefficient_of_variation": 0.0011,
+    "simulation_count": 3000,
+    "assessment": "PASS"
+  },
+  "histogram": {
+    "bin_edges": [
+      2019658.85,
+      2086309.22,
+      2152959.6,
+      2219609.97,
+      2286260.34,
+      2352910.71,
+      2419561.08,
+      2486211.46,
+      2552861.83,
+      2619512.2,
+      2686162.58,
+      2752812.95,
+      2819463.32,
+      2886113.69,
+      2952764.06,
+      3019414.44,
+      3086064.81
+    ],
+    "counts": [
+      13,
+      26,
+      57,
+      126,
+      288,
+      446,
+      520,
+      526,
+      439,
+      288,
+      168,
+      67,
+      25,
+      9,
+      1,
+      1
+    ],
+    "mean": 2489536.59
+  },
+  "cross_validation": {
+    "det_outflows": {
+      "2026": 470813.56,
+      "2027": 467187.9,
+      "2028": 457017.55,
+      "2029": 439081.03,
+      "2030": 411973.66,
+      "2031": 377799.66,
+      "2032": 335631.37,
+      "2033": 284443.75,
+      "2034": 227744.15,
+      "2035": 155067.91,
+      "2036": 79605.87,
+      "2037": 0.0
+    },
+    "det_inflows": {
+      "2026": 0.0,
+      "2027": 35781.83,
+      "2028": 68621.42,
+      "2029": 98235.41,
+      "2030": 124269.66,
+      "2031": 146290.59,
+      "2032": 164057.69,
+      "2033": 177278.73,
+      "2034": 185606.15,
+      "2035": 188985.6,
+      "2036": 186572.19,
+      "2037": 178587.19
+    },
+    "mc_outflows": {
+      "2026": 470298.02,
+      "2027": 466559.55,
+      "2028": 457481.63,
+      "2029": 439481.62,
+      "2030": 412120.75,
+      "2031": 377160.54,
+      "2032": 338343.46,
+      "2033": 284755.39,
+      "2034": 228318.07,
+      "2035": 155211.32,
+      "2036": 78902.22,
+      "2037": 0.0
+    },
+    "mc_inflows": {
+      "2026": 0.0,
+      "2027": 35959.88,
+      "2028": 68890.73,
+      "2029": 98328.99,
+      "2030": 124363.82,
+      "2031": 146843.52,
+      "2032": 164120.87,
+      "2033": 178006.71,
+      "2034": 186089.65,
+      "2035": 189068.31,
+      "2036": 186067.43,
+      "2037": 178732.71
+    }
+  },
+  "cashflow": {
+    "outflows": {
+      "2026": 470298.02,
+      "2027": 466559.55,
+      "2028": 457481.63,
+      "2029": 439481.62,
+      "2030": 412120.75,
+      "2031": 377160.54,
+      "2032": 338343.46,
+      "2033": 284755.39,
+      "2034": 228318.07,
+      "2035": 155211.32,
+      "2036": 78902.22,
+      "2037": 0.0
+    },
+    "inflows": {
+      "2026": 0.0,
+      "2027": 35959.88,
+      "2028": 68890.73,
+      "2029": 98328.99,
+      "2030": 124363.82,
+      "2031": 146843.52,
+      "2032": 164120.87,
+      "2033": 178006.71,
+      "2034": 186089.65,
+      "2035": 189068.31,
+      "2036": 186067.43,
+      "2037": 178732.71
+    },
+    "cumulative_inflows": {
+      "2026": 0.0,
+      "2027": 35959.88,
+      "2028": 104850.61,
+      "2029": 203179.6,
+      "2030": 327543.42,
+      "2031": 474386.95,
+      "2032": 638507.82,
+      "2033": 816514.53,
+      "2034": 1002604.18,
+      "2035": 1191672.49,
+      "2036": 1377739.92,
+      "2037": 1556472.63
+    }
+  }
+}

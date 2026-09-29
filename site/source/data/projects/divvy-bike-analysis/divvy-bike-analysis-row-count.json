@@ -1,0 +1,14 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Trips",
+  "title": "Two Row Counts for the Same Year",
+  "subtitle": "Prose in index.qmd against the sum of the weekday chart labels",
+  "legendLabels": { "emphasis": "Counted from a chart", "other": "Stated in the prose" },
+  "rows": [
+    { "label": "Prose: member plus casual", "value": 5667986, "detail": "3,127,293 members and 2,540,693 casual riders" },
+    { "label": "Sum of weekday chart labels", "value": 5860568, "emphasis": true, "detail": "192,582 more than the prose total. The donut in the site reads 5.86M Total Rides" }
+  ],
+  "caption": "Both numbers cannot be the row count of the same data frame. I could not settle which is right, because the 12 CSVs are not in the repository.",
+  "source": "results/consistency_check.txt from python3 results/check.py"
+}

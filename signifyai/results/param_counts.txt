@@ -1,0 +1,4 @@
+gesture (10 classes): total=2,097,674 trainable=2,097,674
+asl (29 classes, current code): total=3,307,805 trainable=3,307,805
+asl (36 classes, paper-era): total=3,308,708 trainable=3,308,708
+emotion (7 classes): total=914,151 trainable=912,103

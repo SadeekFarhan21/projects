@@ -1,0 +1,184 @@
+{
+ "summary": {
+  "model": "microsoft/codebert-base",
+  "n_commits": 17,
+  "threshold": 0.3,
+  "n_over_threshold_vs_prev": 0,
+  "drift_vs_prev_min": 0.0135,
+  "drift_vs_prev_median": 0.02415,
+  "drift_vs_prev_max": 0.0762,
+  "embedding_dim": 768
+ },
+ "rows": [
+  {
+   "commit": "380aa8d",
+   "author": "Jalen Francis",
+   "msg": "Initial commit",
+   "files": 17,
+   "added": 2585,
+   "removed": 0,
+   "drift_vs_prev": null,
+   "drift_vs_first": null
+  },
+  {
+   "commit": "da590d2",
+   "author": "Jayson Clark",
+   "msg": "New frontend",
+   "files": 18,
+   "added": 1401,
+   "removed": 897,
+   "drift_vs_prev": 0.0181,
+   "drift_vs_first": 0.0181
+  },
+  {
+   "commit": "0019d66",
+   "author": "Farhan Sadeek",
+   "msg": "added mobile responsive",
+   "files": 3,
+   "added": 166,
+   "removed": 50,
+   "drift_vs_prev": 0.031,
+   "drift_vs_first": 0.0591
+  },
+  {
+   "commit": "1245771",
+   "author": "Jayson Clark",
+   "msg": "Setup VSCode extension",
+   "files": 6,
+   "added": 20408,
+   "removed": 0,
+   "drift_vs_prev": 0.0239,
+   "drift_vs_first": 0.0203
+  },
+  {
+   "commit": "f6a88b5",
+   "author": "Jalen Francis",
+   "msg": "updated architecture",
+   "files": 7,
+   "added": 1574,
+   "removed": 114,
+   "drift_vs_prev": 0.0226,
+   "drift_vs_first": 0.0434
+  },
+  {
+   "commit": "bb3bc4a",
+   "author": "Jayson Clark",
+   "msg": "Integrated API into web app",
+   "files": 9,
+   "added": 1063,
+   "removed": 201,
+   "drift_vs_prev": 0.0162,
+   "drift_vs_first": 0.0515
+  },
+  {
+   "commit": "eb75bb4",
+   "author": "Jayson Clark",
+   "msg": "Frontend updates",
+   "files": 5,
+   "added": 522,
+   "removed": 190,
+   "drift_vs_prev": 0.0244,
+   "drift_vs_first": 0.0213
+  },
+  {
+   "commit": "ce28f3a",
+   "author": "Farhan Sadeek",
+   "msg": "Markdown on chat implementation",
+   "files": 2,
+   "added": 189,
+   "removed": 10,
+   "drift_vs_prev": 0.0165,
+   "drift_vs_first": 0.0466
+  },
+  {
+   "commit": "d60f7c6",
+   "author": "Jalen Francis",
+   "msg": "major updates to architecture",
+   "files": 8,
+   "added": 3028,
+   "removed": 762,
+   "drift_vs_prev": 0.0223,
+   "drift_vs_first": 0.0196
+  },
+  {
+   "commit": "a58992e",
+   "author": "Jayson Clark",
+   "msg": "Fixed bugs",
+   "files": 4,
+   "added": 340,
+   "removed": 292,
+   "drift_vs_prev": 0.0141,
+   "drift_vs_first": 0.0159
+  },
+  {
+   "commit": "dd934c5",
+   "author": "Jalen Francis",
+   "msg": "integrated github oauth  and chat/analysis persistence",
+   "files": 8,
+   "added": 1929,
+   "removed": 996,
+   "drift_vs_prev": 0.0135,
+   "drift_vs_first": 0.0069
+  },
+  {
+   "commit": "fac5584",
+   "author": "Jayson Clark",
+   "msg": "Integrated api 2.0",
+   "files": 13,
+   "added": 1680,
+   "removed": 1143,
+   "drift_vs_prev": 0.0251,
+   "drift_vs_first": 0.0347
+  },
+  {
+   "commit": "d473a23",
+   "author": "Jalen Francis",
+   "msg": "updates to database to support caching and accessing specific files an",
+   "files": 2,
+   "added": 1045,
+   "removed": 29,
+   "drift_vs_prev": 0.0484,
+   "drift_vs_first": 0.025
+  },
+  {
+   "commit": "8fd4b85",
+   "author": "Jalen Francis",
+   "msg": "greatly improved rag model.",
+   "files": 6,
+   "added": 3420,
+   "removed": 65,
+   "drift_vs_prev": 0.0354,
+   "drift_vs_first": 0.0603
+  },
+  {
+   "commit": "2bdd3f8",
+   "author": "Jalen Francis",
+   "msg": "added advanced breaking_change_detection",
+   "files": 2,
+   "added": 1746,
+   "removed": 23,
+   "drift_vs_prev": 0.0314,
+   "drift_vs_first": 0.0678
+  },
+  {
+   "commit": "d395719",
+   "author": "Jalen Francis",
+   "msg": "integrated change deteciton in further models.",
+   "files": 9,
+   "added": 5031,
+   "removed": 5038,
+   "drift_vs_prev": 0.0616,
+   "drift_vs_first": 0.0151
+  },
+  {
+   "commit": "011a1b8",
+   "author": "Jayson Clark",
+   "msg": "More complete frontend",
+   "files": 23,
+   "added": 5205,
+   "removed": 552,
+   "drift_vs_prev": 0.0762,
+   "drift_vs_first": 0.0719
+  }
+ ]
+}

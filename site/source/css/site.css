@@ -157,6 +157,12 @@ html .post-content .table-wrap :is(th, td) {
   padding-right: var(--block-pad);
   text-align: start;
 }
+/* Cells line up at the top: when a narrow screen wraps one cell to several
+   lines, its neighbours' first lines stay level with its first line instead
+   of floating to the middle of the row. */
+html .post-content .table-wrap td {
+  vertical-align: top;
+}
 
 /* Collapsible sections use the shared block frame, inset and gap like every
    other block (consecutive ones are spaced like any two blocks). Their text is
@@ -280,11 +286,22 @@ html .post-content li {
   line-height: 1.7;
 }
 
-/* Chart source and hint lines stay small inside post text. */
-html .post-content .fig .fig-source,
+/* Chart text inside post text (sizes in figures.css). The theme's
+   `.post-content p` color and `.post-content figcaption` centring outrank the
+   figures.css rules, which left the source line darker than the caption and
+   the caption centred over left-aligned lines. */
 html .post-content .fig figcaption {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.6;
+  text-align: left;
+}
+html .post-content .fig .fig-source,
+html .post-content .fig .fig-hint {
+  color: var(--muted-foreground);
+}
+html .post-content .fig .fig-source {
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 html .post-content .fig .fig-hint {
   font-size: 0.75rem;
@@ -477,10 +494,12 @@ html .post-preview a.tag-pill {
   font-size: 0.75rem;
   padding: 0.1rem 0.6rem;
 }
-/* The home page list shows the reading time (bold) where the date was. */
+/* The home page list shows each post's date on the right (the project's
+   start, see tools/post-dates.json); the reading time is in the post header. */
 html .post-preview .post-time {
-  color: #1f2937 !important;
-  font-weight: 700;
+  color: #5b6472 !important;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
@@ -555,6 +574,61 @@ html .post-content :is(p, li, td, th, blockquote, dd, figcaption) a:not(.tag-pil
 html .post-content :is(p, li, td, th, blockquote, dd, figcaption) a:not(.tag-pill):not(.excal-link):is(:hover, :focus-visible) {
   text-decoration-thickness: 2px;
 }
+/* Citations: scripts/cite-inline.js renders [3] inline on the baseline at
+   the size of the surrounding text, and marks the References list
+   (ol.references), whose numbers sit flush left (after "Lists hang"). */
+html .post-content a.cite {
+  font-size: inherit;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+/* No underline on citations, even on hover: the brackets and link color
+   already mark them. Matches the running-text link rules' specificity. */
+html .post-content :is(p, li, td, th, blockquote, dd, figcaption) a.cite:not(.tag-pill):not(.excal-link),
+html .post-content :is(p, li, td, th, blockquote, dd, figcaption) a.cite:not(.tag-pill):not(.excal-link):is(:hover, :focus-visible) {
+  text-decoration: none;
+  border-bottom: 0;
+}
+/* Lists hang: the marker sits in a gutter at the text column's left edge
+   and every line of an item, wrapped ones included, starts at the same x.
+   The theme gave .no-indent lists text-indent: 2em !important with no
+   padding and inside markers (a "• " ::before on ul), so the first line of
+   each item started 30px in and its wrapped lines fell back under, and left
+   of, the marker. The gutter fits a two-digit number ("24.", References).
+   Nested lists hang the same way inside their parent item. .post-tags is the
+   tag-pill row, which is a list too but not text. */
+html .post-content :is(ul, ol):not(.post-tags) {
+  margin-left: 0;
+  padding-left: 1.75em !important;
+  text-indent: 0 !important;
+}
+html .post-content :is(ul, ol):not(.post-tags) > li {
+  text-indent: 0;
+  list-style-position: outside;
+}
+html .post-content ul:not(.post-tags) > li {
+  list-style-type: disc;
+}
+html .post-content ul:not(.post-tags) > li::before {
+  content: none;
+}
+html .post-content :is(ul, ol):not(.post-tags) > li::marker {
+  font-variant-numeric: tabular-nums;
+}
+/* Except References: the owner wants those numbers flush with the text
+   column's left edge, not hung in a gutter, so the number sits inline at
+   x = 0 and wrapped lines return to that edge. */
+html .post-content ol.references:not(.post-tags) {
+  padding-left: 0 !important;
+}
+html .post-content ol.references:not(.post-tags) > li {
+  list-style-position: inside;
+}
+/* Blockquotes span the text column like every other block (the theme inset
+   them 1em on both sides); the left rule and tint mark them. */
+html .post-content blockquote {
+  margin: var(--block-gap) 0;
+}
 html .toc-article a,
 html .toc-article .toc-text {
   color: #5b6472;
@@ -571,7 +645,7 @@ html .toc-article a.is-trail .toc-text {
 html .footer-copyright,
 html .footer-copyright a,
 html .archive li span,
-html .archives-container .one-tag-list ul li span,
+html .archives-container .one-tag-list ul li > span,
 html .notfound .notfound-desc,
 html .post-preview .post-time {
   color: #5b6472 !important;
@@ -826,4 +900,65 @@ html .post-list-pager button:focus-visible {
 html .post-list-status {
   color: #4b5563;
   font-size: 0.9375rem;
+}
+
+/* Archive and tag lists (archive.ejs). The theme's `ul li span` date rule also
+   matched the span inside each title link, so titles were set at the date's
+   14px, light weight and 45px min-width, and read like grey dates. Titles get
+   body-weight ink here; dates keep the muted tabular style. The list starts at
+   the year heading's edge instead of the default 40px (1em on phones) indent,
+   and dates and titles share a baseline when a title wraps. */
+html .archives-container .one-tag-list ul {
+  margin: 0;
+  padding-left: 0;
+}
+html .archives-container .one-tag-list ul li {
+  align-items: baseline;
+  margin-bottom: 4px;
+  padding: 6px 0;
+}
+html .archives-container .one-tag-list ul li > span {
+  flex: none;
+  min-width: 48px;
+  font-variant-numeric: tabular-nums;
+}
+html .archives-container .one-tag-list ul li a {
+  line-height: 1.5;
+}
+html .archives-container .one-tag-list ul li a span {
+  margin-right: 0;
+  min-width: 0;
+  color: #2f3339;
+  font-size: 16px;
+  font-weight: 450;
+}
+@media screen and (max-width: 680px) {
+  html .archives-container .one-tag-list ul li a span {
+    font-size: 15px;
+  }
+}
+/* post-list.js pages the archive by setting hidden on rows, but the theme's
+   display: flex on those rows overrode the attribute and kept them on screen. */
+html .archives-container [hidden] {
+  display: none !important;
+}
+
+/* Post header: a GitHub mark after the reading time links to the project's
+   code (front-matter `code:`, set by tools/apply-post-dates.py). */
+html .post-container .post-meta .post-code {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  color: #334155;
+  border-bottom: 0;
+  text-decoration: none;
+  vertical-align: -0.15em;
+}
+html .post-container .post-meta .post-code:is(:hover, :focus-visible) {
+  color: #006cac;
+}
+/* Tag pills in a post's header were drawn at the theme's post-meta weight
+   (350) while the home list's are 650; match the home list. */
+html .post-container .post-meta a.tag-pill {
+  font-weight: 650;
 }

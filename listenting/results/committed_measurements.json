@@ -1,0 +1,129 @@
+{
+ "chapters": {
+  "1": {
+   "sentences": 22,
+   "idiom_tags": 26,
+   "en_filled": 0,
+   "gloss_filled": 22,
+   "synthetic_duration_s": 88.08,
+   "hasAudio": false,
+   "real_audio_s": 230.43,
+   "audio_bytes": 3722279,
+   "real_over_synthetic": 2.62
+  },
+  "2": {
+   "sentences": 18,
+   "idiom_tags": 7,
+   "en_filled": 0,
+   "gloss_filled": 16,
+   "synthetic_duration_s": 85.83,
+   "hasAudio": false,
+   "real_audio_s": 213.84,
+   "audio_bytes": 3456875,
+   "real_over_synthetic": 2.49
+  },
+  "3": {
+   "sentences": 18,
+   "idiom_tags": 14,
+   "en_filled": 0,
+   "gloss_filled": 14,
+   "synthetic_duration_s": 107.57,
+   "hasAudio": false,
+   "real_audio_s": 278.18,
+   "audio_bytes": 4486309,
+   "real_over_synthetic": 2.59
+  },
+  "4": {
+   "sentences": 19,
+   "idiom_tags": 9,
+   "en_filled": 0,
+   "gloss_filled": 19,
+   "synthetic_duration_s": 77.94,
+   "hasAudio": false,
+   "real_audio_s": 221.88,
+   "audio_bytes": 3585607,
+   "real_over_synthetic": 2.85
+  },
+  "5": {
+   "sentences": 20,
+   "idiom_tags": 11,
+   "en_filled": 0,
+   "gloss_filled": 19,
+   "synthetic_duration_s": 87.67,
+   "hasAudio": false
+  },
+  "6": {
+   "sentences": 31,
+   "idiom_tags": 9,
+   "en_filled": 0,
+   "gloss_filled": 26,
+   "synthetic_duration_s": 151.29,
+   "hasAudio": false
+  },
+  "7": {
+   "sentences": 23,
+   "idiom_tags": 16,
+   "en_filled": 0,
+   "gloss_filled": 23,
+   "synthetic_duration_s": 118.92,
+   "hasAudio": false
+  },
+  "8": {
+   "sentences": 9,
+   "idiom_tags": 10,
+   "en_filled": 0,
+   "gloss_filled": 9,
+   "synthetic_duration_s": 59.48,
+   "hasAudio": false
+  },
+  "9": {
+   "sentences": 21,
+   "idiom_tags": 5,
+   "en_filled": 0,
+   "gloss_filled": 20,
+   "synthetic_duration_s": 147.48,
+   "hasAudio": false
+  },
+  "10": {
+   "sentences": 26,
+   "idiom_tags": 22,
+   "en_filled": 0,
+   "gloss_filled": 26,
+   "synthetic_duration_s": 134.1,
+   "hasAudio": false
+  },
+  "11": {
+   "sentences": 48,
+   "idiom_tags": 26,
+   "en_filled": 0,
+   "gloss_filled": 41,
+   "synthetic_duration_s": 264.11,
+   "hasAudio": false
+  },
+  "12": {
+   "sentences": 18,
+   "idiom_tags": 6,
+   "en_filled": 0,
+   "gloss_filled": 18,
+   "synthetic_duration_s": 72.63,
+   "hasAudio": false
+  },
+  "13": {
+   "sentences": 17,
+   "idiom_tags": 8,
+   "en_filled": 0,
+   "gloss_filled": 17,
+   "synthetic_duration_s": 112.97,
+   "hasAudio": false
+  }
+ },
+ "totals": {
+  "sentences": 290,
+  "idiom_tags": 169,
+  "en_filled": 0,
+  "gloss_filled": 270,
+  "gloss_empty": 20,
+  "idiom_tags_per_sentence": 0.583,
+  "synthetic_duration_total_s": 1508.07
+ }
+}

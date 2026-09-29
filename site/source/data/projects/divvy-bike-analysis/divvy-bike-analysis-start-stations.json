@@ -1,0 +1,21 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Rides starting at the station, approximate",
+  "title": "Top Start Stations, Read off the Chart Axis",
+  "subtitle": "Approximate to the nearest thousand, nine bars, no value labels in the original",
+  "legendLabels": { "emphasis": "Streeter Dr and Grand Ave", "other": "Other stations" },
+  "rows": [
+    { "label": "Streeter Dr & Grand Ave", "value": 66000, "emphasis": true },
+    { "label": "DuSable Lake Shore Dr & Monroe St", "value": 44000 },
+    { "label": "Kingsbury St & Kinzie St", "value": 40000 },
+    { "label": "Michigan Ave & Oak St", "value": 40000 },
+    { "label": "DuSable Lake Shore Dr & North Blvd", "value": 40000 },
+    { "label": "Clark St & Elm St", "value": 36000 },
+    { "label": "Clinton St & Washington Blvd", "value": 35000 },
+    { "label": "Millennium Park", "value": 33000 },
+    { "label": "Clinton St & Madison St", "value": 33000 }
+  ],
+  "caption": "Values are eyeballed from the axis of the published bar chart, so treat them as good to a couple of thousand rides. The chart is titled top 10 and shows nine bars.",
+  "source": "the start-station bar chart in the published site"
+}

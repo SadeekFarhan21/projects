@@ -1,0 +1,12 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='100' y='28' font-size='20' font-family='Helvetica, Arial, sans-serif' fill='#0f172a'>Break-Even: Uptake Rate vs P95 Funding</text>
+<line x1='100' y1='450.0' x2='870' y2='450.0' stroke='#d8dde6' stroke-width='1' /><line x1='100' y1='370.0' x2='870' y2='370.0' stroke='#d8dde6' stroke-width='1' /><line x1='100' y1='290.0' x2='870' y2='290.0' stroke='#d8dde6' stroke-width='1' /><line x1='100' y1='210.0' x2='870' y2='210.0' stroke='#d8dde6' stroke-width='1' /><line x1='100' y1='130.0' x2='870' y2='130.0' stroke='#d8dde6' stroke-width='1' /><line x1='100' y1='50.0' x2='870' y2='50.0' stroke='#d8dde6' stroke-width='1' />
+<line x1='100' y1='323.5' x2='870' y2='323.5' stroke='#b91c1c' stroke-width='2' stroke-dasharray='6,4' />
+<text x='866' y='317.5' text-anchor='end' font-size='11' fill='#b91c1c'>Funding Level $2.7M</text>
+<polyline points='119.2,445.2 157.8,426.7 196.2,406.1 234.8,388.7 273.2,369.2 311.8,348.4 350.2,331.9 388.8,312.2 427.2,293.4 465.8,274.0 504.2,254.4 542.8,237.3 581.2,218.7 619.8,199.4 658.2,180.2 696.8,162.4 735.2,143.8 773.8,127.6 812.2,107.8 850.8,90.3' fill='none' stroke='#1d4ed8' stroke-width='3' />
+<text x='14' y='455.0' font-size='12' fill='#334155'>$0.7M</text><text x='14' y='375.0' font-size='12' fill='#334155'>$2.0M</text><text x='14' y='295.0' font-size='12' fill='#334155'>$3.3M</text><text x='14' y='215.0' font-size='12' fill='#334155'>$4.6M</text><text x='14' y='135.0' font-size='12' fill='#334155'>$5.9M</text><text x='14' y='55.0' font-size='12' fill='#334155'>$7.1M</text><text x='119.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>0.0005</text><text x='273.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>0.0014</text><text x='427.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>0.0024</text><text x='581.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>0.0033</text><text x='735.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>0.0043</text><text x='850.8' y='495' text-anchor='middle' font-size='11' fill='#334155'>0.0050</text>
+<line x1='100' y1='450' x2='870' y2='450' stroke='#475569' stroke-width='1.5' />
+<line x1='100' y1='50' x2='100' y2='450' stroke='#475569' stroke-width='1.5' />
+<text x='450.0' y='515' text-anchor='middle' font-size='12' fill='#64748b'>Annual Trigger Start Rate</text>
+</svg>

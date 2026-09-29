@@ -1,0 +1,15 @@
+{
+  "type": "columns",
+  "mode": "stacked",
+  "format": "number",
+  "unit": "Issues raised by the validator",
+  "categories": ["Iteration 1", "Iteration 2", "Iteration 3"],
+  "series": [
+    { "name": "CRITICAL (Gate 4, time zero)", "values": [3, 1, 0] },
+    { "name": "WARNING (Gate 3, mappability)", "values": [1, 0, 0] }
+  ],
+  "title": "The Validator Converged in Three Rounds",
+  "subtitle": "Barrett 2006 run, issues per validator response",
+  "caption": "Iterations 1 and 2 returned FEEDBACK and iteration 3 returned VALID with 6 of 6 gates passed. The design spec grew from 341 to 381 to 385 lines. One run, so this shows the loop working once, not how often it converges.",
+  "source": "backend/run/benchmark-barrett-2006-*/step2b_validation_feedback.txt via analysis/summarize_barrett_run.py"
+}

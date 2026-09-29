@@ -1,0 +1,15 @@
+project:
+  type: website
+  output-dir: _site
+
+format:
+  html:
+    theme: litera
+    toc: true
+    toc-location: right
+    self-contained: true
+
+website:
+  title: "Airport Network Analysis"
+  site-url: https://airport.farhansadeek.com
+  repo-url: https://github.com/SadeekFarhan21/Airport-Network-Analysis  

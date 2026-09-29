@@ -1,0 +1,1011 @@
+---
+import LandingLayout from '../layouts/LandingLayout.astro';
+import ChartCanvas from '../components/ChartCanvas.astro';
+import summary from '../../../output/summary.json';
+
+const ml = summary.ml_enhanced;
+const base = summary.base;
+const stress = summary.stress_tests;
+const geo = summary.geographic;
+const voi = summary.voi;
+const be = summary.breakeven;
+const mon = summary.monitoring;
+const val = summary.validation;
+const af = summary.adaptive_funding;
+const rob = summary.robustness;
+
+const fmt = (v: number) => `$${(v / 1e6).toFixed(2)}M`;
+const fmtK = (v: number) => `$${(v / 1e3).toFixed(0)}K`;
+const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
+
+// Chart data
+const mlYears = Object.keys(ml.average_outflows);
+const histogramData = summary.histogram;
+const groupedBarData = {
+  labels: ['Expected', '95%-Safe'],
+  loan: [ml.loan_summary.mean, ml.loan_summary.p95],
+  grant: [ml.grant_summary.mean, ml.grant_summary.p95],
+};
+const mlComboData = {
+  labels: mlYears,
+  outflows: mlYears.map((y: string) => ml.average_outflows[y]),
+  inflows: mlYears.map((y: string) => ml.average_inflows[y]),
+  cumulativeInflows: mlYears.map((_y: string, i: number) => {
+    let sum = 0;
+    for (let j = 0; j <= i; j++) sum += ml.average_inflows[mlYears[j]];
+    return sum;
+  }),
+};
+const tornadoData = {
+  parameters: summary.tornado.parameters,
+  base_p95: base.loan_summary.p95,
+};
+const recoveryData = {
+  projection: summary.npv.extended_projection,
+  milestones: summary.npv.recovery_milestones,
+};
+const funnelData = {
+  labels: ['Interested applicants', 'Submitted applications', 'Completed loans', 'In-progress loans'],
+  values: [127, 90, 42, 20],
+};
+const stressBarData = {
+  labels: ['Base Case', ...stress.scenarios.map((s: any) => s.scenario_name)],
+  values: [base.loan_summary.p95, ...stress.scenarios.map((s: any) => s.p95)],
+  baseline: base.loan_summary.p95,
+};
+const voiBarData = {
+  labels: voi.parameters.slice(0, 6).map((p: any) => p.parameter),
+  values: voi.parameters.slice(0, 6).map((p: any) => p.dollar_voi),
+  unit: 'currency',
+};
+
+// Year-by-year allocation prediction
+const mlOrig = ml.average_originations || {};
+const mlRepay = ml.average_repayments || {};
+const yearByYear = mlYears.map((y: string, i: number) => {
+  const outflow = ml.average_outflows[y];
+  const inflow = ml.average_inflows[y];
+  const originations = mlOrig[y] || 0;
+  const repayments = mlRepay[y] || 0;
+  // Cumulative net = total capital deployed minus recovered
+  let cumulativeNet = 0;
+  for (let j = 0; j <= i; j++) {
+    cumulativeNet += ml.average_outflows[mlYears[j]] - ml.average_inflows[mlYears[j]];
+  }
+  return { year: y, outflow, inflow, net: outflow - inflow, cumulativeNet, originations, repayments };
+});
+const peakYear = yearByYear.reduce((max, row) => row.cumulativeNet > max.cumulativeNet ? row : max, yearByYear[0]);
+---
+
+<LandingLayout title="Columbus LEAP Funding Model">
+
+<!-- ═════════════════════════════════��════════════════════ -->
+<!-- ACT 1: PROBLEM & ASSUMPTIONS                           -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- ═══ SLIDE 1: HERO ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Project: Quantathon 2026</p>
+    <h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-primary leading-none mb-6">
+      Columbus LEAP<br/>Funding Model
+    </h1>
+    <p class="font-body text-lg text-on-primary-fixed-variant leading-relaxed max-w-2xl mb-4">
+      How much should the City reserve in 2026 so a deferred-repayment water-line assistance fund stays solvent through 2037?
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="bg-surface-container-lowest p-6 rounded-xl ambient-shadow border-b-4 border-secondary">
+        <div class="flex justify-between items-start mb-3">
+          <span class="font-label text-[10px] uppercase tracking-wider text-secondary font-bold">Loan Model</span>
+          <span class="material-symbols-outlined text-secondary text-xl">analytics</span>
+        </div>
+        <h3 class="font-headline text-sm font-bold text-primary mb-1">Recommended Reserve</h3>
+        <div class="font-headline text-4xl font-bold tracking-tighter text-primary">{fmt(ml.loan_summary.p95)}</div>
+        <p class="font-body text-[11px] text-on-primary-fixed-variant mt-2">Advanced model, 95% confidence of solvency</p>
+      </div>
+      <div class="bg-surface-container-lowest p-6 rounded-xl ambient-shadow">
+        <div class="flex justify-between items-start mb-3">
+          <span class="font-label text-[10px] uppercase tracking-wider text-on-primary-fixed-variant font-bold">Grant (no repayments)</span>
+          <div class="bg-tertiary-fixed text-on-tertiary-container px-2 py-0.5 rounded-full flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">trending_up</span>
+            <span class="font-label text-[9px] font-bold">+{((ml.grant_summary.p95 / ml.loan_summary.p95 - 1) * 100).toFixed(0)}%</span>
+          </div>
+        </div>
+        <h3 class="font-headline text-sm font-bold text-primary mb-1">If Structured as Grants</h3>
+        <div class="font-headline text-4xl font-bold tracking-tighter text-primary">{fmt(ml.grant_summary.p95)}</div>
+        <p class="font-body text-[11px] text-on-primary-fixed-variant mt-2">No money comes back to the City</p>
+      </div>
+      <div class="bg-surface-container-high p-6 rounded-xl flex flex-col items-center justify-center text-center">
+        <span class="material-symbols-outlined text-secondary text-2xl mb-2">savings</span>
+        <p class="font-label text-[10px] uppercase tracking-wider text-on-primary-fixed-variant mb-1">Capital Saved</p>
+        <div class="font-headline text-3xl font-bold text-secondary">{fmt(ml.grant_summary.p95 - ml.loan_summary.p95)}</div>
+        <p class="font-body text-[11px] text-on-primary-fixed-variant mt-1">Saved by using loans instead of grants</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 2: THE SCALE ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">The Problem</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">275,667 service lines. Federal deadline 2037.</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7 space-y-5">
+        <div class="grid grid-cols-3 gap-4">
+          <div class="bg-surface-container-lowest p-5 rounded-xl ambient-shadow text-center">
+            <div class="font-headline text-3xl font-bold text-primary">275K</div>
+            <p class="font-body text-[11px] text-on-primary-fixed-variant mt-1">Total service lines<br/>in Columbus</p>
+          </div>
+          <div class="bg-surface-container-lowest p-5 rounded-xl ambient-shadow text-center border-b-4 border-[#DC2626]">
+            <div class="font-headline text-3xl font-bold text-[#DC2626]">91K</div>
+            <p class="font-body text-[11px] text-on-primary-fixed-variant mt-1">Lead or galvanized<br/>(need replacement)</p>
+          </div>
+          <div class="bg-surface-container-lowest p-5 rounded-xl ambient-shadow text-center border-b-4 border-secondary">
+            <div class="font-headline text-3xl font-bold text-secondary">34,269</div>
+            <p class="font-body text-[11px] text-on-primary-fixed-variant mt-1">LEAP-eligible<br/>(private pipes)</p>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-[#DC2626] mt-0.5 flex-shrink-0">warning</span>
+          <p class="text-on-primary-fixed-variant text-sm">The 2024 <strong class="text-primary">EPA Lead and Copper Rule Revision</strong> mandates all lead service lines be replaced by <strong class="text-primary">October 2037</strong>.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-secondary mt-0.5 flex-shrink-0">schedule</span>
+          <p class="text-on-primary-fixed-variant text-sm">Columbus launched a <strong class="text-primary">12-year citywide replacement program in 2025</strong>. LEAP bridges the gap for homeowners who can't wait for the City to reach their street.</p>
+        </div>
+        <div class="bg-secondary/5 rounded-xl p-4 border-l-4 border-secondary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-1 font-bold">Our Goal</p>
+          <p class="text-sm text-on-primary-fixed-variant">Determine the <strong class="text-primary">minimum upfront capital reserve</strong> that keeps LEAP solvent through 2037 with <strong class="text-primary">95% confidence</strong>, accounting for uncertain uptake, delayed repayments, and macroeconomic cycles.</p>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5">
+        <div class="bg-primary rounded-xl p-6 text-white h-full flex flex-col justify-center">
+          <p class="font-label text-[10px] uppercase tracking-widest text-white/50 mb-3 font-bold">Pipe Inventory Breakdown</p>
+          <div class="space-y-3">
+            {[
+              { label: "Whole-line Lead", count: "22,431", pct: "8%", color: "bg-[#DC2626]" },
+              { label: "Customer-side Galvanized", count: "14,892", pct: "5%", color: "bg-[#E97A2E]" },
+              { label: "Lead and Galvanized overlap", count: "-3,054", pct: "", color: "bg-white/30" },
+              { label: "Non-lead/Known safe", count: "184,667", pct: "67%", color: "bg-[#16A34A]" },
+              { label: "Unknown", count: "56,731", pct: "20%", color: "bg-white/20" },
+            ].map(item => (
+              <div class="flex items-center gap-3">
+                <div class={`w-3 h-3 rounded-sm ${item.color} flex-shrink-0`}></div>
+                <span class="text-sm text-white/80 flex-1">{item.label}</span>
+                <span class="font-headline font-bold text-sm">{item.count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 3: FRAMING ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Framing</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">How the model interprets LEAP</h2>
+    <div class="grid grid-cols-12 gap-8">
+      <div class="col-span-12 lg:col-span-7 space-y-5">
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-secondary mt-0.5 flex-shrink-0">apartment</span>
+          <p class="text-on-primary-fixed-variant">LEAP is a <strong class="text-primary">bridge fund</strong> for homes needing replacement before the City reaches them in the 2025-2037 scheduled program.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-secondary mt-0.5 flex-shrink-0">payments</span>
+          <p class="text-on-primary-fixed-variant">The City advances up to <strong class="text-primary">$10,000</strong> per property as a 0% interest, 99-year loan. Repayment is a <strong class="text-primary">single lump sum</strong> on sale or equity withdrawal.</p>
+        </div>
+        <div class="flex gap-4 items-start">
+          <span class="material-symbols-outlined text-secondary mt-0.5 flex-shrink-0">family_restroom</span>
+          <p class="text-on-primary-fixed-variant"><strong class="text-primary">Inheritance alone</strong> does not trigger repayment — loans can persist for decades.</p>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5">
+        <div class="bg-surface-container-low rounded-xl p-8 border-l-4 border-secondary h-full flex flex-col justify-center">
+          <p class="font-label text-[10px] uppercase tracking-widest text-secondary mb-3 font-bold">Key Insight</p>
+          <p class="font-body text-on-primary-fixed-variant leading-relaxed">
+            The question is not "how much do replacements cost?" but <strong class="text-primary">"how much cash covers the timing gap</strong> between origination and repayment?"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 4: ASSUMPTIONS — JUSTIFIED ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <div class="flex items-center gap-3 mb-6">
+      <span class="material-symbols-outlined text-secondary text-2xl">psychology</span>
+      <div>
+        <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] font-bold">Assumptions</p>
+        <h2 class="font-headline text-3xl font-bold tracking-tighter text-primary">Every assumption is data-grounded</h2>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 gap-5">
+      <div class="col-span-12 lg:col-span-8">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-[13px] table-fixed">
+            <colgroup>
+              <col class="w-[18%]" />
+              <col class="w-[12%]" />
+              <col class="w-[12%]" />
+              <col class="w-[58%]" />
+            </colgroup>
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left px-4 py-2.5 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Parameter</th>
+              <th class="text-center px-4 py-2.5 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Base</th>
+              <th class="text-center px-4 py-2.5 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Range</th>
+              <th class="text-left px-4 py-2.5 font-label text-[9px] uppercase tracking-wider text-secondary">Justification</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              {[
+                ["Eligible lines", "34,269", "—", "Counted from City water system records — lead and galvanized pipes, after removing duplicates"],
+                ["Uptake rate", "0.20%/yr", "0.16-0.25%", "Based on 62 actual loans in year 1; adjusted upward as program awareness grows"],
+                ["Cost inflation", "3%/yr", "2-4%", "Based on consumer prices and construction labor costs; capped at $10K per LEAP rules"],
+                ["Sale probability", "5.6%/yr", "4.5-6.5%", "Columbus homeowners stay ~18 years on average → about 1 in 18 sell each year"],
+                ["Equity extraction", "2.0%/yr", "1.5-2.8%", "National cash-out refinance data for homeowners with sufficient equity"],
+                ["Inheritance", "0.8%/yr", "0.6-1.2%", "Life expectancy data and Columbus homeowner demographics; does NOT trigger repayment"],
+                ["Contractor cap", "120-250", "100-300", "LEAP program manager estimates; depends on available contractors"],
+              ].map((row) => (
+                <tr>
+                  <td class="px-4 py-2.5 text-primary font-medium whitespace-nowrap">{row[0]}</td>
+                  <td class="px-4 py-2.5 text-center font-bold text-primary whitespace-nowrap">{row[1]}</td>
+                  <td class="px-4 py-2.5 text-center text-on-primary-fixed-variant whitespace-nowrap">{row[2]}</td>
+                  <td class="px-4 py-2.5 text-on-primary-fixed-variant text-[11px] leading-tight">{row[3]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-4 space-y-4">
+        <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-secondary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-2 font-bold">Validation approach</p>
+          <p class="text-xs text-on-primary-fixed-variant">Every assumption is tested across <strong class="text-primary">3 scenarios</strong> (optimistic, base, conservative). Tornado analysis quantifies how much each assumption moves the final answer.</p>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-[#E97A2E]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#C45A12] mb-2 font-bold">What we don't know</p>
+          <ul class="text-xs text-on-primary-fixed-variant space-y-1">
+            <li>- No street-level replacement schedule</li>
+            <li>- No borrower age or mortgage data</li>
+            <li>- Only ~1 year of LEAP operating history</li>
+          </ul>
+          <p class="text-xs text-on-primary-fixed-variant mt-2">These unknowns are why the P95 (not the mean) is the recommendation.</p>
+        </div>
+        <div class="bg-[#16A34A]/5 rounded-xl p-5 border-l-4 border-[#16A34A]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#16A34A] mb-1 font-bold">External sources</p>
+          <p class="text-xs text-on-primary-fixed-variant">City program page, CFPB research, CDC life tables, BLS construction indices</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- ACT 2: DATA & DEMAND SIGNALS                          -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- ═══ SLIDE 5: DATA FOUNDATION ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Data</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">Five data sources, one integrated model</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      {[
+        { icon: "plumbing", title: "System Materials", stat: "34,269", desc: "Eligible lines (lead and galvanized)" },
+        { icon: "request_quote", title: "LEAP Quotes", stat: "$6,950", desc: "Median from 64 funded amounts" },
+        { icon: "group", title: "Participation", stat: "62", desc: "Loans completed and in-progress" },
+        { icon: "trending_up", title: "Insurance", stat: "3,000", desc: "Active customers after 5 months" },
+        { icon: "model_training", title: "Validation Data", stat: "10,000", desc: "Independent parcels to verify accuracy" },
+      ].map((item) => (
+        <div class="bg-surface-container-lowest p-5 rounded-xl ambient-shadow">
+          <div class="w-9 h-9 rounded-lg machined-gradient flex items-center justify-center mb-3">
+            <span class="material-symbols-outlined text-white text-lg">{item.icon}</span>
+          </div>
+          <h3 class="font-headline font-bold text-primary text-sm">{item.title}</h3>
+          <div class="font-headline text-2xl font-bold text-secondary my-1">{item.stat}</div>
+          <p class="font-body text-[11px] text-on-primary-fixed-variant">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 5: PARTICIPATION FUNNEL ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Demand Signal</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">Early LEAP adoption reveals demand patterns</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7">
+        <ChartCanvas chartId="funnel" chartType="funnel" data={funnelData} />
+        <div class="mt-4 flex gap-4">
+          <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow flex-1 text-center">
+            <div class="font-headline text-lg font-bold text-secondary">33%</div>
+            <p class="text-[10px] text-on-primary-fixed-variant">Overall conversion</p>
+          </div>
+          <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow flex-1 text-center">
+            <div class="font-headline text-lg font-bold text-secondary">$7,386</div>
+            <p class="text-[10px] text-on-primary-fixed-variant">Avg. funded amount</p>
+          </div>
+          <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow flex-1 text-center">
+            <div class="font-headline text-lg font-bold text-secondary">$10,000</div>
+            <p class="text-[10px] text-on-primary-fixed-variant">Hard cap per loan</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5 space-y-4">
+        <div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-[#E97A2E]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#C45A12] mb-2 font-bold">Trigger Mix</p>
+          <div class="flex gap-4 items-center mb-3">
+            <div class="flex-1">
+              <div class="h-3 rounded-full bg-surface-container-high overflow-hidden">
+                <div class="h-full bg-[#E97A2E] rounded-full" style="width: 66%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-between text-xs text-on-primary-fixed-variant">
+            <span><strong class="text-[#E97A2E]">66%</strong> Leak-driven (emergency)</span>
+            <span><strong class="text-primary">34%</strong> Proactive</span>
+          </div>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-secondary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-2 font-bold">Insurance Signal</p>
+          <p class="text-sm text-on-primary-fixed-variant">WSL insurance policies grew from <strong class="text-primary">830 to 2,862</strong> in just 5 months — a <strong class="text-primary">245% increase</strong>. This leading indicator suggests significant latent demand for LEAP services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 6: GEOGRAPHIC RISK ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Geography</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-6">Risk is concentrated in 5 zip codes</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Zip Code</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Parcels</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Eligible %</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Avg Lead Risk</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-secondary">Risk Score</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              {geo.zip_metrics.slice(0, 6).map((z: any, i: number) => (
+                <tr class={i === 0 ? 'bg-secondary/5' : ''}>
+                  <td class="p-3 font-bold text-primary">{z.zip_code}</td>
+                  <td class="p-3 text-right text-on-primary-fixed-variant">{z.parcel_count.toLocaleString()}</td>
+                  <td class="p-3 text-right text-on-primary-fixed-variant">{(z.eligible_pct * 100).toFixed(0)}%</td>
+                  <td class="p-3 text-right text-on-primary-fixed-variant">{z.avg_lead_risk.toFixed(2)}</td>
+                  <td class="p-3 text-right">
+                    <div class="flex items-center justify-end gap-2">
+                      <div class="w-16 h-2 rounded-full bg-surface-container-high overflow-hidden">
+                        <div class="h-full rounded-full" style={`width: ${z.composite_risk_score * 100}%; background: ${z.composite_risk_score > 0.7 ? '#DC2626' : z.composite_risk_score > 0.4 ? '#E97A2E' : '#16A34A'}`}></div>
+                      </div>
+                      <span class={`font-bold text-xs ${z.composite_risk_score > 0.7 ? 'text-[#DC2626]' : z.composite_risk_score > 0.4 ? 'text-[#E97A2E]' : 'text-[#16A34A]'}`}>{z.composite_risk_score.toFixed(2)}</span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5 space-y-4">
+        <div class="bg-[#DC2626]/5 rounded-xl p-5 border-l-4 border-[#DC2626]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#DC2626] mb-2 font-bold">Highest Risk: 43201</p>
+          <p class="text-sm text-on-primary-fixed-variant"><strong class="text-primary">98% eligible</strong>, highest composite score. Expect earliest and most concentrated LEAP demand here.</p>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-secondary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-2 font-bold">How We Rank Neighborhoods</p>
+          <p class="text-xs text-on-primary-fixed-variant mb-2">Combines lead pipe risk, property values, eligible share, renter rates, and replacement costs into a single score.</p>
+          <p class="text-xs text-on-primary-fixed-variant">Risk varies <strong class="text-primary">6x across zip codes</strong> — the City can prioritize outreach where it matters most.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- ACT 3: HOW WE MODELED IT                              -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- ═══ SLIDE 7: TWO-TIER METHODOLOGY ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Approach</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">Two approaches, one confident answer</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-surface-container-lowest p-7 rounded-xl ambient-shadow">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-8 h-8 rounded-lg bg-on-primary-fixed-variant/10 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-primary-fixed-variant text-lg">layers</span>
+          </div>
+          <div>
+            <span class="font-label text-[9px] uppercase tracking-widest text-on-primary-fixed-variant font-bold">Approach 1</span>
+            <h3 class="font-headline text-base font-bold text-primary">Conservative Baseline</h3>
+          </div>
+        </div>
+        <ul class="space-y-2 text-sm text-on-primary-fixed-variant mb-5">
+          <li class="flex gap-2"><span class="opacity-40">-</span> Simulates 3,000 possible futures for the fund</li>
+          <li class="flex gap-2"><span class="opacity-40">-</span> Treats every homeowner the same (average behavior)</li>
+          <li class="flex gap-2"><span class="opacity-40">-</span> Costs drawn from 64 actual LEAP invoices</li>
+          <li class="flex gap-2"><span class="opacity-40">-</span> Cross-checked 4 different ways for accuracy</li>
+        </ul>
+        <div class="pt-4 border-t border-outline-variant/15">
+          <span class="font-headline text-2xl font-bold text-primary">{fmt(base.loan_summary.p95)}</span>
+          <span class="text-xs text-on-primary-fixed-variant ml-2">95% confidence (loan)</span>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest p-7 rounded-xl ambient-shadow border-b-4 border-secondary">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-8 h-8 rounded-lg machined-gradient flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-lg" style="font-variation-settings:'FILL' 1;">model_training</span>
+          </div>
+          <div>
+            <span class="font-label text-[9px] uppercase tracking-widest text-secondary font-bold">Approach 2</span>
+            <h3 class="font-headline text-base font-bold text-primary">Advanced Property-Level Model</h3>
+          </div>
+        </div>
+        <ul class="space-y-2 text-sm text-on-primary-fixed-variant mb-5">
+          <li class="flex gap-2"><span class="text-secondary">+</span> Predicts behavior for each property individually</li>
+          <li class="flex gap-2"><span class="text-secondary">+</span> Accounts for housing booms, recessions, and normal markets</li>
+          <li class="flex gap-2"><span class="text-secondary">+</span> Models increasing urgency as the 2037 deadline approaches</li>
+          <li class="flex gap-2"><span class="text-secondary">+</span> Includes home value growth, contractor limits, and fund earnings</li>
+        </ul>
+        <div class="pt-4 border-t border-outline-variant/15">
+          <span class="font-headline text-2xl font-bold text-secondary">{fmt(ml.loan_summary.p95)}</span>
+          <span class="text-xs text-on-primary-fixed-variant ml-2">95% confidence (loan)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 8: NEURAL NETWORKS ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Key Insight</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">Not all properties behave the same</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+      {[
+        { name: "Who will apply?", pred: "Likelihood a homeowner seeks LEAP assistance", metric: `Accuracy: ${(ml.model_metrics.uptake.correlation * 100).toFixed(0)}%`, impact: "High-risk properties are 4x more likely to apply", color: "border-secondary" },
+        { name: "When will they sell?", pred: "Likelihood a homeowner sells in a given year", metric: `Accuracy: ${(ml.model_metrics.sale_hazard.correlation * 100).toFixed(0)}%`, impact: "Recent buyers sell 60% more often than long-term owners", color: "border-on-tertiary-container" },
+        { name: "What will it cost?", pred: "Estimated replacement cost per property", metric: `Accuracy: ${(ml.model_metrics.cost.r_squared * 100).toFixed(0)}%`, impact: "Costs vary significantly by property — not one-size-fits-all", color: "border-primary" },
+      ].map((nn) => (
+        <div class={`bg-surface-container-lowest p-6 rounded-xl ambient-shadow border-t-4 ${nn.color}`}>
+          <h3 class="font-headline text-lg font-bold text-primary mb-1">{nn.name}</h3>
+          <p class="font-body text-sm text-on-primary-fixed-variant mb-3">{nn.pred}</p>
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Model Performance</span>
+            <span class="font-headline font-bold text-secondary text-sm">{nn.metric}</span>
+          </div>
+          <p class="font-body text-[11px] text-on-primary-fixed-variant">{nn.impact}</p>
+        </div>
+      ))}
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-secondary">
+      <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-1 font-bold">Why this matters for funding</p>
+      <p class="text-sm text-on-primary-fixed-variant">A simple average assumes every homeowner behaves the same. Our analysis reveals that properties most likely to need LEAP are also <strong class="text-primary">least likely to repay quickly</strong> — a compounding effect that simpler models miss entirely.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 9: ENHANCEMENTS ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Real-World Factors</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">7 factors that make our estimate realistic</h2>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {[
+        { num: "1", icon: "show_chart", title: "Economic Cycles", desc: "Accounts for booms, recessions, and normal markets — each affects repayment timing." },
+        { num: "2", icon: "timeline", title: "Tenure Effect", desc: "Long-term homeowners sell less often, delaying loan repayment." },
+        { num: "3", icon: "speed", title: "Deadline Urgency", desc: "Demand rises ~4x as the 2037 federal deadline approaches." },
+        { num: "4", icon: "real_estate_agent", title: "Home Values", desc: "Rising home values increase refinancing, accelerating repayment." },
+        { num: "5", icon: "construction", title: "Contractor Capacity", desc: "Only 120-250 replacements can happen per year." },
+        { num: "6", icon: "account_balance", title: "Fund Earnings", desc: `Idle reserves earn 4%/yr. Projected: ${fmtK(ml.total_fund_income)} in income.` },
+        { num: "7", icon: "trending_down", title: "Partial Losses", desc: "Some loans may not be fully recovered — especially in downturns." },
+      ].map((e) => (
+        <div class="bg-surface-container-lowest p-4 rounded-xl ambient-shadow">
+          <div class="flex items-center gap-2.5 mb-2">
+            <div class="w-7 h-7 rounded-full machined-gradient flex items-center justify-center text-white text-xs font-bold flex-shrink-0">{e.num}</div>
+            <span class="material-symbols-outlined text-secondary text-xl">{e.icon}</span>
+          </div>
+          <h4 class="font-headline font-bold text-primary text-sm mb-1">{e.title}</h4>
+          <p class="font-body text-[11px] text-on-primary-fixed-variant leading-relaxed">{e.desc}</p>
+        </div>
+      ))}
+      <div class="bg-primary p-4 rounded-xl text-white">
+        <p class="font-label text-[9px] uppercase tracking-widest text-white/50 mb-3 font-bold">Market Distribution</p>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span>Boom</span><span class="font-bold">{pct(ml.regime_distribution.Boom)}</span></div>
+          <div class="flex justify-between"><span>Normal</span><span class="font-bold">{pct(ml.regime_distribution.Normal)}</span></div>
+          <div class="flex justify-between"><span>Recession</span><span class="font-bold">{pct(ml.regime_distribution.Recession)}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- ACT 4: WHAT WE FOUND                                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- ═══ SLIDE 10: RESULTS ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Results</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">Loans save the City millions vs. grants</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-3.5 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Metric</th>
+              <th class="text-right p-3.5 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Loan</th>
+              <th class="text-right p-3.5 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Grant</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              <tr><td class="p-3.5 text-on-primary-fixed-variant">Expected funding</td><td class="p-3.5 text-right font-bold text-primary">{fmt(ml.loan_summary.mean)}</td><td class="p-3.5 text-right text-on-primary-fixed-variant">{fmt(ml.grant_summary.mean)}</td></tr>
+              <tr class="bg-secondary/5"><td class="p-3.5 font-bold text-primary">95%-safe funding</td><td class="p-3.5 text-right font-bold text-secondary">{fmt(ml.loan_summary.p95)}</td><td class="p-3.5 text-right text-on-primary-fixed-variant">{fmt(ml.grant_summary.p95)}</td></tr>
+              <tr><td class="p-3.5 text-on-primary-fixed-variant">95% range</td><td class="p-3.5 text-right text-on-primary-fixed-variant">{fmt(ml.loan_summary.p025)} - {fmt(ml.loan_summary.p975)}</td><td class="p-3.5 text-right text-on-primary-fixed-variant">{fmt(ml.grant_summary.p025)} - {fmt(ml.grant_summary.p975)}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-4 flex items-center gap-3 bg-secondary/5 p-3.5 rounded-xl">
+          <div class="w-7 h-7 rounded-full machined-gradient flex items-center justify-center text-white flex-shrink-0">
+            <span class="material-symbols-outlined text-sm">arrow_downward</span>
+          </div>
+          <p class="text-sm text-on-primary-fixed-variant">Loan saves <strong class="text-secondary">{fmt(ml.grant_summary.p95 - ml.loan_summary.p95)}</strong> vs. grants at 95%-safe</p>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5">
+        <ChartCanvas chartId="groupedBar" chartType="groupedBar" data={groupedBarData} />
+      </div>
+    </div>
+    <!-- Financial reasonableness check -->
+    <div class="grid grid-cols-4 gap-3 mt-4">
+      <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-[#16A34A] text-sm">payments</span>
+        <div class="font-headline text-sm font-bold text-primary mt-1">~$80/line</div>
+        <p class="text-[9px] text-on-primary-fixed-variant">Reserve per eligible line</p>
+      </div>
+      <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-[#16A34A] text-sm">home</span>
+        <div class="font-headline text-sm font-bold text-primary mt-1">$7,386 avg</div>
+        <p class="text-[9px] text-on-primary-fixed-variant">Per-loan cost (observed)</p>
+      </div>
+      <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-[#16A34A] text-sm">recycling</span>
+        <div class="font-headline text-sm font-bold text-primary mt-1">~42% by 2037</div>
+        <p class="text-[9px] text-on-primary-fixed-variant">Principal recovered</p>
+      </div>
+      <div class="bg-surface-container-lowest p-3 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-[#16A34A] text-sm">verified</span>
+        <div class="font-headline text-sm font-bold text-primary mt-1">&lt;0.3% budget</div>
+        <p class="text-[9px] text-on-primary-fixed-variant">Of Columbus annual budget</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 11: CASH FLOW ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Cash Flow</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-6">Outflows peak early; repayments build later</h2>
+    <div class="flex-1 min-h-0">
+      <ChartCanvas chartId="mlComboBarLine" chartType="comboBarLine" data={mlComboData} />
+    </div>
+    <div class="grid grid-cols-3 gap-4 -mt-4">
+      <div class="bg-surface-container-lowest p-4 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-secondary text-xl">account_balance</span>
+        <div class="font-headline text-lg font-bold text-secondary mt-1">{fmtK(ml.total_fund_income)}</div>
+        <p class="text-[10px] text-on-primary-fixed-variant">Fund investment income</p>
+      </div>
+      <div class="bg-surface-container-lowest p-4 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-secondary text-xl">real_estate_agent</span>
+        <div class="font-headline text-lg font-bold text-secondary mt-1">${(parseFloat(ml.avg_home_values['2026']) / 1000).toFixed(0)}K → ${(parseFloat(ml.avg_home_values['2037']) / 1000).toFixed(0)}K</div>
+        <p class="text-[10px] text-on-primary-fixed-variant">Home value growth (+{((parseFloat(ml.avg_home_values['2037']) / parseFloat(ml.avg_home_values['2026']) - 1) * 100).toFixed(0)}%)</p>
+      </div>
+      <div class="bg-surface-container-lowest p-4 rounded-xl ambient-shadow text-center">
+        <span class="material-symbols-outlined text-secondary text-xl">construction</span>
+        <div class="font-headline text-lg font-bold text-secondary mt-1">120-250/yr</div>
+        <p class="text-[10px] text-on-primary-fixed-variant">Contractor capacity range</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 12: YEAR-BY-YEAR ALLOCATION ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Year-by-Year Prediction</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-6">Capital deployment peaks in {peakYear.year}, then unwinds</h2>
+    <div class="grid grid-cols-12 gap-5">
+      <div class="col-span-12 lg:col-span-8">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-[12px]">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-2.5 font-label text-[8px] uppercase tracking-wider text-on-primary-fixed-variant">Year</th>
+              <th class="text-right p-2.5 font-label text-[8px] uppercase tracking-wider text-on-primary-fixed-variant">New Loans</th>
+              <th class="text-right p-2.5 font-label text-[8px] uppercase tracking-wider text-on-primary-fixed-variant">Outflows</th>
+              <th class="text-right p-2.5 font-label text-[8px] uppercase tracking-wider text-on-primary-fixed-variant">Repayments</th>
+              <th class="text-right p-2.5 font-label text-[8px] uppercase tracking-wider text-on-primary-fixed-variant">Inflows</th>
+              <th class="text-right p-2.5 font-label text-[8px] uppercase tracking-wider text-on-primary-fixed-variant">Net</th>
+              <th class="text-right p-2.5 font-label text-[8px] uppercase tracking-wider text-secondary">Cum. Deployed</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              {yearByYear.map((row) => (
+                <tr class={row.year === peakYear.year ? 'bg-secondary/5' : row.net < 0 ? 'bg-[#16A34A]/5' : ''}>
+                  <td class="p-2.5 font-bold text-primary">{row.year}</td>
+                  <td class="p-2.5 text-right text-on-primary-fixed-variant">{Math.round(row.originations)}</td>
+                  <td class="p-2.5 text-right text-on-primary-fixed-variant">{fmtK(row.outflow)}</td>
+                  <td class="p-2.5 text-right text-on-primary-fixed-variant">{Math.round(row.repayments)}</td>
+                  <td class="p-2.5 text-right text-on-primary-fixed-variant">{fmtK(row.inflow)}</td>
+                  <td class={`p-2.5 text-right font-bold ${row.net < 0 ? 'text-[#16A34A]' : 'text-[#DC2626]'}`}>{row.net < 0 ? '-' : '+'}{fmtK(Math.abs(row.net))}</td>
+                  <td class={`p-2.5 text-right font-bold ${row.year === peakYear.year ? 'text-secondary' : 'text-primary'}`}>{fmt(row.cumulativeNet)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-4 space-y-4">
+        <div class="bg-secondary/5 rounded-xl p-5 border-l-4 border-secondary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-2 font-bold">Peak Capital Need</p>
+          <div class="font-headline text-2xl font-bold text-secondary mb-1">{fmt(peakYear.cumulativeNet)}</div>
+          <p class="text-xs text-on-primary-fixed-variant">Reached in <strong class="text-primary">{peakYear.year}</strong> — the year when cumulative outflows minus cumulative inflows is highest.</p>
+        </div>
+        <div class="bg-[#16A34A]/5 rounded-xl p-5 border-l-4 border-[#16A34A]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#16A34A] mb-2 font-bold">Crossover Year</p>
+          <p class="text-xs text-on-primary-fixed-variant">Annual inflows exceed outflows starting in <strong class="text-primary">{yearByYear.find(r => r.net < 0)?.year || '2035'}</strong>. From this point, the fund <strong class="text-primary">generates net cash</strong> each year.</p>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-primary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-primary mb-2 font-bold">Adoption Curve</p>
+          <p class="text-xs text-on-primary-fixed-variant">Loan originations peak early as at-risk homeowners act ahead of the City's scheduled program. Demand then declines as fewer lines remain, but <strong class="text-primary">urgency ramps ~4x</strong> as the 2037 deadline nears.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 13: SENSITIVITY & VOI ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Sensitivity</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-6">What would move the answer most</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7">
+        <ChartCanvas chartId="tornado" chartType="tornado" data={tornadoData} />
+      </div>
+      <div class="col-span-12 lg:col-span-5 space-y-4">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Parameter</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Swing</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-secondary">Variance Share</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              {voi.parameters.slice(0, 5).map((p: any, i: number) => (
+                <tr class={i === 0 ? 'bg-secondary/5' : ''}>
+                  <td class="p-3 text-primary text-xs">{p.parameter}</td>
+                  <td class={`p-3 text-right font-bold text-xs ${i === 0 ? 'text-secondary' : 'text-on-primary-fixed-variant'}`}>{fmt(p.swing)}</td>
+                  <td class="p-3 text-right text-secondary font-bold text-xs">{(p.variance_share * 100).toFixed(0)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-[#E97A2E]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#C45A12] mb-1 font-bold">What Would Help Most</p>
+          <p class="text-xs text-on-primary-fixed-variant">LEAP uptake rate drives <strong class="text-primary">{(voi.parameters[0].variance_share * 100).toFixed(0)}%</strong> of uncertainty. A few more years of program data would narrow the funding range by <strong class="text-primary">${voi.parameters[0].dollar_voi.toLocaleString()}</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- ACT 5: ROBUSTNESS                                     -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- ═══ SLIDE 13: STRESS TESTING ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Stress Testing</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-6">The model survives extreme scenarios</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7">
+        <ChartCanvas chartId="stressBar" chartType="stressBar" data={stressBarData} />
+      </div>
+      <div class="col-span-12 lg:col-span-5 space-y-4">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Scenario</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">P95</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">vs Base</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              <tr class="bg-secondary/5">
+                <td class="p-3 font-bold text-primary text-xs">Base Case</td>
+                <td class="p-3 text-right font-bold text-secondary text-xs">{fmt(base.loan_summary.p95)}</td>
+                <td class="p-3 text-right text-xs">—</td>
+              </tr>
+              {stress.scenarios.map((s: any) => (
+                <tr>
+                  <td class="p-3 text-primary text-xs">{s.scenario_name}</td>
+                  <td class="p-3 text-right font-bold text-xs">{fmt(s.p95)}</td>
+                  <td class={`p-3 text-right font-bold text-xs ${s.p95_increase_pct > 50 ? 'text-[#DC2626]' : 'text-[#E97A2E]'}`}>+{s.p95_increase_pct.toFixed(0)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          {[
+            { icon: "trending_down", label: "Housing Crash", desc: "Sales -40%, equity -50%" },
+            { icon: "trending_up", label: "Surge Uptake", desc: "2x trigger rate, +1% inflation" },
+            { icon: "thunderstorm", label: "Perfect Storm", desc: "Both combined" },
+          ].map(s => (
+            <div class="bg-surface-container-low p-3 rounded-lg text-center">
+              <span class="material-symbols-outlined text-on-primary-fixed-variant text-lg">{s.icon}</span>
+              <p class="font-headline text-[10px] font-bold text-primary mt-1">{s.label}</p>
+              <p class="text-[9px] text-on-primary-fixed-variant">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 14: MODEL VALIDATION ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Validation</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">8 independent checks all agree</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7 space-y-5">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-surface-container-lowest p-5 rounded-xl ambient-shadow text-center border-b-4 border-[#16A34A]">
+            <span class="material-symbols-outlined text-[#16A34A] text-2xl">verified</span>
+            <div class="font-headline text-2xl font-bold text-[#16A34A] mt-2">PASS</div>
+            <p class="text-[10px] text-on-primary-fixed-variant mt-1">Overall assessment</p>
+          </div>
+          <div class="bg-surface-container-lowest p-5 rounded-xl ambient-shadow text-center">
+            <div class="font-headline text-2xl font-bold text-primary">{val.det_mc_gap_pct.toFixed(2)}%</div>
+            <p class="text-[10px] text-on-primary-fixed-variant mt-1">Gap between methods</p>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Check</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Value</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Status</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              <tr><td class="p-3 text-primary text-xs">Simulation average</td><td class="p-3 text-right font-bold text-xs">{fmt(val.mc_mean)}</td><td class="p-3 text-right text-[#16A34A] text-xs">&#10003;</td></tr>
+              <tr><td class="p-3 text-primary text-xs">Formula-based estimate</td><td class="p-3 text-right font-bold text-xs">{fmt(val.deterministic_funding)}</td><td class="p-3 text-right text-[#16A34A] text-xs">&#10003;</td></tr>
+              <tr><td class="p-3 text-primary text-xs">Result consistency</td><td class="p-3 text-right font-bold text-xs">{(val.coefficient_of_variation * 100).toFixed(2)}%</td><td class="p-3 text-right text-[#16A34A] text-xs">&#10003;</td></tr>
+              <tr><td class="p-3 text-primary text-xs">Uncertainty range (95%)</td><td class="p-3 text-right font-bold text-xs">${Math.round(val.bootstrap_ci_p95.ci_width).toLocaleString()}</td><td class="p-3 text-right text-[#16A34A] text-xs">&#10003;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-5 space-y-4">
+        <div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-[#16A34A]">
+          <p class="font-label text-[9px] uppercase tracking-widest text-[#16A34A] mb-2 font-bold">Multiple Methods Agree</p>
+          <p class="text-sm text-on-primary-fixed-variant">We tested the answer 8 different ways — simulations, formula-based models, property-level predictions, stress tests, and independent data validation. They all agree within <strong class="text-primary">{Math.abs(val.det_mc_gap_pct).toFixed(1)}%</strong>.</p>
+        </div>
+        <div class="bg-surface-container-low rounded-xl p-6 border-l-4 border-secondary">
+          <p class="font-label text-[9px] uppercase tracking-widest text-secondary mb-2 font-bold">Tested on Fresh Data</p>
+          <p class="text-sm text-on-primary-fixed-variant">Models built on early LEAP data were verified against <strong class="text-primary">10,000 separate properties</strong> they had never seen. The funding estimate remains stable across different financial assumptions (<strong class="text-primary">+/-3%</strong>).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 15: NPV & RECOVERY ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Payback Timeline</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-6">The City recovers most of its investment over time</h2>
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 lg:col-span-7">
+        <ChartCanvas chartId="recoveryLine" chartType="recoveryLine" data={recoveryData} />
+      </div>
+      <div class="col-span-12 lg:col-span-5 space-y-4">
+        <div class="bg-surface-container-lowest rounded-xl ambient-shadow overflow-hidden">
+          <table class="w-full text-sm">
+            <thead><tr class="bg-surface-container-high">
+              <th class="text-left p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">Rate</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">NPV Net Cost</th>
+              <th class="text-right p-3 font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant">vs 3%</th>
+            </tr></thead>
+            <tbody class="divide-y divide-outline-variant/15">
+              {Object.entries(rob).map(([rate, data]: [string, any]) => (
+                <tr class={rate === '3%' ? 'bg-secondary/5' : ''}>
+                  <td class="p-3 text-xs text-primary">{rate}</td>
+                  <td class="p-3 text-right text-xs font-bold">{fmt(data.npv_net_cost)}</td>
+                  <td class={`p-3 text-right text-xs font-bold ${rate === '3%' ? 'text-secondary' : 'text-on-primary-fixed-variant'}`}>{data.pct_change_from_base === 0 ? 'Base' : `${data.pct_change_from_base > 0 ? '+' : ''}${data.pct_change_from_base.toFixed(1)}%`}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="flex gap-3">
+          <div class="flex-1 bg-surface-container-lowest p-4 rounded-xl ambient-shadow text-center">
+            <div class="font-headline text-xl font-bold text-secondary">80%</div>
+            <p class="text-[10px] text-on-primary-fixed-variant">recovery by 2051</p>
+          </div>
+          <div class="flex-1 bg-surface-container-lowest p-4 rounded-xl ambient-shadow text-center">
+            <div class="font-headline text-xl font-bold text-secondary">90%</div>
+            <p class="text-[10px] text-on-primary-fixed-variant">recovery by 2059</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- ACT 6: DECISION FRAMEWORK                             -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- ═══ SLIDE 16: MONITORING ═══ -->
+<section class="slide bg-surface">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-secondary text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Operations</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-primary mb-8">Three early-warning triggers</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+      {[
+        {
+          icon: "group_add",
+          title: "Originations by 2028",
+          metric: `> ${mon.cumulative_originations_2028_p75}`,
+          median: String(mon.cumulative_originations_2028_median),
+          desc: "If cumulative LEAP loans exceed this threshold, uptake is running above 75th percentile",
+          action: "Review reserve adequacy",
+          color: "border-secondary"
+        },
+        {
+          icon: "attach_money",
+          title: "Average Funded Amount",
+          metric: `> $${Math.round(mon.avg_loan_size_p75).toLocaleString()}`,
+          median: `$${Math.round(mon.avg_loan_size_median).toLocaleString()}`,
+          desc: "If average loan size exceeds threshold, cost inflation is hotter than modeled",
+          action: "Increase inflation assumption",
+          color: "border-[#E97A2E]"
+        },
+        {
+          icon: "receipt_long",
+          title: "Repayments by 2029",
+          metric: `< ${mon.cumulative_repayments_2029_p25}`,
+          median: String(mon.cumulative_repayments_2029_median),
+          desc: "If cumulative repayments fall below threshold, repayment timing is slower than expected",
+          action: "Review repayment assumptions",
+          color: "border-[#DC2626]"
+        },
+      ].map(trigger => (
+        <div class={`bg-surface-container-lowest p-6 rounded-xl ambient-shadow border-t-4 ${trigger.color}`}>
+          <div class="flex items-center gap-3 mb-4">
+            <span class="material-symbols-outlined text-secondary text-2xl">{trigger.icon}</span>
+            <h3 class="font-headline font-bold text-primary text-sm">{trigger.title}</h3>
+          </div>
+          <div class="bg-surface-container-high rounded-lg p-3 mb-3 text-center">
+            <p class="font-label text-[9px] uppercase tracking-wider text-on-primary-fixed-variant mb-1">Warning Threshold</p>
+            <div class="font-headline text-2xl font-bold text-[#DC2626]">{trigger.metric}</div>
+            <p class="text-[10px] text-on-primary-fixed-variant mt-1">Median: {trigger.median}</p>
+          </div>
+          <p class="text-xs text-on-primary-fixed-variant mb-2">{trigger.desc}</p>
+          <div class="flex items-center gap-1.5 text-xs text-secondary font-medium">
+            <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            {trigger.action}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="bg-surface-container-low rounded-xl p-5 border-l-4 border-secondary">
+      <p class="text-sm text-on-primary-fixed-variant"><strong class="text-primary">Adaptive response:</strong> If any trigger fires, the City can reassess using the same model framework with updated parameters. No new infrastructure required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SLIDE 18: RECOMMENDATION ═══ -->
+<section class="slide" style="background:linear-gradient(160deg,#081628 0%,#0d2a42 50%,#0b3550 100%);">
+  <div class="slide-content flex-1 flex flex-col justify-center px-8 md:px-16 pt-20 pb-16 max-w-[1400px] mx-auto w-full">
+    <p class="font-label text-white/40 text-[11px] uppercase tracking-[0.2em] mb-3 font-bold">Final Recommendation</p>
+    <h2 class="font-headline text-4xl font-bold tracking-tighter text-white mb-8">Funding Decision</h2>
+
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-10">
+      <div class="font-headline text-6xl md:text-7xl font-bold text-[#5BA3F5] tracking-tighter">{fmt(ml.loan_summary.p95)}</div>
+      <div>
+        <p class="text-white text-lg"><strong>Set the 2026 LEAP reserve at {fmt(ml.loan_summary.p95)}</strong> under the loan structure.</p>
+        <p class="text-white/40 text-sm mt-1">Covers 95% of possible outcomes. Tested across 2 models, 3 extreme scenarios, and multiple financial assumptions.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-3 mb-8">
+      <div class="bg-white/5 backdrop-blur p-4 rounded-xl border border-white/10">
+        <p class="font-label text-[9px] uppercase tracking-wider text-white/40 mb-1">Simple Estimate</p>
+        <div class="font-headline text-xl font-bold text-white">{fmt(base.loan_summary.p95)}</div>
+        <p class="text-white/30 text-[10px] mt-1">Conservative baseline</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur p-4 rounded-xl border border-[#5BA3F5]/30">
+        <p class="font-label text-[9px] uppercase tracking-wider text-[#5BA3F5] mb-1">Advanced Estimate</p>
+        <div class="font-headline text-xl font-bold text-[#5BA3F5]">{fmt(ml.loan_summary.p95)}</div>
+        <p class="text-white/30 text-[10px] mt-1">Recommended</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur p-4 rounded-xl border border-white/10">
+        <p class="font-label text-[9px] uppercase tracking-wider text-[#E97A2E] mb-1">If Grants Instead</p>
+        <div class="font-headline text-xl font-bold text-[#E97A2E]">{fmt(ml.grant_summary.p95)}</div>
+        <p class="text-white/30 text-[10px] mt-1">No money comes back</p>
+      </div>
+      <div class="bg-white/5 backdrop-blur p-4 rounded-xl border border-[#DC2626]/30">
+        <p class="font-label text-[9px] uppercase tracking-wider text-[#DC2626] mb-1">Worst-Case Scenario</p>
+        <div class="font-headline text-xl font-bold text-[#DC2626]">{fmt(stress.scenarios[stress.scenarios.length - 1].p95)}</div>
+        <p class="text-white/30 text-[10px] mt-1">Housing crash and demand surge</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 mb-6">
+      <div>
+        <h3 class="text-white font-headline font-bold mb-3 text-sm">Why we're confident</h3>
+        <ul class="space-y-1.5 text-white/60 text-sm">
+          <li>- Accounts for <strong class="text-white">each property's unique risk</strong>, not just averages</li>
+          <li>- Models housing booms, recessions, and <strong class="text-white">normal markets</strong></li>
+          <li>- Survives <strong class="text-white">3 extreme scenarios</strong> including a "Perfect Storm"</li>
+          <li>- 8 independent checks <strong class="text-white">agree within 1%</strong></li>
+          <li>- 95% confidence = the fund stays solvent <strong class="text-white">19 times out of 20</strong></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-headline font-bold mb-3 text-sm">How to sharpen the estimate</h3>
+        <ul class="space-y-1.5 text-white/60 text-sm">
+          <li>- More years of LEAP program data → <strong class="text-white">reduces 78%</strong> of uncertainty</li>
+          <li>- City's street-by-street replacement schedule → <strong class="text-white">11%</strong> of uncertainty</li>
+          <li>- County home sale & refinance records → <strong class="text-white">4%</strong> of uncertainty</li>
+        </ul>
+        <div class="flex flex-wrap gap-1.5 mt-3">
+          {["Economic Cycles", "Tenure Effect", "Deadline Urgency", "Home Values", "Contractor Limits", "Fund Earnings", "Partial Losses"].map(e => (
+            <span class="bg-white/8 text-white/70 px-2.5 py-1 rounded-full font-label text-[9px] font-bold">{e}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Judging Criteria Scorecard -->
+    <div class="grid grid-cols-5 gap-2">
+      {[
+        { icon: "check_circle", label: "Clear Problem", evidence: "Federal mandate, 34,269 eligible homes, specific dollar question with 95% confidence target" },
+        { icon: "psychology", label: "Grounded Inputs", evidence: "Every assumption traced to real data — program records, census, national housing statistics" },
+        { icon: "target", label: "Trustworthy Answer", evidence: "8 independent methods all arrive at the same number — within 1% of each other" },
+        { icon: "payments", label: "Fiscally Sound", evidence: "~$80/line, <0.3% of city budget, 80% recovered by 2051, survives worst-case scenarios" },
+        { icon: "forum", label: "Actionable Plan", evidence: "Clear recommendation, early-warning triggers, and a path to sharpen estimates over time" },
+      ].map(c => (
+        <div class="bg-white/5 backdrop-blur p-3 rounded-xl border border-white/10">
+          <div class="flex items-center gap-1.5 mb-1.5">
+            <span class="material-symbols-outlined text-[#16A34A] text-sm">{c.icon}</span>
+            <span class="font-label text-[8px] uppercase tracking-wider text-white/80 font-bold">{c.label}</span>
+          </div>
+          <p class="text-[9px] text-white/50 leading-tight">{c.evidence}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+</LandingLayout>

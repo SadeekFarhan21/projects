@@ -1,0 +1,36 @@
+has weight attr (g,u): TRUE TRUE 
+weight summary u:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   1.000   1.000   1.141   1.000   6.000 
+betweenness weighted (default):
+  KORD   KDFW   EDDF   KLAX   KATL   KSFO   KEWR   EHAM   KDEN   KIAD 
+0.0663 0.0384 0.0367 0.0342 0.0313 0.0307 0.0298 0.0281 0.0265 0.0254 
+betweenness unweighted:
+  KORD   KLAX   KATL   KDFW   EDDF   YSSY   KSFO   KDEN   EHAM   KIAD 
+0.0709 0.0470 0.0391 0.0387 0.0342 0.0279 0.0268 0.0256 0.0251 0.0216 
+zero betweenness (weighted / unweighted): 1282 1288 of 1909  nonzero: 627 621 
+KTPA degree 6 closeness rank weighted 81 unweighted 71 of 1177 
+KCLT degree 43 closeness rank weighted 32 unweighted 18 of 1177 
+KIAD degree 32 closeness rank weighted 13 unweighted 18 of 1177 
+KDFW degree 57 closeness rank weighted 2 unweighted 3 of 1177 
+closeness unweighted top10:
+ [1] "KORD" "KATL" "KDFW" "KLAX" "KDEN" "KSEA" "KMIA" "KSFO" "KEWR" "EDDF"
+Spearman weighted:
+      deg   bet   eig   str
+deg 1.000 0.917 0.620 0.984
+bet 0.917 1.000 0.546 0.898
+eig 0.620 0.546 1.000 0.620
+str 0.984 0.898 0.620 1.000
+Spearman unweighted bet/eig:
+      deg   bet   eig   str
+deg 1.000 0.912 0.676 0.984
+bet 0.912 1.000 0.561 0.895
+eig 0.676 0.561 1.000 0.672
+str 0.984 0.895 0.672 1.000
+eigen top5 weighted:
+  KATL   KORD   KSEA   KLAS   KLAX 
+1.0000 0.7768 0.7217 0.6736 0.6627 
+unweighted:
+  KATL   KORD   KDFW   KLAX   KDEN 
+1.0000 0.9104 0.8259 0.6944 0.6817 
+NA origin: 1181 empty-string origin: 0 NA dest: 813 empty dest: 0 

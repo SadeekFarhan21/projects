@@ -1,0 +1,15 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Parameters",
+  "title": "The Smallest Conv Stack Has the Second Most Parameters",
+  "subtitle": "Trainable parameters of the three CNNs, rebuilt from the layer stacks in model_builders",
+  "legendLabels": { "emphasis": "Emotion CNN, four conv blocks with BatchNorm", "other": "Plain conv stacks" },
+  "rows": [
+    { "label": "ASL, 29 classes", "value": 3307805, "detail": "Three conv layers, Flatten, Dense 128. 36-class version has 3,308,708" },
+    { "label": "Gesture, 10 classes", "value": 2097674, "detail": "One Conv 16, MaxPool, Flatten, Dense 32" },
+    { "label": "Emotion, 7 classes", "value": 912103, "detail": "914,151 total, 912,103 trainable", "emphasis": true }
+  ],
+  "caption": "The gesture network has one 16 filter conv layer, yet 2.1 million parameters, because Flatten hands a 64 by 64 by 16 map (65,536 values) to Dense 32. The deepest network, the emotion CNN, is the smallest because global average pooling removes that layer.",
+  "source": "results/count_params.py, run under TensorFlow 2.21 on Python 3.12"
+}

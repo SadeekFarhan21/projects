@@ -1,0 +1,99 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Sampled flight rows",
+  "title": "Sampled Flights by Month",
+  "subtitle": "Rows of sampled_flights.csv by month of the day column, March 2020 to October 2021",
+  "legendLabels": {
+    "emphasis": "Smallest and largest months",
+    "other": "Other months"
+  },
+  "rows": [
+    {
+      "label": "2020-03",
+      "value": 266
+    },
+    {
+      "label": "2020-04",
+      "value": 108,
+      "emphasis": true,
+      "detail": "Smallest month"
+    },
+    {
+      "label": "2020-05",
+      "value": 144
+    },
+    {
+      "label": "2020-06",
+      "value": 168
+    },
+    {
+      "label": "2020-07",
+      "value": 233
+    },
+    {
+      "label": "2020-08",
+      "value": 261
+    },
+    {
+      "label": "2020-09",
+      "value": 209
+    },
+    {
+      "label": "2020-10",
+      "value": 251
+    },
+    {
+      "label": "2020-11",
+      "value": 193
+    },
+    {
+      "label": "2020-12",
+      "value": 244
+    },
+    {
+      "label": "2021-01",
+      "value": 212
+    },
+    {
+      "label": "2021-02",
+      "value": 189
+    },
+    {
+      "label": "2021-03",
+      "value": 283
+    },
+    {
+      "label": "2021-04",
+      "value": 297
+    },
+    {
+      "label": "2021-05",
+      "value": 299
+    },
+    {
+      "label": "2021-06",
+      "value": 320
+    },
+    {
+      "label": "2021-07",
+      "value": 366,
+      "emphasis": true,
+      "detail": "Largest month"
+    },
+    {
+      "label": "2021-08",
+      "value": 345
+    },
+    {
+      "label": "2021-09",
+      "value": 322
+    },
+    {
+      "label": "2021-10",
+      "value": 355
+    }
+  ],
+  "caption": "The 20 bars sum to 5,065, from 108 rows in April 2020 to 366 in July 2021.",
+  "source": "results/run.out, the by month table"
+}

@@ -1,0 +1,75 @@
+query_term,rank,concept_id,concept_name,analytics_concept_id,domain_id,vocabulary_id,confidence,match_type
+iodixanol,1,19003201,iodixanol,19003201,Drug,RxNorm,1.0,exact_name
+iopamidol,1,19081224,iopamidol,19081224,Drug,RxNorm,1.0,exact_name
+iodinated contrast media,1,21605373,"X-RAY CONTRAST MEDIA, IODINATED",,Drug,ATC,0.95,fuzzy_name
+computed tomography with intravenous contrast,1,4013967,CT with intravenous contrast,4013967,Procedure,SNOMED,1.0,exact_synonym
+multidetector computed tomography,1,4300757,Computed tomography,4300757,Procedure,SNOMED,0.9,fuzzy_name
+multidetector computed tomography,2,37032856,Pituitary and Sella turcica | Computed tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,3,37023277,Head and Pituitary and Sella turcica | Computed tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,4,37043432,Head and Orbit - bilateral | Computed tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,5,37076459,Temporal bone - bilateral | Computed tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,6,37055474,Internal auditory canal | X-ray tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,7,37065828,Internal auditory canal Right | Computed tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,8,37051787,Internal auditory canal Right | X-ray tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,9,37042832,Internal auditory canal Left | Computed tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+multidetector computed tomography,10,37077554,Internal auditory canal Left | X-ray tomography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+CT angiography with contrast,1,4303663,CT angiography with contrast,4303663,Procedure,SNOMED,1.0,exact_name
+angiography with contrast (intra-arterial),1,37075344,Internal maxillary artery | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),2,37044192,Head artery and Neck artery | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),3,37043357,Head artery Bilateral and Neck artery Bilateral | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),4,37058008,Head artery - left and Neck artery - left | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),5,37060449,Cerebral arteries - bilateral and Cervical arteries - bilateral | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),6,37043970,Cerebral arteries - unilateral and Cervical arteries - unilateral | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),7,37036561,Carotid arteries - left | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),8,37055579,Carotid arteries -right | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),9,37064580,Carotid arteries - unilateral | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+angiography with contrast (intra-arterial),10,37030260,Carotid artery.external | Radio fluoroscopy angiography | Radiology,,Procedure,LOINC,0.4061,fuzzy_name
+serum creatinine,1,4013964,"Creatinine measurement, serum",4013964,Measurement,SNOMED,1.0,exact_synonym
+estimated glomerular filtration rate (eGFR),1,1004025,Heart rate,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),2,37037470,Tubular extraction rate/1.73 sq M | Serum or Blood | Chemistry - non-challenge,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),3,37053969,Basic metabolic panel and Glomerular filtration rate.predicted | Serum or Plasma | Chemistry Panels,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),4,37031781,Comprehensive metabolic panel and Glomerular filtration rate.predicted | Serum or Plasma | Chemistry Panels,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),5,37028633,"Creatinine and Glomerular filtration rate.predicted panel | Serum, Plasma or Blood | Chemistry Panels",,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),6,37056546,Cystatin C and Glomerular filtration rate by Cystatin C-based formula panel | Serum or Plasma | Chemistry Panels,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),7,37046543,Renal function panel and Glomerular filtration rate.predicted | Serum or Plasma | Chemistry Panels,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),8,37055978,Cardiac output/Heart rate.2 chamber | Heart ventricle - left | Cardiac ultrasound,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),9,37023345,Cardiac output/Heart rate.4 chamber | Heart ventricle - left | Cardiac ultrasound,,Measurement,LOINC,0.8122,fuzzy_name
+estimated glomerular filtration rate (eGFR),10,37029915,One-third mean filling rate | Heart ventricle - left | Cardiac procedures,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),1,1003132,Blood pressure,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),2,37022455,F13A1 gene and F13B gene full mutation analysis | Blood or Tissue | Molecular pathology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),3,37053006,Acinetobacter sp rpsA gene | Positive blood culture | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),4,37040741,Acinetobacter baumannii DNA | Positive blood culture | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),5,37035948,Anaplasma phagocytophilum DNA | Blood | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),6,37028846,Anaplasma phagocytophilum groEL gene | Blood | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),7,37051363,Bacillus cereus group DNA | Positive blood culture | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),8,37056653,Bacillus subtilis group DNA | Positive blood culture | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),9,37033326,Bacteroides fragilis DNA | Blood | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+blood urea nitrogen (BUN),10,37025734,Bartonella henselae DNA | Blood | Microbiology,,Measurement,LOINC,0.8122,fuzzy_name
+acute kidney injury,1,197320,Acute kidney injury,197320,Condition,SNOMED,1.0,exact_name
+chronic kidney disease,1,46271022,Chronic kidney disease,46271022,Condition,SNOMED,1.0,exact_name
+end-stage renal disease,1,193782,End-stage renal disease,193782,Condition,SNOMED,1.0,exact_name
+hemodialysis (maintenance),1,4195714,"Hemodialysis, maintenance at home",4195714,Procedure,SNOMED,0.95,fuzzy_name
+peritoneal dialysis (maintenance),1,4247794,Peritoneal dialysis catheter maintenance,4247794,Procedure,SNOMED,0.95,fuzzy_name
+continuous renal replacement therapy (CRRT),1,36685851,Radionuclide renal study using ACE (angiotensin converting enzyme) inhibitor,36685851,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),2,36685866,Radioligand therapy using lutetium (177-Lu) labeled somatostatin analog,36685866,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),3,37208614,Signposting for digital cognitive behavioural therapy for insomnia,37208614,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),4,37209040,Mentalisation based therapy,37209040,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),5,37209041,Schema therapy,37209041,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),6,4013342,Total revision of hip replacement with use of methyl methacrylate,4013342,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),7,4013047,Closure of renal pyelostomy,4013047,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),8,4013057,"Epidural injection of anesthetic substance, diagnostic, caudal, continuous",4013057,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),9,4017852,Removable appliance therapy,4017852,Procedure,SNOMED,0.855,fuzzy_name
+continuous renal replacement therapy (CRRT),10,603133,External beam radiation therapy using particle spot scanning technique,603133,Procedure,SNOMED,0.855,fuzzy_name
+kidney transplant,1,4322471,Transplant of kidney,4322471,Procedure,SNOMED,1.0,exact_synonym
+kidney transplant status,1,198124,Kidney disease,198124,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,2,37395514,Acute kidney injury due to acute tubular necrosis due to hypovolaemia,37395514,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,3,37395516,Acute kidney injury due to acute tubular necrosis due to circulatory failure,37395516,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,4,37395517,Acute kidney injury due to acute tubular necrosis due to sepsis,37395517,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,5,37395518,Acute kidney injury due to acute tubular necrosis with histological evidence,37395518,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,6,37395519,Acute kidney injury due to acute tubular necrosis due to hypovolaemia with histological evidence,37395519,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,7,37395520,Acute kidney injury due to acute tubular necrosis due to sepsis with histological evidence,37395520,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,8,37395521,Acute kidney injury due to acute tubular necrosis due to circulatory failure with histological evidence,37395521,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,9,44782429,Chronic kidney disease due to hypertension,44782429,Condition,SNOMED,0.855,fuzzy_name
+kidney transplant status,10,45757137,Pre-existing hypertensive heart and chronic kidney disease in mother complicating childbirth,45757137,Condition,SNOMED,0.855,fuzzy_name
+diabetes mellitus type 2,1,201826,Type 2 diabetes mellitus,201826,Condition,SNOMED,1.0,exact_synonym
+hypertension,1,316866,Hypertensive disorder,316866,Condition,SNOMED,1.0,exact_synonym

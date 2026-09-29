@@ -1,0 +1,239 @@
+[
+  {
+    "pmcid": "PMC13028654",
+    "title": "Potential Mechanisms of MAP Kinase JNK’s Involvement in Modulating Cancer Cell Fate in a Cisplatin Concentration-Dependent Manner",
+    "license_href": "https://creativecommons.org/licenses/by/4.0/",
+    "pdf_pages": 22,
+    "chars": 97705,
+    "sentences": 648,
+    "sentences_with_entities_raw": 501,
+    "sentences_with_entities_after_min4_filter": 429,
+    "unique_entities": 37,
+    "cooccurrence_edges": 190,
+    "pattern_edges": 14,
+    "edges_after_merge": 200,
+    "edge_types_after_merge": {
+      "CO_OCCURRENCE": 188,
+      "CAUSES": 5,
+      "TREATS": 6,
+      "INHIBITS": 1
+    },
+    "graph_nodes": 37,
+    "graph_edges": 113,
+    "density": 0.1697,
+    "avg_degree": 6.11,
+    "communities": 7,
+    "largest_community": 13,
+    "entity_type_counts": {
+      "CELL_TYPE": 11,
+      "CHEMICAL": 16,
+      "DISEASE": 3,
+      "GENE_OR_GENE_PRODUCT": 7
+    },
+    "top5_betweenness": [
+      [
+        "cells",
+        0.2257
+      ],
+      [
+        "A549 cells",
+        0.1992
+      ],
+      [
+        "cancer",
+        0.1276
+      ],
+      [
+        "cellular",
+        0.0632
+      ],
+      [
+        "cancer cell lines",
+        0.0566
+      ]
+    ],
+    "top5_degree": [
+      [
+        "cells",
+        19
+      ],
+      [
+        "A549 cells",
+        18
+      ],
+      [
+        "cancer",
+        16
+      ],
+      [
+        "carboplatin",
+        10
+      ],
+      [
+        "cellular",
+        9
+      ]
+    ],
+    "seconds_pdf_text_and_sentences": 0.121,
+    "seconds_ner": 12.79,
+    "seconds_filter_rel_graph_analytics": 0.089
+  },
+  {
+    "pmcid": "PMC13072840",
+    "title": "MK2/p38/p53 Suppress Basal IL-1β and Non-Canonical NF-κB Signaling in Macrophages",
+    "license_href": "https://creativecommons.org/licenses/by/4.0/",
+    "pdf_pages": 12,
+    "chars": 56874,
+    "sentences": 407,
+    "sentences_with_entities_raw": 315,
+    "sentences_with_entities_after_min4_filter": 265,
+    "unique_entities": 27,
+    "cooccurrence_edges": 143,
+    "pattern_edges": 10,
+    "edges_after_merge": 151,
+    "edge_types_after_merge": {
+      "CO_OCCURRENCE": 142,
+      "INHIBITS": 6,
+      "CAUSES": 2,
+      "CAUSED_BY": 1
+    },
+    "graph_nodes": 27,
+    "graph_edges": 115,
+    "density": 0.3276,
+    "avg_degree": 8.52,
+    "communities": 4,
+    "largest_community": 10,
+    "entity_type_counts": {
+      "DISEASE": 3,
+      "GENE_OR_GENE_PRODUCT": 16,
+      "ORGANISM": 1,
+      "CELL_TYPE": 5,
+      "CHEMICAL": 2
+    },
+    "top5_betweenness": [
+      [
+        "cells",
+        0.2478
+      ],
+      [
+        "MK2",
+        0.1226
+      ],
+      [
+        "IL-1",
+        0.086
+      ],
+      [
+        "Il1b",
+        0.0857
+      ],
+      [
+        "Nutlin-3",
+        0.0752
+      ]
+    ],
+    "top5_degree": [
+      [
+        "cells",
+        22
+      ],
+      [
+        "Il1b",
+        17
+      ],
+      [
+        "IL-1",
+        17
+      ],
+      [
+        "MK2",
+        15
+      ],
+      [
+        "Nutlin-3",
+        15
+      ]
+    ],
+    "seconds_pdf_text_and_sentences": 0.066,
+    "seconds_ner": 7.386,
+    "seconds_filter_rel_graph_analytics": 0.045
+  },
+  {
+    "pmcid": "PMC13090758",
+    "title": "Effect of Small Nucleolar RNA H/ACA Box 64 (SNORA64) on Apoptosis Regulator Genes in Pancreatic Cancer in Vitro",
+    "license_href": "",
+    "pdf_pages": 15,
+    "chars": 51364,
+    "sentences": 419,
+    "sentences_with_entities_raw": 238,
+    "sentences_with_entities_after_min4_filter": 204,
+    "unique_entities": 20,
+    "cooccurrence_edges": 44,
+    "pattern_edges": 1,
+    "edges_after_merge": 45,
+    "edge_types_after_merge": {
+      "CO_OCCURRENCE": 44,
+      "INHIBITS": 1
+    },
+    "graph_nodes": 20,
+    "graph_edges": 23,
+    "density": 0.1211,
+    "avg_degree": 2.3,
+    "communities": 10,
+    "largest_community": 5,
+    "entity_type_counts": {
+      "DISEASE": 6,
+      "CELL_TYPE": 5,
+      "GENE_OR_GENE_PRODUCT": 6,
+      "TISSUE": 1,
+      "CHEMICAL": 2
+    },
+    "top5_betweenness": [
+      [
+        "SNORA64",
+        0.231
+      ],
+      [
+        "BCL-XL",
+        0.0965
+      ],
+      [
+        "cells",
+        0.0848
+      ],
+      [
+        "cell line",
+        0.0517
+      ],
+      [
+        "cell",
+        0.0385
+      ]
+    ],
+    "top5_degree": [
+      [
+        "SNORA64",
+        9
+      ],
+      [
+        "cells",
+        6
+      ],
+      [
+        "cell",
+        5
+      ],
+      [
+        "cell line",
+        5
+      ],
+      [
+        "BCL-XL",
+        5
+      ]
+    ],
+    "seconds_pdf_text_and_sentences": 0.062,
+    "seconds_ner": 7.17,
+    "seconds_filter_rel_graph_analytics": 0.034
+  }
+]

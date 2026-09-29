@@ -177,6 +177,8 @@ function wireLegend(node: HTMLElement) {
       }
     });
   });
+  // A responsive redraw brings new marks: isolate the locked series again.
+  node.addEventListener("fig:redraw", () => apply(locked));
 }
 
 /* ------------------------------------------------------------------ wire */

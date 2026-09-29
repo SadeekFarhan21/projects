@@ -1,0 +1,31 @@
+{
+  "type": "bars",
+  "format": "time",
+  "unit": "Wall-clock seconds for scispaCy NER, CPU",
+  "title": "NER Is Almost All of the Pipeline Time",
+  "subtitle": "Seconds for the NER pass on each paper, one run each",
+  "legendLabels": {
+    "emphasis": "Longest paper",
+    "other": "Other papers"
+  },
+  "rows": [
+    {
+      "label": "JNK review, 648 sentences",
+      "value": 12.79,
+      "emphasis": true,
+      "detail": "Everything else took 0.21 s: 0.121 s for text and sentences, 0.089 s for filter, relationships, graph and analytics"
+    },
+    {
+      "label": "MK2/p38/p53, 407 sentences",
+      "value": 7.386,
+      "detail": "Everything else took 0.111 s: 0.066 s and 0.045 s"
+    },
+    {
+      "label": "SNORA64, 419 sentences",
+      "value": 7.17,
+      "detail": "Everything else took 0.096 s: 0.062 s and 0.034 s"
+    }
+  ],
+  "caption": "Louvain and betweenness centrality on graphs of 20 to 37 nodes are negligible, so the cost that would scale with corpus size is the model. Single runs on an Apple silicon CPU, so treat differences between papers as approximate.",
+  "source": "results/pipeline_measurements.json, from scripts/measure_pipeline.py, single run per paper"
+}

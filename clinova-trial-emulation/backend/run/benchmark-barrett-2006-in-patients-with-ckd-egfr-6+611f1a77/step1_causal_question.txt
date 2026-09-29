@@ -1,0 +1,48 @@
+### Causal Question
+Among adults with chronic kidney disease (eGFR <60 mL/min/1.73m²) undergoing **contrast-enhanced multidetector CT (MDCT)**, **what is the effect of receiving iso-osmolar iodinated contrast (iodixanol)** compared with **low-osmolar iodinated contrast (iopamidol)** on the **72-hour risk of contrast-associated nephropathy**, defined as **an increase in serum creatinine ≥0.5 mg/dL within 72 hours** after contrast administration?
+
+---
+
+### PICO Components
+
+| Component | Description | Data Operationalization |
+|---|---|---|
+| **Population** | Patients with CKD undergoing contrast-enhanced MDCT | Adults (e.g., ≥18y) with an IV contrast-enhanced MDCT encounter; **baseline eGFR <60** calculated from the most recent pre-CT creatinine (e.g., CKD-EPI); baseline creatinine drawn *before* contrast (e.g., within 24h, or within 7 days if outpatient and clinically stable); exclude maintenance dialysis; optionally exclude AKI at baseline or recent iodinated contrast exposure (e.g., prior 7 days). |
+| **Intervention** | Iso-osmolar iodinated contrast | Iodixanol administered IV for the MDCT at the index encounter (capture agent name + concentration; optionally restrict to common formulations like iodixanol 320). |
+| **Comparator** | Active comparator: low-osmolar iodinated contrast | Iopamidol administered IV for the MDCT at the index encounter (agent name + concentration; optionally restrict to iopamidol 370 or 300 depending on local practice). |
+| **Outcome** | CIN/CA-AKI event within 72 hours | Binary indicator: **peak** post-contrast serum creatinine within 72h minus baseline creatinine ≥0.5 mg/dL; define measurement window as any creatinine collected after contrast (e.g., 0–72h, or 24–72h) and use the maximum value in-window. (Note: this is a “classic CIN” definition; modern guideline definitions also use KDIGO thresholds.) ([ncbi.nlm.nih.gov](https://www.ncbi.nlm.nih.gov/books/NBK448066/?utm_source=openai)) |
+
+---
+
+### Time Zero
+**Time zero = the date/time of IV iodinated contrast administration for the index MDCT scan.**
+
+*Why this avoids immortal time bias:* eligibility (CKD status and baseline creatinine/eGFR) is assessed **before** (or at) the moment contrast is given, and treatment assignment (iodixanol vs iopamidol) is determined **at** that same moment. Follow-up for creatinine rise then starts immediately after exposure, so there is no “guaranteed event-free” time incorrectly attributed to either group.
+
+---
+
+### Clinical Context (from web search)
+- **Definitions have shifted:** many guidelines now prefer terms like **post-contrast AKI (PC-AKI)** or **contrast-associated AKI (CA-AKI)** rather than “contrast-induced nephropathy (CIN),” and definitions often align with **KDIGO AKI** thresholds (e.g., creatinine rise ≥0.3 mg/dL within 48h or ≥1.5× baseline), rather than the older “≥0.5 mg/dL or ≥25% within 48–72h.” ([esur-cm.org](https://esur-cm.org/index.php/b-renal-adverse-reactions-2?utm_source=openai))  
+- **ESUR guidance** defines PC-AKI as creatinine increase **>0.3 mg/dL or >1.5× baseline within 48–72h** of contrast exposure. ([esur-cm.org](https://esur-cm.org/index.php/b-renal-adverse-reactions-2?utm_source=openai))  
+- **ACR–NKF consensus statements (2020)** emphasize that the risk of true *contrast-induced* AKI after **IV iodinated contrast** has likely been overstated due to lack of adequate control groups, and recommend IV saline prophylaxis mainly for patients with **AKI or eGFR <30** (and selective consideration for eGFR 30–44 in high-risk circumstances). ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/33015613/?utm_source=openai))  
+- **Evidence comparing iodixanol vs iopamidol in CT/CKD:** randomized, double-blind CT studies in CKD populations have reported **no clear difference** in creatinine-based nephropathy rates between iodixanol and iopamidol over ~48–72 hours, although definitions and inclusion criteria vary across trials. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/17035872/?utm_source=openai))  
+- **Broader RCT evidence/meta-analysis:** meta-analyses of RCTs across settings have generally found **no statistically significant overall reduction** in CIN risk for iodixanol compared with low-osmolar agents, with heterogeneity by route (intra-arterial vs IV) and comparator agent. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/19092091/?utm_source=openai))  
+
+---
+
+### Assumptions Made
+1. **Route/setting:** “contrast-enhanced MDCT” implies **intravenous** iodinated contrast for CT (not intra-arterial angiography).
+2. **Baseline renal function measurement:** baseline creatinine is available pre-scan and is “recent enough” to reflect pre-exposure kidney function (e.g., within 24h inpatient; up to 7 days outpatient if stable—consistent with common guideline operationalizations). ([sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S2173510720300240?utm_source=openai))  
+3. **Outcome definition fixed to the question:** primary endpoint is the classic threshold **SCr increase ≥0.5 mg/dL within 72h**, even though modern guideline definitions often use KDIGO thresholds. ([ncbi.nlm.nih.gov](https://www.ncbi.nlm.nih.gov/books/NBK448066/?utm_source=openai))  
+4. **Estimand:** effect on **risk (cumulative incidence)** of meeting the creatinine criterion by 72h (e.g., risk difference or risk ratio).
+
+---
+
+### Feasibility Notes
+- **Feasible in observational EHR/radiology data** if you have: (i) exact contrast agent used, (ii) baseline creatinine/eGFR, (iii) post-contrast creatinine values within 72h, and (iv) key confounders.
+- **Major threats to validity:**
+  - **Confounding by indication / channeling:** higher-risk CKD patients may preferentially receive one agent; control for baseline eGFR, diabetes, hemodynamics, dehydration/CHF, nephrotoxic drugs, contrast volume, inpatient vs outpatient, and prophylactic hydration.
+  - **Outcome ascertainment bias (informative monitoring):** post-CT creatinine is more likely to be checked in sicker/higher-risk patients; a target trial would mandate uniform creatinine measurement at 48–72h, but observational data often won’t. Consider restricting to settings with protocolized monitoring, or using methods to address informative missingness (e.g., IPCW / sensitivity analyses).
+  - **Competing risks:** death or dialysis initiation within 72h can preclude creatinine measurement; pre-specify handling (composite outcome, competing-risk estimand, or censoring model).
+
+If you want, I can also draft the *full* target trial protocol elements (eligibility window, treatment strategies including dose/volume constraints, follow-up/censoring rules, estimand, and an analysis plan aligned to TTE).

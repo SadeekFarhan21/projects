@@ -1,0 +1,11 @@
+.DS_Store
+*.aux
+*.bcf
+*.log
+*.xml
+*.synctex.gz
+
+# Data - symlinks to local Kaggle cache (downloaded via data/dataset.py)
+data/asl_dataset
+data/fer2013.csv
+data/leapGestRecog

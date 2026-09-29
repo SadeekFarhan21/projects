@@ -1,7 +1,10 @@
 /*
- * Home page post list, paged to the screen: every post is in the page, and
- * a page holds as many posts as fit in the window below the list's top (at
- * least 3), so a phone may show 3 per page and a large screen all of them.
+ * Post lists paged to the screen (the home page and the archive): every post
+ * is in the page, and a page holds as many posts as fit in the window below
+ * the list's top (at least 3), so a phone may show 3 per page and a large
+ * screen all of them. data-post-list names the item selector (default
+ * .post-preview); a [data-post-group] (an archive year) whose posts are all
+ * on other pages is hidden with them.
  * The page is kept in the URL (#page-2) so Back and shared links work, and
  * the size is recomputed on resize, keeping the first visible post in view.
  * Without JavaScript every post is visible.
@@ -10,7 +13,9 @@
   var list = document.querySelector('[data-post-list]')
   var nav = document.querySelector('.post-list-pager')
   if (!list || !nav) return
-  var items = Array.prototype.slice.call(list.querySelectorAll('.post-preview'))
+  var items = Array.prototype.slice.call(
+    list.querySelectorAll(list.getAttribute('data-post-list') || '.post-preview'))
+  var groups = Array.prototype.slice.call(list.querySelectorAll('[data-post-group]'))
   if (!items.length) return
   var newer = nav.querySelector('[data-page="newer"]')
   var older = nav.querySelector('[data-page="older"]')
@@ -58,6 +63,9 @@
     var start = (page - 1) * size
     items.forEach(function (item, i) {
       item.hidden = i < start || i >= start + size
+    })
+    groups.forEach(function (group) {
+      group.hidden = !group.querySelector('li:not([hidden])')
     })
     nav.hidden = pages() === 1
     newer.disabled = page === 1

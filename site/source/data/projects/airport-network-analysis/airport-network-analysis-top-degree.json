@@ -1,0 +1,58 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Distinct neighbouring airports",
+  "title": "The Ten Highest-Degree Airports",
+  "subtitle": "Undirected degree in the sampled network, ICAO codes",
+  "legendLabels": {
+    "emphasis": "Chicago O'Hare",
+    "other": "Other airports"
+  },
+  "rows": [
+    {
+      "label": "KORD",
+      "value": 74,
+      "emphasis": true
+    },
+    {
+      "label": "KATL",
+      "value": 71
+    },
+    {
+      "label": "KDFW",
+      "value": 57
+    },
+    {
+      "label": "KDEN",
+      "value": 49
+    },
+    {
+      "label": "KLAX",
+      "value": 46
+    },
+    {
+      "label": "KCLT",
+      "value": 43,
+      "detail": "Sixth, which makes Charlotte one of the major hubs in the sample"
+    },
+    {
+      "label": "KPHX",
+      "value": 42
+    },
+    {
+      "label": "KSEA",
+      "value": 37
+    },
+    {
+      "label": "EDDF",
+      "value": 36,
+      "detail": "Frankfurt, the only non-US airport in the top 10"
+    },
+    {
+      "label": "KPHL",
+      "value": 35
+    }
+  ],
+  "caption": "Degree counts distinct routes in this sample, not flights.",
+  "source": "results/run.out, the max degree and top degree lines"
+}

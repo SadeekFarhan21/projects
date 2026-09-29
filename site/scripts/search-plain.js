@@ -33,8 +33,8 @@ function toPlainText(html) {
     .replace(/<!--[\s\S]*?-->/g, ' ')
     // diagrams, charts and images: drop the whole block
     .replace(/<figure\b[\s\S]*?<\/figure>/gi, ' ')
-    // citation markers: <sup><a href="#ref-1">[1]</a></sup>
-    .replace(/<sup\b[^>]*>\s*<a\b[^>]*href="#ref[^"]*"[^>]*>[\s\S]*?<\/a>\s*<\/sup>/gi, '')
+    // citation markers: <a class="cite" href="#ref-1">[1]</a> (scripts/cite-inline.js)
+    .replace(/(?:&nbsp;|&#8288;)?<a\b[^>]*href="#ref[^"]*"[^>]*>[\s\S]*?<\/a>/gi, '')
     // display math (texmath wraps it in <eqn>)
     .replace(/<eqn\b[^>]*>[\s\S]*?<\/eqn>/gi, ' [equation] ')
     // inline math: keep simple expressions as text, else a placeholder

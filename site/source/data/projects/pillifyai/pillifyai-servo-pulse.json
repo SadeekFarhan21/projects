@@ -1,0 +1,32 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Pulse width in µs",
+  "title": "Three Duty Cycles, Three Pulse Widths",
+  "subtitle": "Duty constants from servo_control.py at a 50 Hz PWM period of 20 ms. Arithmetic on the constants, not an oscilloscope reading",
+  "legendLabels": {
+    "emphasis": "Pulse width"
+  },
+  "rows": [
+    {
+      "label": "MIN_DUTY 2.5%",
+      "value": 500,
+      "emphasis": true,
+      "detail": "0.50 ms, the counterclockwise command in the code"
+    },
+    {
+      "label": "MID_DUTY 7.5%",
+      "value": 1500,
+      "emphasis": true,
+      "detail": "1.50 ms, the neutral or stop command"
+    },
+    {
+      "label": "MAX_DUTY 12.5%",
+      "value": 2500,
+      "emphasis": true,
+      "detail": "2.50 ms, the clockwise command in the code"
+    }
+  ],
+  "caption": "A continuous-rotation servo reads the pulse width as a speed and a direction around the 1.5 ms neutral, which is why the code varies the duty offset from neutral. That reading of the hack is my inference from the code, not something the repo states.",
+  "source": "pillifyai/results/servo_buzzer_arithmetic.txt, produced by results/measure.py"
+}

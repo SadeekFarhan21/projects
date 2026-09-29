@@ -1,0 +1,454 @@
+---
+title: "Computational Notebook"
+subtitle: "Global Flight Connectivity"
+author: "Farhan Sadeek"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc-location: right
+    highlight-style: github
+    code-fold: false
+    code-tools: true
+    self-contained: true
+echo: true
+editor: source
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, error = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(igraph)
+library(igraphdata)
+library(sand)
+library(ggraph)
+library(knitr)
+library(RColorBrewer)
+library(packcircles)
+```
+
+# Summary
+
+::: summary-highlight
+This report analyzes a sampled **flight network** and the interconnected airports within it. Using descriptive analysis techniques from Kolaczyk and Csárdi's *Statistical Analysis of Network Data with R*, I explore structural patterns in the graph and identify important airports and routes.
+:::
+
+## Flight Network Analysis
+
+### Sampled Flight Data
+
+The analysis uses the supplied sampled flight data, which includes a mix of major and regional airports and preserves the hub-and-spoke structure characteristic of air transportation networks.
+
+```{r flight-load}
+## Loading sampled flight data
+df <- read.csv("sampled_flights.csv")
+```
+
+```{r flight-activity}
+## Counting flights per airport
+origin_counts <- df |> count(origin, name = "flights") |> rename(airport = origin)
+dest_counts <- df |> count(destination, name = "flights") |> rename(airport = destination)
+airport_activity <- bind_rows(origin_counts, dest_counts) |>
+  group_by(airport) |>
+  summarise(total_flights = sum(flights)) |>
+  arrange(desc(total_flights))
+
+## Remove airports with empty or NA codes
+airport_activity <- airport_activity |> filter(airport != "" & !is.na(airport))
+```
+
+`sampled_flights.csv` is used directly; no additional airport sampling or filtering is applied.
+
+```{r flight-sampling}
+sampled_df <- df
+cat("Number of flights:", nrow(sampled_df), "\n")
+```
+
+### Building the Network
+
+```{r flight-select-cols}
+## Selecting relevant columns
+sampled_df <- sampled_df |>
+  select(origin, destination, latitude_1, longitude_1, latitude_2, longitude_2) |>
+  drop_na()
+```
+
+```{r flight-edges}
+## Edge list: weighted by flight count per route
+edges <- sampled_df |>
+  group_by(origin, destination) |>
+  summarise(weight = n(), .groups = "drop")
+```
+
+```{r flight-nodes}
+## Vertex list: unique airports with coordinates
+origins <- sampled_df |>
+  select(name = origin, lat = latitude_1, long = longitude_1)
+
+destinations <- sampled_df |>
+  select(name = destination, lat = latitude_2, long = longitude_2)
+
+nodes <- bind_rows(origins, destinations) |>
+  distinct(name, .keep_all = TRUE) |>
+  na.omit()
+```
+
+```{r flight-build-graph}
+## Building the directed graph
+flight_network <- graph_from_data_frame(d = edges, vertices = nodes, directed = TRUE)
+flight_network <- simplify(flight_network, remove.multiple = TRUE, remove.loops = TRUE)
+
+## Undirected version for symmetric analyses
+flight_undirected <- igraph::as.undirected(flight_network, mode = "collapse")
+
+cat("Directed network:\n")
+print(summary(flight_network))
+```
+
+I selected only the columns needed for the analysis, constructed edge and vertex lists, and built both directed and undirected versions of the graph. I then simplified the graph so that there are no multi-edges or self-loops (the edge list was already aggregated by route, but simplification ensures a simple graph and removes any self-loops).
+
+### Network Visualization
+
+I visualized the network using a force-directed layout. In a network this large, raw plots can become unreadable, so I used vertex size scaled by degree and edge transparency to highlight the hub-and-spoke structure. I also applied the Fruchterman-Reingold layout algorithm (Fruchterman & Reingold, 1991), which tends to place highly-connected nodes centrally.
+
+```{r flight-network-viz}
+## Claude Code generated visualization with packcircles for better layoutated 
+deg <- igraph::degree(flight_undirected)
+btw <- igraph::betweenness(flight_undirected)
+
+df <- data.frame(
+  airport = V(flight_undirected)$name,
+  centrality = btw,
+  degree = deg
+)
+
+# Aggressive cleaning
+df <- df[complete.cases(df), ]
+df <- df[df$centrality > 0, ]
+df <- df[is.finite(df$centrality), ]
+df$centrality <- as.numeric(df$centrality)
+
+color_pal <- colorRampPalette(c("lightblue", "steelblue", "darkblue", "orange", "red"))(5)
+## Use unique breaks so cut() never gets duplicate break points (e.g. when degree has little variation)
+deg_breaks <- unique(quantile(df$degree, probs = seq(0, 1, length.out = 6), na.rm = TRUE))
+if (length(deg_breaks) >= 2) {
+  df$deg_bin <- as.integer(cut(df$degree, breaks = deg_breaks, include.lowest = TRUE, labels = FALSE))
+  df$deg_bin <- pmin(df$deg_bin, 5)  # cap at 5 for color_pal
+} else {
+  df$deg_bin <- 1L
+}
+df$color   <- color_pal[df$deg_bin]
+df$label   <- ifelse(df$centrality >= quantile(df$centrality, 0.90), df$airport, "")
+
+# Pack and check for NAs before plotting
+packing <- circleProgressiveLayout(df$centrality, sizetype = "area")
+
+# Drop any rows where packing produced NAs
+bad <- apply(packing, 1, function(r) any(is.na(r)))
+df     <- df[!bad, ]
+packing <- packing[!bad, ]
+
+df <- cbind(df, packing)
+dat.gg <- circleLayoutVertices(packing, npoints = 100)
+dat.gg$deg_bin <- rep(df$deg_bin, each = 101)
+
+ggplot() +
+  geom_polygon(data = dat.gg,
+               aes(x, y, group = id, fill = factor(deg_bin)),
+               colour = "white", linewidth = 0.3, alpha = 0.92) +
+  scale_fill_manual(
+    values = setNames(color_pal, as.character(1:5)),
+    labels = c("Very Low", "Low", "Medium", "High", "Very High"),
+    name = "Degree"
+  ) +
+geom_text(data = df[df$label != "", ],
+            aes(x, y, label = label, size = centrality),
+            color = "black",show.legend = FALSE) +
+  scale_size_continuous(range = c(1.5, 3.5)) +
+  coord_equal() +
+  theme_void() +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.background = element_rect(fill = "white", color = NA)
+  ) +
+  labs(title = "Flight Network — Airport Centrality")
+```
+
+From this visualization I can see the hub-and-spoke structure that airlines follow which is a small number of airports (colored in red/orange) sit at the center of the layout with many connections, while the majority of airports cluster around the periphery with only a few routes each.
+
+### Basic Graph Properties
+
+Below are some basic network property checks designed with the help of [Claude Code](https://code.claude.com). These provide an overview of the network's structure.
+
+```{r flight-basic-props}
+wc <- igraph::clusters(flight_network, mode = "weak")
+
+basic_props <- data.frame(
+  Property = c("Number of airports (vertices)",
+               "Number of flight routes (edges)",
+               "Is the graph simple?",
+               "Is weakly connected?",
+               "Is strongly connected?",
+               "Number of weakly connected components",
+               "Size of largest component",
+               "Diameter (unweighted)",
+               "Average path length",
+               "Edge density"),
+  Value = c(vcount(flight_network),
+            ecount(flight_network),
+            is_simple(flight_network),
+            is_connected(flight_network, mode = "weak"),
+            is_connected(flight_network, mode = "strong"),
+            wc$no,
+            max(wc$csize),
+            diameter(flight_network, weights = NA),
+            round(mean_distance(flight_network), 4),
+            round(edge_density(flight_network), 6))
+)
+
+kable(basic_props, col.names = c("Property", "Value"), align = c("l", "r"))
+```
+
+## Vertex and Edge Characteristics
+
+### Degree Distribution
+
+
+Now we will take a look at the degree distribution, which is a very important property of the network. The degree distribution tells us how many connections each airport has. In airline networks, we often see a highly skewed degree distribution where a few major hubs have many connections, while most airports have only a few routes.
+
+```{r flight-degree-dist, fig.width=10, fig.height=5}
+par(mfrow = c(1, 2))
+
+## Histogram of degree
+hist(igraph::degree(flight_undirected),
+     col = "steelblue",
+     breaks = 50,
+     xlab = "Vertex Degree",
+     ylab = "Frequency",
+     main = "Degree Distribution")
+
+## Log-log degree distribution to check for power-law behavior
+dd.flights <- degree_distribution(flight_undirected)
+d <- 0:(length(dd.flights) - 1)
+ind <- (dd.flights != 0)
+plot(d[ind], dd.flights[ind],
+     log = "xy",
+     col = "steelblue",
+     pch = 19,
+     xlab = "Log-Degree",
+     ylab = "Log-Intensity",
+     main = "Log-Log Degree Distribution")
+```
+
+The degree distribution is very skewed, because of the airports don't have very many connections, but the hubs have a lot of connections. The log-long plot shows a linear relationship in the tail, which is an indication of a power-law or scale-free degree distribution. Now we can derive becuase most airlines want to reduce cost and having only a few hubs make it easier for repair and maintenace.
+
+### Vertex Strength
+
+While degree counts the number of routes, vertex strength accounts for edge weights which could be represented the number of flights on each route. This could help us find airpots where are people flying a lot more frequently.
+
+```{r flight-strength, fig.width=10, fig.height=5}
+par(mfrow = c(1, 2))
+hist(igraph::degree(flight_undirected), col = "lightblue",
+     xlab = "Vertex Degree", ylab = "Frequency", main = "Degree",
+     breaks = 40)
+
+hist(strength(flight_undirected), col = "steelblue",
+     xlab = "Vertex Strength (Total Flights)", ylab = "Frequency",
+     main = "Strength", breaks = 40)
+```
+
+Both distributions are right-skewed, but the strength distribution has an even longer tail. Now this means that not only that the major hubs have more destinations those flights are much more frequent than the routes themselves.
+
+### Average Neighbor Degree
+
+Let's take a look at how each airport's number of connections relates to the average number of connections its neighboring airports have. This helps us see if airports with lots of connections mostly link to other well-connected airports, or if they're more likely to connect to smaller, less connected ones.
+
+```{r flight-avg-neighbor-deg}
+a.nn.deg.flight <- knn(flight_undirected, V(flight_undirected))$knn
+plot(igraph::degree(flight_undirected), a.nn.deg.flight,
+     log = "xy",
+     col = adjustcolor("steelblue", alpha.f = 0.5),
+     pch = 19,
+     xlab = "Log Vertex Degree",
+     ylab = "Log Average Neighbor Degree",
+     main = "Degree vs. Average Neighbor Degree")
+```
+
+The plot shows a negative trend: higher-degree airports (the major hubs) tend to be connected to neighbors with lower average degree. This is textbook disassortative mixing, which is characteristic of hub-and-spoke transportation networks. The big hubs connect to many small regional airports, which in turn have the hub as their most prominent neighbor. This pattern contrasts with social networks, which are typically assortative (popular people befriend other popular people).
+
+## Network Cohesion
+
+Now, this an interesting property to look at how the vertex and edges are connected and the size of the largest component to understand how the network is built.
+
+### Connectivity and Components
+
+```{r flight-connectivity}
+## Vertex and edge connectivity
+v_conn <- igraph::vertex_connectivity(flight_undirected)
+e_conn <- igraph::edge_connectivity(flight_undirected)
+
+comp <- igraph::clusters(flight_undirected)  # use clusters() to avoid the conflict
+
+cohesion_props <- data.frame(
+  Property = c("Vertex connectivity",
+               "Edge connectivity",
+               "Number of components",
+               "Size of largest component",
+               "Number of isolates (degree 0)"),
+  Value = c(v_conn,
+            e_conn,
+            comp$no,
+            max(comp$csize),
+            sum(igraph::degree(flight_undirected) == 0))
+)
+
+kable(cohesion_props, col.names = c("Property", "Value"), align = c("l", "r"))
+```
+
+Now, since vertex connectivity and edge connectivity is 0, this means that this airport network is connected to every single other airport in some path. In a hub-and-spoke network, these values are often low because removing just a few critical hubs would make collapse the network.
+
+### Transitivity
+
+Transitivity, also called the clustering coefficient, measures the tendency for triangles to form in the network. In an airport context, a triangle means that if airport A has direct flights to both B and C, then B and C also have a direct flight between them.
+
+```{r flight-transitivity}
+## Global transitivity
+global_trans <- transitivity(flight_undirected, type = "global")
+
+## Local transitivity
+local_trans <- transitivity(flight_undirected, type = "local")
+
+cat("Global transitivity (clustering coefficient):", round(global_trans, 4), "\n")
+cat("Average local transitivity:", round(mean(local_trans, na.rm = TRUE), 4), "\n")
+```
+
+```{r flight-clustering-vs-degree}
+## Local clustering vs degree
+plot(igraph::degree(flight_undirected), local_trans,
+     col = adjustcolor("steelblue", alpha.f = 0.4),
+     pch = 19,
+     xlab = "Vertex Degree",
+     ylab = "Local Clustering Coefficient",
+     main = "Clustering Coefficient vs. Degree")
+```
+
+## Centrality Analysis
+
+Centrality measures identify the most important or influential nodes in a network. I computed four classic centrality measures, each capturing a different notion of importance in th network.
+
+### Degree Centrality
+
+Degree centrality tells us the number of direct connections a node has. In an airport network, this tells us which airports serve the most direct routes.
+
+```{r flight-degree-centrality}
+## Degree centrality
+deg_cent <- igraph::degree(flight_undirected)
+
+## Top 10 by degree
+top_degree <- sort(deg_cent, decreasing = TRUE)[1:10]
+kable(data.frame(Airport = names(top_degree),
+                 Degree = as.integer(top_degree)),
+      col.names = c("Airport (ICAO)", "Degree"),
+      align = c("l", "r"),
+      caption = "Top 15 Airports by Degree Centrality")
+```
+
+In the airport network, we chose Dallas-Forth Worth, Charlotte, Washington Dulles has some of the highest degree centrality meaning that they are the major hubs in the network.
+
+### Closeness Centrality
+Closeness centrality measures how close a node is to all other nodes, computed as the inverse of the average shortest path distance. Airports with high closeness are well-positioned to reach the entire network quickly — they are geographically or topologically central.
+
+```{r flight-closeness-centrality}
+## Closeness centrality on largest component
+lcc <- induced_subgraph(flight_undirected,
+                        which(comp$membership == which.max(comp$csize)))
+close_cent <- igraph::closeness(lcc)
+
+top_closeness <- sort(close_cent, decreasing = TRUE)[1:10]
+kable(data.frame(Airport = names(top_closeness),
+                 Closeness = round(as.numeric(top_closeness), 6)),
+      col.names = c("Airport (ICAO)", "Closeness"),
+      align = c("l", "r"),
+      caption = "Top 15 Airports by Closeness Centrality")
+```
+
+As expected, Dallas, Washington Dulles are high up on the list. But interestingly, this time Tampa International much higher than Charlotte. I think the most likely reason is that the Charlotte Airport has flights that end in the network and follow to more destinations. Tampa is in Florida, and those flights are much more connected inside of Florida and the southeast region, which makes it more central in terms of closeness.
+
+### Betweenness Centrality
+
+Betweenness centrality counts the number of shortest paths between other pairs of nodes that pass through a given node. Airports with high betweenness are critical choke points. 
+
+```{r flight-betweenness-centrality}
+betw_cent <- igraph::betweenness(flight_undirected, normalized = TRUE)
+
+top_betweenness <- sort(betw_cent, decreasing = TRUE)[1:10]
+kable(data.frame(Airport = names(top_betweenness),
+                 Betweenness = round(as.numeric(top_betweenness), 6)),
+      col.names = c("Airport (ICAO)", "Betweenness"),
+      align = c("l", "r"),
+      caption = "Top 10 Airports by Betweenness Centrality")
+```
+
+Major hubs are again on top meaning that they connect flights from one airport to the other. For example, when I fly to San Francisco, I always have to take a layover at Chicago O'Hare which is a major hub in airport network in the United States.
+
+### Eigenvector Centrality
+
+Eigenvector centrality extends the idea of degree centrality by weighting connections: being connected to well-connected airports matters more than being connected to poorly-connected ones. This captures the recursive notion that an airport is important if it is connected to other important airports.
+
+```{r flight-eigenvector-centrality}
+eig_cent <- eigen_centrality(flight_undirected)$vector
+
+top_eigen <- sort(eig_cent, decreasing = TRUE)[1:10]
+kable(data.frame(Airport = names(top_eigen),
+                 Eigenvector = round(as.numeric(top_eigen), 6)),
+      col.names = c("Airport (ICAO)", "Eigenvector Centrality"),
+      align = c("l", "r"),
+      caption = "Top 10 Airports by Eigenvector Centrality")
+```
+
+### Hub and Authority Scores
+
+For directed networks,hub and authority scores provide a complementary perspective. An airport is a good **hub** if it sends flights to many good authorities, and a good **authority** if it receives flights from many good hubs. In aviation, hubs are airports that serve as major departure points and authorities are major arrival destinations.
+
+```{r flight-hub-authority}
+hub_scores <- hub_score(flight_network)$vector
+auth_scores <- authority_score(flight_network)$vector
+
+top_hubs <- sort(hub_scores, decreasing = TRUE)[1:10]
+top_auths <- sort(auth_scores, decreasing = TRUE)[1:10]
+
+kable(data.frame(Hub_Airport = names(top_hubs),
+                 Hub_Score = round(as.numeric(top_hubs), 4),
+                 Auth_Airport = names(top_auths),
+                 Auth_Score = round(as.numeric(top_auths), 4)),
+      col.names = c("Hub Airport", "Hub Score", "Authority Airport", "Authority Score"),
+      align = c("l", "r", "l", "r"),
+      caption = "Top 10 Airports by Hub and Authority Scores")
+```
+
+I was surprised that Detroit Wayne County Airport wasn't high up there in the hub scores because Detroit is a major Delta hub. One of the reasons that I could think of that is Detroit is not a well sought-after destination for travel compared to Chicago, Dallas, San Francisco, or New York. But it seems like Detroit is a good location for making connecting hub.
+
+### Comparing Centrality Measures
+
+Different centrality measures capture different aspects of importance. I wanted to see how correlated they are in this airport network.
+
+```{r flight-centrality-pairs, fig.width=10, fig.height=8}
+## Pairwise centrality comparison
+cent_df <- data.frame(
+  airport = V(flight_undirected)$name,
+  degree = igraph::degree(flight_undirected),
+  betweenness = igraph::betweenness(flight_undirected),
+  eigenvector = igraph::eigen_centrality(flight_undirected)$vector,
+  strength = igraph::strength(flight_undirected)
+)
+
+## Pairwise scatter plots
+pairs(cent_df[, c("degree", "betweenness", "eigenvector", "strength")],
+      col = adjustcolor("steelblue", alpha.f = 0.3),
+      pch = 19,
+      main = "Pairwise Centrality Comparisons",
+      labels = c("Degree", "Betweenness", "Eigenvector", "Strength"))
+```
+Now, here all the centrality measures are positively correlated meaning that the major hubs tend to score high across all measures. However, the strength (weighted degree) shows a stronger correlation with eigenvector centrality than with betweenness, which makes sense because both strength and eigenvector centrality capture the idea of being connected to other important nodes. Betweenness can be high for airports that serve as critical bridges even if they don't have many direct connections.

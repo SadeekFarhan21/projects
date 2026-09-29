@@ -1,0 +1,157 @@
+---
+interface Props {
+  kicker?: string;
+  title?: string;
+  footer?: string;
+  variant?: 'default' | 'hero' | 'dark';
+}
+const { kicker, title, footer, variant = 'default' } = Astro.props;
+---
+<section class:list={['slide', `slide--${variant}`]}>
+  <div class="slide-inner">
+    {kicker && (
+      <div class="kicker">
+        {variant !== 'hero' && <span class="kicker-line"></span>}
+        <span class:list={['kicker-text', { 'kicker-pill': variant === 'hero' }]}>{kicker}</span>
+      </div>
+    )}
+    {title && <h2>{title}</h2>}
+    <div class="slide-body">
+      <slot />
+    </div>
+    {footer && (
+      <div class="slide-footer">
+        <span class="footer-dot"></span>
+        <span>{footer}</span>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  /* ── Default ── */
+  .slide--default {
+    background: var(--bg);
+  }
+
+  /* ── Hero ── */
+  .slide--hero {
+    background: var(--surface);
+  }
+  .slide--hero :global(h1) {
+    color: var(--ink);
+    line-height: 1.08;
+  }
+  .slide--hero :global(p) { color: var(--ink-soft); }
+  .slide--hero :global(strong) { color: var(--ink); }
+  .slide--hero .kicker-pill {
+    color: var(--surface);
+    background: var(--primary);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  /* ── Dark ── */
+  .slide--dark {
+    background: linear-gradient(160deg, #081628 0%, #0d2a42 50%, #0b3550 100%);
+  }
+  .slide--dark h2, .slide--dark :global(h2) { color: #fff; }
+  .slide--dark :global(p), .slide--dark :global(li) { color: rgba(255,255,255,.72); }
+  .slide--dark :global(strong) { color: #fff; }
+  .slide--dark :global(h3) { color: rgba(255,255,255,.88); }
+  .slide--dark .kicker-text { color: #8BB8F0; background: rgba(43,82,180,.18); }
+  .slide--dark .kicker-line { background: #8BB8F0; }
+  .slide--dark .slide-footer { color: rgba(255,255,255,.3); }
+  .slide--dark .footer-dot { background: rgba(255,255,255,.2); }
+
+  .slide-inner {
+    position: relative; z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 84px clamp(36px, 5vw, 76px) clamp(90px, 12vh, 120px);
+    gap: 12px;
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .kicker-line {
+    width: 24px; height: 2px;
+    background: var(--primary);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .kicker-text {
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary-deep);
+    background: var(--primary-glow);
+    padding: 3px 10px 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .slide-body::-webkit-scrollbar {
+    display: none;
+  }
+  .slide--hero .slide-inner {
+    align-items: flex-start;
+  }
+  .slide--hero .slide-body {
+    justify-content: flex-start;
+    text-align: left;
+    align-self: stretch;
+    gap: 20px;
+  }
+
+  .slide-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 8px;
+    line-height: 1.4;
+  }
+  .footer-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+    opacity: .5;
+  }
+
+  @media print {
+    .slide--hero, .slide--dark { background: white !important; }
+    .slide--hero h1, .slide--dark h2 { color: var(--ink) !important; }
+    .slide--hero p, .slide--dark p { color: var(--ink-soft) !important; }
+  }
+</style>

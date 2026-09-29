@@ -1,0 +1,26 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Images",
+  "title": "How Many Images Each Stage Saw",
+  "subtitle": "Scored count covers only the months in this run's log; five months already processed earlier are not included",
+  "legendLabels": {
+    "emphasis": "Kept by the cloud scoring run",
+    "other": "Input counts"
+  },
+  "rows": [
+    {
+      "label": "Scored in logged run",
+      "value": 1803,
+      "detail": "Sum of the per-month totals in run_all.log. Five months logged as already done are not included"
+    },
+    {
+      "label": "Kept at threshold 70",
+      "value": 217,
+      "emphasis": true,
+      "detail": "About 12 percent of the 1,803 scored images, after near-duplicate clustering. 0 errors"
+    }
+  ],
+  "caption": "In the largest logged month, 2025-07, 330 of 488 images were excluded as near-duplicates before any threshold decision. The 217 excludes months already processed in earlier runs.",
+  "source": "run_all.log from the curation pipeline, summed with grep and awk"
+}

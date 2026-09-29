@@ -1,0 +1,6 @@
+packages:
+  - "apps/*"
+  - "slides"
+
+ignoredBuiltDependencies:
+  - anthropic-fonts

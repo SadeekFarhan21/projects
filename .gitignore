@@ -37,3 +37,6 @@ site/source/js/figures.js
 # ...except the projects site's chart data, which is small and must ship
 !site/source/data/
 !site/source/data/**
+
+# Screenshots written by the Playwright MCP browser tool
+.playwright-mcp/

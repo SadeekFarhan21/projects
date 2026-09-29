@@ -1,0 +1,18 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Query terms, top-1 match type",
+  "title": "How the First 20 Terms Were Matched",
+  "subtitle": "Barrett run, top-ranked concept per query term, 20 of the 47 terms have committed results",
+  "legendLabels": {
+    "emphasis": "Fuzzy name match",
+    "other": "Exact match"
+  },
+  "rows": [
+    { "label": "Exact name", "value": 6, "emphasis": false, "detail": "Confidence 1.0" },
+    { "label": "Exact synonym", "value": 5, "emphasis": false, "detail": "Confidence 1.0" },
+    { "label": "Fuzzy name", "value": 9, "emphasis": true, "detail": "The lowest top-1 is 0.4061, for angiography with contrast (intra-arterial), a LOINC radiology concept with no analytics concept ID" }
+  ],
+  "caption": "14 of the 20 top-1 hits have confidence of at least 0.95, and 4 of the 20 have no analytics_concept_id (iodinated contrast media, intra-arterial angiography, eGFR, BUN). No semantic-tier match appears, and there is no ground truth, so these are match types and not accuracy.",
+  "source": "backend/run/benchmark-barrett-2006-*/step2c_omop_results.csv via analysis/summarize_barrett_run.py"
+}

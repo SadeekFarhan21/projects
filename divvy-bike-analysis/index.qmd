@@ -1,0 +1,536 @@
+---
+title: "Divvy Bike Analysis"
+format: 
+  html:
+    code-fold: true
+    code-wrap: true
+    code-overflow: wrap
+    code-tools: true
+    tidy: true
+    theme: litera
+execute:
+  echo: true
+  warning: false
+mainfont: Helvetica
+editor_options:
+  markdown:
+    wrap: sentence
+    canonical: true
+
+page-footer: |
+  © 2025 Farhan Sadeek. All Rights Reserved.
+---
+
+```{=html}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Fragment+Mono:ital@0;1&display=swap');
+
+p {
+  font-family: 'Funnel Sans';
+}
+
+pre, code {
+  font-family: 'Fragment Mono';
+  font-size: 14px;
+}
+</style>
+```
+
+## Introduction
+
+Public bike share (PBS).
+
+A PBS is an extension of the existing transit system with a network of short-term, self-service bicycle posts in which:
+
+-   Users can use bikes by purchasing casual day use or annual memberships,
+
+-   Users can ride bikes for a short distance for one-way trips within a defined service area and Station locations can change overtime based on ridership practices or operation needs.
+
+Bike share technology continues to evolve quickly along with other wireless and digital changes.
+Other recent advancements include systems that do not require docking stations i.e. "smart lock" systems and electric‐assist bikes.
+
+### About this dataset
+
+I used 1 year (12 Months) of Divvy Chicago Bike Sharing Data from Jan 2024 to Dec 2024, obtained from Divvy Bike .
+
+This dataset included 5,667,986 trips, of which 3,127,293 / 55.2% were made by annual or monthly members, and 2,540,693 / 44.8% by casual users.
+
+#### Missing features
+
+Although this dataset is not a result of a survey, The following missing features could make this analysis more interesting and stronger if were exist.
+
+-   Bike ID,
+-   User ID,
+-   User Gender,
+-   User Age,
+-   Purpose of trip,
+-   Trip distance and
+-   Weather conditions.
+
+I believe some of them are connected to the agreed privacy policy!
+
+Anyway, let's load the packages we need for this brief analysis
+
+```{r setup, warning=FALSE, message=FALSE, hide=TRUE, results='hide'}
+library(tidyverse)
+library(paletteer)
+library(PNWColors) 
+library(leaflet)
+scale_colour_paletteer_d("PNWColors::Sunset")
+scale_fill_paletteer_d("PNWColors::Sunset")
+theme_set(theme_minimal())
+```
+
+Here, `tidyverse` is for analysis, `paletteer` is for creating custom color pallete, and `leaflet` is for creating maps.
+
+## Reading the datasets
+
+Here, we used `read.csv` function to read all 12 months into the dataset in R.
+
+```{r reading data from file, message=FALSE, warning=FALSE, message=FALSE}
+january <- read.csv("datasets/202401-divvy-tripdata.csv")
+february <- read.csv("datasets/202402-divvy-tripdata.csv")
+march <- read.csv("datasets/202403-divvy-tripdata.csv")
+april <- read.csv("datasets/202404-divvy-tripdata.csv")
+may <- read.csv("datasets/202405-divvy-tripdata.csv")
+june <- read.csv("datasets/202406-divvy-tripdata.csv")
+july <- read.csv("datasets/202407-divvy-tripdata.csv")
+august <- read.csv("datasets/202408-divvy-tripdata.csv")
+september <- read.csv("datasets/202409-divvy-tripdata.csv")
+october <- read.csv("datasets/202410-divvy-tripdata.csv")
+november <- read.csv("datasets/202411-divvy-tripdata.csv")
+december <- read.csv("datasets/202412-divvy-tripdata.csv")
+```
+
+## Combining the datasets
+
+Here, we combine all monthly datasets into a single dataset for easier analysis.
+Additionally, a `month` column is added to each dataset to identify the month of each ride.
+
+```{r combining all the datasets}
+df <- bind_rows(
+    january |> mutate(month = 1),
+    february |>  mutate(month = 2),
+    march|>  mutate(month = 3),
+    april|>  mutate(month = 4),
+    may|>  mutate(month = 5),
+    june|>  mutate(month = 6),
+    july |> mutate(month = 7),
+    august |> mutate(month = 8),
+    september |> mutate(month = 9),
+    october |> mutate(month = 10),
+    november |> mutate(month = 11),
+    december|>  mutate(month = 12)
+)
+```
+
+## Creating New Columns
+
+To enhance our analysis, we derive new columns such as `time_of_day` using the `hour` function from the `lubridate` package, and `season` using the `month` function.
+
+```{r adding daytime}
+df <- df |>
+    mutate(hour = hour(started_at)) |>
+    mutate(time_of_day = 
+    case_when (
+      hour %in% 0:5 ~ "Night",
+      hour %in% 6:11 ~ "Morning",
+      hour %in% 12:17 ~ "Afternoon",
+      hour %in% 18:23 ~ "Evening"
+        )
+    )
+```
+
+Simlarly, we derive the `season` column using the `month` from the dataframe.
+
+```{r adding season}
+df <- df  |>
+    mutate(season = 
+    case_when (
+        month %in% c(12, 1, 2) ~ "Winter",
+        month %in% c(3, 4, 5) ~ "Spring",
+        month %in% c(6, 7, 8) ~ "Summer",
+        month %in% c(9, 10, 11) ~ "Fall"
+    )
+)
+```
+
+# Exploratory Data Analysis
+
+In this section, we will analyze the data and visualize the results using various plots.
+We will focus on the following aspects:
+
+-   Ride type by user
+-   Ride type by bikes
+-   Average ride length
+-   Ride length by weekday
+-   Total rides by weekday
+-   Total rides by hour
+-   Total rides by month
+-   Average ride length by season
+-   Top 10 starting and ending stations
+-   Ride type by user
+
+This section analyzes ride types based on user type (`member` vs. `casual`).
+The data is grouped and visualized in a pie chart to show the proportion of rides for each user type.
+
+## Ride Type by Rider
+
+```{r, ride type by user}
+ride_type_by_user <- df |>
+    group_by(member_casual) |>
+    summarise(count = n()) |>
+    mutate(
+        proportion = count / sum(count),
+        percentage = count / sum(count) * 100,
+    )
+
+ride_type_by_user |>
+    mutate(
+        start = lag(proportion, default = 0) * 2 * pi,
+        end = cumsum(proportion) * 2 * pi,
+    ) |>
+    ggplot() +
+    ggforce::geom_arc_bar(
+        aes(
+            x0 = 0, y0 = 0,
+            r0 = 0.7, r = 1,
+            start = start, 
+            end = end,
+            fill = member_casual  # Ensure 'fill' is mapped to a variable
+        )
+    ) +
+    annotate(
+      'text',  
+      x = 0,
+      y = 0,
+      label = paste0(round(nrow(df) / 1000000, 2), "M\nTotal\nRides"),
+      size = 7,
+      lineheight = 1
+    ) +
+    coord_equal(expand = FALSE, xlim = c(-1.1, 1.1), ylim = c(-1.1, 1.1)) +
+    theme_void(base_size = 16) +
+    labs(
+        fill = "Membership Type"  # Add a meaningful label for the legend
+    ) +
+    theme(
+        legend.position = "right",  # Place the legend on the right
+        legend.margin = margin(t = 1, b = 0.5, unit = 'cm'), 
+        legend.text = element_text(size = 15)
+    ) +
+    scale_fill_manual(
+        values = pnw_palette("Sunset", n = 2),
+        labels = c("Casual", "Member")  # Custom labels for legend categories
+    )
+```
+
+**Observations:**
+
+-   55.2% of rides were made by members, while 44.8% were made by casual users.
+
+## Ride Type By Rideable
+
+In this section, we examine ride type based on bike types (classic, electric, docked) and user categories.
+The data is visualized as a stacked bar chart to highlight usage trends.
+
+```{r, ride type by rideable}
+
+
+
+
+ride_type_by_rideable <- df |>
+    group_by(rideable_type, member_casual) |>
+    summarise(count = n(), .groups = 'drop')
+
+ggplot(ride_type_by_rideable, aes(x = rideable_type, y = count, fill = member_casual)) +
+    geom_bar(stat = "identity", position = "stack", width = 0.7) +
+    labs(
+        x = "Bike Type",
+        y = "Count",
+        fill = "User Type"
+    ) +
+    theme_minimal(base_size = 15) +
+    scale_fill_manual(values = pnw_palette("Sunset", n = 2), labels = c("Casual", "Member"))  
+```
+
+This block of code visualizes the number of rides for each bike type (classic, electric, docked) based on user type (member or casual) using a stacked bar chart.
+It groups the data by bike type and user type, counts the rides, and then plots this information with bars filled by user type.
+
+**Observations:**
+
+-   Classic bikes are more popular among members than casual users.
+
+-   Electric bikes are more popular among casual users than members.
+
+## Average Ride Length
+
+```{r, average ride length}
+## Average Ride Length
+average_ride_length <- df |>
+    mutate(ride_length = as.numeric(difftime(ended_at, started_at, units = "mins"))) |>
+    group_by(member_casual) |>
+    summarise(average_ride_length = mean(ride_length, na.rm = TRUE))
+
+ggplot(average_ride_length, aes(x = member_casual, y = average_ride_length, fill = member_casual)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    geom_text(aes(label = round(average_ride_length, 1)), vjust = -0.5, size = 5) +
+     theme(legend.position = "none")+
+  scale_fill_manual(values = pnw_palette("Sunset", n = 2), labels = c("Casual", "Member")) +
+    labs(
+        x = "User Type",
+        y = "Average Ride Length (minutes)",
+        fill = "Member Type"
+    ) +
+    theme_minimal(base_size = 15)
+```
+
+This block of code calculates the average ride length for each user type (member or casual) and visualizes it in a bar chart.
+It groups the data by user type, computes the average ride length, and then plots this information with bars filled by user type.
+
+**Observations:**
+
+-   The average ride length is significantly longer for casual riders compared to members.
+
+-   The average ride length for both members and casual riders is around 20 minutes.
+
+## Ride Length by Weekday
+
+```{r ride length by weekday}
+ride_length_by_weekday <- df |>
+    mutate(ride_length = as.numeric(difftime(ended_at, started_at, units = "mins")),
+           day_of_week = weekdays(as.Date(started_at))) |>
+    group_by(day_of_week) |>
+    summarise(average_ride_length = mean(ride_length, na.rm = TRUE)) |> 
+    mutate(day_of_week = fct_relevel(day_of_week, c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")))
+
+ggplot(ride_length_by_weekday, aes(x = day_of_week, y = average_ride_length, fill = day_of_week)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    geom_text(aes(label = round(average_ride_length, 1)), vjust = -0.5, size = 5) +
+    labs(
+        x = "Day of the Week",
+        y = "Average Ride Length (minutes)"
+    ) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = pnw_palette("Sunset", n = 7))
+```
+
+This block of code calculates the average ride length for each day of the week and visualizes it in a bar chart.
+It groups the data by day of the week, computes the average ride length, and then plots this information with bars filled by the day of the week.
+
+**Observations:**
+
+-   The average ride length is longest on Mondays, followed by Tuesdays, Wednesdays, Thursdays, Fridays, Saturdays, and Sundays.
+-   The average ride length is significantly longer for casual riders compared to members.
+
+## Total Rides By Weekday
+
+Let's look at the total rides by weekday.
+
+```{r, total rides by weekday}
+total_rides_by_weekday <- df |>
+    mutate(day_of_week = weekdays(as.Date(started_at))) |>
+    group_by(day_of_week) |>
+    summarise(total_rides = n()) |>
+    mutate(day_of_week = fct_relevel(day_of_week, c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")))
+
+total_rides_by_weekday |>
+    ggplot(aes(x = day_of_week, y = total_rides, fill = day_of_week)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    geom_text(aes(label = total_rides), vjust = -0.5, size = 5) +
+  theme(legend.position = "none")+
+  scale_fill_manual(values = pnw_palette("Sunset", n = 7))
+```
+
+This block of code calculates the total number of rides for each day of the week and visualizes it in a bar chart.
+It groups the data by day of the week, counts the total rides, and then plots this information with bars filled by the day of the week.
+
+**Observations:**
+
+-   The highest number of rides occurs on Saturdays, followed by Sundays, Fridays, Thursdays, Wednesdays, Tuesdays, and Mondays.
+
+-   The lowest number of rides occurs on Mondays.
+
+## Total Rides by Hour
+
+Let's take a look at the total rides by hour and time of day.
+
+```{r, total rides by hour}
+total_rides_by_hour <- df |>
+    mutate(hour = hour(started_at)) |>
+    group_by(hour, time_of_day) |>
+    summarise(total_rides = n(), .groups = 'drop')
+
+total_rides_by_hour |>
+    ggplot(aes(x = hour, y = total_rides, fill = time_of_day)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    scale_x_continuous(breaks = 0:23) +
+    labs(
+        x = "Hour of the Day",
+        y = "Total Rides",
+        fill = "Time of Day"
+    ) +
+    theme_minimal(base_size = 15) + scale_fill_manual(values = pnw_palette("Sunset", n = 4))
+```
+
+This block of code calculates the total number of rides for each hour of the day and visualizes it in a bar chart.
+It groups the data by hour and time of day, counts the total rides, and then plots this information with bars filled by time of day.
+
+**Observations:**
+
+-   The highest number of rides occurs between 5 PM and 7 PM.
+
+-   The lowest number of rides occurs between 12 AM and 6 AM.
+
+-   The number of rides is highest on weekends, particularly on Saturdays.
+
+-   The number of rides is lowest on Mondays.
+
+## Total Rides by Month
+
+Now let's look at the total rides by month and season.
+
+```{r, total rides by month}
+
+total_rides_by_month <- df |>
+    mutate(month = month(started_at, label = TRUE)) |>
+    group_by(month, season) |>
+    summarise(total_rides = n(), .groups = 'drop')
+
+total_rides_by_month |>
+    ggplot(aes(x = month, y = total_rides, fill = season)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    labs(
+        x = "Month",
+        y = "Total Rides",
+        fill = "Season"
+    ) + scale_fill_manual(values = pnw_palette("Sunset", n = 4))
+```
+
+**Observations:**
+
+-   The highest number of rides occurred in the summer, followed by fall, spring, and winter.
+    -   The total number of rides is slightly higher for casual riders compared to members
+-   Average Ride Length by Season
+
+```{r average ride length by season}
+
+average_ride_length_by_season <- df |>
+    mutate(ride_length = as.numeric(difftime(ended_at, started_at, units = "mins"))) |>
+    group_by(season) |>
+    summarise(average_ride_length = mean(ride_length, na.rm = TRUE), .groups = 'drop')
+
+ggplot(average_ride_length_by_season, aes(x = season, y = average_ride_length, fill = season)) +
+    geom_bar(stat = "identity", width = 0.7) +
+    geom_text(aes(label = round(average_ride_length, 1)), vjust = -0.5, size = 5, color = "white") +
+    labs(
+        x = "Season",
+        y = "Average Ride Length (minutes)",
+        fill = "Season"
+    ) +
+    scale_fill_manual(values = pnw_palette("Sunset", n = 4))
+```
+
+**Observations:**
+
+-   The average ride length is shortest in the summer and longest in the summer.
+
+-   The average ride length is significantly longer for casual riders compared to members.
+
+## Top 10 Starting Stations
+
+The top 10 stations will be visualized on a map to show their locations and the number of rides starting from each station.
+The code uses the `leaflet` library to create an interactive map with clustered markers for the top 10 starting locations of bike rides.
+The map displays the number of rides starting from each location, providing a visual representation of popular bike stations in Chicago.
+
+```{r top 10 starting station, warning=FALSE, message=FALSE}
+df |>
+  mutate(start_station_name = fct_lump(start_station_name, 10)) |> 
+  count(start_station_id, start_station_name, name = "counts", sort = T) |> 
+  filter(!is.na(start_station_name),
+         !is.na(start_station_id),
+         start_station_name != "Other") |>
+  mutate(start_station_name = fct_reorder(start_station_name, counts)) |>
+  top_n(n=11) |>
+  slice(-1) |>
+  ggplot(aes(x = start_station_name, y = counts, fill = start_station_name)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  theme(legend.position = "none") +
+  labs(y = "Count", x = "Start Stations")+
+  scale_fill_manual(values = pnw_palette("Sunset", n = 10))
+
+```
+
+Now let's look at them on the map.
+
+```{r}
+top_start_location <- df |>
+  group_by(start_lat, start_lng) |>
+  summarise(counts = n(), .groups = 'drop') |>
+  slice_max(order_by = counts, n = 10)
+
+leaflet(top_start_location) |>
+  addTiles() |>
+  addMarkers(lng = ~start_lng, lat = ~start_lat, popup = ~counts, clusterOptions = markerClusterOptions())
+```
+
+<br/> This code groups the data by starting latitude and longitude, then summarizes the counts of occurrences for each group.
+It selects the top 10 locations with the highest counts and creates a Leaflet map.
+The map displays markers at the specified locations with popups showing the counts and enables marker clustering.
+
+**Observations:**
+
+-   Most of the Locations are around the downtown and UChicago-Northwestern area.
+-   The most popular starting and ending stations are very to each other. 
+
+## Top 10 Ending Stations
+
+The top 10 ending stations will be visualized on a map to show their locations and the number of rides ending at each station.
+The code uses the `leaflet` library to create an interactive map with clustered markers for the top 10 ending locations of bike rides.
+The map displays the number of rides ending at each location, providing a visual representation of popular bike stations in Chicago.
+
+## Top 10 Ending Stations
+
+```{r, top 10 ending station, warning=FALSE, message=FALSE}
+df |>
+    mutate(end_station_name = fct_lump(end_station_name, 10)) |> 
+    count(end_station_id, end_station_name, name = "counts", sort = T) |> 
+    filter(!is.na(end_station_name),
+                 !is.na(end_station_id),
+                 end_station_name != "Other") |>
+    mutate(end_station_name = fct_reorder(end_station_name, counts)) |> 
+    top_n(n = 11) |>
+    slice(-1) |>
+    ggplot(aes(x = end_station_name, y = counts, fill = end_station_name)) +
+    geom_bar(stat = "identity") +
+    coord_flip() + 
+  theme(legend.position = "none") +
+  labs(y = "Count", x = "End Stations")+
+  scale_fill_manual(values = pnw_palette("Sunset", n = 10))
+
+```
+
+Let's look at them on the map.
+
+```{r}
+top_end_location <- df |>
+  group_by(end_lat, end_lng) |>
+  summarise(counts = n(), .groups = 'drop') |>
+  slice_max(order_by = counts, n = 10)
+
+leaflet(top_end_location) |>
+  addTiles() |>
+  addMarkers(lng = ~end_lng, lat = ~end_lat, popup = ~counts, clusterOptions = markerClusterOptions())
+```
+
+<br/> The first part of the code uses the `ggplot2` library to create a horizontal bar plot of the top end stations by count.
+It groups the data by end_station_name, calculates the counts, and then plots these counts with bars filled by the station names, flipping the coordinates for better readability.
+The second part of the code uses the `leaflet` library to create an interactive map showing the top 10 end locations based on counts.
+It groups the data by latitude and longitude, calculates the counts, and then adds markers to the map at these locations, with popups displaying the counts and clustering options enabled for better visualization.
+
+**Observations:**
+
+-   Most of the Locations are around the downtown and UChicago-Northwestern area.
+
+-   The most popular starting and ending stations are very to each other.

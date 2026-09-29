@@ -1,0 +1,16 @@
+{
+  "type": "bars",
+  "format": "percent",
+  "title": "Three Ways to Score the Same Model",
+  "subtitle": "Predicting the market state 63 trading days ahead",
+  "legendLabels": { "emphasis": "Honest test on 2019-2022", "other": "Shuffled split and baseline" },
+  "rows": [
+    { "label": "Committed confusion matrix (shuffled split)", "value": 95.6, "detail": "501 of 524 samples on the diagonal, read from results/confusion_matrix.png" },
+    { "label": "Logged accuracy, my rerun (shuffled split)", "value": 94.08, "detail": "Model accuracy: 0.9408" },
+    { "label": "Persistence baseline, 2019-2022", "value": 73.4, "detail": "Predict that the state stays the same for 63 days" },
+    { "label": "Model vs same-day state, 2019-2022", "value": 60.6, "emphasis": true, "detail": "1,008 test days, trained only to 2018-12-31" },
+    { "label": "Model vs state 63 days ahead, 2019-2022", "value": 56.8, "emphasis": true, "detail": "The target the model was trained for" }
+  ],
+  "caption": "The shuffled split puts near-duplicate neighbouring days on both sides. On a chronological test the model is below the do-nothing baseline.",
+  "source": "results/pipeline_run.log, results/confusion_matrix.png and results/ablation_output.txt"
+}

@@ -40,6 +40,13 @@ export const theme = (): Theme => ({
 export const SERIES = ["#006cac", "#c0572a", "#7d5ba6"] as const;
 export const DEEMPHASIS = "#9aa1ab";
 
+/**
+ * Color of the i-th series. A fourth series is the "Other" slot: it takes the
+ * deemphasis gray rather than wrapping round to slot 1, which drew two series
+ * of one chart in the same blue.
+ */
+export const seriesColor = (i: number): string => SERIES[i] ?? DEEMPHASIS;
+
 export const fmt = new Intl.NumberFormat("en-US");
 
 /** One shared tooltip, positioned against the page. */
@@ -135,16 +142,72 @@ export function pinTip(on: boolean) {
   tip?.classList.toggle("is-pinned", tipState.pinned);
 }
 
-/** A one-line cue under charts that answer hover, since nothing else says so. */
+/**
+ * The footer under a chart: the source line and the hover hint share one row
+ * below a hairline, so they read as metadata rather than more caption.
+ */
+function footRow(node: Element): HTMLElement {
+  let f = node.querySelector<HTMLElement>(":scope > .fig-foot");
+  if (!f) {
+    f = document.createElement("div");
+    f.className = "fig-foot";
+    node.appendChild(f);
+  }
+  return f;
+}
+
+/**
+ * A one-line cue under charts that answer hover, since nothing else says so.
+ * Touch screens have no hover or arrow keys, so there it would only be clutter
+ * (a tap on a mark still opens its tooltip).
+ */
 export function hoverHint(node: Element) {
   if (node.querySelector(".fig-controls, .fig-hint")) return;
-  const touch = window.matchMedia("(hover: none)").matches;
+  if (window.matchMedia("(hover: none)").matches) return;
   const p = document.createElement("p");
   p.className = "fig-hint";
-  p.textContent = touch
-    ? "Tap a bar or point for exact values, tap again to let go"
-    : "Hover for exact values · click to pin · arrow keys step through";
-  node.appendChild(p);
+  p.textContent = "Hover for exact values · click to pin · arrow keys step through";
+  footRow(node).appendChild(p);
+}
+
+/** Title and optional subtitle above the chart, shared by every figure. */
+export function heading(node: Element, spec: { title: string; subtitle?: string }) {
+  const h = document.createElement("div");
+  h.className = "fig-head";
+  const t = document.createElement("div");
+  t.className = "fig-title";
+  t.textContent = spec.title;
+  h.appendChild(t);
+  if (spec.subtitle) {
+    const s = document.createElement("div");
+    s.className = "fig-subtitle";
+    s.textContent = spec.subtitle;
+    h.appendChild(s);
+  }
+  node.appendChild(h);
+}
+
+/** A legend row of swatches under the chart. */
+export function legend(
+  node: Element,
+  items: { label: string; swatch: string; hatched?: boolean }[]
+) {
+  const l = document.createElement("div");
+  l.className = "fig-legend";
+  for (const it of items) {
+    const s = document.createElement("span");
+    s.className = "fig-legend-item";
+    const sw = document.createElement("i");
+    sw.className = "fig-swatch";
+    sw.style.background = it.hatched
+      ? `repeating-linear-gradient(45deg, ${it.swatch} 0 1.5px, transparent 1.5px 4.5px)`
+      : it.swatch;
+    if (it.hatched) sw.style.borderColor = it.swatch;
+    s.appendChild(sw);
+    s.appendChild(document.createTextNode(it.label));
+    l.appendChild(s);
+  }
+  node.appendChild(l);
 }
 
 export function caption(node: Element, text: string) {
@@ -155,20 +218,23 @@ export function caption(node: Element, text: string) {
 
 /**
  * A figure in a memo is only as good as its provenance, so the source line is a
- * separate element rather than part of the caption prose.
+ * separate element rather than part of the caption prose. The data files write
+ * it as a lowercase phrase ("the project's peeking simulations") to follow the
+ * "Source: " prefix from figures.css; it starts a sentence there, so its first
+ * letter is capitalised here (CSS ::first-letter would hit the prefix instead).
  */
 export function sourceLine(node: Element, text: string) {
   const s = document.createElement("p");
   s.className = "fig-source";
-  s.textContent = text;
-  node.appendChild(s);
+  s.textContent = text.charAt(0).toUpperCase() + text.slice(1);
+  footRow(node).appendChild(s);
 }
 
 /* ------------------------------------------------------------ responsive */
 
 /**
  * Charts are drawn in CSS pixels at the width their figure actually has, so a
- * 10px label is 10px on a phone too, instead of a 680-wide drawing scaled down
+ * 12px label is 12px on a phone too, instead of a 680-wide drawing scaled down
  * to 45% (4.5px text). Below COMPACT a chart switches to its narrow layout
  * (labels above bars, fewer ticks) and to the larger compact text sizes set by
  * `svg.fig-compact` in figures.css. Under MIN_W it scales down a little rather
@@ -327,7 +393,9 @@ export function responsive(node: Element, draw: (svg: SVGSVGElement, L: Layout) 
       old.replaceWith(next);
     } else host.appendChild(next);
     svg = next;
-    draw(next, { w, compact, axisPx: compact ? 11 : 10, labelPx: compact ? 12 : 11 });
+    // Keep in step with .fig-axis / .fig-label (and their svg.fig-compact
+    // variants) in figures.css: layouts measure labels at these sizes.
+    draw(next, { w, compact, axisPx: compact ? 11 : 12, labelPx: compact ? 12 : 13 });
     if (old) host.dispatchEvent(new CustomEvent("fig:redraw", { detail: { animating } }));
   };
   render();

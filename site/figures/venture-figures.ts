@@ -20,16 +20,28 @@
  */
 import { select } from "d3-selection";
 import { scaleLinear, scaleLog, scaleBand } from "d3-scale";
+import { tickStep } from "d3-array";
 import {
   theme,
   SERIES,
   DEEMPHASIS,
+  seriesColor,
   fmt,
   showTip,
   hideTip,
   caption,
   sourceLine,
+  heading,
+  legend,
+  responsive,
+  textWidth,
+  fitText,
+  wrapText,
+  setLines,
+  spacedTicks,
+  clampAnchor,
   json,
+  type Layout,
 } from "./figure-kit";
 
 /* ------------------------------------------------------------- formatting */
@@ -50,6 +62,8 @@ function trim(n: number): string {
 }
 /** Durations given in seconds: 50 ms, 300 µs, 1 µs. */
 function duration(s: number): string {
+  // A bare 0 on a µs or ms axis: "0 ns" read as a unit switch.
+  if (s === 0) return "0";
   if (s >= 1) return `${trim(s)} s`;
   if (s >= 1e-3) return `${trim(s * 1e3)} ms`;
   if (s >= 1e-6) return `${trim(s * 1e6)} µs`;
@@ -68,6 +82,21 @@ function format(v: number, f: Format = "number"): string {
     default:
       return fmt.format(v);
   }
+}
+
+/**
+ * A linear value axis whose ends are ticks: about `count` round steps from
+ * the tick at or below lo to the one at or above hi, so the top gridline is
+ * never under the tallest mark (d3's nice() rounds to a finer step than
+ * ticks(4) then labels, which left bars past the last labelled line).
+ */
+function linearAxis(lo: number, hi: number, count: number) {
+  const step = tickStep(lo, hi, count) || 1;
+  const a = Math.floor(lo / step) * step,
+    b = Math.ceil(hi / step) * step;
+  const ticks: number[] = [];
+  for (let v = a; v <= b + step / 2; v += step) ticks.push(+v.toPrecision(12));
+  return { domain: [a, b] as [number, number], ticks };
 }
 
 /** Log ticks at 1, 10, 100 … within the domain. */
@@ -97,28 +126,96 @@ type Base = {
   source: string;
 };
 
-function heading(node: Element, spec: Base) {
-  const h = document.createElement("div");
-  h.className = "fig-head";
-  const t = document.createElement("div");
-  t.className = "fig-title";
-  t.textContent = spec.title;
-  h.appendChild(t);
-  if (spec.subtitle) {
-    const s = document.createElement("div");
-    s.className = "fig-subtitle";
-    s.textContent = spec.subtitle;
-    h.appendChild(s);
-  }
-  node.appendChild(h);
-}
-
 function footer(node: Element, spec: Base) {
   caption(node, spec.caption);
   sourceLine(node, spec.source);
 }
 
 type Svg = ReturnType<typeof select<SVGSVGElement, unknown>>;
+
+/**
+ * Size a chart's responsive <svg> (figure-kit responsive()) to w x h drawing
+ * units, which are CSS px: the viewBox matches the figure's content width.
+ */
+function sized(el: SVGSVGElement, w: number, h: number, label: string): Svg {
+  return select(el)
+    .attr("viewBox", `0 0 ${w} ${h}`)
+    .attr("role", "img")
+    .attr("aria-label", label) as unknown as Svg;
+}
+
+/** Widest of some labels at a font size, in px. */
+const widest = (labels: string[], px: number, weight: number | string = 400) =>
+  Math.max(0, ...labels.map(l => textWidth(l, px, weight)));
+
+/**
+ * An axis title's lines: word-wrapped to two lines of w rather than cut, so a
+ * long title ("..., log scale") keeps its last words on a phone. Callers
+ * reserve (lines - 1) * titleLineH of extra height.
+ */
+function titleLines(text: string, w: number, px: number): string[] {
+  return wrapText(text, w, px, 2);
+}
+const titleLineH = (px: number) => px + 3;
+
+/**
+ * An axis title (the spec's unit or xLabel) in the muted axis style, wrapped
+ * to the room it has. Centred on cx but kept inside [0, w]; with anchor
+ * "start" it sits flush left at cx.
+ */
+function axisTitle(
+  svg: Svg,
+  text: string,
+  cx: number,
+  y: number,
+  w: number,
+  px: number,
+  anchor?: "start"
+) {
+  const lines = titleLines(text, w, px);
+  const c = anchor
+    ? { x: cx, anchor }
+    : clampAnchor(cx, widest(lines, px), 0, w);
+  const el = svg
+    .append("text")
+    .attr("class", "fig-axis fig-axis-title")
+    .attr("x", c.x)
+    .attr("y", y)
+    .attr("text-anchor", c.anchor);
+  setLines(el.node() as SVGTextElement, lines, c.x, titleLineH(px));
+}
+
+/** Does the segment p-q cross the box [x1,x2]x[y1,y2]? (Liang-Barsky clip.) */
+function segHitsBox(
+  p: [number, number],
+  q: [number, number],
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number
+): boolean {
+  let t0 = 0,
+    t1 = 1;
+  const dx = q[0] - p[0],
+    dy = q[1] - p[1];
+  const edges: [number, number][] = [
+    [-dx, p[0] - x1],
+    [dx, x2 - p[0]],
+    [-dy, p[1] - y1],
+    [dy, y2 - p[1]],
+  ];
+  for (const [pp, qq] of edges) {
+    if (pp === 0) {
+      if (qq < 0) return false;
+    } else {
+      const r = qq / pp;
+      if (pp < 0) t0 = Math.max(t0, r);
+      else t1 = Math.min(t1, r);
+      if (t0 > t1) return false;
+    }
+  }
+  return true;
+}
 
 function svgIn(node: Element, w: number, h: number, label: string): Svg {
   return select(node)
@@ -147,29 +244,6 @@ function hatch(svg: Svg, id: string, color: string) {
     .attr("stroke", color)
     .attr("stroke-width", 1.5);
   return `url(#${id})`;
-}
-
-/** A legend row of swatches under the chart. */
-function legend(
-  node: Element,
-  items: { label: string; swatch: string; hatched?: boolean }[]
-) {
-  const l = document.createElement("div");
-  l.className = "fig-legend";
-  for (const it of items) {
-    const s = document.createElement("span");
-    s.className = "fig-legend-item";
-    const sw = document.createElement("i");
-    sw.className = "fig-swatch";
-    sw.style.background = it.hatched
-      ? `repeating-linear-gradient(45deg, ${it.swatch} 0 1.5px, transparent 1.5px 4.5px)`
-      : it.swatch;
-    if (it.hatched) sw.style.borderColor = it.swatch;
-    s.appendChild(sw);
-    s.appendChild(document.createTextNode(it.label));
-    l.appendChild(s);
-  }
-  node.appendChild(l);
 }
 
 /* ------------------------------------------------------------------ bars */
@@ -203,18 +277,6 @@ type BarsSpec = Base & {
 function bars(node: Element, d: BarsSpec) {
   const t = theme();
   const f = d.format ?? "number";
-  // Notes ride under the label as a muted second line, so rows with notes are
-  // taller. The bar end carries only the value; the tooltip has everything.
-  const CHAR = 6.6;
-  const padL = 176,
-    padR = 84,
-    padT = 10,
-    padB = 24,
-    w = 680;
-  const subFits = (_r: BarRow) => false;
-  const rowH = 30;
-  const plotW = w - padL - padR;
-  const h = padT + d.rows.length * rowH + padB;
   const values = d.rows
     .map(r => r.value)
     .filter((v): v is number => v !== null);
@@ -225,154 +287,199 @@ function bars(node: Element, d: BarsSpec) {
   // specs keep the original [0, max] domain.
   const neg = d.scale !== "log" && minV < 0;
   const span = Math.max(maxV, 0) - minV;
-  const x =
+  const domain: [number, number] =
     d.scale === "log"
-      ? scaleLog()
-          .domain([10 ** Math.floor(Math.log10(minV)), maxV * 1.15])
-          .range([0, plotW])
-      : scaleLinear()
-          .domain(
-            neg
-              ? [minV - span * 0.2, Math.max(maxV, 0) + span * 0.08]
-              : [0, maxV * 1.08]
-          )
-          .range([0, plotW]);
-
-  const svg = svgIn(
-    node,
-    w,
-    h,
-    `${d.title}. ` +
-      d.rows
-        .map(
-          r =>
-            `${r.label} ${r.value === null ? "not disclosed" : format(r.value, f)}${r.note ? `, ${r.note}` : ""}`
-        )
-        .join("; ")
-  );
-  const hatched = hatch(
-    svg,
-    `h-${Math.random().toString(36).slice(2)}`,
-    t.accent
-  );
-
-  // Axis: a few hairlines, labels below, unit under those.
-  const ticks =
-    d.scale === "log" ? logTicks(x.domain()[0], x.domain()[1]) : x.ticks(4);
-  const axisY = padT + d.rows.length * rowH + 4;
-  svg
-    .selectAll("line.tick")
-    .data(ticks)
-    .join("line")
-    .attr("x1", v => padL + x(v))
-    .attr("x2", v => padL + x(v))
-    .attr("y1", padT)
-    .attr("y2", axisY)
-    .attr("stroke", t.border);
-  svg
-    .selectAll("text.tick")
-    .data(ticks)
-    .join("text")
-    .attr("class", "fig-axis")
-    .attr("x", v => padL + x(v))
-    .attr("y", axisY + 12)
-    .attr("text-anchor", "middle")
-    .text(v => format(v, f));
-
-  if (d.reference) {
-    const rx = padL + x(d.reference.value);
-    svg
-      .append("line")
-      .attr("x1", rx)
-      .attr("x2", rx)
-      .attr("y1", padT - 4)
-      .attr("y2", axisY)
-      .attr("stroke", SERIES[1])
-      .attr("stroke-width", 1.5)
-      .attr("stroke-dasharray", d.reference.band ? "3 3" : null);
-    svg
-      .append("text")
-      .attr("class", "fig-axis")
-      .attr("x", rx + 6)
-      .attr("y", padT + 2)
-      .style("fill", SERIES[1])
-      .text(d.reference.label);
-  }
-
-  const g = svg
-    .selectAll<SVGGElement, BarRow>("g.row")
-    .data(d.rows)
-    .join("g")
-    .attr("transform", (_r, i) => `translate(0,${padT + i * rowH})`)
-    .on("mousemove", (event: MouseEvent, r: BarRow) =>
-      showTip(
-        `<strong>${r.label}</strong><br>${r.value === null ? "Not disclosed" : format(r.value, f)}${
-          r.note ? ` · ${r.note}` : ""
-        }${r.detail ? `<br><span class="fig-tip-muted">${r.detail}</span>` : ""}`,
-        event
-      )
-    )
-    .on("mouseleave", hideTip);
-
-  const mid = rowH / 2;
-  g.append("rect")
-    .attr("width", w)
-    .attr("height", rowH)
-    .attr("fill", "transparent");
-  g.append("text")
-    .attr("x", padL - 14)
-    .attr("y", r => (subFits(r) ? mid - 2 : mid + 4))
-    .attr("text-anchor", "end")
-    .attr("class", "fig-label")
-    .attr("font-weight", r => (r.emphasis ? 650 : 450))
-    .text(r => r.label);
-  g.filter(subFits)
-    .append("text")
-    .attr("x", padL - 14)
-    .attr("y", mid + 10)
-    .attr("text-anchor", "end")
-    .attr("class", "fig-axis")
-    .text(r => r.note ?? "");
-
-  const x0 = d.scale === "log" ? x(x.domain()[0]) : neg ? x(0) : 0;
-  if (neg)
-    svg
-      .append("line")
-      .attr("x1", padL + x0)
-      .attr("x2", padL + x0)
-      .attr("y1", padT)
-      .attr("y2", axisY)
-      .attr("stroke", t.muted);
-  g.filter(r => r.value !== null)
-    .append("rect")
-    .attr("x", r => padL + Math.min(x0, x(r.value as number)))
-    .attr("y", mid - 7)
-    .attr("width", r => Math.max(2, Math.abs(x(r.value as number) - x0)))
-    .attr("height", 14)
-    .attr("rx", 4)
-    .attr("fill", r =>
-      r.estimate ? hatched : r.emphasis ? t.accent : DEEMPHASIS
-    )
-    .attr("stroke", r => (r.estimate ? t.accent : "none"))
-    .attr("stroke-width", 1);
-  // Value only at the bar end. A note that had no room on the left goes here
-  // if it fits, otherwise it lives in the tooltip.
+      ? [10 ** Math.floor(Math.log10(minV)), maxV * 1.15]
+      : neg
+        ? [minV - span * 0.2, Math.max(maxV, 0) + span * 0.08]
+        : [0, maxV * 1.08];
+  // Value only at the bar end; the tooltip has the note and the detail.
   const endText = (r: BarRow) =>
     r.value === null ? "Not disclosed" : format(r.value, f);
-  void CHAR;
-  const below = (r: BarRow) => r.value !== null && r.value < 0;
-  g.append("text")
-    .attr("x", r =>
-      below(r)
-        ? padL + x(r.value as number) - 8
-        : padL + (r.value === null ? x0 : x(r.value)) + 8
-    )
-    .attr("text-anchor", r => (below(r) ? "end" : null))
-    .attr("y", mid + 4)
-    .attr("class", "fig-label")
-    .style("fill", r => (r.value === null ? t.muted : t.fg))
-    .attr("font-style", r => (r.value === null ? "italic" : "normal"))
-    .text(endText);
+  const weight = (r: BarRow) => (r.emphasis ? 650 : 450);
+  const aria =
+    `${d.title}. ` +
+    d.rows
+      .map(
+        r =>
+          `${r.label} ${r.value === null ? "not disclosed" : format(r.value, f)}${r.note ? `, ${r.note}` : ""}`
+      )
+      .join("; ");
+
+  responsive(node, (el, L) => {
+    const lp = L.labelPx,
+      ap = L.axisPx;
+    // The label column and the value gutter are measured, not fixed, so the
+    // bars get every pixel the text does not need.
+    const labelW = Math.max(...d.rows.map(r => textWidth(r.label, lp, weight(r))));
+    const padR = Math.ceil(widest(d.rows.map(endText), lp)) + 12;
+    const inlineL = Math.ceil(labelW) + 14;
+    // Labels sit left of their bars while that leaves the bars at least 45% of
+    // the width. Past that (phones, long labels) each label goes on its own
+    // line above its bar, and the bars take the full width.
+    const stacked = L.w - inlineL - padR < L.w * 0.45;
+    const padL = stacked ? 0 : inlineL;
+    const rowH = stacked ? lp + 24 : Math.max(30, lp + 17);
+    const barH = 14;
+    const barY = stacked ? lp + 5 : (rowH - barH) / 2;
+    const midY = barY + barH / 2;
+    const textDy = lp * 0.35; // baseline offset that centres a label on midY
+    // A reference line's label rides above the first row.
+    const padT = d.reference ? ap + 10 : 4;
+    const plotW = L.w - padL - padR;
+    // A negative bar's value label sits left of the bar end. Stretch the low
+    // end of the domain until every such label ends inside the plot, so it
+    // never runs into the row-label column (inline) or off the left edge
+    // (stacked). Solves x(v) >= 8 + label width for the domain's low end.
+    const dom: [number, number] = [domain[0], domain[1]];
+    if (neg)
+      for (const r of d.rows) {
+        if (r.value === null || r.value >= 0) continue;
+        const need = 8 + textWidth(endText(r), lp);
+        if (need >= plotW) continue;
+        dom[0] = Math.min(dom[0], (r.value * plotW - need * dom[1]) / (plotW - need));
+      }
+    const x =
+      d.scale === "log"
+        ? scaleLog().domain(dom).range([0, plotW])
+        : scaleLinear().domain(dom).range([0, plotW]);
+    const axisY = padT + d.rows.length * rowH + 4;
+    const tickY = axisY + ap + 2;
+    const unitY = tickY + ap + 8;
+    const unitN = d.unit ? titleLines(d.unit, L.w, ap).length : 0;
+    const h = Math.ceil(
+      (d.unit ? unitY + (unitN - 1) * titleLineH(ap) : tickY) + ap * 0.35
+    );
+    // Vertical rules (gridlines, zero, reference). With labels stacked above
+    // the bars, a rule would strike through every label, so it is drawn as
+    // one segment per row that starts under that row's label.
+    const rules = (y1: number): [number, number][] =>
+      stacked
+        ? [
+            ...(y1 < padT ? [[y1, padT] as [number, number]] : []),
+            ...d.rows.map((_r, i): [number, number] => [
+              padT + i * rowH + barY - 3,
+              i === d.rows.length - 1 ? axisY : padT + (i + 1) * rowH + 1,
+            ]),
+          ]
+        : [[y1, axisY]];
+    const vrule = (xv: number, y1: number) =>
+      svg
+        .append("g")
+        .selectAll("line")
+        .data(rules(y1))
+        .join("line")
+        .attr("x1", xv)
+        .attr("x2", xv)
+        .attr("y1", s => s[0])
+        .attr("y2", s => s[1]);
+
+    const svg = sized(el, L.w, h, aria);
+    const hatched = hatch(
+      svg,
+      `h-${Math.random().toString(36).slice(2)}`,
+      t.accent
+    );
+
+    // Axis: a few hairlines, labels below, the unit under those.
+    const ticks = spacedTicks(
+      d.scale === "log"
+        ? logTicks(domain[0], domain[1])
+        : (x as ReturnType<typeof scaleLinear<number, number>>).ticks(L.compact ? 3 : 4),
+      v => padL + x(v),
+      v => format(v, f),
+      ap
+    );
+    ticks.forEach(v => vrule(padL + x(v), padT).attr("stroke", t.border));
+    svg
+      .selectAll("text.tick")
+      .data(ticks)
+      .join("text")
+      .attr("class", "fig-axis")
+      .each(function (v) {
+        const c = clampAnchor(padL + x(v), textWidth(format(v, f), ap), 0, L.w);
+        select(this).attr("x", c.x).attr("text-anchor", c.anchor);
+      })
+      .attr("y", tickY)
+      .text(v => format(v, f));
+    if (d.unit) axisTitle(svg, d.unit, padL + plotW / 2, unitY, L.w, ap);
+
+    if (d.reference) {
+      const rx = padL + x(d.reference.value);
+      vrule(rx, padT - 4)
+        .attr("stroke", SERIES[1])
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", d.reference.band ? "3 3" : null);
+      // Right of the line, or left of it when it would run off the edge.
+      const rw = textWidth(d.reference.label, ap);
+      const right = rx + 6 + rw <= L.w;
+      svg
+        .append("text")
+        .attr("class", "fig-axis")
+        .attr("x", right ? rx + 6 : rx - 6)
+        .attr("y", ap)
+        .attr("text-anchor", right ? "start" : "end")
+        .style("fill", SERIES[1])
+        .text(d.reference.label);
+    }
+
+    const g = svg
+      .selectAll<SVGGElement, BarRow>("g.row")
+      .data(d.rows)
+      .join("g")
+      .attr("transform", (_r, i) => `translate(0,${padT + i * rowH})`)
+      .on("mousemove", (event: MouseEvent, r: BarRow) =>
+        showTip(
+          `<strong>${r.label}</strong><br>${r.value === null ? "Not disclosed" : format(r.value, f)}${
+            r.note ? ` · ${r.note}` : ""
+          }${r.detail ? `<br><span class="fig-tip-muted">${r.detail}</span>` : ""}`,
+          event
+        )
+      )
+      .on("mouseleave", hideTip);
+
+    g.append("rect")
+      .attr("width", L.w)
+      .attr("height", rowH)
+      .attr("fill", "transparent");
+    g.append("text")
+      .attr("x", stacked ? 0 : padL - 12)
+      .attr("y", stacked ? lp : midY + textDy)
+      .attr("text-anchor", stacked ? "start" : "end")
+      .attr("class", "fig-label")
+      .attr("font-weight", weight)
+      .text(r => (stacked ? fitText(r.label, L.w, lp, weight(r)) : r.label));
+
+    const x0 = d.scale === "log" ? x(domain[0]) : neg ? x(0) : 0;
+    if (neg) vrule(padL + x0, padT).attr("stroke", t.muted);
+    g.filter(r => r.value !== null)
+      .append("rect")
+      .attr("x", r => padL + Math.min(x0, x(r.value as number)))
+      .attr("y", barY)
+      .attr("width", r => Math.max(2, Math.abs(x(r.value as number) - x0)))
+      .attr("height", barH)
+      .attr("rx", 4)
+      .attr("fill", r =>
+        r.estimate ? hatched : r.emphasis ? t.accent : DEEMPHASIS
+      )
+      .attr("stroke", r => (r.estimate ? t.accent : "none"))
+      .attr("stroke-width", 1);
+    const below = (r: BarRow) => r.value !== null && r.value < 0;
+    g.append("text")
+      .attr("x", r =>
+        below(r)
+          ? padL + x(r.value as number) - 8
+          : padL + (r.value === null ? x0 : x(r.value)) + 8
+      )
+      .attr("text-anchor", r => (below(r) ? "end" : null))
+      .attr("y", midY + textDy)
+      .attr("class", r =>
+        r.value === null ? "fig-label fig-halo" : "fig-label fig-num fig-halo"
+      )
+      .style("fill", r => (r.value === null ? t.muted : t.fg))
+      .attr("font-style", r => (r.value === null ? "italic" : "normal"))
+      .text(endText);
+  });
 
   const items: { label: string; swatch: string; hatched?: boolean }[] = [];
   if (d.rows.some(r => r.emphasis))
@@ -420,15 +527,6 @@ function columns(node: Element, d: ColumnsSpec) {
   const t = theme();
   const f = d.format ?? "number";
   const mode = d.mode ?? "grouped";
-  const w = 680,
-    h = 300,
-    padT = 36,
-    padB = 44,
-    padL = 64,
-    padR = 20;
-  const plotW = w - padL - padR,
-    plotH = h - padT - padB;
-
   const top = (v: ColValue) => (v === null ? 0 : Array.isArray(v) ? v[1] : v);
   const maxV =
     mode === "stacked"
@@ -438,166 +536,187 @@ function columns(node: Element, d: ColumnsSpec) {
           )
         )
       : Math.max(...d.series.flatMap(s => s.values.map(top)));
-  const y = scaleLinear()
-    .domain([0, maxV * 1.12])
-    .range([plotH, 0]);
-  const x0 = scaleBand()
-    .domain(d.categories)
-    .range([0, plotW])
-    .paddingInner(0.35)
-    .paddingOuter(0.2);
-  // A category never gets more than 150px, however few there are: wide slabs
-  // read loud, and the value is in the height, not the area.
-  const band = Math.min(x0.bandwidth(), 150);
-  const inset = (x0.bandwidth() - band) / 2;
-  const cx0 = (c: string) => (x0(c) ?? 0) + inset;
-  const x1 = scaleBand()
-    .domain(d.series.map(s => s.name))
-    .range([0, band])
-    .paddingInner(0.12);
-
-  const svg = svgIn(
-    node,
-    w,
-    h,
+  const valueText = (v: Exclude<ColValue, null>) =>
+    Array.isArray(v) ? `${format(v[0], f)}–${format(v[1], f)}` : format(v, f);
+  const aria =
     `${d.title}. ` +
-      d.categories
-        .map(
-          (c, i) =>
-            `${c}: ` +
-            d.series
-              .map(s => {
-                const v = s.values[i];
-                return `${s.name} ${v === null ? "not available" : Array.isArray(v) ? `${format(v[0], f)} to ${format(v[1], f)}` : format(v, f)}`;
-              })
-              .join(", ")
-        )
-        .join("; ")
-  );
-  const plot = svg.append("g").attr("transform", `translate(${padL},${padT})`);
+    d.categories
+      .map(
+        (c, i) =>
+          `${c}: ` +
+          d.series
+            .map(s => {
+              const v = s.values[i];
+              return `${s.name} ${v === null ? "not available" : Array.isArray(v) ? `${format(v[0], f)} to ${format(v[1], f)}` : format(v, f)}`;
+            })
+            .join(", ")
+      )
+      .join("; ");
 
-  // Grid: hairlines behind the marks.
-  const ticks = y.ticks(4);
-  plot
-    .selectAll("line.grid")
-    .data(ticks)
-    .join("line")
-    .attr("x1", 0)
-    .attr("x2", plotW)
-    .attr("y1", v => y(v))
-    .attr("y2", v => y(v))
-    .attr("stroke", t.border);
-  plot
-    .selectAll("text.grid")
-    .data(ticks)
-    .join("text")
-    .attr("class", "fig-axis")
-    .attr("x", -8)
-    .attr("y", v => y(v) + 3)
-    .attr("text-anchor", "end")
-    .text(v => format(v, f));
-  plot
-    .selectAll("text.cat")
-    .data(d.categories)
-    .join("text")
-    .attr("class", "fig-label")
-    .attr("x", c => cx0(c) + band / 2)
-    .attr("y", plotH + 18)
-    .attr("text-anchor", "middle")
-    .text(c => c);
+  responsive(node, (el, L) => {
+    const lp = L.labelPx,
+      ap = L.axisPx;
+    const h = L.compact ? 260 : 300;
+    // Headroom for the value labels over the tallest column, then rounded out
+    // so the top gridline is at or above every column.
+    const ax = linearAxis(0, maxV * 1.1, 4);
+    const y = scaleLinear().domain(ax.domain);
+    const ticks = ax.ticks;
+    const padL = Math.ceil(widest(ticks.map(v => format(v, f)), ap)) + 10,
+      padR = 4;
+    const plotW = L.w - padL - padR;
+    const x0 = scaleBand()
+      .domain(d.categories)
+      .range([0, plotW])
+      .paddingInner(0.35)
+      .paddingOuter(0.2);
+    // Category names wrap onto up to three lines rather than run into each
+    // other or lose their last word.
+    const catLines = d.categories.map(c => wrapText(c, x0.step() - 6, lp, 3));
+    const nLines = Math.max(1, ...catLines.map(l => l.length));
+    // The unit is the value axis title, top left over the tick labels.
+    const titleH = d.unit
+      ? ap + 10 + (titleLines(d.unit, L.w, ap).length - 1) * titleLineH(ap)
+      : 0;
+    const annH = d.annotations?.some(Boolean) ? lp + 8 : 0;
+    const padT = titleH + annH + 10;
+    const padB = lp + 6 + (nLines - 1) * (lp + 3) + Math.ceil(lp * 0.35);
+    const plotH = h - padT - padB;
+    y.range([plotH, 0]);
+    // A category never gets more than 150px, however few there are: wide slabs
+    // read loud, and the value is in the height, not the area.
+    const band = Math.min(x0.bandwidth(), 150);
+    const inset = (x0.bandwidth() - band) / 2;
+    const cx0 = (c: string) => (x0(c) ?? 0) + inset;
+    const x1 = scaleBand()
+      .domain(d.series.map(s => s.name))
+      .range([0, band])
+      .paddingInner(0.12);
+    // Value labels over grouped columns only when each fits over its column;
+    // on a narrow screen the axis and the tooltip carry the numbers.
+    const allValues = d.series.flatMap(s =>
+      s.values.filter((v): v is Exclude<ColValue, null> => v !== null)
+    );
+    const valuesFit =
+      mode !== "grouped" ||
+      widest(allValues.map(valueText), ap) <= x1.step() + 2;
 
-  const patterns = d.series.map((_s, i) =>
-    hatch(
-      svg,
-      `hc-${i}-${Math.random().toString(36).slice(2)}`,
-      SERIES[i % SERIES.length]
-    )
-  );
+    const svg = sized(el, L.w, h, aria);
+    if (d.unit) axisTitle(svg, d.unit, 0, ap, L.w, ap, "start");
+    const plot = svg.append("g").attr("transform", `translate(${padL},${padT})`);
 
-  d.categories.forEach((c, ci) => {
-    let stackBase = 0;
-    d.series.forEach((s, si) => {
-      const v = s.values[ci];
-      if (v === null) return;
-      const est = s.estimate?.[ci] ?? false;
-      const color = SERIES[si % SERIES.length];
-      const lo = Array.isArray(v) ? v[0] : v;
-      const hi = Array.isArray(v) ? v[1] : v;
-      const bx = mode === "stacked" ? cx0(c) : cx0(c) + (x1(s.name) ?? 0);
-      const bw = mode === "stacked" ? band : x1.bandwidth();
-      const yTop = mode === "stacked" ? y(stackBase + hi) : y(hi);
-      const yBot =
-        mode === "stacked"
-          ? y(stackBase + (Array.isArray(v) ? lo : 0))
-          : y(Array.isArray(v) ? lo : 0);
-      // In a stack, the base of the block is the top of the one below; keep a
-      // 2px surface gap so adjacent fills never touch.
-      const gap = mode === "stacked" && si > 0 ? 2 : 0;
-      const g = plot
-        .append("g")
-        .on("mousemove", (event: MouseEvent) =>
-          showTip(
-            `<strong>${s.name}</strong> · ${c}<br>${
-              Array.isArray(v)
-                ? `${format(v[0], f)} to ${format(v[1], f)}`
-                : format(v, f)
-            }${est ? ` <span class="fig-tip-muted">(guidance or forecast)</span>` : ""}`,
-            event
+    // Grid: hairlines behind the marks.
+    plot
+      .selectAll("line.grid")
+      .data(ticks)
+      .join("line")
+      .attr("x1", 0)
+      .attr("x2", plotW)
+      .attr("y1", v => y(v))
+      .attr("y2", v => y(v))
+      .attr("stroke", t.border);
+    plot
+      .selectAll("text.grid")
+      .data(ticks)
+      .join("text")
+      .attr("class", "fig-axis")
+      .attr("x", -8)
+      .attr("y", v => y(v) + ap * 0.35)
+      .attr("text-anchor", "end")
+      .text(v => format(v, f));
+    plot
+      .selectAll("text.cat")
+      .data(d.categories)
+      .join("text")
+      .attr("class", "fig-label")
+      .attr("y", plotH + lp + 6)
+      .attr("text-anchor", "middle")
+      .each(function (c, i) {
+        setLines(this as SVGTextElement, catLines[i], cx0(c) + band / 2, lp + 3);
+      });
+
+    const patterns = d.series.map((_s, i) =>
+      hatch(svg, `hc-${i}-${Math.random().toString(36).slice(2)}`, seriesColor(i))
+    );
+
+    d.categories.forEach((c, ci) => {
+      let stackBase = 0;
+      d.series.forEach((s, si) => {
+        const v = s.values[ci];
+        if (v === null) return;
+        const est = s.estimate?.[ci] ?? false;
+        const color = seriesColor(si);
+        const lo = Array.isArray(v) ? v[0] : v;
+        const hi = Array.isArray(v) ? v[1] : v;
+        const bx = mode === "stacked" ? cx0(c) : cx0(c) + (x1(s.name) ?? 0);
+        const bw = mode === "stacked" ? band : x1.bandwidth();
+        const yTop = mode === "stacked" ? y(stackBase + hi) : y(hi);
+        const yBot =
+          mode === "stacked"
+            ? y(stackBase + (Array.isArray(v) ? lo : 0))
+            : y(Array.isArray(v) ? lo : 0);
+        // In a stack, the base of the block is the top of the one below; keep a
+        // 2px surface gap so adjacent fills never touch.
+        const gap = mode === "stacked" && si > 0 ? 2 : 0;
+        const g = plot
+          .append("g")
+          .on("mousemove", (event: MouseEvent) =>
+            showTip(
+              `<strong>${s.name}</strong> · ${c}<br>${
+                Array.isArray(v)
+                  ? `${format(v[0], f)} to ${format(v[1], f)}`
+                  : format(v, f)
+              }${est ? ` <span class="fig-tip-muted">(guidance or forecast)</span>` : ""}`,
+              event
+            )
           )
-        )
-        .on("mouseleave", hideTip);
-      g.append("rect")
-        .attr("x", bx)
-        .attr("y", yTop)
-        .attr("width", bw)
-        .attr("height", Math.max(0, yBot - yTop - gap))
-        .attr("rx", mode === "stacked" && si < d.series.length - 1 ? 0 : 4)
-        .attr("fill", est ? patterns[si] : color)
-        .attr("stroke", est ? color : "none")
-        .attr("stroke-width", 1);
-      if (d.showValues === false) {
-        // axis and tooltip carry the values
-      } else if (mode === "grouped") {
-        g.append("text")
-          .attr("class", "fig-axis")
-          .attr("x", bx + bw / 2)
-          .attr("y", yTop - 5)
+          .on("mouseleave", hideTip);
+        g.append("rect")
+          .attr("x", bx)
+          .attr("y", yTop)
+          .attr("width", bw)
+          .attr("height", Math.max(0, yBot - yTop - gap))
+          .attr("rx", mode === "stacked" && si < d.series.length - 1 ? 0 : 4)
+          .attr("fill", est ? patterns[si] : color)
+          .attr("stroke", est ? color : "none")
+          .attr("stroke-width", 1);
+        if (d.showValues === false || !valuesFit) {
+          // axis and tooltip carry the values
+        } else if (mode === "grouped") {
+          g.append("text")
+            .attr("class", "fig-axis fig-num")
+            .attr("x", bx + bw / 2)
+            .attr("y", yTop - 5)
+            .attr("text-anchor", "middle")
+            .style("fill", t.fg)
+            .text(valueText(v));
+        } else if (yBot - yTop > ap + 8 && textWidth(format(hi, f), ap) < bw - 4) {
+          g.append("text")
+            .attr("class", "fig-axis fig-num")
+            .attr("x", bx + bw / 2)
+            .attr("y", (yTop + yBot) / 2 + ap * 0.35)
+            .attr("text-anchor", "middle")
+            .style("fill", est ? t.fg : "#fff")
+            .text(format(hi, f));
+        }
+        stackBase += hi;
+      });
+      const a = d.annotations?.[ci];
+      if (a)
+        plot
+          .append("text")
+          .attr("class", "fig-label")
+          .attr("x", cx0(c) + band / 2)
+          .attr("y", -10)
           .attr("text-anchor", "middle")
-          .style("fill", t.fg)
-          .text(
-            Array.isArray(v)
-              ? `${format(v[0], f)}–${format(v[1], f)}`
-              : format(v, f)
-          );
-      } else if (yBot - yTop > 18) {
-        g.append("text")
-          .attr("class", "fig-axis")
-          .attr("x", bx + bw / 2)
-          .attr("y", (yTop + yBot) / 2 + 3)
-          .attr("text-anchor", "middle")
-          .style("fill", est ? t.fg : "#fff")
-          .text(format(hi, f));
-      }
-      stackBase += hi;
+          .style("fill", t.muted)
+          .text(fitText(a, x0.step(), lp));
     });
-    const a = d.annotations?.[ci];
-    if (a)
-      plot
-        .append("text")
-        .attr("class", "fig-label")
-        .attr("x", cx0(c) + band / 2)
-        .attr("y", -14)
-        .attr("text-anchor", "middle")
-        .style("fill", t.muted)
-        .text(a);
   });
 
   const anyEst = d.series.some(s => s.estimate?.some(Boolean));
   legend(node, [
-    ...d.series.map((s, i) => ({
-      label: s.name,
-      swatch: SERIES[i % SERIES.length],
-    })),
+    ...d.series.map((s, i) => ({ label: s.name, swatch: seriesColor(i) })),
     ...(anyEst
       ? [{ label: "Guidance or forecast", swatch: t.fg, hatched: true }]
       : []),
@@ -734,7 +853,7 @@ function dots(node: Element, d: DotsSpec) {
   g.append("text")
     .attr("x", r => padL + x(r.value) + 12)
     .attr("y", rowH / 2 + 4)
-    .attr("class", "fig-label")
+    .attr("class", "fig-label fig-num")
     .text(r => format(r.value, f));
 
   legend(node, [
@@ -784,184 +903,218 @@ function series(node: Element, d: SeriesSpec) {
     dated
       ? monthLabel(`${Math.floor(v / 12)}-${(v % 12) + 1}`)
       : format(v, d.xFormat ?? "number");
-  const w = 680,
-    h = 300,
-    padT = 20,
-    padB = 44,
-    padL = 60,
-    padR = 130;
-  const plotW = w - padL - padR,
-    plotH = h - padT - padB;
   const all = d.entities.flatMap(e => e.points);
   const xs = all.map(xv);
-  const x = scaleLinear()
-    .domain([Math.min(...xs), Math.max(...xs)])
-    .range([0, plotW]);
   const ys = all.map(p => p.value);
-  const y =
-    d.yScale === "log"
-      ? scaleLog()
-          .domain([
-            10 ** Math.floor(Math.log10(Math.min(...ys))),
-            Math.max(...ys) * 1.3,
-          ])
-          .range([plotH, 0])
-      : scaleLinear()
-          // Starts at 0 unless a value dips below it, so a small negative
-          // measurement is drawn where it is rather than under the axis.
-          .domain([Math.min(0, ...ys), Math.max(...ys) * 1.12])
-          .range([plotH, 0]);
-
-  const svg = svgIn(
-    node,
-    w,
-    h,
+  const color = (e: Entity, i: number) =>
+    e.emphasis === false ? DEEMPHASIS : seriesColor(i);
+  const sorted = d.entities.map(e => [...e.points].sort((a, b) => xv(a) - xv(b)));
+  // Direct labels on every point when there are few; the endpoint otherwise.
+  const labelled = sorted.map(pts => (pts.length <= 3 ? pts : [pts[pts.length - 1]]));
+  const aria =
     `${d.title}. ` +
-      d.entities
-        .map(
-          e =>
-            `${e.name}: ` +
-            e.points
-              .map(p => `${xText(xv(p))} ${format(p.value, f)}`)
-              .join(", ")
+    d.entities
+      .map(
+        e =>
+          `${e.name}: ` +
+          e.points.map(p => `${xText(xv(p))} ${format(p.value, f)}`).join(", ")
+      )
+      .join("; ");
+
+  responsive(node, (el, L) => {
+    const lp = L.labelPx,
+      ap = L.axisPx;
+    const h = L.compact ? 250 : 300;
+    const x = scaleLinear().domain([Math.min(...xs), Math.max(...xs)]);
+    // Starts at 0 unless a value dips below it, so a small negative
+    // measurement is drawn where it is rather than under the axis. The ends
+    // are ticks, so the top gridline sits at or above every point.
+    const ax = linearAxis(Math.min(0, ...ys), Math.max(...ys), L.compact ? 4 : 5);
+    const logLo = 10 ** Math.floor(Math.log10(Math.min(...ys))),
+      logHi = Math.max(...ys) * 1.3;
+    const y =
+      d.yScale === "log"
+        ? scaleLog().domain([logLo, logHi])
+        : scaleLinear().domain(ax.domain);
+    const yTicks = d.yScale === "log" ? logTicks(logLo, logHi) : ax.ticks;
+    // Gutters from the text they hold: tick labels on the left, the end
+    // labels of the lines on the right.
+    const padL = Math.ceil(widest(yTicks.map(v => format(v, f)), ap)) + 10;
+    const padR =
+      Math.ceil(
+        widest(
+          labelled.map(ps => format(ps[ps.length - 1].value, f)),
+          lp
         )
-        .join("; ")
-  );
-  const plot = svg.append("g").attr("transform", `translate(${padL},${padT})`);
-  const yTicks =
-    d.yScale === "log" ? logTicks(y.domain()[0], y.domain()[1]) : y.ticks(4);
-  plot
-    .selectAll("line.grid")
-    .data(yTicks)
-    .join("line")
-    .attr("x1", 0)
-    .attr("x2", plotW)
-    .attr("y1", v => y(v))
-    .attr("y2", v => y(v))
-    .attr("stroke", t.border);
-  plot
-    .selectAll("text.grid")
-    .data(yTicks)
-    .join("text")
-    .attr("class", "fig-axis")
-    .attr("x", -8)
-    .attr("y", v => y(v) + 3)
-    .attr("text-anchor", "end")
-    .text(v => format(v, f));
-  // Ticks only where data exists when the axis is dates: no invented months.
-  const xTicks = dated ? [...new Set(xs)].sort((a, b) => a - b) : x.ticks(5);
-  let lastX = -Infinity,
-    row = 0;
-  const tickRow = xTicks.map(v => {
-    const px = x(v);
-    row = px - lastX < 64 ? 1 - row : 0;
-    lastX = px;
-    return row;
-  });
-  plot
-    .selectAll("text.xt")
-    .data(xTicks)
-    .join("text")
-    .attr("class", "fig-axis")
-    .attr("x", v => x(v))
-    .attr("y", (_v, i) => plotH + 18 + tickRow[i] * 12)
-    .attr("text-anchor", "middle")
-    .text(v => xText(v));
-  if (d.xLabel)
+      ) + 12;
+    // The unit is the value axis title, top left; under it, room for the label
+    // over the highest point.
+    const titleH = d.unit
+      ? ap + 10 + (titleLines(d.unit, L.w, ap).length - 1) * titleLineH(ap)
+      : 0;
+    const padT = titleH + lp + 10;
+    const xLabelN = d.xLabel ? titleLines(d.xLabel, L.w, ap).length : 0;
+    const padB =
+      ap + 8 + (d.xLabel ? ap + 10 + (xLabelN - 1) * titleLineH(ap) : 0) + Math.ceil(ap * 0.35);
+    const plotW = L.w - padL - padR,
+      plotH = h - padT - padB;
+    x.range([0, plotW]);
+    y.range([plotH, 0]);
+
+    const svg = sized(el, L.w, h, aria);
+    if (d.unit) axisTitle(svg, d.unit, 0, ap, L.w, ap, "start");
+    const plot = svg.append("g").attr("transform", `translate(${padL},${padT})`);
     plot
-      .append("text")
+      .selectAll("line.grid")
+      .data(yTicks)
+      .join("line")
+      .attr("x1", 0)
+      .attr("x2", plotW)
+      .attr("y1", v => y(v))
+      .attr("y2", v => y(v))
+      .attr("stroke", t.border);
+    plot
+      .selectAll("text.grid")
+      .data(yTicks)
+      .join("text")
       .attr("class", "fig-axis")
-      .attr("x", plotW / 2)
-      .attr("y", plotH + 34 + (tickRow.some(Boolean) ? 12 : 0))
-      .attr("text-anchor", "middle")
-      .text(d.xLabel);
-
-  if (d.guide) {
-    const k = d.guide.k;
-    const [x0, x1] = x.domain();
-    const N = 80;
-    const pts: string[] = [];
-    for (let i = 0; i <= N; i++) {
-      const gx = x0 + ((x1 - x0) * i) / N;
-      if (gx <= 0) continue;
-      pts.push(`${pts.length ? "L" : "M"}${x(gx)},${y(k / gx)}`);
-    }
+      .attr("x", -8)
+      .attr("y", v => y(v) + ap * 0.35)
+      .attr("text-anchor", "end")
+      .text(v => format(v, f));
+    // Ticks only where data exists when the axis is dates: no invented months.
+    // Labels that would touch a neighbour are dropped, never stacked.
+    const xTicks = spacedTicks(
+      dated ? [...new Set(xs)].sort((a, b) => a - b) : x.ticks(L.compact ? 4 : 6),
+      v => x(v),
+      xText,
+      ap
+    );
     plot
-      .append("path")
-      .attr("d", pts.join(" "))
-      .attr("fill", "none")
-      .attr("stroke", t.muted)
-      .attr("stroke-width", 1.5)
-      .attr("stroke-dasharray", "4 4");
-  }
+      .selectAll("text.xt")
+      .data(xTicks)
+      .join("text")
+      .attr("class", "fig-axis")
+      .each(function (v) {
+        const c = clampAnchor(x(v), textWidth(xText(v), ap), -padL, plotW + padR);
+        select(this).attr("x", c.x).attr("text-anchor", c.anchor);
+      })
+      .attr("y", plotH + ap + 6)
+      .text(v => xText(v));
+    if (d.xLabel)
+      axisTitle(svg, d.xLabel, padL + plotW / 2, padT + plotH + 2 * ap + 16, L.w, ap);
 
-  const labels: { el: SVGTextElement; x: number; y: number }[] = [];
-  d.entities.forEach((e, i) => {
-    const color = e.emphasis === false ? DEEMPHASIS : SERIES[i % SERIES.length];
-    const pts = [...e.points].sort((a, b) => xv(a) - xv(b));
-    if (pts.length > 1)
+    if (d.guide) {
+      const k = d.guide.k;
+      const [x0, x1] = x.domain();
+      const N = 80;
+      const pts: string[] = [];
+      for (let i = 0; i <= N; i++) {
+        const gx = x0 + ((x1 - x0) * i) / N;
+        if (gx <= 0) continue;
+        pts.push(`${pts.length ? "L" : "M"}${x(gx)},${y(k / gx)}`);
+      }
       plot
         .append("path")
-        .attr(
-          "d",
-          pts
-            .map((p, k) => `${k ? "L" : "M"}${x(xv(p))},${y(p.value)}`)
-            .join(" ")
-        )
+        .attr("d", pts.join(" "))
         .attr("fill", "none")
-        .attr("stroke", color)
-        .attr("stroke-width", 2);
-    plot
-      .selectAll(`circle.e${i}`)
-      .data(pts)
-      .join("circle")
-      .attr("cx", p => x(xv(p)))
-      .attr("cy", p => y(p.value))
-      .attr("r", 5)
-      .attr("fill", color)
-      .attr("stroke", t.surface)
-      .attr("stroke-width", 2)
-      .on("mousemove", (event: MouseEvent, p: Point) =>
-        showTip(
-          `<strong>${e.name}</strong> · ${xText(xv(p))}<br>${format(p.value, f)}${
-            p.note ? `<br><span class="fig-tip-muted">${p.note}</span>` : ""
-          }`,
-          event
-        )
-      )
-      .on("mouseleave", hideTip);
-    // Direct labels on every point when there are few; the endpoint otherwise.
-    const labelled = pts.length <= 3 ? pts : [pts[pts.length - 1]];
-    plot
-      .selectAll(`text.l${i}`)
-      .data(labelled)
-      .join("text")
-      .attr("class", "fig-label")
-      .attr("x", p => x(xv(p)) + 8)
-      .attr("y", p => y(p.value) - 9)
-      .style("fill", color)
-      .text(p => format(p.value, f))
-      .each(function (p) {
-        labels.push({ el: this, x: x(xv(p)) + 8, y: y(p.value) - 9 });
-      });
-  });
-  // Nudge direct labels that would print over each other (same x, near-equal
-  // values) apart vertically; an 11px label box is about 14px tall.
-  labels.sort((a, b) => a.y - b.y);
-  labels.forEach((l, k) => {
-    for (let j = 0; j < k; j++) {
-      const o = labels[j];
-      if (Math.abs(o.x - l.x) < 36 && l.y - o.y < 14) l.y = o.y + 14;
+        .attr("stroke", t.muted)
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", "4 4");
     }
-    l.el.setAttribute("y", String(l.y));
+
+    const labels: { el: SVGTextElement; x: number; y: number }[] = [];
+    // Every line in plot coordinates, to keep direct labels off the others.
+    const paths = sorted.map(pts => pts.map(p => [x(xv(p)), y(p.value)] as [number, number]));
+    d.entities.forEach((e, i) => {
+      const c = color(e, i);
+      const pts = sorted[i];
+      if (pts.length > 1)
+        plot
+          .append("path")
+          .attr(
+            "d",
+            pts
+              .map((p, k) => `${k ? "L" : "M"}${x(xv(p))},${y(p.value)}`)
+              .join(" ")
+          )
+          .attr("fill", "none")
+          .attr("stroke", c)
+          .attr("stroke-width", 2);
+      plot
+        .selectAll(`circle.e${i}`)
+        .data(pts)
+        .join("circle")
+        .attr("cx", p => x(xv(p)))
+        .attr("cy", p => y(p.value))
+        .attr("r", L.compact ? 4 : 5)
+        .attr("fill", c)
+        .attr("stroke", t.surface)
+        .attr("stroke-width", 2)
+        .on("mousemove", (event: MouseEvent, p: Point) =>
+          showTip(
+            `<strong>${e.name}</strong> · ${xText(xv(p))}<br>${format(p.value, f)}${
+              p.note ? `<br><span class="fig-tip-muted">${p.note}</span>` : ""
+            }`,
+            event
+          )
+        )
+        .on("mouseleave", hideTip);
+      plot
+        .selectAll(`text.l${i}`)
+        .data(labelled[i])
+        .join("text")
+        .attr("class", "fig-label fig-num")
+        .style("fill", c)
+        .text(p => format(p.value, f))
+        .each(function (p) {
+          // Up and right of the point by default; if another series' line
+          // runs through that spot, the first free spot around the point.
+          const px = x(xv(p)),
+            py = y(p.value);
+          const w = textWidth(format(p.value, f), lp);
+          const spots: [number, number, "start" | "end" | "middle"][] = [
+            [px + 8, py - 9, "start"],
+            [px + 8, py + lp + 6, "start"],
+            [px - 8, py - 9, "end"],
+            [px - 8, py + lp + 6, "end"],
+            [px, py - 12, "middle"],
+            [px, py + lp + 10, "middle"],
+          ];
+          const left = (sx: number, a: string) =>
+            a === "start" ? sx : a === "end" ? sx - w : sx - w / 2;
+          const fits = ([sx, sy, a]: [number, number, string]) => {
+            const x1 = left(sx, a),
+              x2 = x1 + w,
+              y1 = sy - lp * 0.8,
+              y2 = sy + lp * 0.25;
+            if (x1 < -padL || x2 > plotW + padR || y1 < -padT || y2 > plotH) return false;
+            return !paths.some(
+              (ps, j) => j !== i && ps.some((q, k) => k > 0 && segHitsBox(ps[k - 1], q, x1 - 2, y1 - 2, x2 + 2, y2 + 2))
+            );
+          };
+          const [sx, sy, a] = spots.find(fits) ?? spots[0];
+          select(this).attr("x", sx).attr("y", sy).attr("text-anchor", a);
+          labels.push({ el: this, x: sx, y: sy });
+        });
+    });
+    // Nudge direct labels that would print over each other (same x, near-equal
+    // values) apart vertically, one label height (the font size plus leading).
+    const lh = lp + 3;
+    labels.sort((a, b) => a.y - b.y);
+    labels.forEach((l, k) => {
+      for (let j = 0; j < k; j++) {
+        const o = labels[j];
+        if (Math.abs(o.x - l.x) < 36 && l.y - o.y < lh) l.y = o.y + lh;
+      }
+      l.el.setAttribute("y", String(l.y));
+    });
   });
+
   if (d.entities.length > 1)
     legend(
       node,
-      d.entities.map((e, i) => ({
-        label: e.name,
-        swatch: e.emphasis === false ? DEEMPHASIS : SERIES[i % SERIES.length],
-      }))
+      d.entities.map((e, i) => ({ label: e.name, swatch: color(e, i) }))
     );
 }
 

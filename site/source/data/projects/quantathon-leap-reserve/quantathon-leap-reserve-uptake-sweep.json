@@ -1,0 +1,48 @@
+{
+ "type": "series",
+ "format": "money",
+ "unit": "P95 funding requirement",
+ "xFormat": "number",
+ "xLabel": "Uptake start rate, percent per year",
+ "title": "One Assumption Moves the Reserve by a Million Dollars",
+ "subtitle": "P95 of maximum cumulative deficit against the annual loan trigger start rate, 500 paths per point",
+ "entities": [
+  {
+   "name": "P95 funding requirement (loans)",
+   "points": [
+    {
+     "x": 0.1,
+     "value": 1446972
+    },
+    {
+     "x": 0.15,
+     "value": 2087936
+    },
+    {
+     "x": 0.16,
+     "value": 2209057
+    },
+    {
+     "x": 0.2,
+     "value": 2729754,
+     "note": "Base assumption, $2.73M on 500 paths"
+    },
+    {
+     "x": 0.25,
+     "value": 3198070
+    },
+    {
+     "x": 0.3,
+     "value": 3346834
+    },
+    {
+     "x": 0.4,
+     "value": 3346834,
+     "note": "Identical to 0.30%: the 0.30% uptake cap binds"
+    }
+   ]
+  }
+ ],
+ "caption": "Going from 0.16% to 0.25% moves the P95 from $2.21M to $3.20M. The bootstrap interval on the base P95 is $2.72M to $2.74M, so the Monte Carlo error is about 40 times smaller than this one parameter's effect. The points at 0.30% and 0.40% coincide because the base cap is 0.30%.",
+ "source": "my rerun via scripts/measure.py (results/measurements.json, sections C and D), seed 20260328, other parameters at base values"
+}

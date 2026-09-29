@@ -1,0 +1,86 @@
+=== Iteration 1 ===
+{
+  "status": "FEEDBACK",
+  "summary": "Well-specified ACNU scan-level TTE in OMOP, but some exposure/linking/exclusion rules use post\u2013time-zero information and can break three-way coincidence.",
+  "failed_gates": [
+    "Gate 4"
+  ],
+  "issues": [
+    {
+      "gate": "Gate 4",
+      "section": "Time-Zero Alignment",
+      "severity": "CRITICAL",
+      "issue": "Time zero is defined as contrast administration time (t0), but the MDCT linking rule allows the qualifying CT procedure to occur up to +6 hours after t0 (I2/2.2). This makes eligibility potentially depend on post\u2013time-zero information, violating the baseline-only eligibility rule and the three-way coincidence test.",
+      "fix": "Define a single 'scan episode' and set t0 to a timestamp that is guaranteed to be observable at baseline for both eligibility and assignment, e.g., t0 = min(CT procedure_datetime, contrast drug_exposure_start_datetime) (or require CT procedure_datetime <= drug_exposure_start_datetime + small tolerance). Then require the other record to fall within a symmetric window around this t0 without allowing eligibility-defining evidence to occur strictly after follow-up starts."
+    },
+    {
+      "gate": "Gate 4",
+      "section": "Time-Zero Alignment",
+      "severity": "CRITICAL",
+      "issue": "Mixed-exposure exclusion (E5) is defined using a look-forward window [-1h, +6h] around t0. This is future-based exposure classification (post\u2013time-zero information) and can induce selection/immortal-time-type bias under the rubric unless handled via a grace-period design (e.g., clone-censor-weight) or redefined.",
+      "fix": "Either (a) define treatment by the first contrast agent at t0 and treat additional contrast agents as an intercurrent event (treatment-policy in primary; censoring sensitivity with IPCW), or (b) restrict the 'mixed exposure' check to concurrent/near-simultaneous administration that can be considered part of assignment at t0 (e.g., same timestamp or within 0\u201315 minutes)."
+    },
+    {
+      "gate": "Gate 4",
+      "section": "Time-Zero Alignment",
+      "severity": "CRITICAL",
+      "issue": "Intra-arterial contrast exclusion (E6) uses a 0\u20131 day window around t0, which can include procedures occurring after t0. That makes eligibility potentially depend on post\u2013time-zero information.",
+      "fix": "Restrict E6 to evidence at/before t0 (e.g., intra-arterial procedure start_datetime <= t0) or move it to an intercurrent-event handling rule (e.g., censor at intra-arterial procedure time with IPCW in a sensitivity analysis)."
+    },
+    {
+      "gate": "Gate 3",
+      "section": "Data Mappability",
+      "severity": "WARNING",
+      "issue": "The protocol requires strict ordering (Cr0_time < t0; post-contrast Cr_time > t0), but some OMOP instances only have dates (no datetimes) for measurements/procedures, which can make 'strictly before/after' infeasible and lead to misclassification at day boundaries.",
+      "fix": "Pre-specify a deterministic tie-breaking rule when only dates are available (e.g., treat baseline labs as eligible only if measurement_date < index_date; treat same-day labs as missing/ambiguous and exclude from Cr0/Crmax calculations or use visit-level sequencing if available). Report the proportion with datetime vs date-only."
+    }
+  ],
+  "passed_gates": [
+    "Gate 1",
+    "Gate 2",
+    "Gate 3",
+    "Gate 5",
+    "Gate 6"
+  ]
+}
+
+=== Iteration 2 ===
+{
+  "status": "FEEDBACK",
+  "summary": "ACNU scan-level TTE comparing iodixanol vs iopamidol for 72h CA-AKI risk in CKD patients undergoing IV contrast MDCT, OMOP-mapped with AIPW.",
+  "failed_gates": [
+    "Gate 4"
+  ],
+  "issues": [
+    {
+      "gate": "Gate 4",
+      "section": "Time-Zero Alignment",
+      "severity": "CRITICAL",
+      "issue": "Time zero is defined as t0 = max(procedure_datetime, drug_exposure_start_datetime). When the contrast drug_exposure timestamp precedes the CT procedure timestamp (still within the 6h linkage window), treatment assignment can occur before t0 (treatment_start < t0), meaning follow-up starts after treatment initiation (left truncation). This violates the three-way coincidence requirement and can exclude early post-contrast labs/events from the risk window.",
+      "fix": "Redefine t0 to ensure treatment assignment time equals follow-up start. Recommended: set t0 = drug_exposure_start_datetime (contrast administration time) when available; require the qualifying CT/MDCT-with-contrast procedure to be linked within the same visit and within \u00b16h of t0 but do not allow procedure_datetime to define a later t0. If you require strict baseline-only eligibility timing, then either (a) require procedure_datetime <= t0 (and drop episodes where procedure is recorded after contrast), or (b) in datetime-aware mode, coarsen the episode to a single anchor (e.g., set both CT and contrast times to the same derived episode time) and update the machine-check rules so assignment_time == t0 and eligibility is asserted without using a post-t0 timestamp."
+    }
+  ],
+  "passed_gates": [
+    "Gate 1",
+    "Gate 2",
+    "Gate 3",
+    "Gate 5",
+    "Gate 6"
+  ]
+}
+
+=== Iteration 3 ===
+{
+  "status": "VALID",
+  "summary": "ACNU scan-level TTE comparing iodixanol vs iopamidol at contrast administration time with lab-defined 72h CA-AKI outcome; time-zero alignment and OMOP mappability are adequately specified.",
+  "failed_gates": [],
+  "issues": [],
+  "passed_gates": [
+    "Gate 1",
+    "Gate 2",
+    "Gate 3",
+    "Gate 4",
+    "Gate 5",
+    "Gate 6"
+  ]
+}

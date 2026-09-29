@@ -1,0 +1,11 @@
+suppressMessages({library(tidyverse);library(igraph)})
+df <- read.csv("sampled_flights.csv")
+s <- df |> select(origin,destination,latitude_1,longitude_1,latitude_2,longitude_2) |> drop_na()
+edges <- s |> group_by(origin,destination) |> summarise(weight=n(),.groups="drop")
+o <- s |> select(name=origin,lat=latitude_1,long=longitude_1); d <- s |> select(name=destination,lat=latitude_2,long=longitude_2)
+nodes <- bind_rows(o,d) |> distinct(name,.keep_all=TRUE) |> na.omit()
+g <- simplify(graph_from_data_frame(edges,vertices=nodes,directed=TRUE),remove.multiple=TRUE,remove.loops=TRUE)
+u <- suppressWarnings(as.undirected(g,mode="collapse"))
+for(i in 1:4){e<-eigen_centrality(u)$vector; cat("run",i,"spearman eig-str",round(cor(e,strength(u),method="spearman"),3),"eig-deg",round(cor(e,degree(u),method="spearman"),3),"n zero/tiny(<1e-10):",sum(e<1e-10),"min",min(e),"\n")}
+e <- eigen_centrality(u)$vector; comp<-components(u); big<-comp$membership==which.max(comp$csize)
+cat("LCC only spearman eig-str",round(cor(e[big],strength(u)[big],method="spearman"),3),"eig-bet",round(cor(e[big],betweenness(u)[big],method="spearman"),3),"bet-str",round(cor(betweenness(u)[big],strength(u)[big],method="spearman"),3),"\n")

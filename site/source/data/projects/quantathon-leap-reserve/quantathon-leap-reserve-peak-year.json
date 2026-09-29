@@ -1,0 +1,41 @@
+{
+ "type": "bars",
+ "format": "number",
+ "unit": "Paths (of 3,000)",
+ "title": "The Peak Deficit Lands in a Different Year on Each Path",
+ "subtitle": "Year in which each simulated path reaches its maximum cumulative deficit, base scenario",
+ "legendLabels": {
+  "emphasis": "Most common peak year",
+  "other": "Other years"
+ },
+ "rows": [
+  {
+   "label": "2031",
+   "value": 1
+  },
+  {
+   "label": "2032",
+   "value": 47
+  },
+  {
+   "label": "2033",
+   "value": 618
+  },
+  {
+   "label": "2034",
+   "value": 1616,
+   "emphasis": true,
+   "detail": "1,616 of 3,000 paths"
+  },
+  {
+   "label": "2035",
+   "value": 699
+  },
+  {
+   "label": "2036",
+   "value": 19
+  }
+ ],
+ "caption": "Years 2033 to 2035 hold 2,933 of the 3,000 paths. Because the peak year moves, the average of the maxima exceeds the maximum of the average.",
+ "source": "my rerun via scripts/measure.py (results/measurements.json, section B)"
+}

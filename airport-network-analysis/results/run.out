@@ -1,0 +1,54 @@
+flights rows: 5065 
+date range: 2020-03-01T00:00:00Z 2021-10-31T00:00:00Z 
+rows after drop_na: 3297 
+Warning message:
+`as.undirected()` was deprecated in igraph 2.1.0.
+ℹ Please use `as_undirected()` instead. 
+     V    E simple  weak strong ncomp  lcc diam    apl     dens
+1 1909 2574   TRUE FALSE  FALSE   393 1177   19 5.4329 0.000707
+undirected E: 2429 
+vconn 0 econn 0 ncomp 393 isolates 148 
+trans global 0.1209 avg local 0.105 
+max degree 74 median deg 1 mean deg 2.545 share deg<=2 0.798 
+KORD KATL KDFW KDEN KLAX KCLT KPHX KSEA EDDF KPHL 
+  74   71   57   49   46   43   42   37   36   35 
+    KORD     KDFW     KEWR     KSFO     KATL     KMIA     KDEN     EHAM 
+0.000260 0.000250 0.000246 0.000245 0.000244 0.000244 0.000242 0.000242 
+    EDDF     KLAX 
+0.000242 0.000241 
+    KORD     KDFW     EDDF     KLAX     KATL     KSFO     KEWR     EHAM 
+0.066328 0.038433 0.036745 0.034238 0.031264 0.030723 0.029818 0.028060 
+    KDEN     KIAD 
+0.026544 0.025427 
+    KATL     KORD     KSEA     KLAS     KLAX     KDFW     KFLL     KDEN 
+1.000000 0.776768 0.721729 0.673565 0.662704 0.614075 0.565758 0.563760 
+    KBOS     KPHX 
+0.485754 0.455401 
+  KATL   KORD   KSEA   KLAX   KDEN   KLAS   KDFW   KPHX   KCLT   KDTW 
+1.0000 0.8611 0.8471 0.8053 0.7600 0.7104 0.6586 0.6320 0.6150 0.5571 
+Warning message:
+`hub_score()` was deprecated in igraph 2.0.3.
+ℹ Please use `hits_scores()` instead. 
+  KATL   KORD   KLAS   KDFW   KSEA   KFLL   KLAX   KBOS   KSFO   KDEN 
+1.0000 0.7071 0.5880 0.5605 0.5555 0.5554 0.5487 0.4672 0.3934 0.3932 
+Warning message:
+`authority_score()` was deprecated in igraph 2.1.0.
+ℹ Please use `hits_scores()` instead. 
+KATL KORD KDFW KLAX KDEN KSEA KPHX KLAS KCLT KPHL 
+ 109   98   75   66   65   62   56   56   54   45 
+      deg   bet   eig   str
+deg 1.000 0.917 0.670 0.984
+bet 0.917 1.000 0.565 0.898
+eig 0.670 0.565 1.000 0.672
+str 0.984 0.898 0.672 1.000
+top origins raw:
+
+KDFW KATL KORD KDEN KLAX KSEA KPHX VIDP 
+  65   62   56   50   44   44   38   35 
+blank origin/dest: 1181 813 
+by month:
+
+2020-03 2020-04 2020-05 2020-06 2020-07 2020-08 2020-09 2020-10 2020-11 2020-12 
+    266     108     144     168     233     261     209     251     193     244 
+2021-01 2021-02 2021-03 2021-04 2021-05 2021-06 2021-07 2021-08 2021-09 2021-10 
+    212     189     283     297     299     320     366     345     322     355 

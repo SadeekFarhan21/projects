@@ -1,0 +1,31 @@
+# photography-site measurements (public repo SadeekFarhan21/PhotographyWebsite, HEAD 18dfdbb)
+fulls_count=      52 thumbs_count=      52
+fulls_total_KB=32588 thumbs_total_KB=6964
+commits=39 first=2024-11-18 last=2026-09-04
+--- authors
+    38	Farhan Sadeek
+     1	Vercel
+--- fulls dimensions (WxH count)
+  10 3024x1398
+   9 3024x1396
+   7 760x1646
+   7 1600x901
+   6 1600x1200
+   5 2194x1646
+   3 2926x1646
+   2 2924x1646
+   1 4000x1848
+   1 3200x1802
+   1 1600x900
+--- thumbs dimensions
+  11 1280x960
+  10 1280x721
+  10 1280x592
+  10 1280x591
+   7 443x960
+   4 1280x720
+--- tracked files outside vendor/
+172
+--- tracked files total / under vendor
+    5007
+4835

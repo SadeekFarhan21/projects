@@ -1,0 +1,40 @@
+{
+  "type": "columns",
+  "format": "percent",
+  "unit": "Accuracy",
+  "title": "Three Sets of Numbers for Three Models",
+  "subtitle": "The paper's table, the paper's own Results prose, and my recount of the committed confusion matrices",
+  "categories": [
+    "ASL finger-spelling",
+    "Hand gesture",
+    "Facial emotion"
+  ],
+  "series": [
+    {
+      "name": "Paper table",
+      "values": [
+        98.2,
+        99.2,
+        67.6
+      ]
+    },
+    {
+      "name": "Paper Results prose",
+      "values": [
+        95.2,
+        93.5,
+        91.8
+      ]
+    },
+    {
+      "name": "Recount from confusion matrix",
+      "values": [
+        98.0,
+        99.82,
+        68.21
+      ]
+    }
+  ],
+  "caption": "The table and the prose sit in the same PDF and disagree by up to 24 points on emotion. The table is within about 0.6 points of the recounts for gesture and emotion; the prose is not close. The ASL recount is an approximate hand count of the older 36-class matrix, which does not match the current 29-class code. Recounts are hand-read from the images: about 493 of 503 for ASL, 2,795 of 2,800 for gesture and 2,448 of 3,589 for emotion.",
+  "source": "the paper's table and prose, and the committed confusion matrices confusion_1.png, confusion_2.png and confusion_3.png"
+}

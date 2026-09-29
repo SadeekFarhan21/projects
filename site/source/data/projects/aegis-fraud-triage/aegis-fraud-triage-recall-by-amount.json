@@ -1,0 +1,37 @@
+{
+  "type": "bars",
+  "format": "percent",
+  "unit": "Share of injected fraud flagged by the gate",
+  "title": "The Gate Catches Fraud Above $1,000 and Nothing Below",
+  "subtitle": "First-stage gate recall by fraud amount, one 3,000 transaction synthetic run, 233 fraud transactions",
+  "legendLabels": {
+    "emphasis": "Caught",
+    "other": "Missed"
+  },
+  "rows": [
+    {
+      "label": "Under $500",
+      "value": 0,
+      "detail": "0 of 78 flagged"
+    },
+    {
+      "label": "$500 to $1,000",
+      "value": 0,
+      "detail": "0 of 71 flagged"
+    },
+    {
+      "label": "$1,000 to $5,000",
+      "value": 100,
+      "emphasis": true,
+      "detail": "All 76 flagged"
+    },
+    {
+      "label": "Over $5,000",
+      "value": 100,
+      "emphasis": true,
+      "detail": "All 8 flagged"
+    }
+  ],
+  "caption": "The 36.1 percent of injected fraud above $1,000 matched the recall (0.361) in this 3,000-transaction run. The fraud amounts come from the repo's own producer code, so this describes the gate against the repo's synthetic fraud model, not real fraud.",
+  "source": "results/extra_out.txt, from scripts/extra.py"
+}

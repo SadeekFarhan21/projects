@@ -1,0 +1,164 @@
+[
+ {
+  "seed": 0,
+  "start": "2026-02-07 12:00:00",
+  "gate": {
+   "precision": 1.0,
+   "recall": 0.36764705882352944,
+   "flagged_frac": 0.03,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3959,
+   "n_elev": 633,
+   "n_fraud": 408,
+   "flagged": 150
+  },
+  "iforest_only": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "flagged_frac": 0.0,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3959,
+   "n_elev": 633,
+   "n_fraud": 408,
+   "flagged": 0
+  },
+  "detect_per_sec": 153.23200456865388
+ },
+ {
+  "seed": 1,
+  "start": "2026-02-07 12:00:00",
+  "gate": {
+   "precision": 1.0,
+   "recall": 0.37532133676092544,
+   "flagged_frac": 0.0292,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 4011,
+   "n_elev": 600,
+   "n_fraud": 389,
+   "flagged": 146
+  },
+  "iforest_only": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "flagged_frac": 0.0,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 4011,
+   "n_elev": 600,
+   "n_fraud": 389,
+   "flagged": 0
+  },
+  "detect_per_sec": 152.5002208552518
+ },
+ {
+  "seed": 2,
+  "start": "2026-02-07 12:00:00",
+  "gate": {
+   "precision": 1.0,
+   "recall": 0.3975,
+   "flagged_frac": 0.0318,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3984,
+   "n_elev": 616,
+   "n_fraud": 400,
+   "flagged": 159
+  },
+  "iforest_only": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "flagged_frac": 0.0,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3984,
+   "n_elev": 616,
+   "n_fraud": 400,
+   "flagged": 0
+  },
+  "detect_per_sec": 152.55649937378084
+ },
+ {
+  "seed": 0,
+  "start": "2026-02-07 03:00:00",
+  "gate": {
+   "precision": 1.0,
+   "recall": 0.37254901960784315,
+   "flagged_frac": 0.0304,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3959,
+   "n_elev": 633,
+   "n_fraud": 408,
+   "flagged": 152
+  },
+  "iforest_only": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "flagged_frac": 0.0,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3959,
+   "n_elev": 633,
+   "n_fraud": 408,
+   "flagged": 0
+  },
+  "detect_per_sec": 149.37043454395464
+ },
+ {
+  "seed": 1,
+  "start": "2026-02-07 03:00:00",
+  "gate": {
+   "precision": 1.0,
+   "recall": 0.37789203084832906,
+   "flagged_frac": 0.0294,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 4011,
+   "n_elev": 600,
+   "n_fraud": 389,
+   "flagged": 147
+  },
+  "iforest_only": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "flagged_frac": 0.0,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 4011,
+   "n_elev": 600,
+   "n_fraud": 389,
+   "flagged": 0
+  },
+  "detect_per_sec": 149.73792225722545
+ },
+ {
+  "seed": 2,
+  "start": "2026-02-07 03:00:00",
+  "gate": {
+   "precision": 1.0,
+   "recall": 0.4025,
+   "flagged_frac": 0.0322,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3984,
+   "n_elev": 616,
+   "n_fraud": 400,
+   "flagged": 161
+  },
+  "iforest_only": {
+   "precision": 0.0,
+   "recall": 0.0,
+   "flagged_frac": 0.0,
+   "fp_normal": 0,
+   "fp_elevated": 0,
+   "n_normal": 3984,
+   "n_elev": 616,
+   "n_fraud": 400,
+   "flagged": 0
+  },
+  "detect_per_sec": 152.0938496150332
+ }
+]

@@ -1,0 +1,35 @@
+{
+ "type": "bars",
+ "format": "money",
+ "unit": "P95 funding requirement",
+ "title": "Stress Scenarios Against the Base Reserve",
+ "subtitle": "P95 of maximum cumulative deficit, loans, 1,000 paths per scenario, seed 20260401",
+ "legendLabels": {
+  "emphasis": "Base",
+  "other": "Stress scenario"
+ },
+ "rows": [
+  {
+   "label": "Base",
+   "value": 2728307,
+   "emphasis": true
+  },
+  {
+   "label": "2029 Housing Crash",
+   "value": 3139293,
+   "detail": "P95 +14.9% vs base; mean +15.7% vs base mean (code reported 5.4%)"
+  },
+  {
+   "label": "Surge Uptake",
+   "value": 4975190,
+   "detail": "P95 +82.1% vs base; mean +87.4% vs base mean (code reported 70.8%)"
+  },
+  {
+   "label": "Perfect Storm",
+   "value": 5754568,
+   "detail": "P95 +110.7% vs base; mean +117.0% vs base mean (code reported 97.7%)"
+  }
+ ],
+ "caption": "Only the parameters the core model reads take effect: sale and equity probabilities for the crash, trigger start, cap and inflation for the surge. The scenarios apply to all years, not only from 2029.",
+ "source": "my rerun via scripts/measure.py (results/measurements.json, section F)"
+}

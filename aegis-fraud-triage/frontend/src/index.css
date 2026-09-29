@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #050505;
+  color: #e5e7eb;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+code {
+  font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, monospace;
+}
+
+/* === Subtle gradient background === */
+.bg-gradient-mesh {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
+    linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #080808 100%);
+}
+
+/* === Sleek scrollbars === */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.4);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.6);
+}
+
+/* === Animations === */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-once {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes countUp {
+  from { opacity: 0.5; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-pulse-once {
+  animation: pulse-once 1s ease-in-out 3;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-count-up {
+  animation: countUp 0.3s ease-out;
+}
+
+/* === Stat card glow effects === */
+.stat-glow-white { box-shadow: 0 0 20px -5px rgba(255, 255, 255, 0.1); }
+.stat-glow-red { box-shadow: 0 0 20px -5px rgba(239, 68, 68, 0.12); }
+
+/* === Liquid glass tile effects === */
+
+/* Expanded tile backdrop — fade in */
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.expanded-tile-backdrop {
+  animation: backdropFadeIn 0.25s ease-out;
+}
+
+/* Expanded tile glass — scale up + blur entrance */
+@keyframes glassExpand {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  to {
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+.expanded-tile-glass {
+  animation: glassExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Liquid glass shimmer — slow ambient light sweep */
+@keyframes liquidShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.expanded-tile-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.03) 45%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.03) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: liquidShimmer 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animated border glow — subtle white pulse */
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(107, 114, 128, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.03);
+  }
+}
+
+.glass-tile {
+  animation: borderGlow 6s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.glass-tile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}

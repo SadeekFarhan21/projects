@@ -1,0 +1,125 @@
+{
+  "total_seconds": 837.0,
+  "seconds_until_next_log_line": {
+    "Started benchmark trial: BARRETT_2006": 0.0,
+    "Loaded rubric.md and SOTAstack.md": 0.0,
+    "Step 1: Transforming to causal question": 87.0,
+    "Step 1 complete: 6718 chars": 0.0,
+    "Step 2a: Generating design specification": 173.0,
+    "Step 2a complete: 22127 chars": 0.0,
+    "Step 2b: Validating design": 0.0,
+    "Validation iteration 1": 216.0,
+    "Validation iteration 2": 221.0,
+    "Validation iteration 3": 53.0,
+    "Step 2b complete: validated=True": 0.0,
+    "Step 2c: OMOP lookup": 6.0,
+    "Step 2c complete: 47 terms": 0.0,
+    "Step 3: Generating code": 81.0,
+    "Step 3 complete: 16368 chars": 0.0
+  },
+  "log_chars": {
+    "Step 1 complete: 6718 chars": "6718",
+    "Step 2a complete: 22127 chars": "22127",
+    "Step 3 complete: 16368 chars": "16368"
+  },
+  "validator_iterations": [
+    {
+      "iteration": 1,
+      "status": "FEEDBACK",
+      "failed_gates": [
+        "Gate 4"
+      ],
+      "issues": [
+        [
+          "Gate 4",
+          "CRITICAL"
+        ],
+        [
+          "Gate 4",
+          "CRITICAL"
+        ],
+        [
+          "Gate 4",
+          "CRITICAL"
+        ],
+        [
+          "Gate 3",
+          "WARNING"
+        ]
+      ],
+      "issue_counts": {
+        "Gate 4:CRITICAL": 3,
+        "Gate 3:WARNING": 1
+      },
+      "n_passed_gates": 5
+    },
+    {
+      "iteration": 2,
+      "status": "FEEDBACK",
+      "failed_gates": [
+        "Gate 4"
+      ],
+      "issues": [
+        [
+          "Gate 4",
+          "CRITICAL"
+        ]
+      ],
+      "issue_counts": {
+        "Gate 4:CRITICAL": 1
+      },
+      "n_passed_gates": 5
+    },
+    {
+      "iteration": 3,
+      "status": "VALID",
+      "failed_gates": [],
+      "issues": [],
+      "issue_counts": {},
+      "n_passed_gates": 6
+    }
+  ],
+  "spec_lines": {
+    "step2a_design_spec.md": 341,
+    "step2a_design_spec_v2.md": 381,
+    "step2a_design_spec_v3.md": 385
+  },
+  "step3_code_lines": 470,
+  "lookup_terms_file_lines": 47,
+  "omop_csv_rows": 74,
+  "omop_csv_distinct_query_terms": 20,
+  "match_type_counts_all_rows": {
+    "exact_name": 6,
+    "fuzzy_name": 63,
+    "exact_synonym": 5
+  },
+  "top1_rows": 20,
+  "top1_match_type_counts": {
+    "exact_name": 6,
+    "fuzzy_name": 9,
+    "exact_synonym": 5
+  },
+  "top1_confidence_below_0.5": [
+    [
+      "angiography with contrast (intra-arterial)",
+      "Internal maxillary artery | Radio fluoroscopy angiography | Radiology",
+      "LOINC",
+      "0.4061"
+    ]
+  ],
+  "top1_missing_analytics_concept_id": [
+    "iodinated contrast media",
+    "angiography with contrast (intra-arterial)",
+    "estimated glomerular filtration rate (eGFR)",
+    "blood urea nitrogen (BUN)"
+  ],
+  "top1_confidence_ge_0.95": 14,
+  "top1_by_domain": {
+    "Drug": 3,
+    "Procedure": 8,
+    "Measurement": 3,
+    "Condition": 6
+  },
+  "terms_in_lookup_file": 47,
+  "csv_terms_are_first_n_of_lookup_file": true
+}

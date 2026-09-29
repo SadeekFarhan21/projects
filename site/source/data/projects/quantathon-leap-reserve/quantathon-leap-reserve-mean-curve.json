@@ -1,0 +1,67 @@
+{
+ "type": "series",
+ "format": "money",
+ "unit": "Mean cumulative net outflow",
+ "xFormat": "number",
+ "xLabel": "Program year (1 = 2026, 12 = 2037)",
+ "title": "The Average Deficit Curve Peaks Below the Reserve",
+ "subtitle": "Mean over 3,000 paths of cumulative loan outflows minus repayments, base scenario",
+ "entities": [
+  {
+   "name": "Mean cumulative net outflow",
+   "points": [
+    {
+     "x": 1,
+     "value": 470298
+    },
+    {
+     "x": 2,
+     "value": 900898
+    },
+    {
+     "x": 3,
+     "value": 1289489
+    },
+    {
+     "x": 4,
+     "value": 1630641
+    },
+    {
+     "x": 5,
+     "value": 1918398
+    },
+    {
+     "x": 6,
+     "value": 2148715
+    },
+    {
+     "x": 7,
+     "value": 2322938
+    },
+    {
+     "x": 8,
+     "value": 2429686
+    },
+    {
+     "x": 9,
+     "value": 2471915,
+     "note": "Peak of the mean curve, $2,471,915 in 2034, within 0.015% of the deterministic benchmark $2,471,551"
+    },
+    {
+     "x": 10,
+     "value": 2438058
+    },
+    {
+     "x": 11,
+     "value": 2330893
+    },
+    {
+     "x": 12,
+     "value": 2152160
+    }
+   ]
+  }
+ ],
+ "caption": "The maximum of this averaged curve is $2,471,915, in 2034. The mean of per-path maxima is $2,489,537 and the P95 of per-path maxima, the reserve, is $2,731,561. The gap between the first two is Jensen's inequality for a maximum.",
+ "source": "my rerun of solution.model.run_simulation(BASE_SCENARIO, 3000, 20260328) via scripts/measure.py (results/measurements.json, section B)"
+}

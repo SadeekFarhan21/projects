@@ -1,0 +1,19 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Rides in 2024",
+  "title": "Rides by Start Weekday, 2024",
+  "subtitle": "Counts printed on the weekday chart in the rendered site",
+  "legendLabels": { "emphasis": "Busiest day", "other": "Other days" },
+  "rows": [
+    { "label": "Monday", "value": 788188 },
+    { "label": "Tuesday", "value": 803077 },
+    { "label": "Wednesday", "value": 879625 },
+    { "label": "Thursday", "value": 835692 },
+    { "label": "Friday", "value": 841688 },
+    { "label": "Saturday", "value": 925097, "emphasis": true, "detail": "Highest of the seven days" },
+    { "label": "Sunday", "value": 787201, "detail": "Lowest of the seven days, 987 rides below Monday" }
+  ],
+  "caption": "The seven bars sum to 5,860,568. The write-up's prose says Monday was the quietest day, but Sunday is.",
+  "source": "the labels on the weekday chart in the published site"
+}

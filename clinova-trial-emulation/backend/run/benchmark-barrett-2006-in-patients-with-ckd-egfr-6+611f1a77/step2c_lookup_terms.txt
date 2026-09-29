@@ -1,0 +1,47 @@
+iodixanol|Drug
+iopamidol|Drug
+iodinated contrast media|Drug
+computed tomography with intravenous contrast|Procedure
+multidetector computed tomography|Procedure
+CT angiography with contrast|Procedure
+angiography with contrast (intra-arterial)|Procedure
+serum creatinine|Measurement
+estimated glomerular filtration rate (eGFR)|Measurement
+blood urea nitrogen (BUN)|Measurement
+acute kidney injury|Condition
+chronic kidney disease|Condition
+end-stage renal disease|Condition
+hemodialysis (maintenance)|Procedure
+peritoneal dialysis (maintenance)|Procedure
+continuous renal replacement therapy (CRRT)|Procedure
+kidney transplant|Procedure
+kidney transplant status|Condition
+diabetes mellitus type 2|Condition
+hypertension|Condition
+heart failure|Condition
+coronary artery disease|Condition
+peripheral arterial disease|Condition
+stroke|Condition
+chronic obstructive pulmonary disease|Condition
+cirrhosis|Condition
+malignancy (any cancer)|Condition
+sepsis|Condition
+shock|Condition
+hypotension|Condition
+dehydration|Condition
+intensive care unit admission|Procedure
+nonsteroidal anti-inflammatory drugs (NSAIDs)|Drug
+ACE inhibitor|Drug
+angiotensin receptor blocker|Drug
+loop diuretic|Drug
+thiazide diuretic|Drug
+metformin|Drug
+vancomycin|Drug
+aminoglycosides|Drug
+amphotericin B|Drug
+calcineurin inhibitor (tacrolimus/cyclosporine)|Drug
+chemotherapy (systemic antineoplastic agents)|Drug
+intravenous normal saline hydration|Drug
+sodium bicarbonate infusion|Drug
+N-acetylcysteine|Drug
+pregnancy|Condition

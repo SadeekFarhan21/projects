@@ -1,0 +1,226 @@
+{
+  "created_at_utc": "2026-03-07T23:41:45.299879+00:00",
+  "config": {
+    "methods": [
+      "cure",
+      "cure_seq"
+    ],
+    "erased_concepts": [
+      "Vincent van Gogh",
+      "Pablo Picasso",
+      "Rembrandt",
+      "Andy Warhol",
+      "Caravaggio",
+      "Claude Monet",
+      "Paul Cezanne",
+      "Edgar Degas",
+      "Henri Matisse",
+      "Salvador Dali",
+      "Pierre-Auguste Renoir",
+      "Johannes Vermeer",
+      "Francisco Goya",
+      "JMW Turner",
+      "John Constable",
+      "Gustav Klimt",
+      "Egon Schiele",
+      "Paul Gauguin",
+      "Edvard Munch",
+      "Wassily Kandinsky",
+      "Jackson Pollock",
+      "Mark Rothko",
+      "Joan Miro",
+      "Frida Kahlo",
+      "Diego Rivera",
+      "Georgia O'Keeffe",
+      "Edward Hopper",
+      "Jean-Michel Basquiat",
+      "Keith Haring",
+      "Roy Lichtenstein",
+      "Amedeo Modigliani",
+      "Henri Rousseau",
+      "William Blake",
+      "Albrecht Durer",
+      "Sandro Botticelli",
+      "Raphael",
+      "Titian",
+      "Jan van Eyck",
+      "Pieter Bruegel the Elder",
+      "Hieronymus Bosch",
+      "Gustave Courbet",
+      "Camille Pissarro",
+      "Mary Cassatt",
+      "Winslow Homer",
+      "John Singer Sargent",
+      "Claude Lorrain",
+      "Paul Klee",
+      "Lucian Freud",
+      "Francis Bacon",
+      "Kazimir Malevich"
+    ],
+    "unerased_artists": [
+      "Norman Rockwell",
+      "Grant Wood",
+      "Thomas Cole",
+      "Albert Bierstadt",
+      "N C Wyeth",
+      "Caspar David Friedrich",
+      "Jean-Baptiste-Camille Corot",
+      "Artemisia Gentileschi",
+      "Paul Signac",
+      "Childe Hassam"
+    ],
+    "checkpoints": [
+      1,
+      5,
+      10,
+      25,
+      50
+    ],
+    "seeds": [
+      11,
+      22,
+      33
+    ],
+    "steps": 20,
+    "guidance": 7.5,
+    "height": 384,
+    "width": 384,
+    "alpha": 2.0,
+    "embedding_mode": "mean_masked",
+    "spectral_mode": "tikhonov",
+    "clip_model": "openai/clip-vit-base-patch32",
+    "lpips_net": "alex",
+    "device": "cuda",
+    "cache_dir": "<CACHE_DIR>",
+    "erased_concepts_file": "evaluation/artist_lists/erased_artists_50.txt",
+    "unerased_artists_file": "evaluation/artist_lists/unerased_artists_10.txt",
+    "templates_file": null,
+    "n_templates": 20,
+    "max_prompts_per_group": 180
+  },
+  "record_counts": {
+    "erased": 180,
+    "unerased": 180,
+    "total": 360
+  },
+  "results": {
+    "cure": {
+      "checkpoints": [
+        {
+          "n_erased": 1,
+          "lpips_e_mean": 0.7323948813809289,
+          "lpips_e_std": 0.1028284870107812,
+          "lpips_u_mean": 0.709384086396959,
+          "lpips_u_std": 0.08763925830877607,
+          "clip_u_mean": 25.214034244749282,
+          "clip_u_std": 2.8963692573653987,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 5,
+          "lpips_e_mean": 0.7746179507838356,
+          "lpips_e_std": 0.08233698727529867,
+          "lpips_u_mean": 0.7734621541367637,
+          "lpips_u_std": 0.06411884355713701,
+          "clip_u_mean": 21.289763249291315,
+          "clip_u_std": 3.3564767517754643,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 10,
+          "lpips_e_mean": 0.7942800088061227,
+          "lpips_e_std": 0.09249422684033269,
+          "lpips_u_mean": 0.7701112435923683,
+          "lpips_u_std": 0.06957267946818445,
+          "clip_u_mean": 20.2503327899509,
+          "clip_u_std": 3.3342751849140946,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 25,
+          "lpips_e_mean": 0.7659550355540381,
+          "lpips_e_std": 0.08034466486963089,
+          "lpips_u_mean": 0.7593041552437676,
+          "lpips_u_std": 0.07191635220367563,
+          "clip_u_mean": 21.62021148999532,
+          "clip_u_std": 2.8288749168038216,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 50,
+          "lpips_e_mean": 0.786900833580229,
+          "lpips_e_std": 0.09065363331356222,
+          "lpips_u_mean": 0.7612117944492234,
+          "lpips_u_std": 0.07831967314683856,
+          "clip_u_mean": 21.516320927937826,
+          "clip_u_std": 3.0601639063916424,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        }
+      ]
+    },
+    "cure_seq": {
+      "checkpoints": [
+        {
+          "n_erased": 1,
+          "lpips_e_mean": 0.7323948813809289,
+          "lpips_e_std": 0.1028284870107812,
+          "lpips_u_mean": 0.709384086396959,
+          "lpips_u_std": 0.08763925830877607,
+          "clip_u_mean": 25.214034244749282,
+          "clip_u_std": 2.8963692573653987,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 5,
+          "lpips_e_mean": 0.7586564663383696,
+          "lpips_e_std": 0.07456190681067586,
+          "lpips_u_mean": 0.7375072565343644,
+          "lpips_u_std": 0.0630273092297555,
+          "clip_u_mean": 22.682064077589246,
+          "clip_u_std": 3.0944619630710046,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 10,
+          "lpips_e_mean": 0.7678275419606103,
+          "lpips_e_std": 0.07255645772421365,
+          "lpips_u_mean": 0.7397147307793299,
+          "lpips_u_std": 0.06348387088941625,
+          "clip_u_mean": 22.482715702056886,
+          "clip_u_std": 2.94635073199953,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 25,
+          "lpips_e_mean": 0.7569760281178687,
+          "lpips_e_std": 0.0896512373644821,
+          "lpips_u_mean": 0.7349521117077933,
+          "lpips_u_std": 0.06941704111100731,
+          "clip_u_mean": 22.65642442703247,
+          "clip_u_std": 2.888401852853746,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        },
+        {
+          "n_erased": 50,
+          "lpips_e_mean": 0.7577186372545031,
+          "lpips_e_std": 0.08308730253714948,
+          "lpips_u_mean": 0.7470384955406189,
+          "lpips_u_std": 0.07335086995169075,
+          "clip_u_mean": 22.157771073447332,
+          "clip_u_std": 3.0063164188014855,
+          "n_erased_pairs": 180,
+          "n_unerased_pairs": 180
+        }
+      ]
+    }
+  }
+}

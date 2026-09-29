@@ -24,9 +24,10 @@ if (page.total > 1) archiveHeading += ', Page ' + page.current + ' of ' + page.t
 %>
 <h1 class="sr-only"><%= archiveHeading %></h1>
 
-<div class="archives-container">
+<%# Paged to the screen by js/post-list.js, like the home page. %>
+<div class="archives-container" data-post-list=".one-tag-list li">
 <% Object.keys(years).reverse().forEach(function(year){  %>
-<div class="one-tag-list">
+<div class="one-tag-list" data-post-group>
                 <span class="fa fa-calendar-times-o listing-seperator" id="<%= year %>" role="heading" aria-level="2">
                     <span class="tag-text"><%= year %></span>
                 </span>
@@ -54,4 +55,9 @@ if (page.total > 1) archiveHeading += ', Page ' + page.current + ' of ' + page.t
 </div>
 <% }) %>
 </div>
-<%- partial('_partial/pager') %>
+<nav class="post-list-pager" aria-label="Archive pages" hidden>
+    <button type="button" data-page="newer">&larr; Newer</button>
+    <span class="post-list-status" aria-live="polite"></span>
+    <button type="button" data-page="older">Older &rarr;</button>
+</nav>
+<script src="<%- url_for('js/post-list.js') %>" defer></script>

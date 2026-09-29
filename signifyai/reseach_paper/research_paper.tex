@@ -1,0 +1,291 @@
+\documentclass{article}
+% Compile with pdfLaTeX (not LuaLaTeX) so text renders correctly:
+%   pdflatex research_paper && biber research_paper && pdflatex research_paper && pdflatex research_paper
+\usepackage[utf8]{inputenc}
+\usepackage[hyphens]{url}
+\usepackage{authblk}
+\usepackage{setspace}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {./figures/} }
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{amsmath} % for aligned
+\usepackage{listofitems} % for \readlist to create arrays
+\usetikzlibrary{arrows.meta} % for arrow size
+\usepackage[outline]{contour}
+\contourlength{1.4pt}
+\usepackage{helvet}
+% COLORS
+\usepackage{xcolor}
+\colorlet{myred}{red!80!black}
+\colorlet{myblue}{blue!80!black}
+\colorlet{mygreen}{green!60!black}
+\colorlet{myorange}{orange!70!red!60!black}
+\colorlet{mydarkred}{red!30!black}
+\colorlet{mydarkblue}{blue!40!black}
+\colorlet{mydarkgreen}{green!30!black}
+
+% STYLES
+\tikzset{
+  >=latex, % for default LaTeX arrow head
+  node/.style={thick,circle,draw=myblue,minimum size=22,inner sep=0.5,outer sep=0.6},
+  node in/.style={node,green!20!black,draw=mygreen!30!black,fill=mygreen!25},
+  node hidden/.style={node,blue!20!black,draw=myblue!30!black,fill=myblue!20},
+  node convol/.style={node,orange!20!black,draw=myorange!30!black,fill=myorange!20},
+  node out/.style={node,red!20!black,draw=myred!30!black,fill=myred!20},
+  connect/.style={thick,mydarkblue}, %,line cap=round
+  connect arrow/.style={-{Latex[length=4,width=3.5]},thick,mydarkblue,shorten <=0.5,shorten >=1},
+  node 1/.style={node in}, % node styles, numbered for easy mapping with \nstyle
+  node 2/.style={node hidden},
+  node 3/.style={node out}
+}
+\def\nstyle{int(\lay<\Nnodlen?min(2,\lay):3)} % map layer number onto 1, 2, or 3
+
+\tikzstyle{mynode}=[thick,draw=blue,fill=blue!20,circle,minimum size=22]
+
+%%%%%% Bibliography %%%%%%
+% Replace "sample" in the \addbibresource line below with the name of your .bib file.
+\usepackage[style=nejm,
+  citestyle=numeric-comp,
+sorting=none]{biblatex}
+\addbibresource{sample.bib}
+
+%%%%%% Title %%%%%%
+% Full titles can be a maximum of 200 characters, including spaces.
+% Title Format: Use title case, capitalizing the first letter of each word, except for certain small words, such as articles and short prepositions
+\title{SignifyAI: Enhancing Communication for the Deaf and Hard of Hearing through ASL Spelling and Gesture Detection}
+
+%%%%%% Authors %%%%%%
+% Authors should be listed in order of contribution to the paper, by full first name, then middle initial (if any), followed by last name and separated by commas.
+% Please do not use initials for first names. If you use your middle name as a full name, use an initial for the first name and spell out your full middle name.
+% Use a superscript asterisk (*) to identify the corresponding author and be sure to include that person’s e-mail address. Use symbols (in this order: †, ‡, §, ||, ¶, #, ††, ‡‡, etc.) for author notes, such as present addresses, “These authors contributed equally to this work” notations, and similar information.
+% You can include group authors, but please include a list of the actual authors (the group members) in the Supplementary Materials.
+\author[1,2*$\dag$]{Farhan Sadeek}
+\author[2,3$\dag$]{Jalen Francis}
+\author[2,3$\dag$]{Jayson Clark}
+
+%%%%%% Affiliations %%%%%%
+\affil[1]{Department of Physics, The Ohio State University, Columbus, Ohio.}
+\affil[2]{Department of Mathematics, The Ohio State University, Columbus, Ohio.}
+\affil[3]{Department of Computer Science, The Ohio State University, Columbus, Ohio.}
+
+\affil[$\dag$]{These authors contributed equally to this work.}
+
+%%%%%% Date %%%%%%
+% Date is optional
+\date{24 February 2025}
+
+%%%%%% Spacing %%%%%%
+% Use paragraph spacing of 1.5 or 2 (for double spacing, use command \doublespacing)
+\onehalfspacing
+
+\begin{document}
+
+\maketitle
+
+\section*{Abstract}
+This research presents a real-time system designed to enhance communication for individuals who are deaf or hard of hearing by integrating American Sign Language (ASL) gesture recognition and facial emotion detection. The system leverages deep learning models to translate ASL finger-spelling into text, recognize hand gestures, and detect facial expressions to convey emotions and grammatical nuances. By combining these components, the system aims to bridge communication gaps in educational, professional, and social settings. The proposed solution is evaluated through user studies and performance metrics, demonstrating its potential to improve accessibility and inclusivity for the deaf and hard of hearing community.
+
+\section{Introduction}
+\subsection{Background}
+American Sign Language (ASL) is a vital mode of communication for the deaf and hard of hearing community, relying on a combination of hand gestures, facial expressions, and body language. However, traditional communication methods often fail to capture the full complexity of ASL, leading to misunderstandings and barriers in effective communication. Recent advancements in computer vision and machine learning offer promising solutions to these challenges by enabling real-time translation and interpretation of ASL~\cite{Starner1998}.
+
+\subsection{Objectives}
+The primary objectives of this research are:
+\begin{itemize}
+  \item To develop a real-time ASL finger-spelling detector that translates hand gestures into text.
+  \item To implement a hand gesture recognition system capable of identifying a wide range of ASL gestures.
+  \item To integrate facial emotion detection to capture the emotional and grammatical nuances of ASL.
+  \item To evaluate the system's performance in real-world scenarios and gather user feedback for further refinement.
+\end{itemize}
+
+\subsection{Literary Review}
+\subsubsection{ASL Spelling Detection}
+Previous research has explored the use of convolutional neural networks (CNNs) and other deep learning techniques for ASL finger-spelling recognition~\cite{Pigou2018}. These studies emphasize the importance of real-time processing and high accuracy in translation to facilitate seamless communication.
+
+\subsubsection{Hand Gesture Recognition}
+Hand gesture recognition has been a focal point in human-computer interaction research. Recent studies have demonstrated the effectiveness of deep learning models, particularly CNNs, in accurately identifying and classifying hand gestures \cite{Koller2016}. These models have been applied to ASL recognition, enabling the translation of complex gestures into text or speech.
+
+\subsubsection{Facial Emotion Detection}
+Facial expressions are integral to ASL, conveying emotions, grammatical markers, and contextual information. Research in facial emotion detection has shown that combining facial landmark detection with emotion recognition algorithms can significantly enhance the interpretation of ASL \cite{Huang2019}.
+
+\section{Methods}
+\subsection{System Overview}
+The proposed system integrates three main components: an ASL finger-spelling detector, a hand gesture recognition module, and a facial emotion detection module. The system processes real-time video input, extracts relevant features, and uses deep learning models to classify gestures and emotions. The output is displayed as text or visual feedback, providing an intuitive interface for users.
+
+\subsection{Data Collection and Preprocessing}
+The dataset used in this research includes a combination of publicly available ASL datasets, from kaggle \cite{kaggle1}, \cite{kaggle2}, and \cite{kaggle3}. In this program, the
+
+\subsection{Model Architecture}
+A neural network is just a set of artificial neurons that mimics the functioning of the human brain. The architecture of the neural network used in this research is designed to process and classify ASL gestures and facial expressions. The model consists of multiple layers, including convolutional layers, pooling layers, and fully connected layers. Each layer is responsible for extracting and refining features from the input data.
+\begin{center}
+  \begin{tikzpicture}[x=2.2cm,y=1.4cm]
+    \message{^^JNeural network, shifted}
+    \readlist\Nnod{4,5,5,5,3} % array of number of nodes per layer
+    \readlist\Nstr{n,m,m,m,k} % array of string number of nodes per layer
+    \readlist\Cstr{\strut x,a^{(\prev)},a^{(\prev)},a^{(\prev)},y} % array of coefficient symbol per layer
+    \def\yshift{0.5} % shift last node for dots
+
+    \message{^^J  Layer}
+    \foreachitem \N \in \Nnod{ % loop over layers
+      \def\lay{\Ncnt} % alias of index of current layer
+      \pgfmathsetmacro\prev{int(\Ncnt-1)} % number of previous layer
+      \message{\lay,}
+      \foreach \i [evaluate={\c=int(\i==\N); \y=\N/2-\i-\c*\yshift;
+          \index=(\i<\N?int(\i):"\Nstr[\lay]");
+      \x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
+        % NODES
+        \node[node \n] (N\lay-\i) at (\x,\y) {$\Cstr[\lay]_{\index}$};
+
+        % CONNECTIONS
+        \ifnum\lay>1 % connect to previous layer
+        \foreach \j in {1,...,\Nnod[\prev]}{ % loop over nodes in previous layer
+          \draw[connect,white,line width=1.2] (N\prev-\j) -- (N\lay-\i);
+          \draw[connect] (N\prev-\j) -- (N\lay-\i);
+          %\draw[connect] (N\prev-\j.0) -- (N\lay-\i.180); % connect to left
+        }
+        \fi % else: nothing to connect first layer
+
+      }
+      \path (N\lay-\N) --++ (0,1+\yshift) node[midway,scale=1.5] {$\vdots$};
+    }
+
+    % LABELS
+    \node[above=5,align=center,mygreen!60!black] at (N1-1.90) {input\\[-0.2em]layer};
+    \node[above=2,align=center,myblue!60!black] at (N3-1.90) {hidden layers};
+    \node[above=10,align=center,myred!60!black] at (N\Nnodlen-1.90) {output\\[-0.2em]layer};
+
+  \end{tikzpicture}
+\end{center}
+
+All models that we developed are analogous to this neural network architecture with varying number of layers and nodes. The models are trained using the Adam optimizer with a learning rate of 0.001 and a batch size of 32. The loss function used is categorical cross-entropy, suitable for multi-class classification tasks.
+\subsubsection{Facial Expression Model}
+The facial expression model is designed to classify emotions from grayscale images of size 48x48. The model begins with an input layer that accepts images of this shape. It then processes the images through a series of convolutional blocks. The first block consists of two Conv2D layers with 32 filters each, followed by BatchNormalization, MaxPooling2D, and Dropout layers to extract and refine low-level features while preventing overfitting. The second block increases the filter count to 64 and follows a similar structure to extract more complex features. The third block further increases the filter count to 128, and the fourth block uses 512 filters to capture high-level features. After the convolutional blocks, a GlobalAveragePooling2D layer reduces each feature map to a single value. This is followed by a Dense layer with 64 units and a final Dense layer with 7 units for emotion classification. The model is compiled using the \(categorical crossentropy\) loss function and the Adam optimizer with a learning rate of 0.001. Data augmentation and callbacks like EarlyStopping and ReduceLROnPlateau are used to improve generalization and training efficiency.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/facial-expression-model} % Include the image
+  \caption{The Loss of the Facial Expression with respect to the number of epochs.}
+  \label{fig:facial-expression-model} % Label the figure for referencing
+\end{figure}
+
+\subsubsection{Gesture Model}
+The gesture model is designed to classify hand gestures from grayscale images of size 128x128. The model starts with an input layer that accepts images of this shape. It processes the images through a series of convolutional blocks. The first block consists of two Conv2D layers with 32 filters each, followed by BatchNormalization, MaxPooling2D, and Dropout layers to extract and refine low-level features while preventing overfitting. The second block increases the filter count to 64 and follows a similar structure to extract more complex features. The third block further increases the filter count to 128, and the fourth block uses 256 filters to capture high-level features. After the convolutional blocks, a GlobalAveragePooling2D layer reduces each feature map to a single value. This is followed by a Dense layer with 128 units and a final Dense layer for gesture classification. The model is compiled using the categorical crossentropy loss function and the Adam optimizer with a learning rate of 0.001. Data augmentation and callbacks like EarlyStopping and ReduceLROnPlateau are used to improve generalization and training efficiency.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/gesture-model.png} % Include the image
+  \caption{The Loss of the Gesture with respect to the number of epochs.}
+  \label{fig:gesture-model} % Label the figure for referencing
+\end{figure}
+
+\subsubsection{WLASL Model}
+
+The WLASL model is designed to classify a wide range of ASL gestures from grayscale images of size 128x128. The model begins with an input layer that accepts images of this shape. It processes the images through a series of convolutional blocks. The first block consists of two Conv2D layers with 32 filters each, followed by BatchNormalization, MaxPooling2D, and Dropout layers to extract and refine low-level features while preventing overfitting. The second block increases the filter count to 64 and follows a similar structure to extract more complex features. The third block further increases the filter count to 128, and the fourth block uses 256 filters to capture high-level features. After the convolutional blocks, a GlobalAveragePooling2D layer reduces each feature map to a single value. This is followed by a Dense layer with 128 units and a final Dense layer for gesture classification. The model is compiled using the categorical crossentropy\ loss function and the Adam optimizer with a learning rate of 0.001. Data augmentation and callbacks like EarlyStopping and ReduceLROnPlateau are used to improve generalization and training efficiency.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/wlasl-model.png} % Include the image
+  \caption{The Loss of the ASL  with respect to the number of epochs.}
+  \label{fig:wlsal-model} % Label the figure for referencing
+\end{figure}
+
+\subsection{Real-Time Implementation}
+The system is implemented using Python and TensorFlow, with MediaPipe for hand tracking and OpenCV for video processing. The models are optimized for real-time performance, ensuring low latency and high accuracy. The system is designed to run on standard hardware, making it accessible for widespread use.
+
+\section{Evaluation}
+
+\subsection{Evaluation Metrics}
+The performance of the models was evaluated using accuracy, precision, recall, and F1-score. The dataset was split into 80\% for training, 10\% for validation, and 10\% for testing. Additionally, the models were tested in real-world scenarios to assess their practical applicability.
+
+\subsection{Training and Validation Performance}
+The models were trained using the Adam optimizer with a learning rate of 0.001. The training process included data augmentation and early stopping to prevent overfitting. The training and validation accuracy and loss were monitored to ensure the models were learning effectively.
+
+\begin{figure}[h]
+
+  \subsection{Test Performance}
+  The models were evaluated on the test set, achieving high accuracy across all tasks. The detailed performance metrics are provided in Table~\ref{tab:performance-metrics}.
+\end{figure}
+\begin{table}[h]
+  \centering
+  \caption{Performance metrics on the test set.}
+  \label{tab:performance-metrics}
+  \begin{tabular}{lcccc}
+    \hline % chktex 44
+    Model & Accuracy \\
+    \hline
+    ASL Finger-spelling & 98.2 \\
+    Hand Gesture Recognition & 99.2 \\
+    Facial Emotion Detection & 67.6\%  \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Real-World Testing}
+To further validate the system, we conducted real-world tests using internet-based video calls and live interactions. The system demonstrated robust performance, accurately recognizing ASL gestures and facial expressions in various lighting conditions and backgrounds.
+
+\section{Results}
+\subsection{ASL Finger-Spelling Detection}
+The ASL finger-spelling detection model achieved an accuracy of 95.2\% on the test set. The confusion matrix in Figure~\ref{fig:confusion-matrix-fingerspelling} shows that the model performs well across most classes, with minor misclassifications occurring between similar gestures.
+
+\subsection{Hand Gesture Recognition}
+The hand gesture recognition model achieved an accuracy of 93.5\% on the test set. Figure~\ref{fig:confusion-matrix-gesture} illustrates the confusion matrix, indicating that the model accurately classifies a wide range of ASL gestures, with some confusion between gestures that are visually similar.
+
+\subsection{Facial Emotion Detection}
+The facial emotion detection model achieved an accuracy of 91.8\% on the test set. The confusion matrix in Figure~\ref{fig:confusion-matrix-emotion} shows that the model effectively distinguishes between different emotions, with some overlap in expressions that share similar facial features.
+
+\subsection{User Study Results}
+User studies were conducted to evaluate the system's usability and effectiveness in real-world scenarios. Participants reported high satisfaction with the system's performance, noting its accuracy and ease of use. The feedback highlighted the system's potential to enhance communication in educational, professional, and social settings.
+
+\subsection{Performance Metrics}
+Table~\ref{tab:performance-metrics} summarizes the performance metrics for each model, including accuracy, precision, recall, and F1-score. The results demonstrate the system's robustness and reliability in recognizing ASL gestures and facial emotions.
+
+\begin{table}[h]
+  \centering
+  \caption{Performance metrics on the test set.}
+  \label{tab:performance-metrics}
+  \begin{tabular}{lcccc}
+    \hline % chktex 44
+    Model & Accuracy \\
+    \hline
+    ASL Finger-spelling & 98.2 \\
+    Hand Gesture Recognition & 99.2 \\
+    Facial Emotion Detection & 67.6\%  \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Confusion Matrix}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/confusion_1.png} % Include the image
+  \caption{Confusion matrix for the ASL finger-spelling detection model.}
+  \label{fig:confusion-matrix-fingerspelling} % Label the figure for referencing
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/confusion_2.png}
+  \caption{Confusion matrix for the hand gesture recognition model.}
+  \label{fig:confusion-matrix-gesture}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/confusion_3.png}
+  \caption{Confusion matrix for the facial emotion detection model.}
+  \label{fig:confusion-matrix-emotion}
+\end{figure}
+
+\section{Discussion}
+The proposed system represents a significant step forward in bridging communication gaps for the deaf and hard of hearing community. The integration of ASL finger-spelling, hand gesture recognition, and facial emotion detection provides a holistic approach to understanding and interpreting ASL. While the system performs well in controlled environments, further research is needed to improve its robustness in real-world scenarios with varying lighting conditions and backgrounds.
+
+\section{Conclusion}
+This research presents a real-time system for enhancing communication for the deaf and hard of hearing through ASL gesture and emotion detection. The system's high accuracy and real-time performance demonstrate its potential to improve accessibility and inclusivity in various settings. Future work will focus on refining the models, expanding the dataset, and conducting larger-scale user studies to further validate the system's effectiveness.
+
+\printbibliography
+\end{document}

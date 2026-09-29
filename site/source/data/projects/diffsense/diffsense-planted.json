@@ -1,0 +1,36 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Cases out of 14 planted cases",
+  "title": "Breaking-Change Detector on 14 Hand-Labeled Cases",
+  "subtitle": "Python and JavaScript edits applied to a small synthetic repo, each case labeled breaking or not",
+  "legendLabels": {
+    "emphasis": "Correct",
+    "other": "Wrong"
+  },
+  "rows": [
+    {
+      "label": "True positive",
+      "value": 8,
+      "emphasis": true,
+      "detail": "Removed or renamed function, class or method, added or removed required parameter, JS export removed, JS parameter count changed"
+    },
+    {
+      "label": "True negative",
+      "value": 3,
+      "emphasis": true,
+      "detail": "Added function, comment-only change, JS added function"
+    },
+    {
+      "label": "False positive",
+      "value": 3,
+      "detail": "Optional parameter added, docstring-only change, body change with the same signature"
+    },
+    {
+      "label": "False negative",
+      "value": 0
+    }
+  ],
+  "caption": "It caught every planted break and over-flagged three harmless edits. Fourteen hand-picked cases show the detector's shape, not its accuracy on real code.",
+  "source": "scripts/measure.py planted, results/planted_breaking_changes.json"
+}

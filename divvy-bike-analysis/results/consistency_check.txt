@@ -1,0 +1,4 @@
+prose total 5667986 member% 55.17 casual% 44.83
+weekday chart sum 5860568 diff vs prose 192582
+min day Sun max day Sat
+casual/member avg length ratio 1.97

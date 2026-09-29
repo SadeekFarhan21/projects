@@ -1,0 +1,83 @@
+{
+ "type": "series",
+ "format": "number",
+ "unit": "LPIPS_u (lower is better)",
+ "xFormat": "number",
+ "xLabel": "Artists erased so far (k)",
+ "title": "Collateral Drift on Unerased Artists",
+ "subtitle": "LPIPS_u against the unedited model, lower is better. Sequential erasure of up to 100 artists",
+ "entities": [
+  {
+   "name": "CURE",
+   "points": [
+    {
+     "x": 1,
+     "value": 0.7094,
+     "note": "Std 0.0876 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 5,
+     "value": 0.7735,
+     "note": "Std 0.0641 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 10,
+     "value": 0.7701,
+     "note": "Std 0.0696 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 25,
+     "value": 0.7593,
+     "note": "Std 0.0719 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 50,
+     "value": 0.7612,
+     "note": "Std 0.0783 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 100,
+     "value": 0.768,
+     "note": "Std 0.0790 over 3 seeds and the unerased prompts"
+    }
+   ]
+  },
+  {
+   "name": "CURE-Sequential",
+   "points": [
+    {
+     "x": 1,
+     "value": 0.7094,
+     "note": "Std 0.0876 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 5,
+     "value": 0.7375,
+     "note": "Std 0.0630 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 10,
+     "value": 0.7397,
+     "note": "Std 0.0635 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 25,
+     "value": 0.735,
+     "note": "Std 0.0694 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 50,
+     "value": 0.747,
+     "note": "Std 0.0734 over 3 seeds and the unerased prompts"
+    },
+    {
+     "x": 100,
+     "value": 0.7939,
+     "note": "Std 0.0978 over 3 seeds and the unerased prompts"
+    }
+   ]
+  }
+ ],
+ "caption": "CURE-Sequential sits below CURE from k=5 to k=50 and above it at k=100 (0.7939 against 0.7680). The gaps of 0.014 to 0.036 are smaller than or comparable to the per-point standard deviation of about 0.06 to 0.10, and I ran no significance test.",
+ "source": "Jeffrey Xie's committed 100-artist Figure-6-style sweep (evaluation/figure6_results_100/results.json), SD v1.4, seeds 11/22/33, 20 steps, 384x384"
+}

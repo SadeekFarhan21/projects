@@ -1,0 +1,28 @@
+{
+  "type": "columns",
+  "mode": "grouped",
+  "format": "percent",
+  "unit": "Fraud recall",
+  "categories": [
+    "Seed 0, noon",
+    "Seed 1, noon",
+    "Seed 2, noon",
+    "Seed 0, 03:00",
+    "Seed 1, 03:00",
+    "Seed 2, 03:00"
+  ],
+  "series": [
+    {
+      "name": "Full gate (forest, noise, rule boosts)",
+      "values": [36.8, 37.5, 39.8, 37.3, 37.8, 40.3]
+    },
+    {
+      "name": "Isolation Forest alone at the same cutoff",
+      "values": [0, 0, 0, 0, 0, 0]
+    }
+  ],
+  "title": "Rule Boosts Do the Flagging, and Precision Stays at 100 Percent",
+  "subtitle": "Recall on 5,000 synthetic transactions per run, 3 seeds and 2 simulated clock start times. Precision was 1.000 in all 6 runs for the full gate",
+  "caption": "The full gate flagged 2.9 to 3.2 percent of all traffic with zero false positives among normal and elevated normal transactions. The forest alone flagged 0 of 5,000 in every run. The clock start time made almost no difference.",
+  "source": "results/gate_bench.json, from scripts/gate_bench.py"
+}

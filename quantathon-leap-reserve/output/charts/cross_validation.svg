@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='80' y='28' font-size='20' font-family='Helvetica, Arial, sans-serif' fill='#0f172a'>Cross-Validation: Deterministic vs Monte Carlo</text>
+<line x1='80' y1='450.0' x2='870' y2='450.0' stroke='#d8dde6' stroke-width='1' /><text x='18' y='455.0' font-size='12' fill='#334155'>$0.0M</text><line x1='80' y1='370.0' x2='870' y2='370.0' stroke='#d8dde6' stroke-width='1' /><text x='18' y='375.0' font-size='12' fill='#334155'>$0.1M</text><line x1='80' y1='290.0' x2='870' y2='290.0' stroke='#d8dde6' stroke-width='1' /><text x='18' y='295.0' font-size='12' fill='#334155'>$0.2M</text><line x1='80' y1='210.0' x2='870' y2='210.0' stroke='#d8dde6' stroke-width='1' /><text x='18' y='215.0' font-size='12' fill='#334155'>$0.3M</text><line x1='80' y1='130.0' x2='870' y2='130.0' stroke='#d8dde6' stroke-width='1' /><text x='18' y='135.0' font-size='12' fill='#334155'>$0.4M</text><line x1='80' y1='50.0' x2='870' y2='50.0' stroke='#d8dde6' stroke-width='1' /><text x='18' y='55.0' font-size='12' fill='#334155'>$0.5M</text>
+<polyline points='112.9,86.8 178.8,89.6 244.6,96.7 310.4,110.6 376.2,131.7 442.1,158.7 507.9,188.7 573.8,230.1 639.6,273.7 705.4,330.1 771.2,389.1 837.1,450.0' fill='none' stroke='#0f766e' stroke-width='3' />
+<polyline points='112.9,86.4 178.8,89.2 244.6,97.0 310.4,110.9 376.2,131.8 442.1,158.2 507.9,190.8 573.8,230.3 639.6,274.1 705.4,330.2 771.2,388.5 837.1,450.0' fill='none' stroke='#0f766e' stroke-width='2' stroke-dasharray='8,4' />
+<polyline points='112.9,450.0 178.8,422.2 244.6,396.8 310.4,374.1 376.2,353.9 442.1,336.6 507.9,323.2 573.8,312.5 639.6,306.3 705.4,304.0 771.2,306.3 837.1,312.0' fill='none' stroke='#b91c1c' stroke-width='3' />
+<polyline points='112.9,450.0 178.8,422.4 244.6,397.0 310.4,374.1 376.2,354.0 442.1,337.0 507.9,323.3 573.8,313.1 639.6,306.6 705.4,304.0 771.2,305.9 837.1,312.1' fill='none' stroke='#b91c1c' stroke-width='2' stroke-dasharray='8,4' />
+<text x='112.9' y='495' text-anchor='middle' font-size='11' fill='#334155'>2026</text><text x='178.8' y='495' text-anchor='middle' font-size='11' fill='#334155'>2027</text><text x='244.6' y='495' text-anchor='middle' font-size='11' fill='#334155'>2028</text><text x='310.4' y='495' text-anchor='middle' font-size='11' fill='#334155'>2029</text><text x='376.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>2030</text><text x='442.1' y='495' text-anchor='middle' font-size='11' fill='#334155'>2031</text><text x='507.9' y='495' text-anchor='middle' font-size='11' fill='#334155'>2032</text><text x='573.8' y='495' text-anchor='middle' font-size='11' fill='#334155'>2033</text><text x='639.6' y='495' text-anchor='middle' font-size='11' fill='#334155'>2034</text><text x='705.4' y='495' text-anchor='middle' font-size='11' fill='#334155'>2035</text><text x='771.2' y='495' text-anchor='middle' font-size='11' fill='#334155'>2036</text><text x='837.1' y='495' text-anchor='middle' font-size='11' fill='#334155'>2037</text>
+<line x1='80' y1='450' x2='870' y2='450' stroke='#475569' stroke-width='1.5' />
+<line x1='80' y1='50' x2='80' y2='450' stroke='#475569' stroke-width='1.5' />
+<line x1='560' y1='25' x2='590' y2='25' stroke='#0f766e' stroke-width='3' />
+<text x='595' y='30' font-size='11' fill='#334155'>MC Outflows</text>
+<line x1='660' y1='25' x2='690' y2='25' stroke='#0f766e' stroke-width='2' stroke-dasharray='6,3' />
+<text x='695' y='30' font-size='11' fill='#334155'>Det. Outflows</text>
+<line x1='760' y1='25' x2='790' y2='25' stroke='#b91c1c' stroke-width='3' />
+<text x='795' y='30' font-size='11' fill='#334155'>MC Inflows</text>
+<line x1='850' y1='25' x2='880' y2='25' stroke='#b91c1c' stroke-width='2' stroke-dasharray='6,3' />
+<text x='885' y='30' font-size='11' fill='#334155'>Det.</text>
+</svg>

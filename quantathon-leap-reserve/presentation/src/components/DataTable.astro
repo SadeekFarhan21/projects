@@ -1,0 +1,52 @@
+---
+interface Props {
+  headers: string[];
+  rows: string[][];
+  compact?: boolean;
+}
+const { headers, rows, compact = false } = Astro.props;
+---
+<div class:list={['table-wrap', { compact }]}>
+  <table>
+    <thead>
+      <tr>
+        {headers.map(h => <th>{h}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class={i % 2 === 1 ? 'alt' : ''}>
+          {row.map((cell, j) => (
+            j === 0
+              ? <td class="row-label" set:html={cell} />
+              : <td set:html={cell} />
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-wrap {
+    overflow-x: auto;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .3s var(--ease);
+  }
+  .table-wrap:hover { box-shadow: var(--shadow-md); }
+  .table-wrap.compact { border-radius: var(--radius-sm); }
+  .table-wrap.compact table { font-size: clamp(11px, 1.1vw, 14px); }
+  .table-wrap.compact th, .table-wrap.compact td { padding: 7px 10px; }
+
+  table { border-spacing: 0; }
+  th {
+    background: var(--surface-dim);
+    position: sticky; top: 0;
+  }
+  th:first-child { border-radius: var(--radius) 0 0 0; }
+  th:last-child { border-radius: 0 var(--radius) 0 0; }
+  .row-label { font-weight: 500; color: var(--ink); }
+  tr.alt td { background: var(--surface-tint); }
+</style>

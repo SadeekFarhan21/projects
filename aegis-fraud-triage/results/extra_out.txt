@@ -1,0 +1,8 @@
+normal 2386 raw IF min/med/max -0.11 0.075 0.142 gate score med 0.008 flag rate 0.0
+elevated 381 raw IF min/med/max -0.138 -0.022 0.136 gate score med 0.055 flag rate 0.0
+fraud 233 raw IF min/med/max -0.166 -0.15 -0.071 gate score med 0.447 flag rate 0.361
+fraud amount 0 500 78 recall 0.0
+fraud amount 500 1000 71 recall 0.0
+fraud amount 1000 5000 76 recall 1.0
+fraud amount 5000 1000000000.0 8 recall 1.0
+fraud amount>1000 share 0.361

@@ -1,0 +1,18 @@
+{
+  "type": "bars",
+  "format": "multiple",
+  "unit": "real MP3 duration divided by synthetic duration",
+  "title": "Real Audio Runs 2.63x Longer Than the Estimate",
+  "subtitle": "Ratio per chapter, chapters 1 to 4, and overall",
+  "reference": { "value": 1, "label": "Timeline matches audio" },
+  "legendLabels": { "emphasis": "All four chapters", "other": "One chapter" },
+  "rows": [
+    { "label": "Chapter 1", "value": 2.62, "detail": "230.43 s of audio against 88.08 s estimated" },
+    { "label": "Chapter 2", "value": 2.49, "detail": "213.84 s of audio against 85.83 s estimated" },
+    { "label": "Chapter 3", "value": 2.59, "detail": "278.18 s of audio against 107.57 s estimated" },
+    { "label": "Chapter 4", "value": 2.85, "detail": "221.88 s of audio against 77.94 s estimated" },
+    { "label": "Overall", "value": 2.63, "emphasis": true, "detail": "944.33 s of audio against 359.42 s estimated" }
+  ],
+  "caption": "The ratio is not constant, so a single corrected characters-per-second value would not fix it. Chapter 4 is the furthest off.",
+  "source": "ratios computed by the project's measure.py from ffprobe and the chapter JSON"
+}

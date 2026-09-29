@@ -1,0 +1,8 @@
+# Root dependencies for CURE / CURE-Sequential experiments
+# (matches cure/requirements.txt and cure_seq/requirements.txt)
+torch>=2.0
+torchvision
+diffusers>=0.21.0
+transformers>=4.30.0
+accelerate
+Pillow

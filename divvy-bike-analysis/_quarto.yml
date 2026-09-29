@@ -1,0 +1,34 @@
+project:
+  type: website
+  output-dir: _site
+format:
+  html:
+    theme: litera
+    toc: true
+    toc-location: right
+    self-contained: true
+website:
+  title: "Divvy Bike Analysis"
+  site-url: https://divvy-bike-analysis.netlify.app
+  repo-url: https://github.com/SadeekFarhan21/Divvy_Bike_Analysis
+  favicon: Divvy_Logo.png
+  navbar:
+    left:
+      - text: "About Me"
+        href: about_me.qmd
+      - text: "Website"
+        menu: 
+          - text: "Personal"
+            href: https://farhan-sadeek.netlify.app
+          - text: "Academic"
+            href: https://farhan-college-notes.vercel.app
+      - text: "Links"
+        menu:
+        - text: "Github"
+          href: https://github.com/SadeekFarhan21/Divvy_Bike_Analysis
+        - text: "Linkedin"
+          href: https://www.linkedin.com/in/farhansadeekde110/
+        - text: "Twitter"
+          href: https://twitter.com/SadeekFarhan21
+        - text: "Tableau"
+          href: https://public.tableau.com/app/profile/farhan.sadeek

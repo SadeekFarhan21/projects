@@ -1,0 +1,7 @@
+servo (constants parsed from hardware/servo_control.py, PWM 50 Hz => period 20 ms)
+  MIN_DUTY=2.5% -> pulse 0.50 ms
+  MID_DUTY=7.5% -> pulse 1.50 ms
+  MAX_DUTY=12.5% -> pulse 2.50 ms
+buzzer (parsed from hardware/buzzer.py)
+  entries=40 notes=35 rests=5
+  note+rest durations sum=9.2 s; plus 0.1 s default rest after each entry = 13.2 s

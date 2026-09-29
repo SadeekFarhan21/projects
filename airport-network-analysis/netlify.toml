@@ -1,0 +1,7 @@
+[build]
+  command = "bash build.sh"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "18"
+  # Quarto version is set in build.sh (1.5.57)

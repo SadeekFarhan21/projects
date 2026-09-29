@@ -1,0 +1,2 @@
+diff 11
+11.json: regenerated has a stray '~' in one gloss ("士兵~的视听"); committed file lacks it, so committed data was hand-corrected after generation. Other 12 chapters byte-identical.

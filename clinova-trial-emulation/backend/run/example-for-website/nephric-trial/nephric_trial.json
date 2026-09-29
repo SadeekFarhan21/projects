@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "run_id": "benchmark-nephric-in-patients-with-high-risk-dia+bbcdc975",
+    "status": "completed",
+    "started_at": "2026-01-25T07:22:15Z",
+    "completed_at": "2026-01-25T07:38:42Z",
+    "duration_seconds": 987
+  },
+
+  "trial_config": {
+    "trial_id": "NEPHRIC",
+    "trial_name": "NEPHRIC Trial",
+    "population": "High-risk diabetic patients with CKD (creatinine 1.5-3.5 mg/dL) undergoing angiography",
+    "intervention": "iso-osmolar contrast (iodixanol)",
+    "comparator": "low-osmolar contrast (iohexol)",
+    "outcome": "CIN defined as creatinine increase >= 0.5 mg/dL within 72h",
+    "regulatory_question": "Does iso-osmolar contrast provide renal safety benefit in high-risk diabetic CKD patients?",
+    "expected_conclusion": "Yes - renal safety advantage demonstrated. Significantly lower CIN rates with iso-osmolar contrast in this high-risk population",
+    "expected_direction": "protective",
+    "reference": "Aspelin P et al. NEJM. 2003"
+  },
+
+  "step1_causal_question": {
+    "completed_at": "2026-01-25T07:24:33Z",
+    "duration_seconds": 138,
+    "question": "What is the effect of using iso-osmolar iodinated contrast (iodixanol) compared with low-osmolar iodinated contrast (iohexol) on the 72-hour risk of contrast-induced nephropathy (CIN), defined as a >= 0.5 mg/dL increase in serum creatinine, among high-risk adults with diabetes and CKD (baseline creatinine 1.5-3.5 mg/dL) undergoing intra-arterial angiography?",
+    "pico": {
+      "population": "Adults with diabetes and CKD (baseline creatinine 1.5-3.5 mg/dL) undergoing intra-arterial angiography",
+      "intervention": "Iso-osmolar iodinated contrast: iodixanol",
+      "comparator": "Low-osmolar iodinated contrast: iohexol",
+      "outcome": "CIN within 72 hours (creatinine increase >= 0.5 mg/dL from baseline)"
+    },
+    "time_zero": "Contrast administration moment for index angiography procedure"
+  },
+
+  "step2a_design_spec": {
+    "completed_at": "2026-01-25T07:28:18Z",
+    "duration_seconds": 225,
+    "version": 2,
+    "design_pattern": "Active Comparator New-User (ACNU) with cross-fitted AIPW (SuperLearner)",
+    "data_model": "OMOP CDM v5.x",
+    "eligibility_criteria": [
+      { "id": 1, "criterion": "Age >= 18 at index", "type": "include" },
+      { "id": 2, "criterion": "Intra-arterial angiography procedure (coronary/peripheral)", "type": "include" },
+      { "id": 3, "criterion": "Iodixanol or iohexol contrast administered", "type": "include" },
+      { "id": 4, "criterion": "Diabetes mellitus (type 1 or 2) at baseline", "type": "include", "lookback": "-365 days" },
+      { "id": 5, "criterion": "Baseline serum creatinine 1.5-3.5 mg/dL", "type": "include", "lookback": "-1 to -7 days" },
+      { "id": 6, "criterion": "CKD evidence (diagnosis or 2 eGFR < 60 at least 90 days apart)", "type": "include", "lookback": "-2 years" },
+      { "id": 7, "criterion": "ESRD / chronic dialysis", "type": "exclude" },
+      { "id": 8, "criterion": "Kidney transplant history", "type": "exclude" },
+      { "id": 9, "criterion": "Recent iodinated contrast exposure within 7 days", "type": "exclude" },
+      { "id": 10, "criterion": "Evidence of evolving AKI pre-index (rising creatinine)", "type": "exclude", "lookback": "-7 days" }
+    ],
+    "outcome_definition": {
+      "primary": "CIN within 72h: max post-contrast creatinine minus baseline >= 0.5 mg/dL",
+      "secondary": ["KDIGO AKI within 72h", "Need for acute dialysis within 7 days", "All-cause death within 7 days", "Peak creatinine change (continuous)"]
+    },
+    "analysis_plan": {
+      "estimator": "Cross-fitted AIPW with SuperLearner",
+      "folds": 5,
+      "ps_trimming": [0.025, 0.975],
+      "effect_measures": ["Risk Difference (ATE)", "Risk Ratio (RR)"]
+    }
+  },
+
+  "step2b_validation": {
+    "completed_at": "2026-01-25T07:32:55Z",
+    "iterations": 2,
+    "final_status": "VALID",
+    "passed_gates": ["Gate 1", "Gate 2", "Gate 3", "Gate 4", "Gate 5", "Gate 6"],
+    "issues_resolved": [
+      {
+        "gate": "Gate 4",
+        "severity": "CRITICAL",
+        "issue": "Time zero using procedure datetime could precede contrast administration in EHR records",
+        "fix": "Made contrast administration timestamp the primary time zero; link angiography within +/-6h window"
+      },
+      {
+        "gate": "Gate 3",
+        "severity": "WARNING",
+        "issue": "Baseline creatinine window too narrow (24h) for many patients with only pre-admission labs",
+        "fix": "Expanded baseline window to 1-7 days pre-index with closest-value algorithm"
+      }
+    ]
+  },
+
+  "step2c_omop_mapping": {
+    "completed_at": "2026-01-25T07:33:28Z",
+    "terms_mapped": 47,
+    "vocabulary_version": "Athena 2025-08-01",
+    "key_concepts": {
+      "iodixanol": { "concept_id": 19003201, "domain": "Drug", "vocabulary": "RxNorm" },
+      "iohexol": { "concept_id": 19080985, "domain": "Drug", "vocabulary": "RxNorm" },
+      "coronary_angiography": { "concept_ids": [4142645, 37034663, 4156054, 4299523, 3655773], "domain": "Procedure" },
+      "serum_creatinine": { "concept_id": 3016723, "domain": "Measurement" },
+      "egfr": { "concept_id": 3020564, "domain": "Measurement" },
+      "acute_kidney_injury": { "concept_ids": [761083, 197320, 40481064, 4328366, 37116432], "domain": "Condition" },
+      "diabetes_mellitus": { "concept_ids": [201826, 201254, 201820], "domain": "Condition" },
+      "chronic_kidney_disease": { "concept_ids": [46271022, 443611, 443597], "domain": "Condition" }
+    }
+  },
+
+  "step3_code": {
+    "completed_at": "2026-01-25T07:38:42Z",
+    "duration_seconds": 314,
+    "language": "python",
+    "lines_of_code": 417,
+    "key_components": ["Cohort construction with CKD/DM filters", "Contrast agent classification", "Baseline creatinine algorithm", "Cross-fitted AIPW estimation", "CIN outcome adjudication"]
+  },
+
+  "results": {
+    "cohort": {
+      "initial_population": 71743,
+      "after_eligibility": 1247,
+      "treatment_arms": { "iodixanol": 523, "iohexol": 724 }
+    },
+    "primary_outcome": {
+      "name": "CIN within 72 hours (>= 0.5 mg/dL creatinine rise)",
+      "events": { "intervention": 16, "comparator": 58 },
+      "rates": { "intervention": 0.0306, "comparator": 0.0801 },
+      "risk_difference": { "estimate": -0.0495, "ci_lower": -0.0782, "ci_upper": -0.0208, "p_value": 0.0007 },
+      "risk_ratio": { "estimate": 0.382, "ci_lower": 0.221, "ci_upper": 0.660 },
+      "e_value": 4.68
+    },
+    "subgroups": [
+      { "name": "Creatinine 1.5-1.9 mg/dL", "n": 512, "risk_difference": -0.0387, "p_value": 0.028, "note": "Lower CKD severity" },
+      { "name": "Creatinine 2.0-2.4 mg/dL", "n": 438, "risk_difference": -0.0521, "p_value": 0.008, "note": "Moderate CKD" },
+      { "name": "Creatinine 2.5-3.5 mg/dL", "n": 297, "risk_difference": -0.0612, "p_value": 0.012, "note": "Severe CKD - largest benefit" },
+      { "name": "Coronary Angiography", "n": 892, "risk_difference": -0.0478, "p_value": 0.003 },
+      { "name": "Peripheral Angiography", "n": 355, "risk_difference": -0.0534, "p_value": 0.041 },
+      { "name": "Age >= 70", "n": 687, "risk_difference": -0.0562, "p_value": 0.002 },
+      { "name": "Heart Failure", "n": 312, "risk_difference": -0.0689, "p_value": 0.006, "note": "High-risk subgroup - pronounced benefit" },
+      { "name": "Insulin-dependent DM", "n": 489, "risk_difference": -0.0578, "p_value": 0.004 }
+    ],
+    "diagnostics": {
+      "ps_overlap": 0.723,
+      "max_smd_after_weighting": 0.042,
+      "ess_ratio": 0.64,
+      "negative_controls_analyzed": 18
+    }
+  },
+
+  "conclusion": {
+    "finding": "PROTECTIVE EFFECT DEMONSTRATED",
+    "summary": "Iso-osmolar iodixanol provides significant renal safety advantage over low-osmolar iohexol in high-risk diabetic patients with CKD undergoing intra-arterial angiography. CIN rates were reduced by approximately 62% (RR 0.38). The benefit was consistent across all subgroups and most pronounced in the highest-risk patients (severe CKD, heart failure). The E-value of 4.68 indicates robustness to unmeasured confounding. These findings replicate the original NEPHRIC RCT results in real-world data.",
+    "effect_estimate": "Risk Difference: -4.95% (95% CI: -7.82% to -2.08%), p=0.0007",
+    "recommendation": "For high-risk diabetic patients with CKD (creatinine 1.5-3.5 mg/dL) undergoing intra-arterial angiography, iso-osmolar iodixanol should be preferentially used over low-osmolar iohexol to minimize contrast-induced nephropathy risk. This recommendation is strongest for the highest-risk subgroups: severe CKD, heart failure, and elderly patients."
+  },
+
+  "conversation": [
+    { "role": "user", "content": "I want to emulate the NEPHRIC trial comparing iodixanol vs iohexol for CIN in high-risk diabetic CKD patients undergoing angiography." },
+    { "role": "assistant", "content": "I'll design a target trial emulation for this landmark study. The NEPHRIC trial was pivotal in demonstrating iodixanol's renal safety advantage in the highest-risk population. Key design elements: (1) Strict baseline creatinine range 1.5-3.5 mg/dL to match the trial population, (2) Require diabetes AND CKD, (3) Focus on intra-arterial angiography (not IV CT). Time zero will be contrast administration." },
+    { "role": "user", "content": "The original trial showed about 3% CIN with iodixanol vs 26% with iohexol. Will we see something similar?" },
+    { "role": "assistant", "content": "We should see a protective effect for iodixanol, though the absolute rates may differ since real-world populations have evolved. Modern periprocedural care (hydration protocols, reduced contrast volumes) may lower overall CIN rates. However, the relative benefit of iodixanol in this high-risk population should persist. The key is matching the specific population: diabetic CKD patients undergoing angiography, not the broader CT contrast population where iodixanol benefits are less clear." },
+    { "role": "user", "content": "What do the results show?" },
+    { "role": "assistant", "content": "Strong confirmation of the original NEPHRIC findings. We found CIN rates of 3.1% with iodixanol vs 8.0% with iohexol - a 62% relative risk reduction (RR 0.38, p=0.0007). The absolute rates are lower than the original trial (likely due to modern care), but the relative benefit is preserved. Importantly, the effect was strongest in the highest-risk patients: those with creatinine 2.5-3.5 showed a 6.1% absolute risk reduction, and heart failure patients showed 6.9%. The E-value of 4.68 means an unmeasured confounder would need very strong associations with both exposure and outcome to explain this away." }
+  ]
+}

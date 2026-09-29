@@ -1,0 +1,18 @@
+{
+  "type": "bars",
+  "format": "percent",
+  "title": "Fear Is Right Two Times in Five, Happy Nearly Nine in Ten",
+  "subtitle": "Per-class recall of the emotion CNN on the 3,589 FER2013 PrivateTest images",
+  "legendLabels": { "emphasis": "Weakest class", "other": "Per-class recall" },
+  "rows": [
+    { "label": "Happy", "value": 88.2, "detail": "775 of 879" },
+    { "label": "Surprise", "value": 79.8, "detail": "332 of 416" },
+    { "label": "Neutral", "value": 73.0, "detail": "457 of 626" },
+    { "label": "Angry", "value": 62.5, "detail": "307 of 491" },
+    { "label": "Sad", "value": 56.7, "detail": "337 of 594. 126 were predicted Neutral" },
+    { "label": "Disgust", "value": 45.5, "detail": "25 of 55. Only 55 test samples" },
+    { "label": "Fear", "value": 40.7, "detail": "215 of 528. Confused with Sad 104, Angry 72, Neutral 61, Surprise 58", "emphasis": true }
+  ],
+  "caption": "Overall this matrix gives 2,448 of 3,589, or 68.2 percent. Recall is the diagonal cell over its row sum, computed from counts I read off the committed image, not from a rerun.",
+  "source": "the committed emotion confusion matrix, confusion_3.png"
+}

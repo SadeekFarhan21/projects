@@ -1,0 +1,29 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520' viewBox='0 0 900 520'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='120' y='28' font-size='20' font-family='Helvetica, Arial, sans-serif' fill='#0f172a'>Geographic Risk Scores by Zip Code</text>
+<rect x='120' y='60.8' width='672.7' height='32.2' fill='#b91c1c' rx='4' />
+<text x='112' y='81.9' text-anchor='end' font-size='12' fill='#334155'>43201</text>
+<text x='798.7' y='80.9' font-size='11' fill='#64748b'>0.919</text>
+<rect x='120' y='114.5' width='617.5' height='32.2' fill='#dc2626' rx='4' />
+<text x='112' y='135.6' text-anchor='end' font-size='12' fill='#334155'>43206</text>
+<text x='743.5' y='134.6' font-size='11' fill='#64748b'>0.844</text>
+<rect x='120' y='168.2' width='575.4' height='32.2' fill='#ef4444' rx='4' />
+<text x='112' y='189.4' text-anchor='end' font-size='12' fill='#334155'>43202</text>
+<text x='701.4' y='188.4' font-size='11' fill='#64748b'>0.786</text>
+<rect x='120' y='222.0' width='401.6' height='32.2' fill='#f87171' rx='4' />
+<text x='112' y='243.1' text-anchor='end' font-size='12' fill='#334155'>43210</text>
+<text x='527.6' y='242.1' font-size='11' fill='#64748b'>0.549</text>
+<rect x='120' y='275.8' width='316.0' height='32.2' fill='#fca5a5' rx='4' />
+<text x='112' y='296.9' text-anchor='end' font-size='12' fill='#334155'>43230</text>
+<text x='442.0' y='295.9' font-size='11' fill='#64748b'>0.432</text>
+<rect x='120' y='329.5' width='274.0' height='32.2' fill='#fecaca' rx='4' />
+<text x='112' y='350.6' text-anchor='end' font-size='12' fill='#334155'>43220</text>
+<text x='400.0' y='349.6' font-size='11' fill='#64748b'>0.374</text>
+<rect x='120' y='383.2' width='163.5' height='32.2' fill='#1d4ed8' rx='4' />
+<text x='112' y='404.4' text-anchor='end' font-size='12' fill='#334155'>43215</text>
+<text x='289.5' y='403.4' font-size='11' fill='#64748b'>0.223</text>
+<rect x='120' y='437.0' width='107.3' height='32.2' fill='#3b82f6' rx='4' />
+<text x='112' y='458.1' text-anchor='end' font-size='12' fill='#334155'>43221</text>
+<text x='233.3' y='457.1' font-size='11' fill='#64748b'>0.146</text>
+<line x1='120' y1='50' x2='120' y2='480' stroke='#475569' stroke-width='1.5' />
+</svg>

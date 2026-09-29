@@ -1,0 +1,77 @@
+======================================================================
+LEAP Model Test: Out-of-Sample Validation on Columbus v4
+======================================================================
+
+--- v4 Test Set Summary ---
+Total parcels:          10,000
+Material breakdown:     {'galvanized': 3406, 'copper': 3943, 'lead': 2651}
+Eligible (lead+galv):   6,057
+  Lead:                 2,651 (43.8%)
+  Galvanized:           3,406 (56.2%)
+Loan proxy (capped):    mean=$9,993  median=$10,000  stdev=$68
+Replacement cost:       mean=$12,716  median=$12,715
+Avg ownership length:   17.9 years
+Implied sale prob:      0.0558
+Avg assessed value:     $67,334
+Owner-occupied rate:    81.1%
+Avg lead risk score:    0.7269
+
+--- v2 (Training) vs v4 (Test) Comparison ---
+Metric                              v2 (train)       v4 (test)        Delta
+------------------------------------------------------------------------
+Eligible lines                          34,269           6,057      -28,212
+Lead share                               70.0%           43.8%       -26.3%
+Galvanized share                         30.0%           56.2%       +26.3%
+Mean loan amount               $         7,386 $         9,993 $     +2,606
+Sale prob (base scenario)               0.0560          0.0558      -0.0002
+
+--- Running Monte Carlo (1,000 paths, base scenario) ---
+
+--- v4 Simulation Results (Base Scenario) ---
+Metric                                         Loan           Grant
+-----------------------------------------------------------------
+Mean funding requirement            $       607,999 $       883,334
+Median                              $       605,295 $       880,077
+P5 (low)                            $       481,687 $       721,011
+P95 (recommended)                   $       742,138 $     1,051,935
+Min                                 $       342,048 $       547,575
+Max                                 $       891,307 $     1,196,225
+
+--- Running v2-trained model for comparison (1,000 paths) ---
+
+--- v2 (Train) vs v4 (Test) Results Comparison ---
+Metric                                   v2 (train)       v4 (test)      Ratio
+---------------------------------------------------------------------------
+Eligible lines                               34,269           6,057       0.18
+Mean loan amount                    $         7,386 $         9,993       1.35
+Loan P95 funding                    $     2,731,595 $       742,138       0.27
+Loan mean funding                   $     2,492,502 $       607,999       0.24
+Grant P95 funding                   $     4,028,485 $     1,051,935       0.26
+
+--- Annual Cash Flow Comparison (v4 vs v2, Base Scenario) ---
+Year       v4 Outflow     v2 Outflow      v4 Inflow      v2 Inflow         v4 Net
+----------------------------------------------------------------------------
+2026   $      111,196 $      470,009 $            0 $            0 $      111,196
+2027   $      109,826 $      464,969 $        8,993 $       35,422 $      100,833
+2028   $      110,572 $      458,256 $       16,721 $       67,910 $       93,852
+2029   $      104,835 $      442,362 $       24,219 $       98,613 $       80,616
+2030   $       97,499 $      411,168 $       28,970 $      123,915 $       68,529
+2031   $       92,055 $      379,630 $       34,637 $      144,652 $       57,418
+2032   $       80,064 $      337,339 $       39,309 $      164,735 $       40,755
+2033   $       68,038 $      283,653 $       42,164 $      177,314 $       25,875
+2034   $       52,828 $      227,872 $       44,950 $      187,204 $        7,879
+2035   $       38,444 $      155,329 $       45,401 $      190,057 $       -6,957
+2036   $       17,977 $       77,885 $       44,975 $      188,117 $      -26,998
+2037   $            0 $            0 $       42,838 $      178,526 $      -42,838
+
+--- Scaling Analysis ---
+v4 is a sample of 6,057 eligible parcels
+v2 shows 34,269 eligible lines citywide
+Scale factor: 5.66x
+v4 Loan P95 scaled up:    $4,198,832
+v2 Loan P95 (actual):     $2,731,595
+Ratio (scaled v4 / v2):   1.54
+
+======================================================================
+Test complete.
+PYTHONDONTWRITEBYTECODE=1 timeout 500 python3 -m solution.test_v4  8.36s user 0.04s system 99% cpu 8.412 total

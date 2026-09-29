@@ -1,0 +1,12 @@
+{
+  "name": "anthropic-hackathon",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "preview": "pnpm --filter web preview"
+  },
+  "dependencies": {
+    "anthropic-fonts": "1.1.0"
+  }
+}

@@ -1,0 +1,30 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'>
+<rect width='100%' height='100%' fill='white'/>
+<text x='200' y='28' font-size='20' font-family='Helvetica, Arial, sans-serif' fill='#0f172a'>Tornado Sensitivity: Loan Model p95</text>
+<line x1='541.2' y1='50' x2='541.2' y2='560' stroke='#334155' stroke-width='2' stroke-dasharray='6,4' />
+<text x='541.2' y='575' text-anchor='middle' font-size='11' fill='#334155'>Base $2.73M</text>
+<rect x='226.6' y='64.3' width='594.9' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='86.9' text-anchor='end' font-size='12' fill='#334155'>LEAP uptake start rate</text>
+<text x='825.5' y='85.9' font-size='10' fill='#64748b'>$+0.99M</text>
+<rect x='406.2' y='128.1' width='226.5' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='150.6' text-anchor='end' font-size='12' fill='#334155'>Schedule weighting</text>
+<text x='636.7' y='149.6' font-size='10' fill='#64748b'>$-0.38M</text>
+<rect x='487.1' y='191.8' width='129.4' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='214.4' text-anchor='end' font-size='12' fill='#334155'>Sale probability</text>
+<text x='620.5' y='213.4' font-size='10' fill='#64748b'>$+0.21M</text>
+<rect x='483.8' y='255.6' width='129.0' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='278.1' text-anchor='end' font-size='12' fill='#334155'>Cost inflation</text>
+<text x='616.7' y='277.1' font-size='10' fill='#64748b'>$+0.21M</text>
+<rect x='463.3' y='319.3' width='86.6' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='341.9' text-anchor='end' font-size='12' fill='#334155'>LEAP uptake cap</text>
+<text x='553.8' y='340.9' font-size='10' fill='#64748b'>$+0.14M</text>
+<rect x='492.9' y='383.1' width='83.6' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='405.6' text-anchor='end' font-size='12' fill='#334155'>Equity extraction prob.</text>
+<text x='580.4' y='404.6' font-size='10' fill='#64748b'>$+0.14M</text>
+<rect x='542.7' y='446.8' width='6.4' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='469.4' text-anchor='end' font-size='12' fill='#334155'>Inherited sale prob.</text>
+<text x='553.1' y='468.4' font-size='10' fill='#64748b'>$+0.01M</text>
+<rect x='542.1' y='510.6' width='3.9' height='35.1' fill='#1d4ed8' rx='4' opacity='0.7' />
+<text x='192' y='533.1' text-anchor='end' font-size='12' fill='#334155'>Inheritance probability</text>
+<text x='550.0' y='532.1' font-size='10' fill='#64748b'>$-0.01M</text>
+</svg>

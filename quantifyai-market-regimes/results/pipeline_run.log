@@ -1,0 +1,311 @@
+2026-09-29 12:30:27,631 - INFO - Strategy optimizations module found and loaded
+2026-09-29 12:30:27,632 - INFO - Using accurate bond return calculations
+2026-09-29 12:30:27,633 - INFO - Using traditional ML model (not using advanced PyTorch model)
+2026-09-29 12:30:27,633 - INFO - Loading market data from data/market_data.xlsx
+2026-09-29 12:30:27,633 - INFO - Loading market data from data/market_data.xlsx
+2026-09-29 12:30:27,794 - INFO - Reading data with header at row 1
+2026-09-29 12:30:27,877 - INFO - Found columns: ['Date', 'S&P500', 'Bond Rate', 'Unnamed: 3', 'Date.1', 'PrDec', 'PrInc']
+2026-09-29 12:30:27,877 - INFO - Identified price columns: ['Date', 'S&P500', 'Bond Rate']
+2026-09-29 12:30:27,877 - INFO - Identified probability columns: ['Date.1', 'PrDec', 'PrInc']
+2026-09-29 12:30:27,884 - INFO - Loaded price data with 4527 rows and probability data with 736 rows
+./src/data_loader_market.py:202: FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+  merged_df[['PrDec', 'PrInc']] = merged_df[['PrDec', 'PrInc']].fillna(method=fill_method)
+2026-09-29 12:30:27,889 - INFO - Analysis will be performed on data from 2019-01-01 to 2022-12-31
+2026-09-29 12:30:27,890 - INFO - Actual analysis period: 2019-01-02 to 2022-12-30
+2026-09-29 12:30:27,890 - INFO - Total available data: 4025 days from 2007-01-08 to 2022-12-30
+2026-09-29 12:30:27,890 - INFO - Analysis data: 1008 days from 2019-01-02 to 2022-12-30
+2026-09-29 12:30:27,890 - INFO - Classifying market states
+2026-09-29 12:30:27,890 - INFO - Classifying markets with threshold 20.0%
+2026-09-29 12:30:27,893 - INFO - Market state distribution: {'Static': 1966, 'Bull': 1730, 'Bear': 329}
+2026-09-29 12:30:27,894 - INFO - Classifying markets with threshold 20.0%
+2026-09-29 12:30:27,895 - INFO - Market state distribution: {'Bull': 599, 'Static': 337, 'Bear': 72}
+2026-09-29 12:30:28,210 - INFO - Market classification plot saved to OUT/market_states.png
+2026-09-29 12:30:28,215 - INFO - Market states: 72 bear days (7.1%), 599 bull days (59.4%), 337 static days (33.4%)
+2026-09-29 12:30:28,215 - INFO - Analyzing market-based probabilities
+2026-09-29 12:30:28,215 - INFO - Loading market data from data/market_data.xlsx
+2026-09-29 12:30:28,295 - INFO - Reading data with header at row 1
+2026-09-29 12:30:28,376 - INFO - Found columns: ['Date', 'S&P500', 'Bond Rate', 'Unnamed: 3', 'Date.1', 'PrDec', 'PrInc']
+2026-09-29 12:30:28,376 - INFO - Identified price columns: ['Date', 'S&P500', 'Bond Rate']
+2026-09-29 12:30:28,376 - INFO - Identified probability columns: ['Date.1', 'PrDec', 'PrInc']
+2026-09-29 12:30:28,381 - INFO - Loaded price data with 4527 rows and probability data with 736 rows
+./src/data_loader_market.py:202: FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+  merged_df[['PrDec', 'PrInc']] = merged_df[['PrDec', 'PrInc']].fillna(method=fill_method)
+2026-09-29 12:30:28,382 - INFO - Classifying markets with threshold 20.0%
+2026-09-29 12:30:28,384 - INFO - Market state distribution: {'Static': 2105, 'Bull': 2092, 'Bear': 330}
+2026-09-29 12:30:30,333 - INFO - Analyzing bond rates
+2026-09-29 12:30:30,334 - INFO - Loading market data from data/market_data.xlsx
+2026-09-29 12:30:30,413 - INFO - Reading data with header at row 1
+2026-09-29 12:30:30,493 - INFO - Found columns: ['Date', 'S&P500', 'Bond Rate', 'Unnamed: 3', 'Date.1', 'PrDec', 'PrInc']
+2026-09-29 12:30:30,493 - INFO - Identified price columns: ['Date', 'S&P500', 'Bond Rate']
+2026-09-29 12:30:30,493 - INFO - Identified probability columns: ['Date.1', 'PrDec', 'PrInc']
+2026-09-29 12:30:30,498 - INFO - Loaded price data with 4527 rows and probability data with 736 rows
+2026-09-29 12:30:30,859 - INFO - Running advanced anomaly detection
+2026-09-29 12:30:31,425 - INFO - Analyzing 31 anomalies
+2026-09-29 12:30:32,304 - INFO - Performing catastrophe modeling and tail risk analysis
+2026-09-29 12:30:32,714 - INFO - Daily VaR (95%): -0.0214, Expected Shortfall: -0.0355
+2026-09-29 12:30:32,714 - INFO - GFC stress test: -45.0% shock, N/A days to recovery
+2026-09-29 12:30:32,714 - INFO - Preparing data for training and prediction
+2026-09-29 12:30:32,716 - INFO - Using data from 2008-01-01 to 2018-12-31 for training model
+2026-09-29 12:30:32,716 - INFO - Test data period: 2019-01-02 to 2022-12-30
+2026-09-29 12:30:32,716 - INFO - Using 2769 days for training, 1008 days for analysis/prediction
+2026-09-29 12:30:32,716 - INFO - Training market prediction model
+2026-09-29 12:30:32,716 - INFO - Preparing features for prediction model
+2026-09-29 12:30:32,724 - INFO - Training market prediction model with enhanced regularization and balance handling
+2026-09-29 12:30:32,724 - INFO - Class distribution in training data: {'Bear': np.int64(250), 'Static': np.int64(1315), 'Bull': np.int64(1052)}
+2026-09-29 12:30:32,725 - INFO - Using class weights: {np.int64(0): np.float64(3.489333333333333), np.int64(1): np.float64(0.6633713561470216), np.int64(2): np.float64(0.8292141951837769)}
+2026-09-29 12:30:32,726 - INFO - Classes in training set: [0 1 2], counts: [ 200 1052  841]
+
+=== Probability Data Analysis ===
+Probability data availability: 736 dates
+Average days between probability updates: -8.9
+Median days between probability updates: -7.0
+Min days between updates: -28.0
+Max days between updates: -1.0
+
+=== Probability Values ===
+PrDec (Decrease) mean: 0.1340, min: 0.0537, max: 0.3519
+PrInc (Increase) mean: 0.1037, min: 0.0160, max: 0.3616
+Sum of probabilities mean: 0.2376
+
+=== Average Probabilities by Market State ===
+                 PrDec     PrInc
+Market_State                    
+Bear          0.251509  0.247524
+Bull          0.133656  0.095192
+Static        0.133949  0.108808
+
+=== Predictive Power Analysis ===
+
+Average probabilities 21 days before market state:
+                      PrDec     PrInc
+Future_Market_21d                    
+Bear               0.244439  0.235585
+Bull               0.135932  0.098190
+Static             0.133319  0.107692
+Bear markets: PrDec - PrInc = 0.0089
+Bull markets: PrDec - PrInc = 0.0377
+
+Average probabilities 63 days before market state:
+                      PrDec     PrInc
+Future_Market_63d                    
+Bear               0.234801  0.225582
+Bull               0.139839  0.104287
+Static             0.131960  0.103174
+Bear markets: PrDec - PrInc = 0.0092
+Bull markets: PrDec - PrInc = 0.0356
+
+Average probabilities 126 days before market state:
+                       PrDec     PrInc
+Future_Market_126d                    
+Bear                0.215409  0.210263
+Bull                0.146105  0.115424
+Static              0.130123  0.093791
+Bear markets: PrDec - PrInc = 0.0051
+Bull markets: PrDec - PrInc = 0.0307
+
+Average probabilities 252 days before market state:
+                       PrDec     PrInc
+Future_Market_252d                    
+Bear                0.160989  0.163533
+Bull                0.156516  0.128561
+Static              0.132005  0.086368
+Bear markets: PrDec - PrInc = -0.0025
+Bull markets: PrDec - PrInc = 0.0280
+
+=== Bond Rate Analysis ===
+Bond rate range: -0.10% to 5.35%
+Mean bond rate: 1.32%
+Median bond rate: 0.21%
+
+Total bond return over period: 26.65%
+Annualized bond return: 1.32%
+
+Correlation between daily stock and bond returns: -0.0020
+
+=== Risk-Adjusted Returns ===
+S&P 500: Return = -5.94%, Volatility = 20.05%, Sharpe = -0.30
+Bonds: Return = 1.32%, Volatility = 0.11%, Sharpe = 11.82
+Fitting 3 folds for each of 8 candidates, totalling 24 fits
+2026-09-29 12:30:41,000 - INFO - Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'min_samples_split': 5, 'n_estimators': 200, 'subsample': 0.8}
+2026-09-29 12:30:41,004 - INFO - Classes present in test data: ['Bear', 'Static', 'Bull']
+2026-09-29 12:30:41,627 - INFO - Model trained with accuracy: 0.9408
+2026-09-29 12:30:41,632 - INFO - Model saved to OUT/market_predictor_model.joblib
+2026-09-29 12:30:41,799 - INFO - Confusion matrix plot saved to OUT/confusion_matrix.png
+2026-09-29 12:30:41,799 - INFO - Model accuracy: 0.9408
+2026-09-29 12:30:41,799 - INFO - Generating market predictions
+2026-09-29 12:30:41,813 - INFO - Added ensemble_anomaly column to predictions data (1008 dates matched)
+2026-09-29 12:30:41,814 - INFO - Anomaly distribution: {1: 977, -1: 31}
+2026-09-29 12:30:41,814 - INFO - Running standard investment strategies
+2026-09-29 12:30:41,814 - INFO - Optimization parameters loaded from config/strategy_optimizations.py
+2026-09-29 12:30:41,814 - INFO - Using optimized parameters for prediction strategy:
+2026-09-29 12:30:41,814 - INFO -   - static_allocation: 0.6
+2026-09-29 12:30:41,814 - INFO -   - vol_dampening: 0.7
+2026-09-29 12:30:41,814 - INFO - Using optimized strategy parameters
+2026-09-29 12:30:41,828 - INFO - Running buy-and-hold strategy backtest
+2026-09-29 12:30:41,829 - INFO - S&P 500 start: 2510.03, end: 3839.50, total return: 52.97%
+2026-09-29 12:30:41,829 - INFO - Buy & Hold final return: 52.97% (should match S&P 500 return: 52.97%)
+2026-09-29 12:30:41,829 - INFO - Using optimized parameters for prediction strategy
+2026-09-29 12:30:41,829 - INFO - Running prediction-based strategy backtest
+2026-09-29 12:30:41,832 - INFO - Allocation statistics: 47 days with ≥99% equity, 0 days with ≤1% equity exposure, 122 days balanced
+2026-09-29 12:30:42,160 - INFO - Using optimized parameters for dynamic allocation strategy
+2026-09-29 12:30:42,160 - INFO - Running dynamic allocation strategy
+2026-09-29 12:30:42,377 - INFO - Dynamic allocation: 271 days >95% stocks, 80 days >95% bonds, 274 days ~50/50 split
+2026-09-29 12:30:42,377 - ERROR - Error in optimized combined strategy: 'StrategyOptimizer' object has no attribute '_optimize_combined_strategy'. Using standard version.
+2026-09-29 12:30:42,377 - INFO - Running combined investment strategy
+./src/backtest.py:556: FutureWarning: Series.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+  df[col] = df[col].fillna(method='bfill').fillna(df['SP500'].iloc[0])
+2026-09-29 12:30:42,627 - INFO - Combined strategy - Final return: 41.91%, Max drawdown: -11.70%
+2026-09-29 12:30:42,627 - INFO - Running enhanced investment strategies
+2026-09-29 12:30:42,628 - INFO - Strategy optimizations module found and loaded in enhanced backtester
+2026-09-29 12:30:42,629 - INFO - Using optimized strategy parameters
+2026-09-29 12:30:42,643 - INFO - Enhanced backtester initialized with 100% capital allocation policy (no leverage)
+2026-09-29 12:30:42,644 - INFO - Tactical Risk Managed strategy using optimized parameters:
+2026-09-29 12:30:42,644 - INFO -   - target_vol: 0.1
+2026-09-29 12:30:42,644 - INFO -   - base_bull_allocation: 0.9
+2026-09-29 12:30:42,644 - INFO - Regime Adaptive strategy using optimized parameters:
+2026-09-29 12:30:42,644 - INFO -   - recovery_period: 45
+2026-09-29 12:30:42,644 - INFO -   - volatile_allocation: 0.4
+2026-09-29 12:30:42,644 - INFO - Using optimized parameters for tactical risk-managed strategy
+2026-09-29 12:30:42,644 - INFO - Target volatility: 0.10
+2026-09-29 12:30:42,646 - WARNING - Non-finite values detected in total allocation before normalization. Cleaning...
+2026-09-29 12:30:42,646 - WARNING - Found allocations not summing to 100%. Min: 0.0, Max: 1.0
+2026-09-29 12:30:42,876 - INFO - Tactical allocations: 0 days ≥99% equity, 14 days ≤1% equity, 404 days balanced
+2026-09-29 12:30:42,876 - INFO - Using optimized parameters for regime-adaptive strategy
+2026-09-29 12:30:42,876 - INFO - Running regime-adaptive strategy
+2026-09-29 12:30:43,103 - INFO - Market regimes: {'Bullish': 369, 'Recovery': 280, 'Bearish': 219, 'Neutral': 127, 'Volatile': 13}
+2026-09-29 12:30:43,103 - INFO - Using optimized parameters for volatility targeting strategy
+2026-09-29 12:30:43,103 - INFO - Target volatility: 0.08
+2026-09-29 12:30:43,103 - INFO - Maximum allocation capped at 100% to avoid leverage
+2026-09-29 12:30:43,325 - INFO - Volatility targeting - avg allocation: 0.39, realized vol: 5.97%
+2026-09-29 12:30:43,325 - INFO - Using optimized parameters for market-beating strategy
+2026-09-29 12:30:43,325 - INFO - Running market-beating strategy
+2026-09-29 12:30:43,593 - INFO - Market-beating allocations: 77.2% days >80% equity, 6.6% days <20% equity
+2026-09-29 12:30:43,593 - INFO - Ensemble anomaly column found – running combined anomaly-regime strategy
+2026-09-29 12:30:43,593 - INFO - Using optimized parameters for combined anomaly-regime strategy
+2026-09-29 12:30:43,593 - INFO - Running combined anomaly-regime strategy
+2026-09-29 12:30:43,596 - INFO - Found 31 anomalies in the data
+2026-09-29 12:30:43,830 - INFO - Combined anomaly-regime strategy: 31/31 anomalies with 0% equity, avg allocation: 0.56
+2026-09-29 12:30:43,964 - INFO - Performance comparison plot saved to OUT/enhanced_strategy_performance.png
+2026-09-29 12:30:44,161 - INFO - Regime allocations plot saved to OUT/regime_allocations.png
+2026-09-29 12:30:44,165 - INFO - Strategy Performance Summary:
+2026-09-29 12:30:44,165 - INFO - 
+==================================================
+2026-09-29 12:30:44,165 - INFO - Strategy: Buy And Hold
+2026-09-29 12:30:44,165 - INFO - ==================================================
+2026-09-29 12:30:44,165 - INFO - Total Return: 52.97%
+2026-09-29 12:30:44,165 - INFO - Annualized Return: 11.21%
+2026-09-29 12:30:44,165 - INFO - Sharpe Ratio: 0.58
+2026-09-29 12:30:44,165 - INFO - Max Drawdown: -33.92%
+2026-09-29 12:30:44,165 - INFO - Win Rate: 54.12%
+2026-09-29 12:30:44,165 - INFO - 
+==================================================
+2026-09-29 12:30:44,165 - INFO - Strategy: Prediction Strategy
+2026-09-29 12:30:44,165 - INFO - ==================================================
+2026-09-29 12:30:44,165 - INFO - Total Return: 42.77%
+2026-09-29 12:30:44,165 - INFO - Annualized Return: 9.31%
+2026-09-29 12:30:44,165 - INFO - Sharpe Ratio: 0.86
+2026-09-29 12:30:44,165 - INFO - Max Drawdown: -13.89%
+2026-09-29 12:30:44,165 - INFO - Win Rate: 54.76%
+2026-09-29 12:30:44,165 - INFO - 
+==================================================
+2026-09-29 12:30:44,165 - INFO - Strategy: Dynamic Allocation
+2026-09-29 12:30:44,165 - INFO - ==================================================
+2026-09-29 12:30:44,165 - INFO - Total Return: 51.65%
+2026-09-29 12:30:44,165 - INFO - Annualized Return: 10.97%
+2026-09-29 12:30:44,165 - INFO - Sharpe Ratio: 0.91
+2026-09-29 12:30:44,165 - INFO - Max Drawdown: -13.81%
+2026-09-29 12:30:44,165 - INFO - Win Rate: 58.04%
+2026-09-29 12:30:44,165 - INFO - 
+==================================================
+2026-09-29 12:30:44,165 - INFO - Strategy: Combined Strategy
+2026-09-29 12:30:44,165 - INFO - ==================================================
+2026-09-29 12:30:44,165 - INFO - Total Return: 41.91%
+2026-09-29 12:30:44,165 - INFO - Annualized Return: 9.15%
+2026-09-29 12:30:44,165 - INFO - Sharpe Ratio: 1.01
+2026-09-29 12:30:44,165 - INFO - Max Drawdown: -11.70%
+2026-09-29 12:30:44,165 - INFO - Win Rate: 54.56%
+2026-09-29 12:30:44,165 - INFO - 
+==================================================
+2026-09-29 12:30:44,165 - INFO - Strategy: Tactical Risk Managed
+2026-09-29 12:30:44,165 - INFO - ==================================================
+2026-09-29 12:30:44,165 - INFO - Total Return: 21.26%
+2026-09-29 12:30:44,165 - INFO - Annualized Return: 4.94%
+2026-09-29 12:30:44,165 - INFO - Sharpe Ratio: 0.81
+2026-09-29 12:30:44,165 - INFO - Max Drawdown: -8.30%
+2026-09-29 12:30:44,165 - INFO - Win Rate: 55.46%
+2026-09-29 12:30:44,165 - INFO - 
+==================================================
+2026-09-29 12:30:44,165 - INFO - Strategy: Regime Adaptive
+2026-09-29 12:30:44,165 - INFO - ==================================================
+2026-09-29 12:30:44,166 - INFO - Total Return: 26.63%
+2026-09-29 12:30:44,166 - INFO - Annualized Return: 6.08%
+2026-09-29 12:30:44,166 - INFO - Sharpe Ratio: 0.43
+2026-09-29 12:30:44,166 - INFO - Max Drawdown: -27.01%
+2026-09-29 12:30:44,166 - INFO - Win Rate: 54.56%
+2026-09-29 12:30:44,166 - INFO - 
+==================================================
+2026-09-29 12:30:44,166 - INFO - Strategy: Volatility Targeting
+2026-09-29 12:30:44,166 - INFO - ==================================================
+2026-09-29 12:30:44,166 - INFO - Total Return: 24.81%
+2026-09-29 12:30:44,166 - INFO - Annualized Return: 5.70%
+2026-09-29 12:30:44,166 - INFO - Sharpe Ratio: 0.87
+2026-09-29 12:30:44,166 - INFO - Max Drawdown: -7.59%
+2026-09-29 12:30:44,166 - INFO - Win Rate: 54.46%
+2026-09-29 12:30:44,166 - INFO - 
+==================================================
+2026-09-29 12:30:44,166 - INFO - Strategy: Market Beating
+2026-09-29 12:30:44,166 - INFO - ==================================================
+2026-09-29 12:30:44,166 - INFO - Total Return: 49.91%
+2026-09-29 12:30:44,166 - INFO - Annualized Return: 10.65%
+2026-09-29 12:30:44,166 - INFO - Sharpe Ratio: 0.76
+2026-09-29 12:30:44,166 - INFO - Max Drawdown: -22.27%
+2026-09-29 12:30:44,166 - INFO - Win Rate: 54.37%
+2026-09-29 12:30:44,166 - INFO - 
+==================================================
+2026-09-29 12:30:44,166 - INFO - Strategy: Combined Anomaly Regime
+2026-09-29 12:30:44,166 - INFO - ==================================================
+2026-09-29 12:30:44,166 - INFO - Total Return: 56.68%
+2026-09-29 12:30:44,166 - INFO - Annualized Return: 11.88%
+2026-09-29 12:30:44,166 - INFO - Sharpe Ratio: 1.10
+2026-09-29 12:30:44,166 - INFO - Max Drawdown: -10.68%
+2026-09-29 12:30:44,166 - INFO - Win Rate: 59.03%
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+./src/backtest.py:855: FutureWarning: 'M' is deprecated and will be removed in a future version, please use 'ME' instead.
+  monthly_returns = (1 + returns).resample('M').prod() - 1
+2026-09-29 12:30:44,309 - INFO - Allocation plot saved to OUT/prediction_allocations.png
+2026-09-29 12:30:44,400 - INFO - Allocation plot saved to OUT/dynamic_allocations.png
+2026-09-29 12:30:44,423 - INFO - Running anomaly-responsive investment strategy
+2026-09-29 12:30:44,423 - INFO - Using optimized parameters for anomaly aware strategy
+2026-09-29 12:30:44,423 - INFO - Running anomaly-aware investment strategy
+2026-09-29 12:30:44,715 - INFO - Anomaly strategy: 31 anomalies detected, 96 days with 100% bond allocation
+2026-09-29 12:30:44,811 - INFO - Allocation plot saved to OUT/anomaly_strategy_allocations.png
+2026-09-29 12:30:44,812 - INFO - 
+==================================================
+2026-09-29 12:30:44,812 - INFO - BEST PERFORMING STRATEGIES
+2026-09-29 12:30:44,812 - INFO - ==================================================
+2026-09-29 12:30:44,812 - INFO - 1. Combined Anomaly Regime:
+2026-09-29 12:30:44,812 - INFO -    Return: 11.88% | Max DD: -10.68% | Sharpe: 1.10
+2026-09-29 12:30:44,812 - INFO - 2. Buy And Hold:
+2026-09-29 12:30:44,812 - INFO -    Return: 11.21% | Max DD: -33.92% | Sharpe: 0.58
+2026-09-29 12:30:44,812 - INFO - 3. Dynamic Allocation:
+2026-09-29 12:30:44,812 - INFO -    Return: 10.97% | Max DD: -13.81% | Sharpe: 0.91
+2026-09-29 12:30:44,812 - INFO - 
+Best strategy outperforms Buy & Hold by 0.67%
+2026-09-29 12:30:44,812 - INFO - Market prediction and investment pipeline complete.
+2026-09-29 12:30:44,812 - INFO - Results and analysis saved to OUT
+python main.py --data data/market_data.xlsx --output OUT --start_date   70.82s user 4.51s system 376% cpu 20.008 total

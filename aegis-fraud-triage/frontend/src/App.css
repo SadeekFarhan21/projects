@@ -1,0 +1,187 @@
+/* App-level styles - fraud injection effects + enhanced animations */
+
+/* Tile entrance animation */
+@keyframes tileEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tile-enter {
+  animation: tileEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Money saved special glow */
+@keyframes moneySavedGlow {
+  0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0); }
+  50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+}
+
+.money-saved-glow {
+  animation: moneySavedGlow 3s ease-in-out infinite;
+}
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '\258B';
+  animation: blink 1s step-end infinite;
+  color: #ffffff;
+}
+
+/* === Agent console trace slide-in === */
+@keyframes traceSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* === Verdict scan-line glow sweep === */
+@keyframes verdictScan {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.verdict-scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+.verdict-scanline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: verdictScan 2s ease-in-out 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* === Verdict color-specific scan-lines === */
+.verdict-block,
+.verdict-clear,
+.verdict-flag {
+  position: relative;
+  overflow: hidden;
+}
+
+.verdict-block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(239, 68, 68, 0.08) 45%,
+    rgba(239, 68, 68, 0.15) 50%, rgba(239, 68, 68, 0.08) 55%, transparent 100%);
+  background-size: 200% 100%;
+  animation: verdictScan 2s ease-in-out 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.verdict-clear::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(34, 197, 94, 0.08) 45%,
+    rgba(34, 197, 94, 0.15) 50%, rgba(34, 197, 94, 0.08) 55%, transparent 100%);
+  background-size: 200% 100%;
+  animation: verdictScan 2s ease-in-out 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.verdict-flag::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.04) 55%, transparent 100%);
+  background-size: 200% 100%;
+  animation: verdictScan 2s ease-in-out 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* === Investigation focus ring (white glow for active investigation) === */
+@keyframes focusRing {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08); }
+}
+
+.investigation-focus {
+  animation: focusRing 2s ease-in-out infinite;
+}
+
+/* === Alert slide-in animation === */
+@keyframes alertSlideIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* === Header frosted bottom edge glow === */
+.header-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* === React Flow dark theme overrides === */
+.react-flow__pane {
+  cursor: grab;
+}
+
+.react-flow__node {
+  cursor: pointer;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__controls,
+.react-flow__minimap {
+  display: none;
+}

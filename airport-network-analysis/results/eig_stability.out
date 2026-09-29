@@ -1,0 +1,5 @@
+run 1 spearman eig-str 0.601 eig-deg 0.602 n zero/tiny(<1e-10): 732 min 0 
+run 2 spearman eig-str 0.57 eig-deg 0.57 n zero/tiny(<1e-10): 732 min 0 
+run 3 spearman eig-str 0.603 eig-deg 0.604 n zero/tiny(<1e-10): 732 min 0 
+run 4 spearman eig-str 0.615 eig-deg 0.616 n zero/tiny(<1e-10): 732 min 0 
+LCC only spearman eig-str 0.504 eig-bet 0.431 bet-str 0.935 

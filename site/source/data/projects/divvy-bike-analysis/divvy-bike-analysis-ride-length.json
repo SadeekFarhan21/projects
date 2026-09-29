@@ -1,0 +1,21 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Mean ride length, minutes",
+  "title": "Average Ride Length by Weekday and Rider Type",
+  "subtitle": "Mean of ended_at minus started_at, labels as printed on the charts",
+  "legendLabels": { "emphasis": "Casual riders", "other": "Members and weekdays" },
+  "rows": [
+    { "label": "Member", "value": 12.8 },
+    { "label": "Casual", "value": 25.2, "emphasis": true, "detail": "1.97 times the member mean" },
+    { "label": "Monday", "value": 16 },
+    { "label": "Tuesday", "value": 15 },
+    { "label": "Wednesday", "value": 15.5 },
+    { "label": "Thursday", "value": 15.3 },
+    { "label": "Friday", "value": 17 },
+    { "label": "Saturday", "value": 20.9 },
+    { "label": "Sunday", "value": 21.4 }
+  ],
+  "caption": "The rider-type means and the weekday means come from two separate charts. The weekday means pool both rider types.",
+  "source": "the labels on the two ride-length charts in the published site"
+}

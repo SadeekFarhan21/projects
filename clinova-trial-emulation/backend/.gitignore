@@ -1,0 +1,7 @@
+*.env
+
+# Large OMOP vocabulary CSV files
+omop_lookup/CONCEPT.csv
+omop_lookup/CONCEPT_RELATIONSHIP.csv
+omop_lookup/CONCEPT_SYNONYM.csv
+omop_lookup/omop_lookup.duckdb

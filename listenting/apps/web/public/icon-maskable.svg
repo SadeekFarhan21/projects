@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0F1115"/>
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#D4452B" stroke-width="6"/>
+  <text x="50%" y="58%" text-anchor="middle" font-family="Georgia, serif" font-size="180" font-weight="600" fill="#F7F6F2">听</text>
+</svg>

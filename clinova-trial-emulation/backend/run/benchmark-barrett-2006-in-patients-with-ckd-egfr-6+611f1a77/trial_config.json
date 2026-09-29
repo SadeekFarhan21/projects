@@ -1,0 +1,12 @@
+{
+  "trial_id": "BARRETT_2006",
+  "trial_name": "Barrett 2006 CE-MDCT Trial",
+  "population": "CKD (eGFR < 60) undergoing contrast-enhanced MDCT",
+  "intervention": "iso-osmolar contrast (iodixanol)",
+  "comparator": "low-osmolar contrast (iopamidol)",
+  "outcome": "CIN defined as serum creatinine increase >= 0.5 mg/dL within 72h",
+  "regulatory_question": "Is there a difference in CIN rates between iso-osmolar and low-osmolar contrast in CKD patients undergoing CT?",
+  "expected_conclusion": "No demonstrated difference in CIN rates between iso-osmolar and low-osmolar contrast in CKD patients",
+  "expected_direction": "null",
+  "reference": "Barrett BJ et al. Radiology. 2006"
+}

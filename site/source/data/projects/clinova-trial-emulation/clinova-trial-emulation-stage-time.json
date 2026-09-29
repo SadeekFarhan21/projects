@@ -1,0 +1,20 @@
+{
+  "type": "bars",
+  "format": "time",
+  "unit": "Wall-clock time per stage",
+  "title": "Where One Pipeline Run Spent 14 Minutes",
+  "subtitle": "Barrett 2006 benchmark run, 2026-01-25, 837 s in total, from the committed run_log.txt timestamps",
+  "legendLabels": {
+    "emphasis": "Validation loop (3 iterations)",
+    "other": "Other stages"
+  },
+  "rows": [
+    { "label": "Question agent", "value": 87, "emphasis": false, "detail": "Wrote a 6,718 character causal question" },
+    { "label": "Design agent", "value": 173, "emphasis": false, "detail": "Wrote a 22,127 character design spec" },
+    { "label": "Validation loop", "value": 490, "emphasis": true, "detail": "Iterations took 216 s, 221 s and 53 s, and include the two revise_spec calls" },
+    { "label": "OMOP lookup", "value": 6, "emphasis": false, "detail": "Local tool, no LLM call" },
+    { "label": "Code agent", "value": 81, "emphasis": false, "detail": "Wrote a 16,368 character script" }
+  ],
+  "caption": "Times are the gaps between log lines, so the validation figure covers the three validate() calls and the two revisions between them. One run, one question, not repeated.",
+  "source": "backend/run/benchmark-barrett-2006-*/run_log.txt via analysis/summarize_barrett_run.py"
+}

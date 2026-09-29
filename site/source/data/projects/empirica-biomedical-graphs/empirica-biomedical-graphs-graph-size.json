@@ -1,0 +1,41 @@
+{
+  "type": "columns",
+  "mode": "grouped",
+  "format": "number",
+  "unit": "Count",
+  "categories": [
+    "JNK and cisplatin review (PMC13028654)",
+    "MK2/p38/p53 and IL-1b (PMC13072840)",
+    "SNORA64 and apoptosis (PMC13090758)"
+  ],
+  "series": [
+    {
+      "name": "Nodes",
+      "values": [
+        37,
+        27,
+        20
+      ]
+    },
+    {
+      "name": "Edges",
+      "values": [
+        113,
+        115,
+        23
+      ]
+    },
+    {
+      "name": "Louvain communities",
+      "values": [
+        7,
+        4,
+        10
+      ]
+    }
+  ],
+  "title": "The Final Graphs Are Small, and Density Varies Nearly Threefold",
+  "subtitle": "Graph size after the 4-occurrence entity filter, three papers",
+  "caption": "Density is 0.170, 0.328 and 0.121, and average degree is 6.11, 8.52 and 2.30. The SNORA64 paper has 20 nodes and 23 edges but ten communities, the largest with 5 nodes, so its graph is close to a set of small clusters. Edges are counted after GraphBuilder drops pairs whose endpoints did not survive the filter, so they are fewer than the merged edge count.",
+  "source": "results/pipeline_measurements.json, from scripts/measure_pipeline.py, single run per paper"
+}

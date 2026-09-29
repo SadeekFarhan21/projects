@@ -1,0 +1,138 @@
+{
+  "_rule": "A post is dated to its project's first real commit (template scaffolding skipped). Projects that lived only locally before being committed use the creation time of their earliest file. Apply with: python3 tools/apply-post-dates.py Dates are naive local times in the site timezone (America/New_York, _config.yml): Hexo shifts explicit offsets/Z by the timezone a second time. `code` is the GitHub link shown as an icon in the post header (the project folder in this repo).",
+  "building-a-gpt-from-scratch": {
+    "date": "2026-09-11 02:46:31",
+    "source": "projects/gpt-from-scratch, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/gpt-from-scratch"
+  },
+  "reverse-engineering-gpt-2s-induction-circuit": {
+    "date": "2026-09-12 21:49:27",
+    "source": "projects/tiny-circuits, local: earliest file created (first commit 2026-09-20)",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/tiny-circuits"
+  },
+  "testing-gpt-2s-induction-heads": {
+    "date": "2026-09-12 21:49:27",
+    "source": "projects/tiny-circuits, local: earliest file created (first commit 2026-09-20)",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/tiny-circuits"
+  },
+  "rlvr-grpo-reward-variance": {
+    "date": "2026-09-13 13:43:19",
+    "source": "projects/math-rlvr, local: earliest file created (first commit 2026-09-20)",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/math-rlvr"
+  },
+  "aegis-fraud-triage": {
+    "date": "2026-02-06 18:44:45",
+    "source": "SadeekFarhan21/Aegis, first real commit (skips the 2025-01-01 Lovable template placeholder)",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/aegis-fraud-triage"
+  },
+  "airport-network-analysis": {
+    "date": "2026-02-05 18:06:05",
+    "source": "SadeekFarhan21/Airport-Network-Analysis, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/airport-network-analysis"
+  },
+  "clinova-trial-emulation": {
+    "date": "2026-01-25 16:41:36",
+    "source": "SadeekFarhan21/Clinova, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/clinova-trial-emulation"
+  },
+  "cure-improve": {
+    "date": "2026-02-27 13:48:53",
+    "source": "arses-ui/CURE-Improve (forked as SadeekFarhan21/CURE-Improve), first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/cure-improve"
+  },
+  "diffsense": {
+    "date": "2025-06-21 13:25:13",
+    "source": "SadeekFarhan21/DiffSense, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/diffsense"
+  },
+  "divvy-bike-analysis": {
+    "date": "2025-01-18 13:34:33",
+    "source": "SadeekFarhan21/Divvy_Bike_Analysis, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/divvy-bike-analysis"
+  },
+  "empirica-biomedical-graphs": {
+    "date": "2025-10-24 23:27:00",
+    "source": "SadeekFarhan21/empirica, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/empirica-biomedical-graphs"
+  },
+  "listenting": {
+    "date": "2026-05-23 09:30:30",
+    "source": "SadeekFarhan21/ListenTing, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/listenting"
+  },
+  "photography-site": {
+    "date": "2024-11-18 11:33:22",
+    "source": "SadeekFarhan21/PhotographyWebsite, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/photography-site"
+  },
+  "pillifyai": {
+    "date": "2025-03-28 22:45:01",
+    "source": "SadeekFarhan21/PillifyAI, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/pillifyai"
+  },
+  "quantathon-leap-reserve": {
+    "date": "2026-03-28 10:33:40",
+    "source": "SadeekFarhan21/quantathon-2026, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/quantathon-leap-reserve"
+  },
+  "quantifyai-market-regimes": {
+    "date": "2025-02-26 15:48:55",
+    "source": "SadeekFarhan21/QuantifyAI, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/quantifyai-market-regimes"
+  },
+  "signifyai": {
+    "date": "2025-02-22 10:35:49",
+    "source": "SadeekFarhan21/SignifyAI, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/signifyai"
+  },
+  "a-backtester-that-audits-itself": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/leakage-checked-backtester, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/leakage-checked-backtester"
+  },
+  "a-risc-v-kernel-that-tests-itself": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/riscv-sv39-kernel, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/riscv-sv39-kernel"
+  },
+  "crash-safe-b-plus-tree-store": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/kvdb-btree-wal-engine, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/kvdb-btree-wal-engine"
+  },
+  "crypto-reversal-is-real-in-ranks-and-dead-in-dollars": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/crypto-reversal-preregistered, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/crypto-reversal-preregistered"
+  },
+  "fuzzing-a-matching-engine": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/price-time-matching-engine, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/price-time-matching-engine"
+  },
+  "group-commit-in-a-redis-clone": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/kvd-resp-server, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/kvd-resp-server"
+  },
+  "pricing-adverse-selection": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/adverse-selection-lob-sim, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/adverse-selection-lob-sim"
+  },
+  "smolgrad": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/smolgrad, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/smolgrad"
+  },
+  "what-durability-costs-a-kafka-style-broker": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/minikafka-log-broker, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/minikafka-log-broker"
+  },
+  "why-peeking-breaks-ab-tests": {
+    "date": "2026-09-29 04:01:45",
+    "source": "projects/cuped-msprt-ope-engine, first commit",
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/cuped-msprt-ope-engine"
+  }
+}

@@ -14,7 +14,20 @@ import { select } from "d3-selection";
 import { scaleLinear, scaleSequential } from "d3-scale";
 import { interpolateRgb } from "d3-interpolate";
 import { max } from "d3-array";
-import { theme, fmt, showTip, hideTip, caption, json, hoverHint } from "./figure-kit";
+import {
+  theme,
+  fmt,
+  showTip,
+  hideTip,
+  caption,
+  sourceLine,
+  heading,
+  legend,
+  responsive,
+  textWidth,
+  json,
+  hoverHint,
+} from "./figure-kit";
 import { animateIn } from "./motion";
 import { interactive } from "./interact";
 import { ventureFigure, specFigure } from "./venture-figures";
@@ -24,6 +37,8 @@ import { ventureFigure, specFigure } from "./venture-figures";
 type Cell = { layer: number; head: number; score: number };
 
 type Scores = {
+  model: string;
+  source: string;
   n_layers: number;
   n_heads: number;
   gap: number;
@@ -32,124 +47,160 @@ type Scores = {
   scores: Cell[];
 };
 
+type Svg = ReturnType<typeof select<SVGSVGElement, unknown>>;
+
+/** Size a responsive chart's <svg> (figure-kit responsive()) in CSS px. */
+function sized(el: SVGSVGElement, w: number, h: number, label: string): Svg {
+  return select(el)
+    .attr("viewBox", `0 0 ${w} ${h}`)
+    .attr("role", "img")
+    .attr("aria-label", label) as unknown as Svg;
+}
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 async function inductionHeatmap(node: Element) {
   const d = await json<Scores>("data/induction-scores.json");
   const t = theme();
-  const cell = 30,
-    gapPx = 3,
-    padL = 40,
-    padT = 24,
-    legendW = 86;
-  const w = padL + d.n_heads * (cell + gapPx) + legendW;
-  const h = padT + d.n_layers * (cell + gapPx) + 26;
+  heading(node, {
+    title: `Induction Score for Every Head in ${d.model.replace(/\b\w/g, c => c.toUpperCase())}`,
+    subtitle: `${cap(d.measurement)}, by layer and head`,
+  });
 
   const hi = max(d.scores, (s: Cell) => s.score) ?? 1;
   const color = scaleSequential<string>(
     interpolateRgb("#eef3f7", t.accent)
   ).domain([0, hi]);
   const isCanonical = new Set(d.canonical.map(c => `${c.layer}-${c.head}`));
+  const aria =
+    `Induction score for all ${d.scores.length} attention heads of GPT-2 small, by layer and head. ` +
+    `The five canonical induction heads score above 0.80; the next head scores 0.517.`;
 
-  const svg = select(node)
-    .append("svg")
-    .attr("viewBox", `0 0 ${w} ${h}`)
-    .attr("width", "100%")
-    .attr("role", "img")
-    .attr(
-      "aria-label",
-      `Induction score for all ${d.scores.length} attention heads of GPT-2 small, by layer and head. ` +
-        `The five canonical induction heads score above 0.80; the next head scores 0.517.`
+  responsive(node, (el, L) => {
+    const ap = L.axisPx;
+    const gapPx = L.compact ? 2 : 3,
+      padL = Math.ceil(textWidth("Layer", ap)) + 10,
+      // Axis titles: "Head" over the column numbers, "Layer" at the corner.
+      padT = 2 * ap + 14,
+      legendW = Math.ceil(textWidth("0.00", ap)) + 32;
+    // Square cells as large as the width allows, up to 30px.
+    const cell = Math.max(
+      12,
+      Math.min(30, Math.floor((L.w - padL - legendW) / d.n_heads) - gapPx)
     );
+    const step = cell + gapPx;
+    const w = padL + d.n_heads * step + legendW;
+    const h = padT + d.n_layers * step + 4;
+    const svg = sized(el, w, h, aria);
+    // Drawn at its own width, left-aligned under the title, not stretched.
+    el.style.width = `${w}px`;
+    el.style.maxWidth = "100%";
 
-  // axis labels
-  for (let head = 0; head < d.n_heads; head++) {
     svg
       .append("text")
-      .attr("x", padL + head * (cell + gapPx) + cell / 2)
+      .attr("class", "fig-axis fig-axis-title")
+      .attr("x", padL)
+      .attr("y", ap)
+      .text("Head");
+    svg
+      .append("text")
+      .attr("class", "fig-axis fig-axis-title")
+      .attr("x", padL - 8)
       .attr("y", padT - 8)
-      .attr("text-anchor", "middle")
-      .attr("class", "fig-axis")
-      .text(head);
-  }
-  for (let layer = 0; layer < d.n_layers; layer++) {
-    svg
-      .append("text")
-      .attr("x", padL - 10)
-      .attr("y", padT + layer * (cell + gapPx) + cell / 2 + 4)
       .attr("text-anchor", "end")
-      .attr("class", "fig-axis")
-      .text(`L${layer}`);
-  }
+      .text("Layer");
+    for (let head = 0; head < d.n_heads; head++) {
+      svg
+        .append("text")
+        .attr("x", padL + head * step + cell / 2)
+        .attr("y", padT - 8)
+        .attr("text-anchor", "middle")
+        .attr("class", "fig-axis")
+        .text(head);
+    }
+    for (let layer = 0; layer < d.n_layers; layer++) {
+      svg
+        .append("text")
+        .attr("x", padL - 8)
+        .attr("y", padT + layer * step + cell / 2 + ap * 0.35)
+        .attr("text-anchor", "end")
+        .attr("class", "fig-axis")
+        .text(`L${layer}`);
+    }
 
-  svg
-    .selectAll<SVGRectElement, Cell>("rect.cell")
-    .data(d.scores)
-    .join("rect")
-    .attr("class", "cell")
-    .attr("x", (s: Cell) => padL + s.head * (cell + gapPx))
-    .attr("y", (s: Cell) => padT + s.layer * (cell + gapPx))
-    .attr("width", cell)
-    .attr("height", cell)
-    .attr("rx", 3)
-    .attr("fill", (s: Cell) => color(s.score))
-    .attr("stroke", (s: Cell) =>
-      isCanonical.has(`${s.layer}-${s.head}`) ? t.fg : "transparent"
-    )
-    .attr("stroke-width", 1.75)
-    .on("mousemove", (event: MouseEvent, s: Cell) =>
-      showTip(
-        `<strong>L${s.layer}H${s.head}</strong><br>Induction score ${s.score.toFixed(3)}` +
-          (isCanonical.has(`${s.layer}-${s.head}`)
-            ? "<br><em>Canonical induction head</em>"
-            : ""),
-        event
-      )
-    )
-    .on("mouseleave", hideTip);
-
-  // sequential legend
-  const lx = padL + d.n_heads * (cell + gapPx) + 22;
-  const lh = 132;
-  const grad = svg
-    .append("defs")
-    .append("linearGradient")
-    .attr("id", "fig-ramp")
-    .attr("x1", "0")
-    .attr("y1", "1")
-    .attr("x2", "0")
-    .attr("y2", "0");
-  for (let i = 0; i <= 10; i++)
-    grad
-      .append("stop")
-      .attr("offset", `${i * 10}%`)
-      .attr("stop-color", color((hi * i) / 10));
-  svg
-    .append("rect")
-    .attr("x", lx)
-    .attr("y", padT)
-    .attr("width", 11)
-    .attr("height", lh)
-    .attr("rx", 2)
-    .attr("fill", "url(#fig-ramp)")
-    .attr("stroke", t.border);
-  (
-    [
-      [0, hi],
-      [0.5, hi / 2],
-      [1, 0],
-    ] as [number, number][]
-  ).forEach(([pos, val]) =>
     svg
-      .append("text")
-      .attr("x", lx + 17)
-      .attr("y", padT + pos * lh + 4)
-      .attr("class", "fig-axis")
-      .text(val.toFixed(2))
-  );
+      .selectAll<SVGRectElement, Cell>("rect.cell")
+      .data(d.scores)
+      .join("rect")
+      .attr("class", "cell")
+      .attr("x", (s: Cell) => padL + s.head * step)
+      .attr("y", (s: Cell) => padT + s.layer * step)
+      .attr("width", cell)
+      .attr("height", cell)
+      .attr("rx", 3)
+      .attr("fill", (s: Cell) => color(s.score))
+      .attr("stroke", (s: Cell) =>
+        isCanonical.has(`${s.layer}-${s.head}`) ? t.fg : "transparent"
+      )
+      .attr("stroke-width", 1.75)
+      .on("mousemove", (event: MouseEvent, s: Cell) =>
+        showTip(
+          `<strong>L${s.layer}H${s.head}</strong><br>Induction score ${s.score.toFixed(3)}` +
+            (isCanonical.has(`${s.layer}-${s.head}`)
+              ? "<br><em>Canonical induction head</em>"
+              : ""),
+          event
+        )
+      )
+      .on("mouseleave", hideTip);
+
+    // sequential legend
+    const lx = padL + d.n_heads * step + 12;
+    const lh = Math.min(132, d.n_layers * step - gapPx);
+    const rampId = `fig-ramp-${Math.random().toString(36).slice(2)}`;
+    const grad = svg
+      .append("defs")
+      .append("linearGradient")
+      .attr("id", rampId)
+      .attr("x1", "0")
+      .attr("y1", "1")
+      .attr("x2", "0")
+      .attr("y2", "0");
+    for (let i = 0; i <= 10; i++)
+      grad
+        .append("stop")
+        .attr("offset", `${i * 10}%`)
+        .attr("stop-color", color((hi * i) / 10));
+    svg
+      .append("rect")
+      .attr("x", lx)
+      .attr("y", padT)
+      .attr("width", 11)
+      .attr("height", lh)
+      .attr("rx", 2)
+      .attr("fill", `url(#${rampId})`)
+      .attr("stroke", t.border);
+    (
+      [
+        [0, hi],
+        [0.5, hi / 2],
+        [1, 0],
+      ] as [number, number][]
+    ).forEach(([pos, val]) =>
+      svg
+        .append("text")
+        .attr("x", lx + 17)
+        .attr("y", padT + pos * lh + ap * 0.35)
+        .attr("class", "fig-axis")
+        .text(val.toFixed(2))
+    );
+  });
 
   caption(
     node,
-    `Induction score for every head in GPT-2 small, ${d.measurement}. Outlined cells are the five heads the literature names. Hover for exact scores.`
+    `Induction score for every head in GPT-2 small, ${d.measurement}. Outlined cells are the five heads the literature names.`
   );
+  sourceLine(node, d.source);
 }
 
 /* ----------------------------------------------------------- ranked heads */
@@ -158,92 +209,102 @@ async function inductionRanked(node: Element) {
   const d = await json<Scores>("data/induction-scores.json");
   const t = theme();
   const rows = [...d.scores].sort((a, b) => b.score - a.score).slice(0, 14);
-  const rowH = 24,
-    padT = 14,
-    padL = 62,
-    padR = 92;
-  const w = 640;
-  const h = padT + rows.length * rowH + 14;
-  const x = scaleLinear()
-    .domain([0, rows[0].score])
-    .range([0, w - padL - padR]);
+  heading(node, {
+    title: "The Fourteen Highest-Scoring Heads",
+    subtitle: `Induction score by head, highest first. The dashed line marks the gap after rank 5`,
+  });
+  const aria = `The fourteen highest-scoring heads. The top five score ${rows[4].score.toFixed(3)} to ${rows[0].score.toFixed(3)}; the sixth scores ${rows[5].score.toFixed(3)}, a gap of ${d.gap.toFixed(3)}.`;
+  const name = (s: Cell) => `L${s.layer}H${s.head}`;
 
-  const svg = select(node)
-    .append("svg")
-    .attr("viewBox", `0 0 ${w} ${h}`)
-    .attr("width", "100%")
-    .attr("role", "img")
-    .attr(
-      "aria-label",
-      `The fourteen highest-scoring heads. The top five score ${rows[4].score.toFixed(3)} to ${rows[0].score.toFixed(3)}; the sixth scores ${rows[5].score.toFixed(3)}, a gap of ${d.gap.toFixed(3)}.`
-    );
+  responsive(node, (el, L) => {
+    const lp = L.labelPx;
+    const rowH = Math.max(24, lp + 11),
+      padT = 6,
+      padL = Math.ceil(Math.max(...rows.map(s => textWidth(name(s), lp, 450)))) + 12,
+      padR = Math.ceil(textWidth("0.000", lp)) + 14;
+    const w = L.w;
+    const h = padT + rows.length * rowH + 4;
+    const x = scaleLinear()
+      .domain([0, rows[0].score])
+      .range([0, w - padL - padR]);
+    const svg = sized(el, w, h, aria);
+    const barH = 13,
+      barY = (rowH - barH) / 2,
+      textY = rowH / 2 + lp * 0.35;
 
-  const g = svg
-    .selectAll<SVGGElement, Cell>("g.row")
-    .data(rows)
-    .join("g")
-    .attr("class", "row")
-    .attr(
-      "transform",
-      (_d: Cell, i: number) => `translate(0,${padT + i * rowH})`
-    )
-    .on("mousemove", (event: MouseEvent, s: Cell) =>
-      showTip(
-        `<strong>L${s.layer}H${s.head}</strong><br>Induction score ${s.score.toFixed(3)}`,
-        event
+    const g = svg
+      .selectAll<SVGGElement, Cell>("g.row")
+      .data(rows)
+      .join("g")
+      .attr("class", "row")
+      .attr(
+        "transform",
+        (_d: Cell, i: number) => `translate(0,${padT + i * rowH})`
       )
-    )
-    .on("mouseleave", hideTip);
+      .on("mousemove", (event: MouseEvent, s: Cell) =>
+        showTip(
+          `<strong>${name(s)}</strong><br>Induction score ${s.score.toFixed(3)}`,
+          event
+        )
+      )
+      .on("mouseleave", hideTip);
 
-  g.append("rect") // hit target, wider than the mark
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", w)
-    .attr("height", rowH)
-    .attr("fill", "transparent");
-  g.append("text")
-    .attr("x", padL - 10)
-    .attr("y", 15)
-    .attr("text-anchor", "end")
-    .attr("class", (_d: Cell, i: number) => (i < 5 ? "fig-label" : "fig-axis"))
-    .text((s: Cell) => `L${s.layer}H${s.head}`);
-  g.append("rect")
-    .attr("x", padL)
-    .attr("y", 4)
-    .attr("width", (s: Cell) => x(s.score))
-    .attr("height", 13)
-    .attr("rx", 4)
-    .attr("fill", (_d: Cell, i: number) => (i < 5 ? t.accent : "#c9d7e2"));
-  g.append("text")
-    .attr("x", (s: Cell) => padL + x(s.score) + 8)
-    .attr("y", 15)
-    .attr("class", (_d: Cell, i: number) => (i < 5 ? "fig-label" : "fig-axis"))
-    .text((s: Cell) => s.score.toFixed(3));
+    g.append("rect") // hit target, wider than the mark
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", w)
+      .attr("height", rowH)
+      .attr("fill", "transparent");
+    g.append("text")
+      .attr("x", padL - 10)
+      .attr("y", textY)
+      .attr("text-anchor", "end")
+      .attr("class", "fig-label")
+      .attr("font-weight", (_d: Cell, i: number) => (i < 5 ? 650 : 450))
+      .text(name);
+    g.append("rect")
+      .attr("x", padL)
+      .attr("y", barY)
+      .attr("width", (s: Cell) => x(s.score))
+      .attr("height", barH)
+      .attr("rx", 4)
+      .attr("fill", (_d: Cell, i: number) => (i < 5 ? t.accent : "#c9d7e2"));
+    g.append("text")
+      .attr("x", (s: Cell) => padL + x(s.score) + 8)
+      .attr("y", textY)
+      .attr("class", "fig-label fig-num")
+      .text((s: Cell) => s.score.toFixed(3));
 
-  const gy = padT + 5 * rowH - 3;
-  svg
-    .append("line")
-    .attr("x1", padL - 46)
-    .attr("x2", w - 30)
-    .attr("y1", gy)
-    .attr("y2", gy)
-    .attr("stroke", t.fg)
-    .attr("stroke-width", 1)
-    .attr("stroke-dasharray", "3 3");
-  svg
-    .append("text")
-    .attr("x", w - 30)
-    // Below the line, where the lower bars leave the right side empty, so the
-    // label cannot collide with the rank-5 value however long that bar gets.
-    .attr("y", gy + 16)
-    .attr("text-anchor", "end")
-    .attr("class", "fig-label")
-    .text(`Gap of ${d.gap.toFixed(3)}`);
+    const gy = padT + 5 * rowH;
+    svg
+      .append("line")
+      .attr("x1", 0)
+      .attr("x2", w)
+      .attr("y1", gy)
+      .attr("y2", gy)
+      .attr("stroke", t.fg)
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "3 3");
+    svg
+      .append("text")
+      .attr("x", w)
+      // Below the line, where the lower bars leave the right side empty, so the
+      // label cannot collide with the rank-5 value however long that bar gets.
+      .attr("y", gy + lp + 4)
+      .attr("text-anchor", "end")
+      .attr("class", "fig-label")
+      .text(`Gap of ${d.gap.toFixed(3)}`);
+  });
 
+  legend(node, [
+    { label: "Canonical induction heads", swatch: t.accent },
+    { label: "Next highest", swatch: "#c9d7e2" },
+  ]);
   caption(
     node,
     `The top five heads and the drop below them. The ${d.gap.toFixed(3)} gap after rank 5 is what makes "the induction heads" a set rather than a cutoff someone chose.`
   );
+  sourceLine(node, d.source);
 }
 
 /* -------------------------------------------------------- parameter budget */
@@ -256,6 +317,7 @@ type Group = {
 };
 
 type Params = {
+  source: string;
   total_params: number;
   final_loss: number;
   config: Record<string, number>;
@@ -265,72 +327,88 @@ type Params = {
 async function gptParameters(node: Element) {
   const d = await json<Params>("data/gpt-parameters.json");
   const t = theme();
-  const rowH = 30,
-    padT = 12,
-    padL = 132,
-    padR = 150;
-  const w = 660;
-  const h = padT + d.groups.length * rowH + 12;
-  const x = scaleLinear()
-    .domain([0, max(d.groups, (g: Group) => g.params) ?? 1])
-    .range([0, w - padL - padR]);
+  const VOCAB = "#8fb8d0";
+  heading(node, {
+    title: "Where the Parameters Sit",
+    subtitle: `${fmt.format(d.total_params)} parameters by component, share of the model after each count`,
+  });
+  const aria =
+    `Parameter budget of the ${fmt.format(d.total_params)} parameter model by component. ` +
+    d.groups
+      .map((g: Group) => `${g.label} ${fmt.format(g.params)}, ${g.share}%`)
+      .join("; ");
+  const value = (r: Group) => `${fmt.format(r.params)} · ${r.share.toFixed(1)}%`;
 
-  const svg = select(node)
-    .append("svg")
-    .attr("viewBox", `0 0 ${w} ${h}`)
-    .attr("width", "100%")
-    .attr("role", "img")
-    .attr(
-      "aria-label",
-      `Parameter budget of the ${fmt.format(d.total_params)} parameter model by component. ` +
-        d.groups
-          .map((g: Group) => `${g.label} ${fmt.format(g.params)}, ${g.share}%`)
-          .join("; ")
-    );
+  responsive(node, (el, L) => {
+    const lp = L.labelPx;
+    const labelW = Math.max(...d.groups.map(g => textWidth(g.label, lp, 450)));
+    const padR = Math.ceil(Math.max(...d.groups.map(g => textWidth(value(g), lp)))) + 14;
+    const inlineL = Math.ceil(labelW) + 14;
+    // Same rule as the spec bar charts: labels above the bars when beside
+    // them would leave the bars under 45% of the width.
+    const stacked = L.w - inlineL - padR < L.w * 0.45;
+    const padL = stacked ? 0 : inlineL;
+    const rowH = stacked ? lp + 25 : Math.max(30, lp + 17),
+      barH = 15,
+      barY = stacked ? lp + 5 : (rowH - barH) / 2,
+      textY = barY + barH / 2 + lp * 0.35,
+      padT = 4;
+    const w = L.w;
+    const h = padT + d.groups.length * rowH + 4;
+    const x = scaleLinear()
+      .domain([0, max(d.groups, (g: Group) => g.params) ?? 1])
+      .range([0, w - padL - padR]);
+    const svg = sized(el, w, h, aria);
 
-  const g = svg
-    .selectAll<SVGGElement, Group>("g.row")
-    .data(d.groups)
-    .join("g")
-    .attr(
-      "transform",
-      (_d: Group, i: number) => `translate(0,${padT + i * rowH})`
-    )
-    .on("mousemove", (event: MouseEvent, r: Group) =>
-      showTip(
-        `<strong>${r.label}</strong><br>${fmt.format(r.params)} parameters<br>${r.share}% of the model`,
-        event
+    const g = svg
+      .selectAll<SVGGElement, Group>("g.row")
+      .data(d.groups)
+      .join("g")
+      .attr(
+        "transform",
+        (_d: Group, i: number) => `translate(0,${padT + i * rowH})`
       )
-    )
-    .on("mouseleave", hideTip);
+      .on("mousemove", (event: MouseEvent, r: Group) =>
+        showTip(
+          `<strong>${r.label}</strong><br>${fmt.format(r.params)} parameters<br>${r.share}% of the model`,
+          event
+        )
+      )
+      .on("mouseleave", hideTip);
 
-  g.append("rect")
-    .attr("width", w)
-    .attr("height", rowH)
-    .attr("fill", "transparent");
-  g.append("text")
-    .attr("x", padL - 12)
-    .attr("y", 17)
-    .attr("text-anchor", "end")
-    .attr("class", "fig-label")
-    .text((r: Group) => r.label);
-  g.append("rect")
-    .attr("x", padL)
-    .attr("y", 4)
-    .attr("width", (r: Group) => x(r.params))
-    .attr("height", 15)
-    .attr("rx", 4)
-    .attr("fill", (r: Group) => (r.vocab_bound ? "#8fb8d0" : t.accent));
-  g.append("text")
-    .attr("x", (r: Group) => padL + x(r.params) + 10)
-    .attr("y", 17)
-    .attr("class", "fig-label")
-    .text((r: Group) => `${fmt.format(r.params)} · ${r.share.toFixed(1)}%`);
+    g.append("rect")
+      .attr("width", w)
+      .attr("height", rowH)
+      .attr("fill", "transparent");
+    g.append("text")
+      .attr("x", stacked ? 0 : padL - 12)
+      .attr("y", stacked ? lp : textY)
+      .attr("text-anchor", stacked ? "start" : "end")
+      .attr("class", "fig-label")
+      .text((r: Group) => r.label);
+    g.append("rect")
+      .attr("x", padL)
+      .attr("y", barY)
+      .attr("width", (r: Group) => Math.max(2, x(r.params)))
+      .attr("height", barH)
+      .attr("rx", 4)
+      .attr("fill", (r: Group) => (r.vocab_bound ? VOCAB : t.accent));
+    g.append("text")
+      .attr("x", (r: Group) => padL + Math.max(2, x(r.params)) + 8)
+      .attr("y", textY)
+      .attr("class", "fig-label fig-num")
+      .text(value);
+  });
 
+  legend(node, [
+    { label: "Transformer blocks and norms", swatch: t.accent },
+    { label: "Vocabulary-bound tensors", swatch: VOCAB },
+  ]);
   caption(
     node,
     `Where the ${fmt.format(d.total_params)} parameters sit, read from the shipped checkpoint (${d.config.n_layers} blocks, ${d.config.num_heads} heads, d_model ${d.config.n_embed}, vocab ${d.config.vocab_size}). Lighter bars are the two vocabulary-bound tensors; the MLPs hold more than the attention they surround.`
   );
+  sourceLine(node, d.source);
 }
 
 /* ------------------------------------------------- GRPO advantage explorer */
@@ -343,24 +421,17 @@ async function gptParameters(node: Element) {
 function grpoAdvantage(node: Element) {
   const t = theme();
   const G = 8;
-  const w = 660,
-    h = 232;
+  const FAIL = "#b9c3cc";
   // The slider is this chart's keyboard control; it has no marks to step through.
   (node as HTMLElement).dataset.keys = "off";
+  heading(node, {
+    title: "GRPO Advantages for One Group of Eight Rollouts",
+    subtitle: "The advantage definition evaluated for k correct rollouts, not a measurement",
+  });
   // The control row sits above the chart it drives.
   const controls = document.createElement("div");
   controls.className = "fig-controls";
   node.appendChild(controls);
-  const svg = select(node)
-    .append("svg")
-    .attr("viewBox", `0 0 ${w} ${h}`)
-    .attr("width", "100%")
-    .attr("role", "img")
-    .attr(
-      "aria-label",
-      "GRPO advantages for a group of eight rollouts as the number of correct rollouts varies. " +
-        "At zero correct and at eight correct the rewards are identical, the standard deviation is zero, and every advantage is zero."
-    );
 
   const input = document.createElement("input");
   input.type = "range";
@@ -371,6 +442,7 @@ function grpoAdvantage(node: Element) {
   input.setAttribute("aria-label", "Rollouts solved correctly, out of 8");
   input.style.minHeight = "24px"; // WCAG 2.5.8 minimum target size
   const readout = document.createElement("span");
+  readout.className = "fig-value";
   controls.append(
     Object.assign(document.createElement("label"), {
       textContent: "Correct rollouts",
@@ -379,135 +451,133 @@ function grpoAdvantage(node: Element) {
     readout
   );
 
-  const padL = 132;
-  const x = scaleLinear()
-    .domain([0, G - 1])
-    .range([padL, w - 150]);
-  const yReward = 74;
-  const yAdv = 168;
+  // Set by each (re)draw of the SVG; update() moves the marks for a new k.
+  let update: (k: number) => void = () => {};
 
-  svg
-    .append("text")
-    .attr("x", padL - 14)
-    .attr("y", yReward + 4)
-    .attr("text-anchor", "end")
-    .attr("class", "fig-label")
-    .text("Reward");
-  svg
-    .append("text")
-    .attr("x", padL - 14)
-    .attr("y", yAdv + 4)
-    .attr("text-anchor", "end")
-    .attr("class", "fig-label")
-    .text("Advantage");
-  svg
-    .append("line")
-    .attr("x1", padL - 6)
-    .attr("x2", w - 140)
-    .attr("y1", yAdv)
-    .attr("y2", yAdv)
-    .attr("stroke", t.border);
+  responsive(node, (el, L) => {
+    const lp = L.labelPx,
+      ap = L.axisPx;
+    const w = L.w;
+    // Advantages reach +-2.65 (one solved or one failed of eight); SCALE px
+    // per unit keeps the tallest bar clear of the reward row.
+    const SCALE = 30,
+      reach = Math.ceil(2.7 * SCALE);
+    const noteY = lp;
+    const yReward = noteY + 30;
+    const yAdv = yReward + 16 + reach;
+    const h = yAdv + reach + 4;
+    const svg = sized(
+      el,
+      w,
+      h,
+      "GRPO advantages for a group of eight rollouts as the number of correct rollouts varies. " +
+        "At zero correct and at eight correct the rewards are identical, the standard deviation is zero, and every advantage is zero."
+    );
+    const padL = Math.ceil(textWidth("Advantage", lp)) + 14;
+    const x = scaleLinear()
+      .domain([0, G - 1])
+      .range([padL + 12, w - 12]);
+    const half = Math.min(9, ((w - padL - 24) / (G - 1)) * 0.3);
 
-  const legend = svg.append("g");
-  legend
-    .append("circle")
-    .attr("cx", padL)
-    .attr("cy", 24)
-    .attr("r", 6)
-    .attr("fill", t.accent);
-  legend
-    .append("text")
-    .attr("x", padL + 12)
-    .attr("y", 28)
-    .attr("class", "fig-axis")
-    .text("Solved (reward 1)");
-  legend
-    .append("circle")
-    .attr("cx", padL + 138)
-    .attr("cy", 24)
-    .attr("r", 6)
-    .attr("fill", t.surface)
-    .attr("stroke", "#b9c3cc")
-    .attr("stroke-width", 1.5);
-  legend
-    .append("text")
-    .attr("x", padL + 150)
-    .attr("y", 28)
-    .attr("class", "fig-axis")
-    .text("Failed (reward 0)");
+    svg
+      .append("text")
+      .attr("x", padL - 14)
+      .attr("y", yReward + lp * 0.35)
+      .attr("text-anchor", "end")
+      .attr("class", "fig-label")
+      .text("Reward");
+    svg
+      .append("text")
+      .attr("x", padL - 14)
+      .attr("y", yAdv + lp * 0.35)
+      .attr("text-anchor", "end")
+      .attr("class", "fig-label")
+      .text("Advantage");
+    svg
+      .append("line")
+      .attr("x1", padL - 6)
+      .attr("x2", w)
+      .attr("y1", yAdv)
+      .attr("y2", yAdv)
+      .attr("stroke", t.border);
 
-  const rewardG = svg.append("g");
-  const advG = svg.append("g");
-  const note = svg
-    .append("text")
-    .attr("x", w - 132)
-    .attr("y", yReward - 18)
-    .attr("class", "fig-label");
-  const note2 = svg
-    .append("text")
-    .attr("x", w - 132)
-    .attr("y", yReward + 2)
-    .attr("class", "fig-axis");
-  const note3 = svg
-    .append("text")
-    .attr("x", w - 132)
-    .attr("y", yReward + 20)
-    .attr("class", "fig-axis");
+    const rewardG = svg.append("g");
+    const advG = svg.append("g");
+    // One status line over the chart: the spread, then what it means.
+    const note = svg.append("text").attr("x", 0).attr("y", noteY);
+    const noteStd = note.append("tspan").attr("class", "fig-label").attr("font-weight", 650);
+    const noteSay = note.append("tspan").attr("class", "fig-axis").attr("dx", 10);
+
+    update = (k: number) => {
+      const rewards: number[] = Array.from({ length: G }, (_, i) =>
+        i < k ? 1 : 0
+      );
+      const mean = rewards.reduce((a: number, b: number) => a + b, 0) / G;
+      const variance =
+        rewards.reduce((a: number, r: number) => a + (r - mean) ** 2, 0) / G;
+      const std = Math.sqrt(variance);
+      const adv: number[] = rewards.map(r => (std === 0 ? 0 : (r - mean) / std));
+
+      rewardG
+        .selectAll<SVGCircleElement, number>("circle")
+        .data(rewards)
+        .join("circle")
+        .attr("cx", (_d: number, i: number) => x(i))
+        .attr("cy", yReward)
+        .attr("r", half)
+        .attr("fill", (r: number) => (r === 1 ? t.accent : t.surface))
+        .attr("stroke", (r: number) => (r === 1 ? t.accent : FAIL))
+        .attr("stroke-width", 1.5);
+
+      advG
+        .selectAll<SVGRectElement, number>("rect")
+        .data(adv)
+        .join("rect")
+        .attr("x", (_d: number, i: number) => x(i) - half)
+        .attr("width", 2 * half)
+        .attr("rx", 3)
+        .attr("y", (a: number) => (a >= 0 ? yAdv - a * SCALE : yAdv))
+        .attr("height", (a: number) =>
+          Math.max(Math.abs(a) * SCALE, a === 0 ? 2 : 0)
+        )
+        .attr("fill", (a: number) =>
+          a === 0 ? "#c9d7e2" : a > 0 ? t.accent : "#e08a5a"
+        );
+
+      const dead = std === 0;
+      noteStd.text(`Reward std ${std.toFixed(2)}`);
+      noteSay
+        .text(
+          dead
+            ? `Every advantage is 0 · ${k === 0 ? "too hard" : "too easy"}`
+            : "Gradient is non-zero"
+        )
+        .style("fill", dead ? t.fg : null);
+    };
+    update(Number(input.value));
+  });
 
   function draw(k: number) {
-    const rewards: number[] = Array.from({ length: G }, (_, i) =>
-      i < k ? 1 : 0
-    );
-    const mean = rewards.reduce((a: number, b: number) => a + b, 0) / G;
-    const variance =
-      rewards.reduce((a: number, r: number) => a + (r - mean) ** 2, 0) / G;
-    const std = Math.sqrt(variance);
-    const adv: number[] = rewards.map(r => (std === 0 ? 0 : (r - mean) / std));
-
     readout.textContent = `${k} of ${G}`;
-
-    rewardG
-      .selectAll<SVGCircleElement, number>("circle")
-      .data(rewards)
-      .join("circle")
-      .attr("cx", (_d: number, i: number) => x(i))
-      .attr("cy", yReward)
-      .attr("r", 9)
-      .attr("fill", (r: number) => (r === 1 ? t.accent : t.surface))
-      .attr("stroke", (r: number) => (r === 1 ? t.accent : "#b9c3cc"))
-      .attr("stroke-width", 1.5);
-
-    const scale = 34;
-    advG
-      .selectAll<SVGRectElement, number>("rect")
-      .data(adv)
-      .join("rect")
-      .attr("x", (_d: number, i: number) => x(i) - 9)
-      .attr("width", 18)
-      .attr("rx", 3)
-      .attr("y", (a: number) => (a >= 0 ? yAdv - a * scale : yAdv))
-      .attr("height", (a: number) =>
-        Math.max(Math.abs(a) * scale, a === 0 ? 2 : 0)
-      )
-      .attr("fill", (a: number) =>
-        a === 0 ? "#c9d7e2" : a > 0 ? t.accent : "#e08a5a"
-      );
-
-    note.text(`Reward std ${std.toFixed(2)}`);
+    update(k);
+    const rewards = Array.from({ length: G }, (_, i) => (i < k ? 1 : 0));
+    const mean = k / G;
+    const std = Math.sqrt(rewards.reduce((a, r) => a + (r - mean) ** 2, 0) / G);
     const dead = std === 0;
-    note2.text(dead ? "Every advantage is 0" : "Gradient is non-zero");
-    note3.text(dead ? (k === 0 ? "Too hard" : "Too easy") : "");
     // What the chart shows, spoken with the slider value.
     const advText = dead
       ? "every advantage is 0, no gradient"
-      : `solved rollouts get advantage ${adv[0].toFixed(2)}, failed ones ${adv[G - 1].toFixed(2)}`;
+      : `solved rollouts get advantage ${((1 - mean) / std).toFixed(2)}, failed ones ${((0 - mean) / std).toFixed(2)}`;
     input.setAttribute("aria-valuetext", `${k} of ${G} correct: reward std ${std.toFixed(2)}, ${advText}`);
-    note2.attr("fill", dead ? t.fg : t.muted);
   }
-
   input.addEventListener("input", () => draw(Number(input.value)));
   draw(3);
 
+  legend(node, [
+    { label: "Solved (reward 1)", swatch: t.accent },
+    { label: "Failed (reward 0)", swatch: FAIL },
+    { label: "Negative advantage", swatch: "#e08a5a" },
+  ]);
   caption(
     node,
     "Not a measurement: the GRPO advantage definition evaluated over one group of 8 rollouts. " +

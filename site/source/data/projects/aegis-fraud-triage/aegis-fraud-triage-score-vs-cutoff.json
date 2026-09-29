@@ -1,0 +1,41 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Isolation Forest score after the repo's normalization (0 to 1)",
+  "title": "The Isolation Forest Alone Tops Out Near 0.33, Below the 0.55 Cutoff",
+  "subtitle": "Median of clip(-2 x decision_function, 0, 1) per traffic class, from a 3,000 transaction synthetic run, before noise and rule boosts",
+  "legendLabels": {
+    "emphasis": "Flag cutoff",
+    "other": "Isolation Forest score"
+  },
+  "rows": [
+    {
+      "label": "Normal, median",
+      "value": 0,
+      "detail": "Median raw decision_function +0.075, so the clipped score is 0"
+    },
+    {
+      "label": "Elevated normal, median",
+      "value": 0.044,
+      "detail": "Median raw decision_function -0.022, so 2 x 0.022 = 0.044"
+    },
+    {
+      "label": "Fraud, median",
+      "value": 0.3,
+      "detail": "Median raw decision_function -0.150, so 2 x 0.150 = 0.30"
+    },
+    {
+      "label": "Fraud, most anomalous",
+      "value": 0.332,
+      "detail": "Minimum raw decision_function -0.166, so 2 x 0.166 = 0.332"
+    },
+    {
+      "label": "Hard-coded flag cutoff",
+      "value": 0.55,
+      "emphasis": true,
+      "detail": "is_anomaly = score > 0.55"
+    }
+  ],
+  "caption": "The forest orders the classes correctly, but its scaled output never reaches the cutoff. The scores here are derived by hand from the measured raw medians, not recorded directly.",
+  "source": "results/extra_out.txt, raw decision_function values from scripts/extra.py, scaled with the formula in backend/anomaly_detection/engine.py"
+}

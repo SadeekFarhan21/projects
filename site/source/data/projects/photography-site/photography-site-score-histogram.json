@@ -1,0 +1,23 @@
+{
+  "type": "bars",
+  "format": "number",
+  "unit": "Photos",
+  "title": "Pass 1 Scores from the Local 3B Vision Model",
+  "subtitle": "qwen2.5vl:3b, 2,419 scored photos, score 0-100 grouped by decade",
+  "legendLabels": {
+    "emphasis": "Below the cutoff of 15",
+    "other": "At or above the cutoff"
+  },
+  "rows": [
+    { "label": "0-9", "value": 13, "emphasis": true, "detail": "The only photos the pass-1 cutoff of 15 removed" },
+    { "label": "20s", "value": 1669, "detail": "69 percent of all scored photos landed in this one bin" },
+    { "label": "30s", "value": 143 },
+    { "label": "40s", "value": 136 },
+    { "label": "60s", "value": 117 },
+    { "label": "70s", "value": 289 },
+    { "label": "80s", "value": 32 },
+    { "label": "90s", "value": 20 }
+  ],
+  "caption": "The 10s and 50s bins were empty and are omitted. Rows sum to 2,419. The run had 0 scoring errors but was terminated once mid-run, and the score distribution is the only quality signal available: there is no human-labelled ground truth.",
+  "source": "scores.csv from the local pass-1 run, tallied with a short Python script"
+}

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+data/
+*.joblib
+*.pkl
+*.pth
+config/secrets.py

@@ -1,0 +1,15 @@
+{
+  "type": "columns",
+  "mode": "grouped",
+  "format": "number",
+  "unit": "Count",
+  "categories": ["1","2","3","4","5","6","7","8","9","10","11","12","13"],
+  "series": [
+    { "name": "Sentences", "values": [22,18,18,19,20,31,23,9,21,26,48,18,17] },
+    { "name": "Idiom tags", "values": [26,7,14,9,11,9,16,10,5,22,26,6,8] }
+  ],
+  "title": "290 Sentences and 169 Idiom Tags Across 13 Chapters",
+  "subtitle": "Output of prepare-chapters.ts, by chapter number",
+  "caption": "Sentences are split on the characters 。！？ and idioms are tagged by substring match against a hand-written list of 28 entries. Chapters 1 and 8 have more tags than sentences because one sentence can contain several terms. Regeneration is deterministic and needs no API key.",
+  "source": "prepare-chapters.ts run on the qinkan.net source text"
+}
