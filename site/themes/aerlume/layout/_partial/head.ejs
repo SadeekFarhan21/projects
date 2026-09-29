@@ -84,7 +84,9 @@ var keywords = escapeAttribute(pageKeywords);
 
     <link rel="shortcut icon" href="<%= config.root %>img/favicon.ico">
 
-    <title><%= pageTitle %></title>
+    <%# The browser tab shows the post's short tab_title when it has one (the
+        full headline truncates); link previews keep the full title. %>
+    <title><%= page.tab_title ? page.tab_title + ' | ' + config.title : pageTitle %></title>
 
     <!-- JSON-LD 结构化数据 -->
     <% if (is_post()) { %>

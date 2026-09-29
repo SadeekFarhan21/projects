@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Every Line of a Small GPT, Written by Hand"
+tab_title: Small GPT
 code: https://github.com/SadeekFarhan21/projects/tree/main/gpt-from-scratch
 tags:
   - transformers

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "An ASL and Emotion Overlay for Any Video Call"
+tab_title: SignifyAI
 code: https://github.com/SadeekFarhan21/projects/tree/main/signifyai
 date: 2025-02-22 10:35:49
 tags:
@@ -23,15 +24,15 @@ The goal was to help deaf and hard-of-hearing people and hearing people talk on 
 
 That led to two design choices that shape everything else. Capture is a screen grab, so the tool needs no camera access and works on any conferencing app. And the app runs several classifiers on the same frame every 100 ms, so each one has to be small.
 
-The scope was three recognizers. ASL finger-spelling classifies a hand crop into a letter. A hand-gesture model classifies the same crop into one of 10 gestures. An emotion model classifies a face crop into one of the seven FER2013 labels.
+The scope was three recognizers. Two of them share a hand crop, with ASL finger-spelling classifying it into a letter and a hand-gesture model classifying the same crop into one of 10 gestures, while the third, an emotion model, classifies a face crop into one of the seven FER2013 labels.
 
-The work split cleanly. Jalen wrote the model training scripts and the README. Jayson wrote the desktop app. I wrote the research paper and made its confusion-matrix and loss-curve figures, wrote an early FER2013 notebook whose data pipeline and training recipe the emotion script kept, and later wrote the dataset downloader. All three of us share equal credit on the paper.
+The three of us built it as one team and share equal credit on the paper. I wrote the research paper and made its confusion-matrix and loss-curve figures, along with an early FER2013 notebook whose data pipeline and training recipe the emotion script kept and, later, the dataset downloader. Jalen wrote the model training scripts and the README, and Jayson wrote the desktop app.
 
 ## Technical Details
 
 ### Small CNNs on Cropped Inputs
 
-None of the models is exotic. Each is a convolutional classifier that takes a small grayscale crop and outputs a softmax over classes, trained with Adam<sup>[[3]](#ref-3)</sup>. The emotion network is the deepest: four convolution blocks with batch normalization<sup>[[4]](#ref-4)</sup> and dropout, ending in global average pooling. The ASL network is three convolutions and a dense layer with dropout. The gesture network is the plainest, one convolution and one dense layer with no dropout or batch normalization.
+None of the models is exotic. Each is a convolutional classifier that takes a small grayscale crop and outputs a softmax over classes, trained with Adam<sup>[[3]](#ref-3)</sup>. The emotion network is the deepest, with four convolution blocks with batch normalization<sup>[[4]](#ref-4)</sup> and dropout, ending in global average pooling. The ASL network is three convolutions and a dense layer with dropout. The gesture network is the plainest, one convolution and one dense layer with no dropout or batch normalization.
 
 ### Detect, Crop, Classify
 
@@ -162,7 +163,7 @@ The ASL confusion matrix is from our original 36-class run, with roughly 7 to 20
 
 ### Study the Face Properly
 
-FER2013 labels are a coarse proxy for what a signer's face is doing. In signed languages the face carries grammar, not just emotion. I would design an experiment around that directly instead of reusing seven emotion labels.
+FER2013 labels are a coarse proxy for what a signer's face is doing. In signed languages the face carries grammar as well as emotion. I would design an experiment around that directly instead of reusing seven emotion labels.
 
 ## References
 

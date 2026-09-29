@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Fraud Triage That Spares the LLM 97% of Transactions"
+tab_title: Aegis
 code: https://github.com/SadeekFarhan21/projects/tree/main/aegis-fraud-triage
 date: 2026-02-06 18:44:45
 tags:
@@ -14,11 +15,11 @@ description: >-
 
 A bank's fraud desk can't read every card transaction by hand, and running an LLM on every transaction is too slow and too expensive. Aegis is the funnel I built for that problem at TartanHacks, CMU's hackathon, in February 2026, with my teammate Jalen Francis. Transactions stream through a Redpanda (Kafka) topic. A cheap gate, a scikit-learn Isolation Forest<sup>[[1]](#ref-1)</sup> plus hand-written rules, scores each one. Anything above 0.55 becomes an alert, and a pool of three asyncio workers hands each alert to a ReAct-style agent<sup>[[2]](#ref-2)</sup> on a local Ollama model, which answers BLOCK, CLEAR or FLAG_FOR_REVIEW. Flagged alerts wait for a human, and every verdict goes into a FAISS index<sup>[[3]](#ref-3)</sup> that later investigations can search.
 
-The whole design rests on the gate, so after the hackathon I measured it on 5,000 synthetic transactions per run over 6 runs. It sent **2.9 to 3.2 percent** of traffic to the agent with **precision 1.000 in every run**: not one normal transaction reached the LLM. Recall was 0.368 to 0.403, and it splits cleanly by amount: in a 3,000-transaction run **every fraud above $1,000 was caught**, so the gate's recall is the share of fraud above that line.
+The whole design rests on the gate, so after the hackathon I measured it on 5,000 synthetic transactions per run over 6 runs. It sent **2.9 to 3.2 percent** of traffic to the agent with **precision 1.000 in every run**, so not one normal transaction reached the LLM. Recall was 0.368 to 0.403, and it splits cleanly by amount. In a 3,000-transaction run **every fraud above $1,000 was caught**, so the gate's recall is the share of fraud above that line.
 
 ## Why It Matters
 
-The hackathon theme was to make a bank's fraud desk faster. The shape that fits is a funnel: something fast and cheap looks at everything, and something slow and smart looks only at what the fast stage flags. The whole system lives or dies on that first stage. Here is what Jalen and I built in roughly 20 hours. I wrote the backend and the React dashboard, and Jalen did the design, the demo and the slides.
+The hackathon theme was to make a bank's fraud desk faster. The shape that fits is a funnel, where something fast and cheap looks at everything and something slow and smart looks only at what the fast stage flags. The whole system lives or dies on that first stage. Here is what Jalen and I built in roughly 20 hours. I wrote the backend and the React dashboard, and Jalen did the design, the demo and the slides.
 
 - A stream of card transactions arriving through Kafka, the way a bank's would.
 - A fast first stage that scores every transaction and lets most of them through.
@@ -44,7 +45,7 @@ ReAct<sup>[[2]](#ref-2)</sup> interleaves reasoning text with tool calls. The mo
 
 ### Retrieval as Memory
 
-A sentence embedding maps text to a vector where similar meanings sit close together. FAISS<sup>[[3]](#ref-3)</sup> stores those vectors and returns nearest neighbors. With L2-normalized vectors, inner product equals cosine similarity, so an `IndexFlatIP` gives exact cosine top-k. Storing past verdicts as text and retrieving the nearest ones into the agent's prompt gives the agent a memory of what was decided before. It's retrieval, not learning: nothing about the model or the gate changes.
+A sentence embedding maps text to a vector where similar meanings sit close together. FAISS<sup>[[3]](#ref-3)</sup> stores those vectors and returns nearest neighbors. With L2-normalized vectors, inner product equals cosine similarity, so an `IndexFlatIP` gives exact cosine top-k. Storing past verdicts as text and retrieving the nearest ones into the agent's prompt gives the agent a memory of what was decided before. The memory is pure retrieval, and nothing about the model or the gate changes.
 
 ### Architecture
 
@@ -140,7 +141,7 @@ The agent runs on a local Ollama model, and llama3:8b, the model I started with,
 
 ### 2. Keeping the LLM Off Most Traffic
 
-Transactions never stop arriving, and each investigation is up to 6 rounds of LLM reasoning and tool calls, so the agent can't look at everything. **The gate is what makes the agent affordable: one scikit-learn call per transaction, 149 to 153 transactions per second on one thread, and only about 3 percent passed on.** Three workers bound how many investigations run at once. The producer, consumer and workers all run as asyncio tasks in one FastAPI process, so investigations overlap without any extra infrastructure.
+Transactions never stop arriving, and each investigation is up to 6 rounds of LLM reasoning and tool calls, so the agent can't look at everything. **The gate makes the agent affordable, with one scikit-learn call per transaction, 149 to 153 transactions per second on one thread, and only about 3 percent passed on.** Three workers bound how many investigations run at once. The producer, consumer and workers all run as asyncio tasks in one FastAPI process, so investigations overlap without any extra infrastructure.
 
 ### 3. Memory Without Retraining
 

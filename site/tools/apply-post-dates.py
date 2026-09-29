@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Set each post's front-matter `date:` and `code:` from tools/post-dates.json.
+"""Set each post's front-matter `date:`, `code:` and `tab_title:` from tools/post-dates.json.
 
 A post is dated to when its project started: the first real commit, or, for a
 project that lived only locally before it was committed, the creation time of
@@ -30,7 +30,7 @@ def main() -> int:
                 missing.append(f"{folder}/{post.name} (no front matter)")
                 continue
             new_head = head = m.group(1)
-            for key in ("date", "code"):
+            for key in ("date", "code", "tab_title"):
                 if key not in entry:
                     continue
                 line = f"{key}: {entry[key]}"

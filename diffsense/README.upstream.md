@@ -2,9 +2,6 @@
 
 > 🏆 **AI Berkeley Hackathon Project** - Semantic drift detection using embedding-powered analysis of git history
 
-[![Demo](https://img.shields.io/badge/Demo-Ready-brightgreen)](./setup.sh)
-[![Documentation](https://img.shields.io/badge/Docs-Complete-blue)](./TECHNICAL_ROADMAP.md)
-[![Presentation](https://img.shields.io/badge/Presentation-Guide-purple)](./DEMO_GUIDE.md)
 
 ## 🚀 Quick Start for Judges
 

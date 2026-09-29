@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Encoder Sets the Scale of Commit Drift"
+tab_title: DiffSense
 code: https://github.com/SadeekFarhan21/projects/tree/main/diffsense
 date: 2025-06-21 13:25:13
 tags:
@@ -20,7 +21,7 @@ Afterwards I ran the analysis on DiffSense's own history, and the main lesson is
 
 ## Why It Matters
 
-The pitch is simple. Point DiffSense at a repository and see where it changed and which commits are likely to break callers, without reading every diff.
+The pitch is to point DiffSense at a repository and see where it changed and which commits are likely to break callers, without reading every diff.
 
 Drift was the part I wanted to understand. A commit is a diff plus a message. Embed both, compare each commit to a reference, and look at the distance, and you get a cheap timeline of where a codebase changed character. The alternative is asking an LLM about every commit, which costs a call per commit and isn't reproducible. An embedding distance is one number, computed locally, the same on every run.
 
@@ -42,7 +43,7 @@ DiffSense's `calculate_drift_score` compares each commit to the first one, so it
 
 ### The Hybrid Embedding
 
-A commit has two views. The diff is code, the message is prose. DiffSense embeds them separately and blends them. The code encoder is CodeBERT<sup>[[2]](#ref-2)</sup>, mean pooled over the last hidden state. The text encoder is a sentence transformer, `all-MiniLM-L6-v2`<sup>[[3]](#ref-3)</sup>, trained so that cosine similarity between sentence vectors is meaningful<sup>[[4]](#ref-4)</sup>. The hybrid is
+A commit has two views, code in the diff and prose in the message, so DiffSense embeds them separately and blends them. The code encoder is CodeBERT<sup>[[2]](#ref-2)</sup>, mean pooled over the last hidden state, and the text encoder is a sentence transformer, `all-MiniLM-L6-v2`<sup>[[3]](#ref-3)</sup>, which was trained so that cosine similarity between sentence vectors is meaningful<sup>[[4]](#ref-4)</sup>. The hybrid is
 
 $$
 h = 0.7 \, e_{\text{code}} + 0.3 \, e_{\text{text}},
@@ -56,7 +57,7 @@ Cosine distance only spreads out if the encoder spreads unrelated inputs across 
 
 ### Breaking Changes Without a Model
 
-The other detector doesn't use embeddings at all. It compares the API surface of a file before and after a commit. For Python it parses both versions with the standard `ast` module and collects a signature for every function, async function and class. For JavaScript, Java and C++ it does the comparison with regular expressions. A removed name, a renamed name or a changed parameter list is a candidate breaking change, and a separate behavioral-change category covers edits that keep the signature. It's a heuristic, not a trained classifier.
+The other detector doesn't use embeddings at all. It compares the API surface of a file before and after a commit. For Python it parses both versions with the standard `ast` module and collects a signature for every function, async function and class. For JavaScript, Java and C++ it does the comparison with regular expressions. A removed name, a renamed name or a changed parameter list is a candidate breaking change, and a separate behavioral-change category covers edits that keep the signature. It's a heuristic with no trained classifier behind it.
 
 ### Architecture
 
@@ -191,7 +192,7 @@ I ran the parts that need no paid key, on CPU, with newer libraries than the rep
 | all-MiniLM-L6-v2 | 384 | 0.501 | 0.679 | 0.985 |
 | microsoft/codebert-base (default) | 768 | 0.0135 | 0.0242 | 0.0762 |
 
-**The two encoders put drift on scales that don't overlap: CodeBERT's largest step (0.0762) is far below MiniLM's smallest (0.501).** CodeBERT's biggest steps are the last two commits, Jalen's that integrated change detection into more models (0.062) and Jayson's "More complete frontend" (0.076). MiniLM's biggest is Jalen's "major updates to architecture" (0.985). **The two encoders don't pick the same commit as the biggest move.**
+**The two encoders put drift on scales that don't overlap, and CodeBERT's largest step (0.0762) is far below MiniLM's smallest (0.501).** CodeBERT's biggest steps are the last two commits, Jalen's that integrated change detection into more models (0.062) and Jayson's "More complete frontend" (0.076). MiniLM's biggest is Jalen's "major updates to architecture" (0.985). **The two encoders don't pick the same commit as the biggest move.**
 
 The raw pairwise cosine on unrelated snippets:
 

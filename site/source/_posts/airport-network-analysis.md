@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "O'Hare or Atlanta Tops Every Centrality Ranking"
+tab_title: Flight Network
 tags:
   - network-analysis
   - r
@@ -12,7 +13,7 @@ code: https://github.com/SadeekFarhan21/projects/tree/main/airport-network-analy
 
 This project analyzes a sampled **flight network** and the interconnected airports within it. Using the descriptive techniques in Kolaczyk and Csárdi's *Statistical Analysis of Network Data with R*<sup>[[1]](#ref-1)</sup>, I explore structural patterns in the graph and identify important airports and routes. It is one Quarto notebook in R with igraph<sup>[[6]](#ref-6)</sup>. A sample of 5,065 flights becomes a directed graph of **1,909 airports and 2,574 routes**, and it has the hub-and-spoke shape airlines build: a small number of airports sit at the center with many connections, while most airports have only a few routes each.
 
-The result I like most is how consistent the hubs are. I computed six centrality measures, each with its own idea of what "important" means, and **every ranking is topped by either Chicago O'Hare or Atlanta**. O'Hare leads on degree, closeness and betweenness. Atlanta leads on eigenvector centrality and on both hub and authority scores. The network is also disassortative: the big hubs connect to many small regional airports rather than to each other.
+The result I like most is how consistent the hubs are. I computed six centrality measures, each with its own idea of what "important" means, and **every ranking is topped by either Chicago O'Hare or Atlanta**. O'Hare leads on degree, closeness and betweenness. Atlanta leads on eigenvector centrality and on both hub and authority scores. The network is also disassortative, which means the big hubs connect to many small regional airports rather than to each other.
 
 ## Why It Matters
 
@@ -42,7 +43,7 @@ Not every row becomes an edge. A route needs both an origin and a destination, a
 
 ### Degree, Strength and Neighbours
 
-The **degree** of an airport is the number of direct connections it has. In airline networks the degree distribution is usually highly skewed: a few major hubs have many connections, while most airports have only a few routes. **Strength** is the weighted version. It adds up the flights on each route, so it finds the airports people fly through most often, not just the ones with the most destinations. **Average neighbour degree** is the mean degree of an airport's neighbours. Plotting it against the airport's own degree shows whether airports with lots of connections mostly link to other well-connected airports (assortative mixing), or to smaller, less connected ones (disassortative mixing).
+The **degree** of an airport is the number of direct connections it has. In airline networks the degree distribution is usually highly skewed: a few major hubs have many connections, while most airports have only a few routes. **Strength** is the weighted version. It adds up the flights on each route, so it finds the airports people fly through most often, where degree finds the ones with the most destinations. **Average neighbour degree** is the mean degree of an airport's neighbours. Plotting it against the airport's own degree shows whether airports with lots of connections mostly link to other well-connected airports (assortative mixing), or to smaller, less connected ones (disassortative mixing).
 
 ### Cohesion
 
@@ -183,9 +184,9 @@ Transitivity is low too, at 0.1209 globally and 0.105 on average per airport.
 
 ![Histogram and log-log plot of the degree distribution](/img/posts/airport-network-analysis/degree-distribution.png)
 
-The log-log plot shows a linear relationship in the tail, which is an indication of a power-law or scale-free degree distribution<sup>[[7]](#ref-7)</sup>. That fits the cost argument: airlines concentrate routes on a few hubs.
+The log-log plot shows a linear relationship in the tail, which is an indication of a power-law or scale-free degree distribution<sup>[[7]](#ref-7)</sup>. That fits the cost argument, since airlines concentrate routes on a few hubs.
 
-Strength, which counts flights instead of routes, tells the same story more strongly. Both distributions are right-skewed, but **the strength distribution has an even longer tail**. The major hubs don't just have more destinations; their flights are more frequent too.
+Strength, which counts flights instead of routes, tells the same story more strongly. Both distributions are right-skewed, but **the strength distribution has an even longer tail**. The major hubs have more destinations, and their flights are more frequent too.
 
 ![Side-by-side histograms of vertex degree and vertex strength](/img/posts/airport-network-analysis/degree-and-strength.png)
 

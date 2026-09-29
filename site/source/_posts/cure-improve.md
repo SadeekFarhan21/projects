@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Erasing Artists From Stable Diffusion at Right Angles"
+tab_title: Concept Erasure
 code: https://github.com/SadeekFarhan21/projects/tree/main/cure-improve
 date: 2026-02-27 13:48:53
 tags:
@@ -15,13 +16,13 @@ description: >-
 
 CURE<sup>[[1]](#ref-1)</sup> erases a concept, such as a painter's style, from a text-to-image diffusion model with one closed-form edit to the cross-attention key and value weights. No training. The problem is erasing more than one. Erase concepts one after another and the edits don't compose cleanly: each pair leaves a cross term that damages images you never meant to touch. CURE-Improve is a small team research codebase built around one fix, CURE-Sequential. It keeps a bank of every direction already erased and forces each new concept's projector to be orthogonal to all of them, which makes the cross term zero by construction.
 
-On Stable Diffusion v1.4<sup>[[2]](#ref-2)</sup>, with 3 seeds at 384 px, the bank helps up to a point. From 5 to 50 erased artists, CURE-Sequential drifts less on artists it was never asked to erase (LPIPS<sub>u</sub> 0.7375 against 0.7735 at k=5, CLIP<sub>u</sub> up 0.64 to 2.23 points). At 100 erasures it flips and is worse on both measures (LPIPS<sub>u</sub> 0.7939 against 0.7680, CLIP<sub>u</sub> 21.25 against 21.69). That lines up with the idea's one real cost: CLIP's text space has 768 dimensions, and every erased concept spends some of them for good.
+On Stable Diffusion v1.4<sup>[[2]](#ref-2)</sup>, with 3 seeds at 384 px, the bank helps up to a point. From 5 to 50 erased artists, CURE-Sequential drifts less on artists it was never asked to erase (LPIPS<sub>u</sub> 0.7375 against 0.7735 at k=5, CLIP<sub>u</sub> up 0.64 to 2.23 points). At 100 erasures it flips and is worse on both measures (LPIPS<sub>u</sub> 0.7939 against 0.7680, CLIP<sub>u</sub> 21.25 against 21.69). That lines up with the idea's one real cost. CLIP's text space has 768 dimensions, and every erased concept spends some of them for good.
 
 ## Why It Matters
 
 Concept erasure is for the case where a model has to stop producing something. CURE erases a concept in about two seconds with no gradient steps, which makes it attractive for the "erase a hundred artists" setting. That is also where it degrades. The CURE paper's Figure 6 shows perceptual divergence starting around 50 erasures and stronger interference on untargeted prompts beyond about 100. The question for this project was whether that failure can be fixed without training anything.
 
-The work was split. Arses Prasai built the implementation: a reimplementation of CURE for SD v1.4 (`cure/`, not the authors' code), the sequential variant (`cure_seq/`), a port of the same idea to SD3's MM-DiT architecture (`cure_dit/`), and a shared evaluation harness (`evaluation/`) that scores every method the same way. He also ran the quick-proof benchmark. Jeffrey Xie ran the Figure-6-style sweeps behind the main results. My part is the analysis in this post and two small weight-free scripts, written with AI help. One recomputes the method gaps from the committed results, and the other checks the linear algebra on synthetic data.
+The work was split. Arses Prasai built the implementation, which includes a reimplementation of CURE for SD v1.4 (`cure/`, not the authors' code), the sequential variant (`cure_seq/`), a port of the same idea to SD3's MM-DiT architecture (`cure_dit/`), and a shared evaluation harness (`evaluation/`) that scores every method the same way. He also ran the quick-proof benchmark. Jeffrey Xie ran the Figure-6-style sweeps behind the main results. My part is the analysis in this post and two small weight-free scripts, written with AI help. One recomputes the method gaps from the committed results, and the other checks the linear algebra on synthetic data.
 
 ## Technical Details
 
@@ -47,7 +48,7 @@ $$
 W_2 = W_1 (I - P_2) = W_0 (I - P_1)(I - P_2) = W_0 \big(I - P_1 - P_2 + P_1 P_2\big)
 $$
 
-The first three terms are what you wanted, one projector removed per concept. The last term, $W_0 P_1 P_2$, is an unintended edit. It is zero only when the two projectors annihilate each other, and two concepts that share directions (two painters with overlapping style words, say) won't. The cross term grows with the number of concepts.
+The first three terms are what you wanted, one projector removed per concept, but the last term, $W_0 P_1 P_2$, is an unintended edit. It is zero only when the two projectors annihilate each other, which two concepts that share directions (two painters with overlapping style words, say) won't do. So the more concepts you erase, the larger the cross term grows.
 
 ### Orthogonalizing Against a Bank
 
@@ -174,7 +175,7 @@ LPIPS<sub>u</sub> is already 0.709 at k=1 for both methods, so the baseline drif
 
 ### Quick-Proof Benchmark
 
-**Across the nine summarized runs, the picture is mixed.** CURE-Sequential wins on both target and drop in the five Gavish-Donoho forward runs. Four of those are the same run in effect: the 20-concept forward runs at alpha 1.5, 2.0, 2.5 and 3.0 give identical numbers (target 26.7340 for CURE and 24.8841 for CURE-Sequential in all four), because the Gavish-Donoho threshold ignores alpha. In the reverse-order Gavish-Donoho run `gd_reverse_20c_v2`, CURE-Sequential has better retention (drop 1.4540 against 4.2923) and worse suppression (target 26.1652 against 24.3610). In the Tikhonov runs, `tikhonov_forward` favors CURE-Sequential on retention, and `tikhonov_reverse` gives it slightly better suppression and worse retention (drop 4.7717 against 3.5260). **Erasure order matters in the reverse runs.** Nine runs of 3 to 5 seeds each don't support more than that.
+**Across the nine summarized runs, the picture is mixed.** CURE-Sequential wins on both target and drop in the five Gavish-Donoho forward runs. Four of those are the same run in effect. The 20-concept forward runs at alpha 1.5, 2.0, 2.5 and 3.0 give identical numbers (target 26.7340 for CURE and 24.8841 for CURE-Sequential in all four), because the Gavish-Donoho threshold ignores alpha. In the reverse-order Gavish-Donoho run `gd_reverse_20c_v2`, CURE-Sequential has better retention (drop 1.4540 against 4.2923) and worse suppression (target 26.1652 against 24.3610). In the Tikhonov runs, `tikhonov_forward` favors CURE-Sequential on retention, and `tikhonov_reverse` gives it slightly better suppression and worse retention (drop 4.7717 against 3.5260). **Erasure order matters in the reverse runs.** Nine runs of 3 to 5 seeds each don't support more than that.
 
 ### The Linear Algebra Holds
 

@@ -56,6 +56,45 @@ The writing standard below is adapted from Sean Goedecke, "Writing a tech blog p
 - **Credit collaborators plainly by name** for their parts ("Alex built the player"). Forked and team
   repos Farhan worked on are his work to write about; no per-commit accounting.
 
+## Don't write like AI
+Adapted from Blake Stockton's "Don't Write Like AI" series (AI Writers Room). These are the tells
+readers notice; catch them in editing rather than by prompting around them.
+- **Colons.** No colons in titles or headings. Don't use colons in consecutive paragraphs. Never put
+  a colon mid-paragraph *and* another before the list that follows it; keep at most one. Prefer a
+  real sentence or transition over "The fix is simple: X."
+- **Negation.** Avoid "it's not X, it's Y" / "not just X, but Y". State the positive claim.
+- **Em dashes.** Don't use them; use a comma, parentheses, or two sentences.
+- **Red-flag words and phrases.** Not banned outright (judge in context), but each is a flag and
+  a few together read as machine-written. Prefer the specific, plain word. (Blake Stockton, "Don't
+  Write Like AI" 4 and 5.)
+  - Words: unlock, transform, revolutionize, future-proof, game-changer, strategic, shift, modern,
+    today's, real ("real value"), supercharge, harness, leverage, optimize, streamline,
+    fundamental(ly), unleash, enhanced, unprecedented, seamless, powerful, intuitive, comprehensive,
+    tailored, scalable, agile, dynamic, cutting-edge, best-in-class, next-generation, enable,
+    crucial, essential, key (as an adjective), robust, elevate, align, proactive, nuanced,
+    innovative, intersection, moreover, thrilled, delve, foster, emphasize.
+  - Phrases: "in today's fast-paced…", "in a world where…", "now more than ever", "let's dive in",
+    "let's break it down", "here's the thing", "here's what you need to know", "the goal?",
+    "the result?", "the good news?", "the bottom line", "that's where X comes in", "it's no secret
+    that", "let's face it", "not all X are created equal", "stay ahead of the curve", "imagine a
+    world where", "[Problem]? Meet [solution].", "X is more than just Y. It's Z.", "Do X, so you
+    can Y."
+  - Don't swap in strained second-choice words either ("morphed… nimble… evolving landscape");
+    write the plain, specific thing.
+- **Vague-change intros.** Never open with "In today's…", "As the [field] continues to evolve…",
+  "With the rise of…", "In an increasingly…", "As organizations adapt…" (the formula "As [trend]
+  continues to [vague verb], [audience] must [generic goal]"). Write the intro last, once the post
+  says what it says, and open on something specific from the project: a number, a concrete moment,
+  or a sharp observation. (Blake Stockton, "Don't Write Like AI (6 of 101)".)
+- Vary sentence structure; if three paragraphs in a row share a shape, rewrite one.
+- **Sentence stacking.** A paragraph of short, standalone factual sentences with the same rhythm
+  and no bridges reads like a list without bullets, and readers glaze over. Combine sentences that
+  belong together ("Improv builds confidence by helping people think on their feet"), add
+  transitions ("so", "that's why", "as a result"), mix short and long sentences, and keep a point of
+  view. Pick the few ideas that matter and go deeper on them rather than covering everything.
+  Read the paragraph aloud; if it sounds like a list, rewrite it. (Blake Stockton, "Don't Write
+  Like AI (2 of 101)".)
+
 ## Length and process
 - Size the post to the project: a weekend build is roughly 1,200–2,000 words of prose; a research or
   measurement project with real results can run to ~3,000. Cut repetition before substance.
@@ -73,7 +112,8 @@ The writing standard below is adapted from Sean Goedecke, "Writing a tech blog p
 ## House format (see existing posts)
 Front matter (`layout: post`, Title Case title, 2–4 lowercase topic tags — what the project is
 about, never how it was made, so no `team-project`, one-sentence description with the
-headline number), then these `##` sections in order:
+headline number, and a short `tab_title` for the browser tab: the project's name, or 1–3 words;
+record it in `site/tools/post-dates.json`), then these `##` sections in order:
 
 1. **The introduction is the summary — no heading.** The post opens with one or two untitled
    paragraphs that introduce the problem and give the core takeaway and a high-level technical

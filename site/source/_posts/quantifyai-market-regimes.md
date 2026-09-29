@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Beating Buy-and-Hold by Holding Less Stock"
+tab_title: QuantifyAI
 code: https://github.com/SadeekFarhan21/projects/tree/main/quantifyai-market-regimes
 date: 2025-02-26 15:48:55
 tags:
@@ -14,13 +15,13 @@ description: >-
 
 The 2025 Ohio State Quantathon was a five-day team competition with one question: each day, how much money should sit in the S&P 500 and how much in bonds, if the goal is to beat buy-and-hold? Our answer was QuantifyAI. It labels every day Bear, Bull or Static with a 20% drawdown rule, predicts that label 63 trading days ahead with gradient boosting, flags unusual days with an anomaly ensemble, and backtests about ten allocation strategies on top of both.
 
-Over 2019 to 2022 the best strategy returned **56.68%** with a Sharpe ratio of **1.10** and a maximum drawdown of **-10.68%**, against 52.97%, 0.58 and -33.92% for buy-and-hold. The more interesting part is where that Sharpe comes from. Annualised return barely moves, 11.88% against 11.21%, while annualised volatility falls from 22.9% to 10.7%. **The strategy wins by holding less equity through a window that contains the 2020 crash. It is a risk-control result, not a forecasting result.**
+Over 2019 to 2022 the best strategy returned **56.68%** with a Sharpe ratio of **1.10** and a maximum drawdown of **-10.68%**, against 52.97%, 0.58 and -33.92% for buy-and-hold. The more interesting part is where that Sharpe comes from. Annualised return barely moves, 11.88% against 11.21%, while annualised volatility falls from 22.9% to 10.7%. **The strategy wins by holding less equity through a window that contains the 2020 crash. It is a risk-control result more than a forecasting one.**
 
 ## Why It Matters
 
 The competition gave us a daily S&P 500 series, a bond rate and two "market-based probability" series. The brief asked us to predict market regimes, comparing Markov chains, gradient boosting and LSTMs, and to beat buy-and-hold. This post covers the gradient boosting path.
 
-Regimes are a useful target because allocation doesn't need a price. It needs one decision a day: how much equity to hold. A coarse label like Bear, Bull or Static maps straight onto that decision. Our first attempt, predicting the price level itself, went nowhere (see [Problems](#problems)).
+Regimes are a useful target because allocation needs only one decision a day, how much equity to hold. A coarse label like Bear, Bull or Static maps straight onto that decision. Our first attempt, predicting the price level itself, went nowhere (see [Problems](#problems)).
 
 What makes this worth writing up is the gap between the Sharpe and the forecast. A strategy that cuts equity at the right moments looks brilliant on Sharpe whether or not its model can see the future, because Sharpe rewards lower volatility as much as higher return. If you want to know what you built, you have to pull the two apart, and that is most of what I measured after the competition.
 
@@ -35,7 +36,7 @@ $$
 \text{Rise}_t = \frac{P_t}{\min_{s \in (t-252,\,t]} P_s} - 1.
 $$
 
-A day is Bear if $\text{DD}_t \le -0.2$, Bull if it is not Bear and $\text{Rise}_t \ge 0.2$, and Static otherwise. This follows the familiar 20% convention for bull and bear markets<sup>[[1]](#ref-1)</sup>, with the 252-day window standing in for peaks and troughs. Because the window is trailing, the label does not look ahead. It is also a lagging description: a Bear label appears only after a 20% fall has happened.
+A day is Bear if $\text{DD}_t \le -0.2$, Bull if it is not Bear and $\text{Rise}_t \ge 0.2$, and Static otherwise. This follows the familiar 20% convention for bull and bear markets<sup>[[1]](#ref-1)</sup>, with the 252-day window standing in for peaks and troughs. Because the window is trailing, the label does not look ahead. It is also a lagging description, because a Bear label appears only after a 20% fall has happened.
 
 ### Predicting a Regime 63 Days Out
 
@@ -161,7 +162,7 @@ The test is a single path with one crash in it, and the placebo is the only unce
 
 <figure data-figure="chart:projects/quantifyai-market-regimes/quantifyai-market-regimes-strategies"></figure>
 
-Buy-and-hold matches the paper exactly: 52.97% total, 11.21% a year, Sharpe 0.58, drawdown -33.92%, win rate 54.12%. **The combined anomaly-regime strategy reproduces its Sharpe of 1.10:** 56.68% total, drawdown -10.68% and a 59.03% win rate, against 56.41%, 1.10 and -10.68% in the paper's table. Two of the other strategies land about 2 points off the table (prediction 42.77% against 44.89%, dynamic 51.65% against 53.49%).
+Buy-and-hold matches the paper exactly: 52.97% total, 11.21% a year, Sharpe 0.58, drawdown -33.92%, win rate 54.12%. **The combined anomaly-regime strategy reproduces its Sharpe of 1.10**, with 56.68% total, drawdown -10.68% and a 59.03% win rate, against 56.41%, 1.10 and -10.68% in the paper's table. Two of the other strategies land about 2 points off the table (prediction 42.77% against 44.89%, dynamic 51.65% against 53.49%).
 
 Against simple baselines on the same window, a constant 50/50 mix returned 29.79% with Sharpe 0.63 and drawdown -18.03%, and 60/40 returned 34.70%, 0.61 and -21.38%. **Only the headline strategy beats buy-and-hold on total return, and buy-and-hold has the deepest drawdown of any of them.** The window contains the 2020 crash, the fast recovery and the 2022 fall, which is exactly the kind of period where cutting equity pays.
 

@@ -4,16 +4,48 @@
   "unit": "Sharpe ratio",
   "title": "Ablating the Headline Strategy",
   "subtitle": "Combined anomaly-regime strategy with one input changed, 2019-2022",
-  "legendLabels": { "emphasis": "As published", "other": "Ablations from my audit" },
+  "legendLabels": {
+    "emphasis": "Headline strategy",
+    "other": "One input changed"
+  },
   "rows": [
-    { "label": "Causal rolling-z anomalies", "value": 1.16, "detail": "30 flagged days. Total return 58.63%, max drawdown -10.58%" },
-    { "label": "As published", "value": 1.10, "emphasis": true, "detail": "Total return 56.68%, max drawdown -10.68%" },
-    { "label": "Placebo, 31 random anomaly days (mean of 200)", "value": 0.93, "detail": "5th to 95th percentile 0.65 to 1.22. 14.5% of runs match or beat 1.10" },
-    { "label": "Predicted state set to current state", "value": 0.88, "detail": "Total return 50.35%, max drawdown -19.55%" },
-    { "label": "Always Bull, real anomalies", "value": 0.79, "detail": "Total return 56.02%, max drawdown -22.56%" },
-    { "label": "Anomalies switched off", "value": 0.96, "detail": "Total return 50.01%, max drawdown -12.31%" },
-    { "label": "Always Bull, no anomalies", "value": 0.60, "detail": "Total return 47.27%, max drawdown -29.01%" }
+    {
+      "label": "Causal rolling-z anomalies",
+      "value": 1.16,
+      "detail": "30 flagged days. Total return 58.63%, max drawdown -10.58%"
+    },
+    {
+      "label": "As published",
+      "value": 1.1,
+      "emphasis": true,
+      "detail": "Total return 56.68%, max drawdown -10.68%"
+    },
+    {
+      "label": "Placebo, 31 random anomaly days (mean of 200)",
+      "value": 0.93,
+      "detail": "5th to 95th percentile 0.65 to 1.22. 14.5% of runs match or beat 1.10"
+    },
+    {
+      "label": "Predicted state set to current state",
+      "value": 0.88,
+      "detail": "Total return 50.35%, max drawdown -19.55%"
+    },
+    {
+      "label": "Always Bull, real anomalies",
+      "value": 0.79,
+      "detail": "Total return 56.02%, max drawdown -22.56%"
+    },
+    {
+      "label": "Anomalies switched off",
+      "value": 0.96,
+      "detail": "Total return 50.01%, max drawdown -12.31%"
+    },
+    {
+      "label": "Always Bull, no anomalies",
+      "value": 0.6,
+      "detail": "Total return 47.27%, max drawdown -29.01%"
+    }
   ],
-  "caption": "An audit I wrote after the fact, not the team's code. The placebo row is a mean, so its range matters more than its height. One path, so none of these differences are tested for significance.",
+  "caption": "Each row changes one input to the combined strategy and reruns the backtest. The placebo row is a mean, so its range matters more than its height. One path, so none of these differences are tested for significance.",
   "source": "results/ablation_output.txt from python tools/ablate.py"
 }

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Timestamps and Hashes Did Most of My Photo Culling"
+tab_title: Photo Culling
 code: https://github.com/SadeekFarhan21/projects/tree/main/photography-site
 date: 2024-11-18 11:33:22
 tags:
@@ -15,13 +16,13 @@ description: >-
 
 I shoot city and landscape travel photos, and my Google Photos library had **2,952 images** in it, thousands of them near-identical frames: burst shots, drone passes and repeat attempts at the same skyline. I built a pipeline to turn that pile into a portfolio. Classical filters catch blur and bursts, a vision model scores each photo against a written rubric, a second pass ranks the survivors and writes titles and captions, and a bulk uploader pushes the result into a Next.js photo site.
 
-The main lesson is that the cheap signals did most of the work. The cloud scoring run scored **1,803 photos and kept 217** at a threshold of 70, about 12 percent, and **most of the cuts came from grouping near-duplicates by capture time and perceptual hash, not from the aesthetic score**. The small local model I tried first did even less: a 3B vision model on a laptop put 1,669 of 2,419 photos in the 20s and removed only 13.
+The main lesson is that the cheap signals did most of the work. The cloud scoring run scored **1,803 photos and kept 217** at a threshold of 70, about 12 percent, and **most of the cuts came from grouping near-duplicates by capture time and perceptual hash, not from the aesthetic score**. The small local model I tried first did even less. A 3B vision model on a laptop put 1,669 of 2,419 photos in the 20s and removed only 13.
 
 ## Why It Matters
 
 Every photographer knows this problem. The one good frame sits next to a dozen near-identical ones, and picking by hand from about 2,950 files is slow, boring work. I wanted a machine to make the first cut.
 
-There are two sites. The first was the quick answer: a Jekyll gallery, [PhotographyWebsite](https://github.com/SadeekFarhan21/PhotographyWebsite), built on rampatra's photography template<sup>[[1]](#ref-1)</sup> and AJ's html5up design<sup>[[2]](#ref-2)</sup>, with 52 photos I picked by hand, deployed on Vercel. The second was the ambitious one: a database-backed gallery with EXIF, location pages and proper storage, fed by a curated set instead of whatever I remembered to upload. It is a fork of Sam Becker's exif-photo-blog<sup>[[3]](#ref-3)</sup>, and the curation pipeline sits next to it.
+There are two sites. The first was the quick answer, a Jekyll gallery, [PhotographyWebsite](https://github.com/SadeekFarhan21/PhotographyWebsite), built on rampatra's photography template<sup>[[1]](#ref-1)</sup> and AJ's html5up design<sup>[[2]](#ref-2)</sup>, with 52 photos I picked by hand, deployed on Vercel. The second was the ambitious one, a database-backed gallery with EXIF, location pages and proper storage, fed by a curated set instead of whatever I remembered to upload. It is a fork of Sam Becker's exif-photo-blog<sup>[[3]](#ref-3)</sup>, and the curation pipeline sits next to it.
 
 I kept the pipeline's job narrow. Cut the library down mechanically, rank what's left with a vision model against a rubric, generate titles, captions and tags, and upload with the EXIF data and blur placeholders the site expects.
 
@@ -37,7 +38,7 @@ The curation path has six stages. Google Photos access produces a folder of file
 
 ### Cheap Filters First
 
-Before any model sees a photo, two classical checks are nearly free. Blur can be estimated as the variance of the Laplacian of the image: a sharp image has strong edges and a high variance<sup>[[4]](#ref-4)</sup>. Duplicates and bursts can be found with perceptual hashes, which map visually similar images to hashes that differ in only a few bits. A difference hash (dHash) compares the brightness of adjacent pixels in a tiny grayscale copy<sup>[[5]](#ref-5)</sup>, and the DCT-based pHash is its heavier relative<sup>[[6]](#ref-6)</sup>. The distance between two hashes is the Hamming distance, the number of bits that differ. `curate.py` uses pHash, and `curate_month.py` uses its own 64-bit dHash, treating a Hamming distance of 6 or less as a duplicate.
+Before any model sees a photo, two classical checks are nearly free. Blur can be estimated as the variance of the Laplacian of the image, since a sharp image has strong edges and a high variance<sup>[[4]](#ref-4)</sup>. Duplicates and bursts can be found with perceptual hashes, which map visually similar images to hashes that differ in only a few bits. A difference hash (dHash) compares the brightness of adjacent pixels in a tiny grayscale copy<sup>[[5]](#ref-5)</sup>, and the DCT-based pHash is its heavier relative<sup>[[6]](#ref-6)</sup>. The distance between two hashes is the Hamming distance, the number of bits that differ. `curate.py` uses pHash, and `curate_month.py` uses its own 64-bit dHash, treating a Hamming distance of 6 or less as a duplicate.
 
 ### Session Clustering by Time
 
@@ -47,7 +48,7 @@ Photos from one burst or one drone flight are taken seconds apart. Sort by captu
 
 ### Prompted Scoring Is a Coarse Instrument
 
-Asking a vision language model for a 0 to 100 aesthetic score is an LLM-as-judge setup<sup>[[7]](#ref-7)</sup>. It's cheap and it can follow a written rubric, but the scores aren't calibrated. A small model may squeeze everything into a narrow band, which is exactly what I saw, and even a strong one is a filter, not an oracle. That shaped the design: use the model to throw out the clearly weak, not to crown the best.
+Asking a vision language model for a 0 to 100 aesthetic score is an LLM-as-judge setup<sup>[[7]](#ref-7)</sup>. It's cheap and it can follow a written rubric, but the scores aren't calibrated. A small model may squeeze everything into a narrow band, which is exactly what I saw, and even a strong one is only a filter. That shaped the design. The model throws out the clearly weak, and I don't ask it to crown the best.
 
 ## Implementation
 
@@ -84,7 +85,7 @@ My first plan, `run_pipeline.sh`, ran two local passes with Ollama: qwen2.5vl:3b
 
 ### The Rubric
 
-The prompt asks for a harsh scale for a city and landscape travel portfolio. People can appear in scenes, but portraits and selfies score low. Glare costs 10 points. When several images are shown together, near-duplicates cost 20 points, which I called the variety rule. Sharpness is deliberately left out of the rubric, because the model only ever sees a downscaled copy. The second pass, `prompt_pass2.txt`, is brutal on purpose: most photos should land in the 50s and 60s, and only a handful should reach 90.
+The prompt asks for a harsh scale for a city and landscape travel portfolio. People can appear in scenes, but portraits and selfies score low. Glare costs 10 points. When several images are shown together, near-duplicates cost 20 points, which I called the variety rule. Sharpness is deliberately left out of the rubric, because the model only ever sees a downscaled copy. The second pass, `prompt_pass2.txt`, is brutal on purpose. Most photos should land in the 50s and 60s, and only a handful should reach 90.
 
 ### Metadata and Upload
 

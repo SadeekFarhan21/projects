@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Graphing What Biomedical Papers Mention Together"
+tab_title: Empirica
 code: https://github.com/SadeekFarhan21/projects/tree/main/empirica-biomedical-graphs
 date: 2025-10-24 23:27:00
 tags:
@@ -24,7 +25,7 @@ The idea was a reading aid. Instead of skimming forty abstracts, you upload the 
 
 The scope was broad for a weekend: several PDFs per project, each with its own graph that can be switched on and off; biomedical entity extraction; communities and centrality so the graph says something beyond a hairball; an LLM chat and hypothesis generator; an agent that finds more papers; and Google sign-in with a project list per user.
 
-Jalen Francis built most of it: the NLP and graph pipeline, the retrieval layer, the LLM service, the agentic module and most of the frontend. Edward Kim wrote the first Google OAuth pass. I built the login screen and branding and the backend's health-check and auth-check endpoints. The upstream repository is [jalenfran/synapsemapper](https://github.com/jalenfran/synapsemapper), and my copy is [SadeekFarhan21/empirica](https://github.com/SadeekFarhan21/empirica).
+Jalen Francis built most of it, including the NLP and graph pipeline, the retrieval layer, the LLM service, the agentic module and most of the frontend. Edward Kim wrote the first Google OAuth pass. I built the login screen and branding and the backend's health-check and auth-check endpoints. The upstream repository is [jalenfran/synapsemapper](https://github.com/jalenfran/synapsemapper), and my copy is [SadeekFarhan21/empirica](https://github.com/SadeekFarhan21/empirica).
 
 ## Technical Details
 
@@ -32,11 +33,11 @@ Jalen Francis built most of it: the NLP and graph pipeline, the retrieval layer,
 
 Biomedical named entity recognition is a mature task. Empirica uses `en_ner_bionlp13cg_md`, one of the scispaCy models<sup>[[1]](#ref-1)</sup>, trained on the BioNLP 2013 Cancer Genetics corpus<sup>[[3]](#ref-3)</sup>, which labels things like genes or gene products, chemicals, cancers, cell types and organisms. Given a sentence, it returns character spans and labels.
 
-Relations are harder: saying how two entities are related means reading the sentence. Empirica does the cheapest thing and keeps the sentence so a human can judge.
+Relations are harder, because saying how two entities are related means reading the sentence. Empirica does the cheapest thing and keeps the sentence so a human can judge.
 
 ### Co-occurrence as an Edge
 
-If two entities appear in the same sentence, draw an edge between them and count how many sentences they share. That is the oldest trick in literature mining, and Swanson's early literature-based discovery work leaned on it at the level of whole articles<sup>[[4]](#ref-4)</sup>. It has high recall and low precision: two entities can share a sentence because one causes the other, because they were measured in the same assay, or because they sit in the same list, and the edge cannot tell which. What it does well is stay auditable: keep the sentence, and every edge can be checked.
+If two entities appear in the same sentence, draw an edge between them and count how many sentences they share. That is the oldest trick in literature mining, and Swanson's early literature-based discovery work leaned on it at the level of whole articles<sup>[[4]](#ref-4)</sup>. It has high recall and low precision: two entities can share a sentence because one causes the other, because they were measured in the same assay, or because they sit in the same list, and the edge cannot tell which. What it does well is stay auditable. Keep the sentence, and every edge can be checked.
 
 <figure class="excal" data-diagram="empirica-biomedical-graphs-edge-extraction"><a href="/img/diagrams/empirica-biomedical-graphs-edge-extraction.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/empirica-biomedical-graphs-edge-extraction.webp" alt="Two ways Empirica makes an edge: sentence-level co-occurrence adds weight 1 to every entity pair in a sentence and keeps up to three evidence sentences, and regex verb patterns with single-word captures turn 'the p38 MAPK inhibits NF-kB signaling' into an edge with source MAPK and target NF because the hyphen cuts the entity." width="2400" height="1643" loading="lazy" decoding="async"></a></figure>
 

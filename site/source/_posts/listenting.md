@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Learning Chinese by Ear From Sun Tzu"
+tab_title: ListenTing
 code: https://github.com/SadeekFarhan21/projects/tree/main/listenting
 date: 2026-05-23 09:30:30
 tags:
@@ -40,7 +41,7 @@ $$
 \text{frame length} = \left\lfloor \frac{1152}{8} \cdot \frac{\text{bitrate}}{\text{sample rate}} \right\rfloor + \text{padding}
 $$
 
-so summing frames and dividing the total samples by the sample rate gives the duration. That is exact for constant-bitrate audio, and the script requests `mp3_44100_128` from ElevenLabs.<sup>[[6]](#ref-6)</sup> The frame formula is standard MP3 framing, not something from that documentation.
+so summing frames and dividing the total samples by the sample rate gives the duration. That is exact for constant-bitrate audio, and the script requests `mp3_44100_128` from ElevenLabs.<sup>[[6]](#ref-6)</sup> That citation covers the output format; the frame formula itself is standard MP3 framing.
 
 ### Architecture
 
@@ -144,7 +145,7 @@ A synced transcript needs the start and end of every sentence inside a chapter-l
 
 ### 3. Grading a Spoken Answer Kindly
 
-A check-in that makes a heritage speaker feel stupid defeats the point of the app. The grading prompt tells the model to be warm and never shame, and to treat the transcription as possibly wrong, since browser speech recognition mishears. **I split the models by difficulty: question writing is short and forgiving, so it goes to Haiku 4.5; grading a free-form spoken answer against a rubric is the judgment step, so it goes to Sonnet 4.5.**
+A check-in that makes a heritage speaker feel stupid defeats the point of the app. The grading prompt tells the model to be warm and never shame, and to treat the transcription as possibly wrong, since browser speech recognition mishears. **I split the models by difficulty. Question writing is short and forgiving, so it goes to Haiku 4.5, while grading a free-form spoken answer against a rubric is the judgment step, so it goes to Sonnet 4.5.**
 
 ## Experiments
 

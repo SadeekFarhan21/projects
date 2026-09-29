@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Keeping Columbus's Lead-Pipe Loan Fund From Running Dry"
+tab_title: LEAP Loan Fund
 code: https://github.com/SadeekFarhan21/projects/tree/main/quantathon-leap-reserve
 date: 2026-03-28 10:33:40
 tags:
@@ -12,13 +13,13 @@ description: "A two-person Quantathon 2026 entry sizes a $2.73M Columbus lead-pi
 
 Columbus runs LEAP, a loan fund that pays for replacing lead and galvanized water service lines. It lends up to $10,000 at 0% for up to 99 years, and the loan is repaid in one lump sum when the house is sold or equity is withdrawn. For Quantathon 2026 (the SIAM-MTI challenge), Aaditya and I had to answer one question: how much should the city set aside in 2026 so the fund never runs dry before the 2037 federal replacement deadline?
 
-We built a cohort Monte Carlo that simulates 34,269 eligible lines over twelve years on 3,000 paths and takes the 95th percentile of each path's worst cumulative deficit. The answer is **$2.73M** for loans, against **$4.01M** for an equivalent grant program. A Markov-chain benchmark built from the same inputs agrees with the simulation to within 0.015% once both measure the same quantity. The more useful finding is where the uncertainty lives: the sampling error on $2.73M is about $25k, while a plausible range for a single uptake rate estimated from the pilot moves it by nearly $1M.
+We built a cohort Monte Carlo that simulates 34,269 eligible lines over twelve years on 3,000 paths and takes the 95th percentile of each path's worst cumulative deficit. The answer is **$2.73M** for loans, against **$4.01M** for an equivalent grant program. A Markov-chain benchmark built from the same inputs agrees with the simulation to within 0.015% once both measure the same quantity. The more useful finding is where the uncertainty lives. The sampling error on $2.73M is about $25k, while a plausible range for a single uptake rate estimated from the pilot moves it by nearly $1M.
 
 ## Why It Matters
 
-Lead service lines have a hard federal deadline, and a loan fund that runs out of money halfway there stalls replacements for the households that depend on it. A grant program is simple to budget: you spend what you give away. A loan fund is harder, because money comes back, but slowly and at times nobody controls. A loan is repaid when a house sells, and nobody knows when that will be.
+Lead service lines have a hard federal deadline, and a loan fund that runs out of money halfway there stalls replacements for the households that depend on it. A grant program is simple to budget, because you spend what you give away. A loan fund is harder, because money comes back, but slowly and at times nobody controls. A loan is repaid when a house sells, and nobody knows when that will be.
 
-The task asked for the 2026 upfront funding that sustains the program through 2037 at a 95%-sufficient level, a comparison of the loan structure with a grant, and a confidence interval on the recommendation. There are 34,269 eligible lines (whole-lead lines plus customer-side galvanized lines, minus the overlap) out of 288,389 in the system materials table. The pilot data is tiny: 64 observed funded loan amounts with a mean of $7,386 and a cap-limited maximum of $10,000, and a snapshot of 62 active loans (42 completed, 20 in progress).
+The task asked for the 2026 upfront funding that sustains the program through 2037 at a 95%-sufficient level, a comparison of the loan structure with a grant, and a confidence interval on the recommendation. There are 34,269 eligible lines (whole-lead lines plus customer-side galvanized lines, minus the overlap) out of 288,389 in the system materials table. The pilot data is tiny, with 64 observed funded loan amounts with a mean of $7,386 and a cap-limited maximum of $10,000, and a snapshot of 62 active loans (42 completed, 20 in progress).
 
 That set the design. A city cannot observe a fund's future, so the reserve has to come from a simulation of household behavior over twelve years, driven by parameters estimated from a pilot that is barely larger than a classroom. A single expected value would hide the risk, so the model produces a distribution and reports a high percentile of it. Everything else we built is there to show how far to trust that percentile.
 
@@ -44,7 +45,7 @@ Each loan is Active, Inherited or Repaid. Active loans repay on a sale (5.6% a y
 
 ### Jensen's Inequality for a Maximum
 
-For any random process, $E[\max_t X_t] \ge \max_t E[X_t]$, because the maximum is convex<sup>[[2]](#ref-2)</sup>. A deterministic expected-value model computes the right-hand side. A Monte Carlo average of per-path peaks computes the left. They differ whenever the peak moves between paths.
+For any random process, $E[\max_t X_t] \ge \max_t E[X_t]$, because the maximum is convex<sup>[[2]](#ref-2)</sup>. A deterministic expected-value model computes the right-hand side, while a Monte Carlo average of per-path peaks computes the left, so the two differ whenever the peak moves between paths.
 
 ### Two Kinds of Uncertainty
 
@@ -103,7 +104,7 @@ The agent simulation scales 10,000 parcels up to 34,269 and adds regime switchin
 
 The deterministic benchmark gives a maximum cumulative deficit of **$2,471,551**. The Monte Carlo mean is $2,489,537, a gap of 0.72%, and the deterministic value falls outside the bootstrap interval for the mean, $2,484,206 to $2,494,821. Two implementations built from the same inputs should not disagree like that, so either one has a bug or the comparison is wrong.
 
-It was the comparison. The deterministic model computes $\max_t E[X_t]$, and the interval is for $E[\max_t X_t]$. So I computed the right quantity from the same 3,000 paths: average the cumulative net outflow per year first, then take the maximum over years.
+It was the comparison. The deterministic model computes $\max_t E[X_t]$, and the interval is for $E[\max_t X_t]$. So I computed the right quantity from the same 3,000 paths, averaging the cumulative net outflow per year first and then taking the maximum over years.
 
 ```python
 # scripts/measure.py (added in the port)
@@ -116,7 +117,7 @@ The result is $2,471,915, within 0.015% of the deterministic $2,471,551. **Compa
 
 ### 2. Separating Sampling Error from Parameter Uncertainty
 
-The bootstrap interval for the P95 is $2,716,604 to $2,741,433, a width of about $24.8k. That is tight, and it is easy to read as the precision of the $2.73M. It is only the Monte Carlo sampling error from using 3,000 paths instead of infinitely many. **The tornado swing on the uptake start rate alone is $987,296** (P95 of $2.21M at 0.16% to $3.20M at 0.25%), about 40 times the P95 interval width and 93 times the mean interval width. **A confidence interval on the recommendation is mostly parameter uncertainty, not sampling error.**
+The bootstrap interval for the P95 is $2,716,604 to $2,741,433, a width of about $24.8k. That is tight, and it is easy to read as the precision of the $2.73M. It is only the Monte Carlo sampling error from using 3,000 paths instead of infinitely many. **The tornado swing on the uptake start rate alone is $987,296** (P95 of $2.21M at 0.16% to $3.20M at 0.25%), about 40 times the P95 interval width and 93 times the mean interval width. **A confidence interval on the recommendation is mostly parameter uncertainty, with sampling error a small part of it.**
 
 The rate itself, 0.20% a year, rests on a single pilot window of 62 active loans. To make the point concrete I pooled paths over a uniform prior on the uptake start rate from 0.16% to 0.25%, the tornado's own range. The prior is my assumption. The mixture has a mean of $2,514,853 and a **P95 of $3,029,090**. Treat that as an illustration of how much wider an honest interval is, not as a better estimate.
 
@@ -152,7 +153,7 @@ The averaged deficit curve peaks at $2,471,915 in 2034, and paths peak anywhere 
 
 <figure data-figure="chart:projects/quantathon-leap-reserve/quantathon-leap-reserve-uptake-sweep"></figure>
 
-The P95 is roughly linear in the uptake start rate until the cap binds: $1.45M at 0.10%, $2.09M at 0.15%, $2.21M at 0.16%, $2.73M at 0.20%, $3.20M at 0.25%, and $3.35M at both 0.30% and 0.40%. **That is about $1.3M of reserve per 0.10 percentage points of uptake**: the 0.10% to 0.20% endpoints, $1.45M to $2.73M, give $1.28M. The tornado ranking puts uptake first, then schedule weighting, then sale probability and cost inflation. Federal rules could raise uptake by 2 to 5 times, which would move the reserve toward the surge scenario.
+The P95 is roughly linear in the uptake start rate until the cap binds: $1.45M at 0.10%, $2.09M at 0.15%, $2.21M at 0.16%, $2.73M at 0.20%, $3.20M at 0.25%, and $3.35M at both 0.30% and 0.40%. **That is about $1.3M of reserve per 0.10 percentage points of uptake.** The 0.10% to 0.20% endpoints, $1.45M to $2.73M, give $1.28M. The tornado ranking puts uptake first, then schedule weighting, then sale probability and cost inflation. Federal rules could raise uptake by 2 to 5 times, which would move the reserve toward the surge scenario.
 
 ### Stress Scenarios
 

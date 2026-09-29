@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Casual Riders Keep Divvy Bikes Twice as Long"
+tab_title: Divvy Trips
 code: https://github.com/SadeekFarhan21/projects/tree/main/divvy-bike-analysis
 date: 2025-01-18 13:34:33
 tags:
@@ -16,7 +17,7 @@ description: >-
 
 Divvy is Chicago's bike share, and every trip it logs records when it started and ended, where, on what kind of bike, and whether the rider was a member or a casual user. In January 2025 I built a Quarto site in R that turns all of 2024, about 5.86 million trips, into charts that answer who rides, when and where. The clearest answer is that **casual riders ride about twice as long as members, 25.2 minutes a ride against 12.8**. Saturday is the busiest day, the hourly curve peaks at 17:00, the busiest month is September rather than July, and one station, Streeter Dr and Grand Ave, leads the rest by a wide margin.
 
-Technically it is descriptive exploratory analysis<sup>[[1]](#ref-1)</sup>, small and deliberately plain. Twelve monthly CSVs are stacked with the tidyverse<sup>[[2]](#ref-2)</sup>, a few time columns are derived, and each question gets one group-and-summarise feeding one ggplot2<sup>[[3]](#ref-3)</sup> chart, plus two Leaflet<sup>[[4]](#ref-4)</sup> maps, all rendered to a static page. It has counts and means and no models, so what it shows is the shape of one year of trips, not an explanation of it.
+Technically it is descriptive exploratory analysis<sup>[[1]](#ref-1)</sup>, small and deliberately plain. Twelve monthly CSVs are stacked with the tidyverse<sup>[[2]](#ref-2)</sup>, a few time columns are derived, and each question gets one group-and-summarise feeding one ggplot2<sup>[[3]](#ref-3)</sup> chart, plus two Leaflet<sup>[[4]](#ref-4)</sup> maps, all rendered to a static page. It has counts and means and no models, so it shows the shape of one year of trips without explaining it.
 
 ## Why It Matters
 
@@ -109,11 +110,11 @@ The Leaflet maps group by `start_lat` and `start_lng`, take `slice_max(n = 10)`,
 
 ## Problems
 
-The hard part of this project was not the code. It was deciding what a year of trip records can honestly support, and shaping every chart around that.
+The hard part of this project was deciding what a year of trip records can honestly support, and shaping every chart around that.
 
 ### 1. The Data Counts Trips, Not People
 
-There is no user ID, so one person taking 300 rides counts 300 times. I built every chart around trips for that reason. **Every number here is about trips, not riders**, and "casual riders ride longer" really means "casual trips last longer". Nothing in the data says how many distinct people are behind either group.
+There is no user ID, so one person taking 300 rides counts 300 times. I built every chart around trips for that reason. **Every number here is about trips**, and "casual riders ride longer" really means "casual trips last longer". Nothing in the data says how many distinct people are behind either group.
 
 ### 2. A Mean Is Not a Typical Ride
 
@@ -151,7 +152,7 @@ By season, **summer rides are longest and winter rides shortest**: roughly 19.4 
 
 By hour, **the day has a commuter shape**. The chart peaks at 17:00 with roughly 600,000 rides, with 16:00 near 535,000 and 18:00 near 480,000, plus a smaller morning bump at 08:00 near 330,000. The minimum is overnight, at about 15,000 around hours 3 and 4.
 
-By month, **September, not July, is the peak**, at about 820,000 rides, with July and August near 750,000. January is lowest at about 145,000 and December is about 178,000.
+By month, **September is the peak**, at about 820,000 rides, with July and August near 750,000. January is lowest at about 145,000 and December is about 178,000.
 
 ### Where
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "A Pill Dispenser Built Around One Dose Record"
+tab_title: PillifyAI
 code: https://github.com/SadeekFarhan21/projects/tree/main/pillifyai
 date: 2025-03-28 22:45:01
 tags:
@@ -13,9 +14,9 @@ description: >-
   dose record.
 ---
 
-A prescription is a piece of paper and a promise. Nobody can tell whether the pill actually came out of the bottle. At the Make2025 hackathon, Jalen Francis and I built PillifyAI in about 19.5 hours to close that loop. A doctor prescribes in a mobile app. A server turns the prescription into scheduled dose records. A dispenser asks the server what's due, releases the dose, and reports back, so the patient's history can show a dose the device confirmed and not just one the patient claimed.
+A prescription is a piece of paper and a promise. Nobody can tell whether the pill actually came out of the bottle. At the Make2025 hackathon, Jalen Francis and I built PillifyAI in about 19.5 hours to close that loop. A doctor prescribes in a mobile app. A server turns the prescription into scheduled dose records. A dispenser asks the server what's due, releases the dose, and reports back, so the patient's history can tell a dose the device confirmed from one the patient only claimed.
 
-What made it work is one decision: **a dose is a single row, and every part of the system reads and writes that row.** The app, the server and the dispenser never talk to each other directly, and the row keeps "the patient says they took it" separate from "the device says it released it". Under the hood there's an Expo and React Native app, a Node, Express and Postgres server, an ESP32 that polls the server every 30 seconds, and Raspberry Pi scripts that drive a hacked SG90 servo and a piezo buzzer.
+What made it work is one decision. **A dose is a single row, and every part of the system reads and writes that row.** The app, the server and the dispenser never talk to each other directly, and the row keeps "the patient says they took it" separate from "the device says it released it". Under the hood there's an Expo and React Native app, a Node, Express and Postgres server, an ESP32 that polls the server every 30 seconds, and Raspberry Pi scripts that drive a hacked SG90 servo and a piezo buzzer.
 
 ## Why It Matters
 
@@ -33,7 +34,7 @@ This was a hackathon build, not a clinical product. The point was to get the loo
 
 ### One Record as the Shared Truth
 
-The whole design comes down to one idea. The doctor's prescription creates the dose row as pending. The dispenser's report marks it dispensed. The patient's history reads it. Since the state lives only in that row, the three clients never need to coordinate, and each one can be built and tested against the server alone. With two people and one night, that mattered.
+The whole design comes down to one idea, and it lives in the dose row. The doctor's prescription creates that row as pending, the dispenser's report marks it dispensed, and the patient's history reads it. Since the state lives only in that row, the three clients never need to coordinate, and each one can be built and tested against the server alone. With two people and one night, that mattered.
 
 The `MedicationTracking` model has exactly the fields that idea needs. Condensed from the source, with layout and some `allowNull` options trimmed:
 
@@ -53,11 +54,11 @@ The split between `status` and `deviceDispensed` is the design choice I care abo
 
 ### Polling Instead of Pushing
 
-A microcontroller on home WiFi is hard to reach from outside, so the dispenser asks the server instead of waiting to be told. Polling on an interval is the simplest design that works under that constraint, and it fits the request-response REST style the server already speaks<sup>[[1]](#ref-1)</sup>. The cost is latency, and the interval sets the limit: with a 30 second poll, a due dose waits at most 30 seconds before the dispenser notices. A pill scheduled for a given minute can wait that long, and the behavior is easy to reason about.
+A microcontroller on home WiFi is hard to reach from outside, so the dispenser asks the server instead of waiting to be told. Polling on an interval is the simplest design that works under that constraint, and it fits the request-response REST style the server already speaks<sup>[[1]](#ref-1)</sup>. The cost is latency, and the interval sets the limit. With a 30 second poll, a due dose waits at most 30 seconds before the dispenser notices. A pill scheduled for a given minute can wait that long, and the behavior is easy to reason about.
 
 ### Hobby Servos and Pulse Width
 
-A standard hobby servo expects a pulse every 20 ms (50 Hz), and the width of that pulse, usually 1 to 2 ms, sets the shaft angle<sup>[[2]](#ref-2)</sup>. A servo modified to rotate continuously reads the same pulse as a speed and direction around a neutral width instead. We hacked an SG90, and our code drives it by speed: the further the duty is from neutral, the faster it turns.
+A standard hobby servo expects a pulse every 20 ms (50 Hz), and the width of that pulse, usually 1 to 2 ms, sets the shaft angle<sup>[[2]](#ref-2)</sup>. A servo modified to rotate continuously reads the same pulse as a speed and direction around a neutral width instead. We hacked an SG90, and our code drives it by speed, so the further the duty is from neutral, the faster it turns.
 
 At 50 Hz the period is 20 ms, so you get the pulse width by multiplying the duty cycle by the period: 2.5 percent is 0.50 ms, 7.5 percent is 1.50 ms and 12.5 percent is 2.50 ms.
 
@@ -71,7 +72,7 @@ The system is three clients around one server and one database.
 
 <figure class="excal" data-diagram="pillifyai-architecture"><a href="/img/diagrams/pillifyai-architecture.webp" class="excal-link" aria-label="Open the diagram full size"><img src="/img/diagrams/pillifyai-architecture.webp" alt="PillifyAI architecture: a Firebase auth box (email login, doctor or patient role) points to both the Expo and React Native mobile app, whose tabs are Home, History and Account plus doctor-only Patients and Prescribe and which keeps an offlineOperationsQueue in AsyncStorage, and to the Node Express server; the app and the server talk over REST (POST /prescribe, PUT /status/:id); the server exposes /api/auth, /api/patients, /api/medications and /api/devices and holds a Postgres database with the User, Doctor, Patient, Medication and MedicationTracking models; an ESP32 sketch that polls every 30 s, shows its state with LEDs on pins 2, 4 and 5, and blinks, dispenses and reports when a dose is due talks to the server both ways through GET esp32/medications and POST esp32/dispense/:id with an X-API-Key header; a separate box holds the Raspberry Pi scripts (hacked SG90 servo on GPIO 2 at 50 Hz, piezo buzzer on GPIO 18)." width="2400" height="1184" loading="lazy" decoding="async"></a></figure>
 
-The mobile app and the server talk over REST. The app's service layer covers today's medications, history, updating a taken status, and prescribing. The server mounts four route groups under `/api`: `auth`, `patients`, `medications` and `devices`. The device routes are the dispenser's entire interface: a ping, a listing of patients and medications, and a POST that marks a dose dispensed, sent with an `X-API-Key` header.
+The mobile app and the server talk over REST. The app's service layer covers today's medications, history, updating a taken status, and prescribing. The server mounts four route groups under `/api` (`auth`, `patients`, `medications` and `devices`). The device routes are the dispenser's entire interface: a ping, a listing of patients and medications, and a POST that marks a dose dispensed, sent with an `X-API-Key` header.
 
 There are two pieces of hardware code. The ESP32 sketch handles the network side. The Raspberry Pi scripts handle the mechanical side, driving the servo and the buzzer.
 
@@ -111,7 +112,7 @@ Prescribing is the largest handler in the server, about 230 lines. It has to cre
 
 ### The ESP32 Loop
 
-The ESP32 sketch connects to WiFi with retries, pings the server, then polls every 30 seconds (`CHECK_INTERVAL = 30000`). It parses JSON with ArduinoJson<sup>[[5]](#ref-5)</sup> on the Arduino core for the ESP32<sup>[[6]](#ref-6)</sup>, uses a 10 second HTTP timeout, and shares one request helper between calls. Three LEDs show state: pin 2 for connected, pin 4 for dispensing and pin 5 for an error. When a dose is due, the dispensing LED blinks and the sketch dispenses on its own.
+The ESP32 sketch connects to WiFi with retries, pings the server, then polls every 30 seconds (`CHECK_INTERVAL = 30000`). It parses JSON with ArduinoJson<sup>[[5]](#ref-5)</sup> on the Arduino core for the ESP32<sup>[[6]](#ref-6)</sup>, uses a 10 second HTTP timeout, and shares one request helper between calls. Three LEDs show state, with pin 2 for connected, pin 4 for dispensing and pin 5 for an error. When a dose is due, the dispensing LED blinks and the sketch dispenses on its own.
 
 ```cpp
 void handleMedicationDue() {
@@ -136,7 +137,7 @@ void handleMedicationDue() {
 
 ### The Servo Class on the Pi
 
-The Raspberry Pi scripts use RPi.GPIO<sup>[[7]](#ref-7)</sup>. A `ServoControl` class starts 50 Hz PWM on GPIO 2 (physical pin 3) at the neutral duty and gives three ways to move: `set_direction`, `set_speed` and `gradual_move`. Condensed from the source, with comments changed or trimmed and the else branch and the rest of `set_speed` cut:
+The Raspberry Pi scripts use RPi.GPIO<sup>[[7]](#ref-7)</sup>. A `ServoControl` class starts 50 Hz PWM on GPIO 2 (physical pin 3) at the neutral duty and gives three ways to move, `set_direction`, `set_speed` and `gradual_move`. Condensed from the source, with comments changed or trimmed and the else branch and the rest of `set_speed` cut:
 
 ```python
 MIN_DUTY = 2.5   # fully counterclockwise

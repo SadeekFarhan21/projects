@@ -1,14 +1,16 @@
 {
-  "_rule": "A post is dated to its project's first real commit (template scaffolding skipped). Projects that lived only locally before being committed use the creation time of their earliest file. Apply with: python3 tools/apply-post-dates.py Dates are naive local times in the site timezone (America/New_York, _config.yml): Hexo shifts explicit offsets/Z by the timezone a second time. `code` is the GitHub link shown as an icon in the post header (the project folder in this repo).",
+  "_rule": "A post is dated to its project's first real commit (template scaffolding skipped). Projects that lived only locally before being committed use the creation time of their earliest file. Apply with: python3 tools/apply-post-dates.py Dates are naive local times in the site timezone (America/New_York, _config.yml): Hexo shifts explicit offsets/Z by the timezone a second time. `code` is the GitHub link shown as an icon in the post header (the project folder in this repo). `tab_title` is the short title shown in the browser tab.",
   "building-a-gpt-from-scratch": {
     "date": "2026-09-11 02:46:31",
     "source": "projects/gpt-from-scratch, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/gpt-from-scratch"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/gpt-from-scratch",
+    "tab_title": "Small GPT"
   },
   "reverse-engineering-gpt-2s-induction-circuit": {
     "date": "2026-09-12 21:49:27",
     "source": "projects/tiny-circuits, local: earliest file created (first commit 2026-09-20)",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/tiny-circuits"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/tiny-circuits",
+    "tab_title": "Induction Heads"
   },
   "testing-gpt-2s-induction-heads": {
     "date": "2026-09-12 21:49:27",
@@ -18,72 +20,86 @@
   "rlvr-grpo-reward-variance": {
     "date": "2026-09-13 13:43:19",
     "source": "projects/math-rlvr, local: earliest file created (first commit 2026-09-20)",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/math-rlvr"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/math-rlvr",
+    "tab_title": "GRPO"
   },
   "aegis-fraud-triage": {
     "date": "2026-02-06 18:44:45",
     "source": "SadeekFarhan21/Aegis, first real commit (skips the 2025-01-01 Lovable template placeholder)",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/aegis-fraud-triage"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/aegis-fraud-triage",
+    "tab_title": "Aegis"
   },
   "airport-network-analysis": {
     "date": "2026-02-05 18:06:05",
     "source": "SadeekFarhan21/Airport-Network-Analysis, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/airport-network-analysis"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/airport-network-analysis",
+    "tab_title": "Flight Network"
   },
   "clinova-trial-emulation": {
     "date": "2026-01-25 16:41:36",
     "source": "SadeekFarhan21/Clinova, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/clinova-trial-emulation"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/clinova-trial-emulation",
+    "tab_title": "Clinova"
   },
   "cure-improve": {
     "date": "2026-02-27 13:48:53",
     "source": "arses-ui/CURE-Improve (forked as SadeekFarhan21/CURE-Improve), first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/cure-improve"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/cure-improve",
+    "tab_title": "Concept Erasure"
   },
   "diffsense": {
     "date": "2025-06-21 13:25:13",
     "source": "SadeekFarhan21/DiffSense, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/diffsense"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/diffsense",
+    "tab_title": "DiffSense"
   },
   "divvy-bike-analysis": {
     "date": "2025-01-18 13:34:33",
     "source": "SadeekFarhan21/Divvy_Bike_Analysis, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/divvy-bike-analysis"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/divvy-bike-analysis",
+    "tab_title": "Divvy Trips"
   },
   "empirica-biomedical-graphs": {
     "date": "2025-10-24 23:27:00",
     "source": "SadeekFarhan21/empirica, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/empirica-biomedical-graphs"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/empirica-biomedical-graphs",
+    "tab_title": "Empirica"
   },
   "listenting": {
     "date": "2026-05-23 09:30:30",
     "source": "SadeekFarhan21/ListenTing, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/listenting"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/listenting",
+    "tab_title": "ListenTing"
   },
   "photography-site": {
     "date": "2024-11-18 11:33:22",
     "source": "SadeekFarhan21/PhotographyWebsite, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/photography-site"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/photography-site",
+    "tab_title": "Photo Culling"
   },
   "pillifyai": {
     "date": "2025-03-28 22:45:01",
     "source": "SadeekFarhan21/PillifyAI, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/pillifyai"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/pillifyai",
+    "tab_title": "PillifyAI"
   },
   "quantathon-leap-reserve": {
     "date": "2026-03-28 10:33:40",
     "source": "SadeekFarhan21/quantathon-2026, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/quantathon-leap-reserve"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/quantathon-leap-reserve",
+    "tab_title": "LEAP Loan Fund"
   },
   "quantifyai-market-regimes": {
     "date": "2025-02-26 15:48:55",
     "source": "SadeekFarhan21/QuantifyAI, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/quantifyai-market-regimes"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/quantifyai-market-regimes",
+    "tab_title": "QuantifyAI"
   },
   "signifyai": {
     "date": "2025-02-22 10:35:49",
     "source": "SadeekFarhan21/SignifyAI, first commit",
-    "code": "https://github.com/SadeekFarhan21/projects/tree/main/signifyai"
+    "code": "https://github.com/SadeekFarhan21/projects/tree/main/signifyai",
+    "tab_title": "SignifyAI"
   },
   "a-backtester-that-audits-itself": {
     "date": "2026-09-29 04:01:45",

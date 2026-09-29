@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Trial Emulation With a Critic That Guards Time Zero"
+tab_title: Clinova
 code: https://github.com/SadeekFarhan21/projects/tree/main/clinova-trial-emulation
 date: 2026-01-25 16:41:36
 tags:

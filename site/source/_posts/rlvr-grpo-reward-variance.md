@@ -1,5 +1,6 @@
 ---
 title: "GRPO Only Learns When the Rewards Disagree"
+tab_title: GRPO
 code: https://github.com/SadeekFarhan21/projects/tree/main/math-rlvr
 date: 2026-09-13 13:43:19
 description: "An RLVR pipeline on Qwen2.5-0.5B-Instruct, published before the training run. GRPO learns from the spread of rewards rather than their level, and four bugs never raised an exception."
@@ -9,7 +10,7 @@ tags:
   - grpo
 ---
 
-What the pipeline did produce is a diagnosis and four post-mortems. The diagnosis is that the learning signal in GRPO<sup>[[1]](#ref-1)</sup> is the within-group *spread* of rewards rather than their level, which makes "my dataset is too easy" and "my dataset is too hard" indistinguishable from outside the reward function. The post-mortems cover four engineering failures (a token-id collision, non-terminating rollouts, generation running in train mode, and a silently frozen adapter), none of which raised an exception, and all of which produced a training run that looked healthy.
+This RLVR pipeline produced a diagnosis and four post-mortems. The diagnosis is that the learning signal in GRPO<sup>[[1]](#ref-1)</sup> is the within-group *spread* of rewards rather than their level, which makes "my dataset is too easy" and "my dataset is too hard" indistinguishable from outside the reward function. The post-mortems cover four engineering failures (a token-id collision, non-terminating rollouts, generation running in train mode, and a silently frozen adapter), none of which raised an exception, and all of which produced a training run that looked healthy.
 
 We also measured hardware instead of assuming it. For this workload a rented Modal L4 ran about 5% faster per step than an M4 Pro laptop, because per-step time is dominated by serial decode overhead rather than arithmetic. That is one paired observation, not a benchmark.
 
@@ -69,9 +70,9 @@ The other half of RLVR is deciding whether a completion's answer matches the gol
 | `40` | `72` | ❌ | ❌ |
 | *(no `\boxed{}`)* | `72` | none | ❌ |
 
-Rows two and three are the reason this matters, and the reason is not noise. A naive string check does not produce a *noisy* reward, it produces a **biased** one. It systematically punishes correct answers for being written in a different form, and therefore trains the model toward the dataset's formatting conventions rather than toward being right. Parsing both sides symbolically and checking mathematical equality is the only version that rewards the intended thing.
+Rows two and three are the reason this matters. A naive string check produces a **biased** reward. It systematically punishes correct answers for being written in a different form, and therefore trains the model toward the dataset's formatting conventions rather than toward being right. Parsing both sides symbolically and checking mathematical equality is the only version that rewards the intended thing.
 
-Stated generally, the verifier is not an approximation of the objective, it *is* the objective. Every systematic error in it becomes a systematic pressure on the policy.
+Stated generally, the verifier *is* the objective. Every systematic error in it becomes a systematic pressure on the policy.
 
 ## Implementation
 
@@ -87,7 +88,7 @@ print(f"[reward] n={n} mean={mean:.3f} std={var ** 0.5:.3f} "
       f"(std~0 => no learning signal)")
 ```
 
-Ten lines of arithmetic that convert a silent failure into a visible one. It is the single highest-leverage thing in the pipeline. The general form is that **the learning signal in policy-gradient RL comes from the spread of outcomes, not their level.** Curriculum design is not a nice-to-have here, it is a precondition.
+Ten lines of arithmetic that convert a silent failure into a visible one. It is the single most useful thing in the pipeline. The general form is that **the learning signal in policy-gradient RL comes from the spread of outcomes, not their level.** That makes curriculum design a precondition here.
 
 ### Training Configuration
 
@@ -182,7 +183,7 @@ The rented datacenter GPU was roughly 5% faster than the laptop. At 300 steps th
 
 This is a single paired observation (one configuration, one run on each device, no repetitions), so it carries no interval and should not be read as a benchmark. What it does support is a directional claim with a mechanism behind it. **Per-step time is dominated by generation overhead in HuggingFace `generate`, not by matrix multiplication.** Sampling 8 completions of up to 640 tokens is a long serial sequence of small, latency-bound decode steps, and a wider GPU does not shorten a serial loop.
 
-The consequences follow from the mechanism rather than from the 5%. Larger GPUs cost proportionally more per hour for roughly the same wall-clock, and a T4 is a false economy because it lacks bf16 and loses more time than it saves in price. The real fix is not more silicon but batched inference through vLLM, continuous batching<sup>[[15]](#ref-15)</sup> and paged attention<sup>[[14]](#ref-14)</sup>, which is blocked on the TRL version above.
+The consequences follow from the mechanism rather than from the 5%. Larger GPUs cost proportionally more per hour for roughly the same wall-clock, and a T4 is a false economy because it lacks bf16 and loses more time than it saves in price. The real fix is batched inference through vLLM, continuous batching<sup>[[15]](#ref-15)</sup> and paged attention<sup>[[14]](#ref-14)</sup>, which is blocked on the TRL version above.
 
 ## Results
 

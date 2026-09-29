@@ -1,5 +1,6 @@
 ---
 title: "Finding the Induction Heads in GPT-2 Small"
+tab_title: Induction Heads
 code: https://github.com/SadeekFarhan21/projects/tree/main/tiny-circuits
 date: 2026-09-12 21:49:27
 description: "All 144 attention heads of GPT-2 small scored on the induction diagonal in one cached forward pass on a laptop, recovering the five canonical heads. An induction score is a correlation, not a cause."
