@@ -8,6 +8,7 @@
  * - smooth-scrolls to a heading on click and updates the URL hash
  * - keeps the active entry visible inside the sidebar
  * - closes the mobile TOC after a pick
+ * - keeps sub-lists collapsed except the branch holding the current entry
  */
 (function () {
   var tocs = Array.prototype.slice.call(document.querySelectorAll('#toc, #toc-mobile'))
@@ -56,6 +57,17 @@
     else if (r.bottom > b.bottom - 24) box.scrollTop += r.bottom - (b.bottom - 24)
   }
 
+  // Open only the sub-lists on the path to the active entry; collapse the rest.
+  function expandBranch() {
+    tocs.forEach(function (t) {
+      var branches = t.querySelectorAll('li')
+      Array.prototype.forEach.call(branches, function (li) {
+        if (!li.querySelector(':scope > ol, :scope > ul')) return
+        li.classList.toggle('is-open', !!li.querySelector('a.is-active'))
+      })
+    })
+  }
+
   function mark() {
     var id = current()
     if (id === activeId) return
@@ -72,6 +84,8 @@
         a.removeAttribute('aria-current')
       }
     })
+    expandBranch()
+    links.forEach(function (a) { if (a.classList.contains('is-active')) keepVisible(a) })
   }
 
   var ticking = false
@@ -108,6 +122,7 @@
         x.classList.toggle('is-active', on)
       })
       activeId = el.id
+      expandBranch()
     })
   })
 

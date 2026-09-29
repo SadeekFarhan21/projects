@@ -161,3 +161,12 @@ html .post-content pre * {
   word-break: normal !important;
   overflow-wrap: break-word;
 }
+
+/* Nested TOC entries stay collapsed except under the section being read
+   (toc.js toggles .is-open on the branch holding the active entry). */
+.toc-article li > .toc-child {
+  display: none;
+}
+.toc-article li.is-open > .toc-child {
+  display: block;
+}
