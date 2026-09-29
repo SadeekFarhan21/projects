@@ -11,3 +11,7 @@ UPSTREAM_COMMIT (the theme is not published on npm). MIT license kept in LICENSE
 - Dropped the 404 page's image, which the theme references but does not ship.
 - Added css/site.css (loaded on every page) to undo the theme's word-break: break-all for English text.
 - Fonts: Quicksand (text) and Fragment Mono (code) from Google Fonts, set in head.ejs and css/site.css.
+- Moved the post TOC from the left nav into a sticky right column (`.index-right` in layout.ejs, styled in css/site.css); below 1180px the collapsible in-post TOC is used instead (media query in aerlume.css widened from 680px).
+- index.js re-measures the TOC when the nav opens or closes and never pins a hidden TOC (it used to stick over the nav).
+- The sidebar TOC skips the posts' own "table of contents" heading.
+- WRITING and CODE use inline SVG pen and code icons instead of duplicating other nav icons.

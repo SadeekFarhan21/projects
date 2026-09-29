@@ -6,6 +6,6 @@
         <% } %>
     </div>
     <div id="<%= item && item.toc_mobile ? 'toc-mobile-list' : '' %>" class="<%= item && item.toc_mobile ? 'toc-mobile-list' : '' %>">
-    <%- toc(item.encrypt ? item.origin : item.content, {list_number: false}) %>
+    <%- toc(item.encrypt ? item.origin : item.content, {list_number: false}).replace(/<li class="toc-item toc-level-2"><a class="toc-link" href="#table-of-contents">.*?<\/li>/, '') %>
     </div>
 </div>

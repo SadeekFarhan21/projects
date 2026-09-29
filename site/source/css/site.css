@@ -40,3 +40,93 @@ pre *,
 :where(.katex *) {
   font-family: inherit;
 }
+
+/* Contents sidebar on the right of posts (layout.ejs .index-right). It sticks
+   below the top of the viewport while the post scrolls. Below 1180px the
+   right column is hidden and the collapsible in-post TOC is shown instead. */
+.index-container .index-right {
+  flex: 0 0 220px;
+  min-width: 0;
+  align-self: stretch;
+}
+html .index-right .toc-article,
+html .index-right .toc-article.toc-fixed {
+  display: block;
+  opacity: 1;
+  transform: none;
+  position: sticky;
+  top: 24px;
+  width: auto;
+  margin-top: 104px;
+  max-height: calc(100vh - 48px) !important;
+  overflow-y: auto !important;
+}
+@media screen and (max-width: 1180px) {
+  .index-container .index-right {
+    display: none;
+  }
+}
+
+/* TOC entries and the author name: wrap at word boundaries, use Quicksand. */
+html body .toc-article li a,
+html body .toc-article li a span {
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.nav .avatar-name .name i {
+  font-family: "Quicksand", Helvetica, Arial, sans-serif !important;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Collapsible in-post TOC (shown below 1180px): keep the accent bar next to
+   the CONTENTS label and push only the Show button to the right. */
+.toc-mobile .toc-heading::before {
+  margin-right: 0 !important;
+}
+.toc-mobile .toc-heading > span {
+  margin-right: auto;
+}
+
+/* Inline SVG nav icons (WRITING, CODE) sized like the icon font. */
+.nav .contents .nav-svg-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Typography. The theme adds letter-spacing: 1px to post text and headings
+   and asks for weight 300, which spreads Quicksand's tight letterforms apart
+   and makes it look unlike Quicksand elsewhere. Use the font's own spacing,
+   a real loaded weight, and the grayscale smoothing most sites use on macOS. */
+html body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+html .post-content,
+html .post-content p,
+html .post-content li,
+html .post-content h1,
+html .post-content h2,
+html .post-content h3,
+html .post-content h4,
+html .post-content blockquote,
+html .post-content td,
+html .post-content th,
+html .post-preview-container,
+html .about-content {
+  letter-spacing: normal;
+}
+html .post-content p,
+html .post-content li {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.7;
+}
+html .post-content code,
+html .post-content pre,
+html .post-content pre * {
+  letter-spacing: normal;
+}

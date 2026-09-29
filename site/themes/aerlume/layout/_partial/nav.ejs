@@ -54,7 +54,7 @@
             <% if (config.writing_url) { %>
             <li>
                 <a href="<%= config.writing_url %>">
-                    <i class="iconfont icon-guanyu2" aria-hidden="true"></i>
+                    <i class="iconfont nav-svg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></i>
                     <span><%= __('nav.writing') %></span>
                 </a>
             </li>
@@ -62,7 +62,7 @@
             <% if (config.code_url) { %>
             <li>
                 <a href="<%= config.code_url %>">
-                    <i class="iconfont icon-guidang2" aria-hidden="true"></i>
+                    <i class="iconfont nav-svg-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></i>
                     <span><%= __('nav.code') %></span>
                 </a>
             </li>
@@ -77,12 +77,6 @@
             <% } %>
         </ul>
     </div>
-    <%
-        if(is_post()){
-        // if(/[0-9]*\/[0-9]*\/[0-9]*\//.test(path)){
-    %>
-        <%- partial('./toc', {item: page, index: false}) %>
-    <% } %>
 </div>
 
 

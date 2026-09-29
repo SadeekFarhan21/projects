@@ -29,6 +29,11 @@
         <!-- Main Content -->
         <%- body %>
     </div>
+    <% if (is_post()) { %>
+    <aside class="index-right" aria-label="Contents">
+        <%- partial('_partial/toc', {item: page, index: false}) %>
+    </aside>
+    <% } %>
 </div>
 
 <%- partial('_partial/footer', null, {cache: false}) %>

@@ -131,6 +131,9 @@ if (navToggleBtn && navEl) {
             localStorage.setItem('nav-collapsed', 'true')
         }
         syncSidebarState()
+        // The sidebar TOC moves (or appears) when the nav opens or closes, so
+        // tell the TOC code to re-measure where it sits.
+        window.dispatchEvent(new Event('aerlume:nav-toggle'))
     })
 }
 
@@ -392,15 +395,21 @@ if (window.isPost && toc && toc.children && toc.children[0]) {
 
     var nameArray = Array.from(nameSet)
 
+    // Where the TOC sits in the page when it is not pinned. 0 means it is
+    // hidden (collapsed nav) and must never be pinned, since pinning a hidden
+    // TOC at 0 left it stuck over the nav once the nav was opened.
+    function measureTocTop() {
+        toc = document.getElementById('toc')
+        if (!toc) return
+        toc.classList.remove('toc-fixed')
+        tocToTop = getComputedStyle(toc).display === 'none' ? 0 : getDistanceOfLeft(toc).top
+    }
+
     function reLayout() {
         var scrollToTop = document.documentElement.scrollTop || window.pageYOffset
-        if (tocToTop === 0) {
-            toc = document.getElementById('toc')
-            if (!toc) return
-            toc.classList.remove('toc-fixed')
-            tocToTop = getDistanceOfLeft(toc).top
-        }
-        if (tocToTop <= scrollToTop + 10) {
+        if (tocToTop === 0) measureTocTop()
+        if (!toc) return
+        if (tocToTop > 0 && tocToTop <= scrollToTop + 10) {
             if (!toc.classList.contains('toc-fixed')) toc.classList.add('toc-fixed')
         } else if (toc.classList.contains('toc-fixed')) {
             toc.classList.remove('toc-fixed')
@@ -432,11 +441,23 @@ if (window.isPost && toc && toc.children && toc.children[0]) {
         }
     }
 
+    measureTocTop()
     reLayout()
 
     window.addEventListener('scroll', function () {
         reLayout()
     })
+
+    function remeasure() {
+        measureTocTop()
+        reLayout()
+    }
+    window.addEventListener('aerlume:nav-toggle', function () {
+        remeasure()
+        // measure again once the nav's width transition has settled
+        setTimeout(remeasure, 400)
+    })
+    window.addEventListener('resize', remeasure)
 }
 
 // donate

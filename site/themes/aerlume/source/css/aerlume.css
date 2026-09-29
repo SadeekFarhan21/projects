@@ -2482,7 +2482,7 @@ pre .javascript .function {
     display: none;
   }
 }
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 1180px) {
   .toc-mobile {
     display: block;
     width: 100%;
